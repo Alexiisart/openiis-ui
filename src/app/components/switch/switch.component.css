@@ -1,0 +1,462 @@
+/* Contenedor principal del switch */
+.switch-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: fit-content;
+}
+
+/* Label del switch */
+.switch-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.5;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.switch-label:hover:not(.disabled) {
+  color: var(--color-text-primary);
+}
+
+/* Input nativo oculto */
+.switch-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+/* Wrapper del switch */
+.switch-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Track (carril) del switch */
+.switch-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  background: var(--color-border);
+  border: 2px solid var(--color-border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  box-shadow: var(--shadow-xs, inset 0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+/* Thumb (botón deslizable) del switch */
+.switch-thumb {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface, #fff);
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-xs, 0 1px 2px rgba(0, 0, 0, 0.05));
+  transform: translateX(0);
+  left: 2px;
+}
+
+/* Texto del switch */
+.switch-text {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+
+/* Iconos del switch */
+.switch-icon {
+  font-size: 12px;
+  color: var(--color-border);
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.switch-icon.checked {
+  color: var(--color-surface, #fff);
+}
+
+/* Texto de ayuda */
+.switch-help {
+  font-size: 12px;
+  color: var(--color-border);
+  line-height: 1.4;
+  margin-left: 56px; /* Alineado con el texto */
+}
+
+/* Texto de error */
+.switch-error {
+  font-size: 12px;
+  color: var(--color-danger, #ef4444);
+  line-height: 1.4;
+  font-weight: 500;
+  margin-left: 56px; /* Alineado con el texto */
+}
+
+/* =============================================================================
+   TAMAÑOS
+============================================================================= */
+
+/* Tamaño XS */
+[data-size="xs"] .switch-track {
+  width: 32px;
+  height: 18px;
+}
+
+[data-size="xs"] .switch-thumb {
+  width: 14px;
+  height: 14px;
+}
+
+[data-size="xs"] .switch-input:checked + .switch-track .switch-thumb {
+  transform: translateX(14px);
+}
+
+[data-size="xs"] .switch-text {
+  font-size: 12px;
+}
+
+[data-size="xs"] .switch-icon {
+  font-size: 10px;
+}
+
+[data-size="xs"] .switch-help,
+[data-size="xs"] .switch-error {
+  margin-left: 44px;
+}
+
+/* Tamaño SM */
+[data-size="sm"] .switch-track {
+  width: 38px;
+  height: 22px;
+}
+
+[data-size="sm"] .switch-thumb {
+  width: 18px;
+  height: 18px;
+}
+
+[data-size="sm"] .switch-input:checked + .switch-track .switch-thumb {
+  transform: translateX(14px);
+}
+
+[data-size="sm"] .switch-text {
+  font-size: 13px;
+}
+
+[data-size="sm"] .switch-icon {
+  font-size: 11px;
+}
+
+[data-size="sm"] .switch-help,
+[data-size="sm"] .switch-error {
+  margin-left: 50px;
+}
+
+/* Tamaño MD (default) */
+[data-size="md"] .switch-track {
+  width: 44px;
+  height: 24px;
+}
+
+[data-size="md"] .switch-thumb {
+  width: 20px;
+  height: 20px;
+}
+
+[data-size="md"] .switch-input:checked + .switch-track .switch-thumb {
+  transform: translateX(17px);
+}
+
+[data-size="md"] .switch-text {
+  font-size: 14px;
+}
+
+[data-size="md"] .switch-icon {
+  font-size: 12px;
+}
+
+[data-size="md"] .switch-help,
+[data-size="md"] .switch-error {
+  margin-left: 56px;
+}
+
+/* Tamaño LG */
+[data-size="lg"] .switch-track {
+  width: 54px;
+  height: 30px;
+}
+
+[data-size="lg"] .switch-thumb {
+  width: 26px;
+  height: 26px;
+}
+
+[data-size="lg"] .switch-input:checked + .switch-track .switch-thumb {
+  transform: translateX(21px);
+}
+
+[data-size="lg"] .switch-text {
+  font-size: 16px;
+}
+
+[data-size="lg"] .switch-icon {
+  font-size: 14px;
+}
+
+[data-size="lg"] .switch-help,
+[data-size="lg"] .switch-error {
+  margin-left: 66px;
+}
+
+/* Tamaño XL */
+[data-size="xl"] .switch-track {
+  width: 64px;
+  height: 36px;
+}
+
+[data-size="xl"] .switch-thumb {
+  width: 32px;
+  height: 32px;
+}
+
+[data-size="xl"] .switch-input:checked + .switch-track .switch-thumb {
+  transform: translateX(24px);
+}
+
+[data-size="xl"] .switch-text {
+  font-size: 18px;
+}
+
+[data-size="xl"] .switch-icon {
+  font-size: 16px;
+}
+
+[data-size="xl"] .switch-help,
+[data-size="xl"] .switch-error {
+  margin-left: 76px;
+}
+
+/* =============================================================================
+   ESTADOS
+============================================================================= */
+
+/* Estado hover */
+.switch-label:hover:not(.disabled) .switch-track {
+  box-shadow: var(--shadow-sm, inset 0 1px 3px rgba(0, 0, 0, 0.1)),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.switch-label:hover:not(.disabled) .switch-thumb {
+  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+/* Estado focus */
+.switch-input:focus + .switch-track {
+  box-shadow: 0 0 0 3px var(--color-border-focus, rgba(59, 130, 246, 0.1)),
+    var(--shadow-xs, inset 0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+.switch-input:focus ~ .switch-text {
+  color: var(--color-text-primary);
+}
+
+/* Estado disabled */
+.switch-container.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.switch-container.disabled .switch-label {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.switch-container.disabled .switch-track {
+  background: var(--color-surface-elevated, #f3f4f6);
+  border-color: var(--color-surface-elevated, #f3f4f6);
+}
+
+.switch-container.disabled .switch-thumb {
+  background: #e5e7eb;
+  box-shadow: none;
+}
+
+.switch-container.disabled .switch-text {
+  color: var(--color-border);
+}
+
+/* Estado readonly */
+.switch-container.readonly .switch-label {
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Estado error */
+.switch-container.error .switch-track {
+  border-color: var(--color-danger, #ef4444);
+}
+
+.switch-container.error .switch-text {
+  color: var(--color-danger, #ef4444);
+}
+
+/* =============================================================================
+   VARIANTES
+============================================================================= */
+
+/* Variante Default */
+[data-variant="default"] .switch-input:checked + .switch-track {
+  background: var(--color-info);
+  border-color: var(--color-info);
+}
+
+[data-variant="default"]
+  .switch-label:hover:not(.disabled)
+  .switch-input:checked
+  + .switch-track {
+  background: var(--color-text-muted);
+  border-color: var(--color-text-muted);
+}
+
+[data-variant="default"] .switch-input:focus + .switch-track {
+  box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1),
+    var(--shadow-xs, inset 0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+/* Variante Primary */
+[data-variant="primary"] .switch-input:checked + .switch-track {
+  background: var(--primary-500, #3b82f6);
+  border-color: var(--primary-500, #3b82f6);
+}
+
+[data-variant="primary"]
+  .switch-label:hover:not(.disabled)
+  .switch-input:checked
+  + .switch-track {
+  background: var(--primary-600, #2563eb);
+  border-color: var(--primary-600, #2563eb);
+}
+
+[data-variant="primary"] .switch-input:focus + .switch-track {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1),
+    var(--shadow-xs, inset 0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+/* Variante Success */
+[data-variant="success"] .switch-input:checked + .switch-track {
+  background: var(--success-500, #10b981);
+  border-color: var(--success-500, #10b981);
+}
+
+[data-variant="success"]
+  .switch-label:hover:not(.disabled)
+  .switch-input:checked
+  + .switch-track {
+  background: var(--success-600, #059669);
+  border-color: var(--success-600, #059669);
+}
+
+[data-variant="success"] .switch-input:focus + .switch-track {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1),
+    var(--shadow-xs, inset 0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+/* Variante Warning */
+[data-variant="warning"] .switch-input:checked + .switch-track {
+  background: var(--warning-500, #f59e0b);
+  border-color: var(--warning-500, #f59e0b);
+}
+
+[data-variant="warning"]
+  .switch-label:hover:not(.disabled)
+  .switch-input:checked
+  + .switch-track {
+  background: var(--warning-600, #d97706);
+  border-color: var(--warning-600, #d97706);
+}
+
+[data-variant="warning"] .switch-input:focus + .switch-track {
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1),
+    var(--shadow-xs, inset 0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+/* Variante Danger */
+[data-variant="danger"] .switch-input:checked + .switch-track {
+  background: var(--color-danger, #ef4444);
+  border-color: var(--color-danger, #ef4444);
+}
+
+[data-variant="danger"]
+  .switch-label:hover:not(.disabled)
+  .switch-input:checked
+  + .switch-track {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+[data-variant="danger"] .switch-input:focus + .switch-track {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1),
+    var(--shadow-xs, inset 0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+/* Variante Subtle */
+[data-variant="subtle"] .switch-input:checked + .switch-track {
+  background: var(--color-border);
+  border-color: var(--color-border);
+}
+
+[data-variant="subtle"]
+  .switch-label:hover:not(.disabled)
+  .switch-input:checked
+  + .switch-track {
+  background: var(--color-text-muted);
+  border-color: var(--color-text-muted);
+}
+
+[data-variant="subtle"] .switch-input:focus + .switch-track {
+  box-shadow: 0 0 0 3px rgba(156, 163, 175, 0.1),
+    var(--shadow-xs, inset 0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+/* =============================================================================
+   RESPONSIVIDAD
+============================================================================= */
+
+@media (max-width: 768px) {
+  /* En móviles, aumentar área de click */
+  .switch-label {
+    padding: var(--space-1) 0;
+  }
+
+  /* Tamaños mínimos para touch */
+  [data-size="xs"] .switch-track {
+    height: 20px;
+  }
+
+  [data-size="sm"] .switch-track {
+    height: 24px;
+  }
+}
+
+/* Reducir animaciones para usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .switch-track,
+  .switch-thumb,
+  .switch-text,
+  .switch-label,
+  .switch-icon {
+    transition: none;
+  }
+}

@@ -1,59 +1,130 @@
-# OpeniisUiTest
+# 🎨 OpenIIS UI
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.9.
+OpenIIS UI es una biblioteca de componentes Angular moderna y altamente personalizable, diseñada para crear interfaces de usuario elegantes y accesibles. Esta biblioteca ofrece un conjunto completo de componentes que siguen las mejores prácticas de diseño y desarrollo.
 
-## Development server
+## ✨ Características
 
-To start a local development server, run:
+- 🎯 **Diseño Moderno**: Componentes con estética contemporánea y profesional
+- 🌗 **Modo Oscuro**: Soporte completo para temas claro y oscuro
+- 🎨 **Temas Personalizables**: Sistema de temas flexible (Classic, Neutral, Vivid)
+- ♿ **Accesibilidad**: Componentes diseñados siguiendo WCAG 2.1
+- 📱 **Responsive**: Diseño adaptable para todas las pantallas
+- 🚀 **Alto Rendimiento**: Optimizado para máxima eficiencia
+- 🧩 **Modular**: Componentes independientes y reutilizables
 
-```bash
-ng serve
-```
+## 🛠️ Componentes
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Formularios
 
-## Code scaffolding
+- **Buttons**: Variantes primary, secondary, outline, ghost, etc.
+- **Inputs**: Text, email, password, URL, tel, number
+- **Select/Dropdowns**: Básico y searchable
+- **Checkboxes**: Multiple estados y variantes
+- **Radio Buttons**: Grupos personalizables
+- **Date Input**: Selector de fechas con validaciones
+- **File Upload**: Soporte para drag & drop y preview
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Feedback
 
-```bash
-ng generate component component-name
-```
+- **Tooltips**: Múltiples posiciones y variantes
+- **Modals**: Alert, confirm y custom
+- **Toast**: Notificaciones emergentes
+- **Badges**: Estados y tamaños variados
+- **Progress Bar**: Lineal con estados
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Navegación
 
-```bash
-ng generate --help
-```
+- **Breadcrumbs**: Navegación jerárquica
+- **FAB**: Botones de acción flotante
+- **Button Groups**: Agrupación de acciones
 
-## Building
+### Contenido
 
-To build the project run:
+- **Cards**: Múltiples layouts y acciones
+- **Tables**: Ordenamiento y paginación
+- **Empty States**: Estados vacíos personalizables
+- **Avatar**: Imágenes de perfil con fallback
 
-```bash
-ng build
-```
+## 🚀 Instalación
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+\`\`\`bash
+npm install openiis-ui
+\`\`\`
 
-## Running unit tests
+## 📖 Uso
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+1. **Importa el módulo**:
+   \`\`\`typescript
+   import { OpeniisButtonComponent } from 'openiis-ui';
 
-```bash
-ng test
-```
+@NgModule({
+imports: [
+OpeniisButtonComponent
+]
+})
+\`\`\`
 
-## Running end-to-end tests
+2. **Usa los componentes**:
+   \`\`\`html
+   <openiis-button
+   type="primary"
+   text="Mi Botón"
+   iconLeft="add"
+   size="md"
+   (clickEvent)="onButtonClick()"
+   > </openiis-button>
+   > \`\`\`
 
-For end-to-end (e2e) testing, run:
+## 🎨 Temas
 
-```bash
-ng e2e
-```
+OpenIIS UI incluye tres temas predefinidos:
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+- **Classic**: Diseño tradicional y profesional
+- **Neutral**: Paleta de colores suave y minimalista
+- **Vivid**: Colores vibrantes y modernos
 
-## Additional Resources
+Para cambiar el tema:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+\`\`\`typescript
+this.themeService.setTheme('vivid');
+\`\`\`
+
+## 🌙 Modo Oscuro
+
+Activar/desactivar el modo oscuro:
+
+\`\`\`typescript
+this.themeService.toggleDarkMode();
+\`\`\`
+
+## 📚 Documentación
+
+Visita nuestra [documentación completa](https://github.com/tuusuario/openiis-ui/wiki) para ver:
+
+- Guías detalladas
+- API de componentes
+- Ejemplos de uso
+- Mejores prácticas
+- Personalización avanzada
+
+## 🤝 Contribuir
+
+¡Las contribuciones son bienvenidas! Por favor, lee nuestra [guía de contribución](CONTRIBUTING.md).
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+
+## 🙋‍♂️ Soporte
+
+- 📧 Email: tu@email.com
+- 🐛 Issues: [GitHub Issues](https://github.com/tuusuario/openiis-ui/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/tuusuario/openiis-ui/discussions)
+
+## 🌟 Showcase
+
+¿Usando OpenIIS UI? ¡Nos encantaría ver tu proyecto! Agrégalo a nuestra [galería de proyectos](https://github.com/tuusuario/openiis-ui/wiki/Showcase).
+
+---
+
+Hecho con ❤️ por el equipo de OpenIIS

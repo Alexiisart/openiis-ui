@@ -1,0 +1,375 @@
+/* OPENIIS UPLOADER COMPONENT - ESTILOS ESENCIALES */
+
+/* Contenedor principal */
+.openiis-uploader {
+  position: relative;
+  width: 100%;
+  font-family: var(--font-family-base);
+}
+
+.openiis-uploader.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* VARIANTE AVATAR */
+.avatar-uploader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-preview {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: 3px dashed var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+  transition: all 0.3s ease;
+}
+
+.avatar-preview:hover {
+  border-color: var(--primary-500);
+  background: var(--primary-50);
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--color-text-muted);
+  font-size: var(--space-8);
+}
+
+.avatar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-inverse);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.avatar-preview:hover .avatar-overlay {
+  opacity: 1;
+}
+
+/* ÁREA DE SUBIDA */
+.upload-area {
+  width: 100%;
+}
+
+.drop-zone {
+  position: relative;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-background);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 160px;
+  padding: var(--space-6);
+}
+
+.drop-zone:hover {
+  border-color: var(--primary-500);
+}
+
+.drop-zone.drag-over {
+  border-color: var(--primary-500);
+  background: var(--primary-50);
+  transform: scale(1.02);
+}
+
+.drop-zone.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.drop-zone.disabled:hover {
+  border-color: var(--color-border);
+  background: var(--color-background);
+  transform: none;
+}
+
+.drop-zone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.upload-icon {
+  font-size: var(--space-12);
+  color: var(--color-text-muted);
+}
+
+.drop-zone:hover .upload-icon {
+  color: var(--primary-500);
+}
+
+.upload-title {
+  font-size: var(--space-6);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.upload-description {
+  font-size: var(--space-3);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.upload-info {
+  font-size: var(--space-3);
+  color: var(--color-text-muted);
+  margin: 0;
+  padding: var(--space-2);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+}
+
+/* LISTA DE ARCHIVOS */
+.files-list {
+  margin-top: var(--space-4);
+}
+
+/* VISTA GALERÍA */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-4);
+}
+
+.image-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.image-preview {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: var(--space-8);
+}
+
+/* VISTA LISTA */
+.file-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all 0.3s ease;
+}
+
+.file-item:hover {
+  background: var(--color-surface-elevated);
+  border-color: var(--primary-500);
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.file-icon {
+  font-size: var(--space-6);
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.file-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.file-name {
+  font-size: var(--space-3);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-size {
+  font-size: var(--space-2);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ACCIONES */
+.upload-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-4);
+  padding: var(--space-2);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.file-count {
+  font-size: var(--space-3);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* TAMAÑOS */
+.openiis-uploader.size-sm .drop-zone {
+  min-height: 120px;
+  padding: var(--space-4);
+}
+
+.openiis-uploader.size-sm .upload-icon {
+  font-size: var(--space-8);
+}
+
+.openiis-uploader.size-sm .avatar-preview {
+  width: 80px;
+  height: 80px;
+}
+
+.openiis-uploader.size-lg .drop-zone {
+  min-height: 200px;
+  padding: var(--space-8);
+}
+
+.openiis-uploader.size-lg .upload-icon {
+  font-size: var(--space-12);
+}
+
+.openiis-uploader.size-lg .avatar-preview {
+  width: 160px;
+  height: 160px;
+}
+
+.openiis-uploader.size-xl .drop-zone {
+  min-height: 240px;
+  padding: var(--space-10);
+}
+
+.openiis-uploader.size-xl .upload-icon {
+  font-size: var(--space-12);
+}
+
+.openiis-uploader.size-xl .avatar-preview {
+  width: 200px;
+  height: 200px;
+}
+
+/* VARIANTES */
+.openiis-uploader.variant-compact .drop-zone {
+  min-height: 80px;
+  padding: var(--space-4);
+}
+
+.openiis-uploader.variant-compact .upload-icon {
+  font-size: var(--space-6);
+}
+
+.openiis-uploader.variant-image-preview .drop-zone {
+  border-style: solid;
+  border-width: 1px;
+}
+
+.openiis-uploader.variant-multi-file .drop-zone {
+  border-radius: var(--radius-lg);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .drop-zone {
+    min-height: 120px;
+    padding: var(--space-4);
+  }
+
+  .upload-icon {
+    font-size: var(--space-8);
+  }
+
+  .upload-title {
+    font-size: var(--space-4);
+  }
+
+  .image-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--space-2);
+  }
+
+  .image-preview {
+    height: 120px;
+  }
+
+  .upload-actions {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .avatar-preview {
+    width: 100px;
+    height: 100px;
+  }
+}

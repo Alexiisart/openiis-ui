@@ -1,0 +1,350 @@
+/* Contenedor principal del radio button */
+.radio-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+/* Label del radio button */
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.5;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.radio-label:hover:not(.disabled) {
+  color: var(--color-text-primary);
+}
+
+/* Input nativo oculto */
+.radio-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+/* Indicador visual del radio button */
+.radio-indicator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface-elevated);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  box-shadow: var(--shadow-xs);
+}
+
+/* Punto interno del radio button */
+.radio-dot {
+  border-radius: 50%;
+  background: transparent;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(0);
+}
+
+/* Texto del radio button */
+.radio-text {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+
+/* Texto de ayuda */
+.radio-help {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  margin-left: calc(
+    var(--space-6) + var(--space-2)
+  ); /* Alineado con el texto */
+}
+
+/* Texto de error */
+.radio-error {
+  font-size: 0.75rem;
+  color: var(--color-error);
+  line-height: 1.4;
+  font-weight: 500;
+  margin-left: calc(
+    var(--space-6) + var(--space-2)
+  ); /* Alineado con el texto */
+}
+
+/* =============================================================================
+   TAMAÑOS
+============================================================================= */
+
+/* Tamaño XS */
+[data-size="xs"] .radio-indicator {
+  width: 14px;
+  height: 14px;
+}
+
+[data-size="xs"] .radio-dot {
+  width: 6px;
+  height: 6px;
+}
+
+[data-size="xs"] .radio-text {
+  font-size: 0.75rem;
+}
+
+[data-size="xs"] .radio-help,
+[data-size="xs"] .radio-error {
+  margin-left: calc(14px + var(--space-2));
+}
+
+/* Tamaño SM */
+[data-size="sm"] .radio-indicator {
+  width: 16px;
+  height: 16px;
+}
+
+[data-size="sm"] .radio-dot {
+  width: 8px;
+  height: 8px;
+}
+
+[data-size="sm"] .radio-text {
+  font-size: 0.8125rem;
+}
+
+[data-size="sm"] .radio-help,
+[data-size="sm"] .radio-error {
+  margin-left: calc(16px + var(--space-2));
+}
+
+/* Tamaño MD (default) */
+[data-size="md"] .radio-indicator {
+  width: 20px;
+  height: 20px;
+}
+
+[data-size="md"] .radio-dot {
+  width: 10px;
+  height: 10px;
+}
+
+[data-size="md"] .radio-text {
+  font-size: 0.875rem;
+}
+
+[data-size="md"] .radio-help,
+[data-size="md"] .radio-error {
+  margin-left: calc(20px + var(--space-2));
+}
+
+/* Tamaño LG */
+[data-size="lg"] .radio-indicator {
+  width: 24px;
+  height: 24px;
+}
+
+[data-size="lg"] .radio-dot {
+  width: 12px;
+  height: 12px;
+}
+
+[data-size="lg"] .radio-text {
+  font-size: 1rem;
+}
+
+[data-size="lg"] .radio-help,
+[data-size="lg"] .radio-error {
+  margin-left: calc(24px + var(--space-2));
+}
+
+/* Tamaño XL */
+[data-size="xl"] .radio-indicator {
+  width: 28px;
+  height: 28px;
+}
+
+[data-size="xl"] .radio-dot {
+  width: 14px;
+  height: 14px;
+}
+
+[data-size="xl"] .radio-text {
+  font-size: 1.125rem;
+}
+
+[data-size="xl"] .radio-help,
+[data-size="xl"] .radio-error {
+  margin-left: calc(28px + var(--space-2));
+}
+
+/* =============================================================================
+   ESTADOS
+============================================================================= */
+
+/* Estado checked */
+.radio-input:checked + .radio-indicator .radio-dot {
+  transform: scale(1);
+}
+
+/* Estado hover */
+.radio-label:hover:not(.disabled) .radio-indicator {
+  border-color: var(--color-border-focus);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Estado focus */
+.radio-input:focus + .radio-indicator {
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px var(--primary-100, rgba(20, 184, 166, 0.1)),
+    var(--shadow-sm);
+}
+
+.radio-input:focus ~ .radio-text {
+  color: var(--color-text-primary);
+}
+
+/* Estado disabled */
+.radio-container.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.radio-container.disabled .radio-label {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.radio-container.disabled .radio-indicator {
+  background: var(--color-surface);
+  border-color: var(--neutral-300);
+}
+
+.radio-container.disabled .radio-text {
+  color: var(--color-text-muted);
+}
+
+/* Estado readonly */
+.radio-container.readonly .radio-label {
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Estado error */
+.radio-container.error .radio-indicator {
+  border-color: var(--color-error);
+}
+
+.radio-container.error .radio-text {
+  color: var(--color-error);
+}
+
+/* =============================================================================
+   TIPOS/VARIANTES
+============================================================================= */
+
+/* Tipo Success */
+
+[data-type="success"] .radio-input:checked + .radio-indicator .radio-dot {
+  background: var(--color-success, #10b981);
+}
+
+[data-type="success"] .radio-label:hover:not(.disabled) .radio-indicator {
+  border-color: var(--color-success, #10b981);
+}
+
+[data-type="success"] .radio-input:focus + .radio-indicator {
+  border-color: var(--color-success, #10b981);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15), var(--shadow-sm);
+}
+
+/* Tipo Warning */
+
+[data-type="warning"] .radio-input:checked + .radio-indicator .radio-dot {
+  background: var(--color-warning, #f59e0b);
+}
+
+[data-type="warning"] .radio-label:hover:not(.disabled) .radio-indicator {
+  border-color: var(--color-warning, #f59e0b);
+}
+
+[data-type="warning"] .radio-input:focus + .radio-indicator {
+  border-color: var(--color-warning, #f59e0b);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15), var(--shadow-sm);
+}
+
+/* Tipo Danger */
+
+[data-type="danger"] .radio-input:checked + .radio-indicator .radio-dot {
+  background: var(--color-error, #ef4444);
+}
+
+[data-type="danger"] .radio-label:hover:not(.disabled) .radio-indicator {
+  border-color: var(--color-error, #ef4444);
+}
+
+[data-type="danger"] .radio-input:focus + .radio-indicator {
+  border-color: var(--color-error, #ef4444);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15), var(--shadow-sm);
+}
+
+/* Tipo Subtle */
+[data-type="subtle"] .radio-input:checked + .radio-indicator {
+  border-color: var(--neutral-400);
+  background: var(--neutral-50);
+}
+
+[data-type="subtle"] .radio-input:checked + .radio-indicator .radio-dot {
+  background: var(--neutral-600);
+}
+
+[data-type="subtle"] .radio-label:hover:not(.disabled) .radio-indicator {
+  border-color: var(--neutral-500);
+}
+
+[data-type="subtle"] .radio-input:focus + .radio-indicator {
+  border-color: var(--neutral-600);
+  box-shadow: 0 0 0 3px var(--neutral-100, rgba(115, 115, 115, 0.1)),
+    var(--shadow-sm);
+}
+
+/* =============================================================================
+   RESPONSIVIDAD
+============================================================================= */
+
+@media (max-width: 768px) {
+  /* En móviles, aumentar área de click */
+  .radio-label {
+    padding: var(--space-1) 0;
+  }
+
+  /* Tamaños mínimos para touch */
+  [data-size="xs"] .radio-indicator {
+    width: 16px;
+    height: 16px;
+  }
+
+  [data-size="sm"] .radio-indicator {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Reducir animaciones para usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .radio-indicator,
+  .radio-dot,
+  .radio-text,
+  .radio-label {
+    transition: none;
+  }
+}

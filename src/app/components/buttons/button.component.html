@@ -1,0 +1,38 @@
+<div class="button-wrapper" [class.has-tooltip]="shouldShowTooltip">
+  <button
+    [type]="htmlType"
+    [class]="buttonClasses"
+    [disabled]="disabled || loading"
+    (click)="onClick($event)"
+    (mouseenter)="showTooltipOnHover()"
+    (mouseleave)="hideTooltipOnLeave()"
+    [attr.aria-label]="ariaLabel"
+    [attr.title]="type === 'icon' ? '' : title"
+  >
+    @if (loading) {
+    <openiis-spinner
+      variant="circle"
+      size="xs"
+      color="primary"
+      [inline]="true"
+      ariaLabel="Cargando botón"
+    ></openiis-spinner>
+    } @else if (iconLeft) {
+    <span class="material-icons-outlined icon-left">{{ iconLeft }}</span>
+    } @if (text) {
+    <span class="button-text">{{ text }}</span>
+    } @if (iconRight && !loading) {
+    <span class="material-icons-outlined icon-right">{{ iconRight }}</span>
+    }
+  </button>
+
+  @if (shouldShowTooltip) {
+  <openiis-tooltip
+    [text]="effectiveTooltipText"
+    [position]="tooltipPosition"
+    [variant]="tooltipVariant"
+    [visible]="showTooltip"
+  >
+  </openiis-tooltip>
+  }
+</div>

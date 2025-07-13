@@ -1,0 +1,37 @@
+@import "../modal/modal.component.css";
+
+/* Usar las variables semánticas globales de root.css */
+.modal-content.success .modal-header {
+  border-bottom-color: var(--color-success);
+  border-bottom-width: 1px;
+}
+
+.modal-content.warning .modal-header {
+  border-bottom-color: var(--color-warning);
+  border-bottom-width: 1px;
+}
+
+.modal-content.danger .modal-header {
+  border-bottom-color: var(--color-error);
+  border-bottom-width: 1px;
+}
+
+.modal-content.info .modal-header {
+  border-bottom-color: var(--color-info);
+  border-bottom-width: 1px;
+}
+
+.modal-content.success .primary-btn {
+  color: var(--color-success);
+  border-width: 1px;
+}
+
+.modal-content.success .primary-btn:hover {
+  background: rgba(16, 185, 129, 0.1); /* color base de success con opacidad */
+}
+
+.modal-body p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}

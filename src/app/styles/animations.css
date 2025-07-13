@@ -1,0 +1,683 @@
+/**
+ * Archivo centralizado de animaciones CSS
+ * Contiene todas las animaciones reutilizables para la aplicación
+ */
+
+/**
+ * Animaciones de entrada
+ * Efectos para cuando los elementos aparecen en pantalla
+ */
+
+/* Desvanecimiento hacia arriba */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Desvanecimiento simple */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Escala con desvanecimiento */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Deslizamiento desde la derecha */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Deslizamiento desde la izquierda */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/**
+ * Animaciones de modales
+ * Efectos específicos para ventanas modales
+ */
+
+/* Entrada de modal con escala y deslizamiento */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Modal deslizándose hacia arriba */
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/**
+ * Animaciones de dropdowns y menús
+ * Efectos para menús desplegables
+ */
+
+/* Menú desplegable deslizándose hacia abajo */
+@keyframes dropdownSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Animaciones de carga y efectos
+ * Efectos para estados de carga y transiciones
+ */
+
+/* Rotación continua */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Efecto de brillo deslizante */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/**
+ * Animaciones específicas de Spinner
+ * Efectos para diferentes tipos de spinners
+ */
+
+/* Spinner circular */
+@keyframes spinnerCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Spinner con puntos */
+@keyframes spinnerDots {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Spinner con barras */
+@keyframes spinnerBars {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    opacity: 0.5;
+  }
+  20% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* Spinner con pulso */
+@keyframes spinnerPulse {
+  0%,
+  100% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+/* Spinner con onda */
+@keyframes spinnerWave {
+  0%,
+  60%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Spinner con anillo */
+@keyframes spinnerRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Spinner con rebote */
+@keyframes spinnerBounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Spinner con desvanecimiento */
+@keyframes spinnerFade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/**
+ * Animaciones específicas de Progress Bar
+ * Efectos para barras de progreso
+ */
+
+/* Animación de rayas en movimiento */
+@keyframes progressStripe {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 20px 0;
+  }
+}
+
+/* Progreso indeterminado */
+@keyframes progressIndeterminate {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+/* Pulso de progreso */
+@keyframes progressPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/**
+ * Animaciones específicas de Badge
+ * Efectos para insignias
+ */
+
+/* Pulso de badge */
+@keyframes badgePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Brillo de badge */
+@keyframes badgeGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 20px currentColor;
+  }
+}
+
+/**
+ * Animaciones específicas de FAB
+ * Efectos para botones flotantes
+ */
+
+/* Efecto ripple */
+@keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+  }
+}
+
+/**
+ * Animaciones de micro-interacciones
+ * Efectos sutiles para feedback visual
+ */
+
+/* Pulsación suave */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Rebote suave */
+@keyframes bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%,
+  43% {
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+/* Sacudida horizontal */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-4px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+/**
+ * Animaciones de estado
+ * Efectos para cambios de estado y transiciones
+ */
+
+/* Deslizamiento hacia la derecha */
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
+
+/* Desvanecimiento de salida */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Zoom de entrada */
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Zoom de salida */
+@keyframes zoomOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+/**
+ * Animaciones de peligro
+ * Efectos para estados de alerta
+ */
+
+/* Pulsación de peligro */
+@keyframes pulse-danger {
+  0%,
+  100% {
+    background-color: var(--color-error);
+    box-shadow: 0 0 0 0 rgba(var(--color-error-rgb, 220, 38, 38), 0.7);
+  }
+  50% {
+    background-color: var(--color-error);
+    box-shadow: 0 0 0 10px rgba(var(--color-error-rgb, 220, 38, 38), 0);
+  }
+}
+
+/**
+ * Clases de utilidad para animaciones
+ * Aplicación rápida de efectos comunes
+ */
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-modal-slide-up {
+  animation: modalSlideUp 0.2s ease-out;
+}
+
+.animate-dropdown-slide {
+  animation: dropdownSlideDown 0.15s ease-out;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.animate-ripple {
+  animation: ripple 0.6s ease-out;
+}
+
+.animate-badge-pulse {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+.animate-badge-glow {
+  animation: badgeGlow 1.5s ease-in-out infinite;
+}
+
+.animate-progress-stripe {
+  animation: progressStripe 1s linear infinite;
+}
+
+.animate-progress-indeterminate {
+  animation: progressIndeterminate 1.5s ease-in-out infinite;
+}
+
+.animate-progress-pulse {
+  animation: progressPulse 1.5s ease-in-out infinite;
+}
+
+.animate-spinner-circle {
+  animation: spinnerCircle 1s linear infinite;
+}
+
+.animate-spinner-dots {
+  animation: spinnerDots 1s ease-in-out infinite;
+}
+
+.animate-spinner-bars {
+  animation: spinnerBars 1s ease-in-out infinite;
+}
+
+.animate-spinner-pulse {
+  animation: spinnerPulse 1s ease-in-out infinite;
+}
+
+.animate-spinner-wave {
+  animation: spinnerWave 1s ease-in-out infinite;
+}
+
+.animate-spinner-ring {
+  animation: spinnerRing 1s linear infinite;
+}
+
+.animate-spinner-bounce {
+  animation: spinnerBounce 1s ease-in-out infinite;
+}
+
+.animate-spinner-fade {
+  animation: spinnerFade 1s ease-in-out infinite;
+}
+
+/**
+ * Variaciones de velocidad
+ * Efectos con diferentes duraciones
+ */
+
+.animate-slow {
+  animation-duration: 2s;
+}
+
+.animate-fast {
+  animation-duration: 0.5s;
+}
+
+.animate-slower {
+  animation-duration: 3s;
+}
+
+.animate-faster {
+  animation-duration: 0.3s;
+}
+
+/**
+ * Controles de animación
+ * Estados de pausa y reproducción
+ */
+
+.animate-paused {
+  animation-play-state: paused;
+}
+
+.animate-running {
+  animation-play-state: running;
+}
+
+/**
+ * Animaciones con delays
+ * Efectos retardados para secuencias
+ */
+
+.animate-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-500 {
+  animation-delay: 0.5s;
+}
+
+.animate-delay-700 {
+  animation-delay: 0.7s;
+}
+
+.animate-delay-1000 {
+  animation-delay: 1s;
+}
+
+/**
+ * Animaciones responsivas
+ * Ajustes para diferentes tamaños de pantalla
+ */
+
+@media (max-width: 768px) {
+  .animate-fade-in-up,
+  .animate-modal-slide-up,
+  .animate-dropdown-slide {
+    animation-duration: 0.2s;
+  }
+
+  .animate-bounce,
+  .animate-pulse {
+    animation-duration: 1s;
+  }
+}
+
+/**
+ * Animaciones accesibles
+ * Respeto por preferencias de movimiento reducido
+ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animate-spin,
+  .animate-bounce,
+  .animate-pulse,
+  .animate-shake,
+  .animate-shimmer {
+    animation: none !important;
+  }
+}
+
+/**
+ * Animaciones para modo oscuro
+ * Ajustes específicos para tema oscuro
+ */
+
+@media (prefers-color-scheme: dark) {
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
+  .animate-badge-glow {
+    animation: badgeGlow 1.5s ease-in-out infinite;
+  }
+}
+
+/**
+ * Animaciones para impresión
+ * Desactivación para medios impresos
+ */
+
+@media print {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

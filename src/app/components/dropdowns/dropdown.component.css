@@ -1,0 +1,145 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 32px 8px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 140px;
+  box-shadow: var(--shadow-sm);
+}
+
+.dropdown-select:hover:not(:disabled) {
+  border-color: var(--color-border-focus);
+  background-color: var(--color-surface-elevated);
+  box-shadow: var(--shadow-md);
+}
+
+.dropdown-select:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px var(--primary-200), var(--shadow-md);
+}
+
+.dropdown-select:disabled {
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.dropdown-select:hover:not(:disabled) + .dropdown-icon {
+  color: var(--primary-600);
+}
+
+.dropdown-select:focus + .dropdown-icon {
+  color: var(--primary-600);
+}
+
+/* Tamaños */
+.dropdown--sm .dropdown-select {
+  padding: 6px 28px 6px 10px;
+  font-size: 13px;
+  min-width: 120px;
+}
+
+.dropdown--sm .dropdown-icon {
+  right: 6px;
+}
+
+.dropdown--sm .dropdown-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.dropdown--md .dropdown-select {
+  padding: 8px 32px 8px 12px;
+  font-size: 14px;
+  min-width: 140px;
+}
+
+.dropdown--lg .dropdown-select {
+  padding: 12px 36px 12px 16px;
+  font-size: 16px;
+  min-width: 160px;
+}
+
+.dropdown--lg .dropdown-icon {
+  right: 10px;
+}
+
+.dropdown--lg .dropdown-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Mejoras en las opciones del select */
+.dropdown-select option {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  padding: 8px 12px;
+  font-weight: 500;
+  border: none;
+}
+
+.dropdown-select option:hover,
+.dropdown-select option:focus {
+  background: var(--color-surface-elevated);
+  color: var(--primary-600);
+}
+
+.dropdown-select option:checked {
+  background: var(--primary-600);
+  color: var(--color-text-inverse);
+  font-weight: 600;
+}
+
+/* Mejoras visuales adicionales */
+.dropdown-wrapper {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+/* Responsive y accesibilidad */
+@media (max-width: 768px) {
+  .dropdown-select {
+    min-width: 120px;
+    font-size: 14px;
+  }
+
+  .dropdown--lg .dropdown-select {
+    min-width: 140px;
+  }
+}

@@ -1,0 +1,609 @@
+/* Contenedor principal del input */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+/* Label del input */
+.input-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-1);
+  line-height: 1.4;
+}
+
+/* Wrapper del input con iconos */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Campo de input base */
+.input-field {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-xs);
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Ocultar la X nativa del navegador en inputs search */
+.input-field[type="search"]::-webkit-search-cancel-button,
+.input-field[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Para Edge/IE */
+.input-field[type="search"]::-ms-clear {
+  display: none;
+}
+
+/* Estados del input */
+.input-field:focus {
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1), var(--shadow-sm);
+  background: var(--color-background);
+}
+
+.input-field:hover:not(:disabled):not(:focus) {
+  border-color: var(--neutral-300);
+}
+
+.input-field::placeholder {
+  color: var(--color-text-muted);
+}
+
+.input-field:disabled {
+  background: var(--color-surface);
+  border-color: var(--neutral-300);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.input-field:readonly {
+  background: var(--color-surface);
+  cursor: default;
+}
+
+/* Textarea específico */
+.textarea-field {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Iconos del input */
+.input-icon {
+  position: absolute;
+  color: var(--color-text-muted);
+  font-size: 1.25rem;
+  transition: color 0.2s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.input-icon-left {
+  left: var(--space-3);
+}
+
+.input-icon-right {
+  right: var(--space-3);
+}
+
+/* Aplicar padding cuando hay iconos */
+.input-has-icon-left .input-field {
+  padding-left: var(--space-12) !important;
+}
+
+.input-has-icon-right .input-field {
+  padding-right: var(--space-12) !important;
+}
+
+.input-has-clear .input-field {
+  padding-right: var(--space-12) !important;
+}
+
+/* Botón de limpiar */
+.input-clear-btn {
+  position: absolute;
+  right: var(--space-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.input-clear-btn:hover {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+.input-clear-btn .material-icons-outlined {
+  font-size: 1rem;
+}
+
+/* Texto de ayuda */
+.input-help {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* Texto de error */
+.input-error {
+  font-size: 0.75rem;
+  color: var(--color-error);
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* Contador de caracteres */
+.input-character-count {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-align: right;
+  line-height: 1.4;
+}
+
+/* =============================================================================
+   TAMAÑOS
+============================================================================= */
+
+/* Tamaño XS */
+[data-size="xs"] .input-field {
+  padding: var(--space-1) var(--space-2);
+  font-size: 0.75rem;
+}
+
+[data-size="xs"] .textarea-field {
+  min-height: 60px;
+}
+
+[data-size="xs"] .input-has-icon-left .input-field {
+  padding-left: var(--space-8);
+}
+
+[data-size="xs"] .input-has-icon-right .input-field,
+[data-size="xs"] .input-has-clear .input-field {
+  padding-right: var(--space-8);
+}
+
+[data-size="xs"] .input-icon {
+  font-size: 1rem;
+}
+
+[data-size="xs"] .input-icon-left {
+  left: var(--space-2);
+}
+
+[data-size="xs"] .input-icon-right {
+  right: var(--space-2);
+}
+
+/* Tamaño SM */
+[data-size="sm"] .input-field {
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.8125rem;
+}
+
+[data-size="sm"] .textarea-field {
+  min-height: 70px;
+}
+
+[data-size="sm"] .input-has-icon-left .input-field {
+  padding-left: var(--space-10);
+}
+
+[data-size="sm"] .input-has-icon-right .input-field,
+[data-size="sm"] .input-has-clear .input-field {
+  padding-right: var(--space-10);
+}
+
+[data-size="sm"] .input-icon {
+  font-size: 1.125rem;
+}
+
+/* Tamaño MD (default) */
+[data-size="md"] .input-field {
+  padding: var(--space-3) var(--space-4);
+  font-size: 0.875rem;
+}
+
+[data-size="md"] .textarea-field {
+  min-height: 80px;
+}
+
+[data-size="md"] .input-has-icon-left .input-field {
+  padding-left: var(--space-12);
+}
+
+[data-size="md"] .input-has-icon-right .input-field,
+[data-size="md"] .input-has-clear .input-field {
+  padding-right: var(--space-12);
+}
+
+[data-size="md"] .input-icon {
+  font-size: 1.25rem;
+}
+
+/* Tamaño LG */
+[data-size="lg"] .input-field {
+  padding: var(--space-4) var(--space-5);
+  font-size: 1rem;
+}
+
+[data-size="lg"] .textarea-field {
+  min-height: 100px;
+}
+
+[data-size="lg"] .input-has-icon-left .input-field {
+  padding-left: 3.5rem;
+}
+
+[data-size="lg"] .input-has-icon-right .input-field,
+[data-size="lg"] .input-has-clear .input-field {
+  padding-right: 3.5rem;
+}
+
+[data-size="lg"] .input-icon {
+  font-size: 1.375rem;
+}
+
+[data-size="lg"] .input-icon-left {
+  left: var(--space-4);
+}
+
+[data-size="lg"] .input-icon-right {
+  right: var(--space-4);
+}
+
+/* Tamaño XL */
+[data-size="xl"] .input-field {
+  padding: var(--space-5) var(--space-6);
+  font-size: 1.125rem;
+}
+
+[data-size="xl"] .textarea-field {
+  min-height: 120px;
+}
+
+[data-size="xl"] .input-has-icon-left .input-field {
+  padding-left: 4rem;
+}
+
+[data-size="xl"] .input-has-icon-right .input-field,
+[data-size="xl"] .input-has-clear .input-field {
+  padding-right: 4rem;
+}
+
+[data-size="xl"] .input-icon {
+  font-size: 1.5rem;
+}
+
+[data-size="xl"] .input-icon-left {
+  left: var(--space-5);
+}
+
+[data-size="xl"] .input-icon-right {
+  right: var(--space-5);
+}
+
+/* =============================================================================
+   VARIANTES
+============================================================================= */
+
+/* Variante Filled */
+[data-variant="filled"] .input-field {
+  background: var(--color-surface);
+  border: 1px solid transparent;
+}
+
+[data-variant="filled"] .input-field:focus {
+  background: var(--color-surface-elevated);
+  border-color: var(--color-border-focus);
+}
+
+[data-variant="filled"] .input-field:hover:not(:disabled):not(:focus) {
+  background: var(--color-surface-elevated);
+}
+
+/* Variante Outlined */
+[data-variant="outlined"] .input-field {
+  background: transparent;
+  border: 1px solid var(--color-border);
+}
+
+[data-variant="outlined"] .input-field:focus {
+  border-color: var(--color-border-focus);
+  background: var(--color-surface-elevated);
+}
+
+/* Variante Minimal */
+[data-variant="minimal"] .input-field {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 0;
+  box-shadow: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+[data-variant="minimal"] .input-field:focus {
+  border-bottom-color: var(--color-border-focus);
+  box-shadow: 0 1px 0 0 var(--color-border-focus);
+}
+
+[data-variant="minimal"] .input-icon-left {
+  left: 0;
+}
+
+[data-variant="minimal"] .input-icon-right {
+  right: 0;
+}
+
+[data-variant="minimal"] .input-has-icon-left .input-field {
+  padding-left: var(--space-8);
+}
+
+[data-variant="minimal"] .input-has-icon-right .input-field,
+[data-variant="minimal"] .input-has-clear .input-field {
+  padding-right: var(--space-8);
+}
+
+/* =============================================================================
+   ESTADOS ESPECIALES
+============================================================================= */
+
+.input-error-state {
+  border-color: var(--color-error) !important;
+}
+
+.input-error-state:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1), var(--shadow-sm);
+}
+/* Estado de error */
+.input-error-state .input-field {
+  border-color: var(--color-error) !important;
+}
+
+.input-error-state .input-field:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1), var(--shadow-sm);
+}
+
+.input-error-state .input-label {
+  color: var(--color-error);
+}
+
+/* Estado disabled */
+.input-disabled .input-label {
+  color: var(--color-text-muted);
+}
+
+.input-disabled .input-icon {
+  color: var(--color-text-muted);
+}
+
+/* Estado readonly */
+.input-readonly .input-field {
+  cursor: default;
+}
+
+/* =============================================================================
+   RESPONSIVE
+============================================================================= */
+
+@media (max-width: 768px) {
+  /* En móviles, hacer los inputs un poco más grandes para mejor interacción */
+  [data-size="xs"] .input-field {
+    padding: var(--space-2) var(--space-3);
+    font-size: 16px; /* Evita zoom en iOS */
+  }
+
+  [data-size="sm"] .input-field {
+    padding: var(--space-3) var(--space-4);
+    font-size: 16px;
+  }
+
+  [data-size="md"] .input-field {
+    padding: var(--space-3) var(--space-4);
+    font-size: 16px;
+  }
+
+  [data-size="lg"] .input-field {
+    padding: var(--space-4) var(--space-5);
+    font-size: 16px;
+  }
+
+  [data-size="xl"] .input-field {
+    padding: var(--space-5) var(--space-6);
+    font-size: 16px;
+  }
+
+  /* Ajustar el área de toque para iconos y botones */
+  .input-clear-btn {
+    padding: var(--space-2);
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* Botón de toggle para contraseñas */
+.input-toggle-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3;
+}
+
+.input-toggle-btn:hover {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+}
+
+.input-toggle-btn:focus {
+  outline-offset: 2px;
+}
+
+.input-toggle-btn .material-icons-outlined {
+  font-size: 18px;
+}
+
+/* Ajustes para input con botón de toggle */
+.input-has-password-toggle .input-field {
+  padding-right: 40px;
+}
+
+/* Iconos de validación */
+.input-icon-validation {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.input-icon-validation.success {
+  color: var(--color-success);
+}
+
+.input-icon-validation.error {
+  color: var(--color-error);
+}
+
+/* Estados de validación */
+.input-success-state .input-field {
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.1);
+}
+
+.input-success-state .input-field:focus {
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.2);
+}
+
+.input-success-state .input-label {
+  color: var(--color-success);
+}
+
+/* Ajustes cuando hay iconos de validación */
+.input-has-validation .input-field {
+  padding-right: 40px;
+}
+
+/* Ajustes cuando hay tanto botón de toggle como icono de validación */
+.input-has-password-toggle .input-icon-validation {
+  right: 44px;
+}
+
+.input-has-password-toggle.input-has-validation .input-field {
+  padding-right: 76px;
+}
+
+/* Ajustes cuando hay botón de clear e icono de validación */
+.input-has-clear .input-icon-validation {
+  right: 44px;
+}
+
+.input-has-clear.input-has-validation .input-field {
+  padding-right: 76px;
+}
+
+/* Ajustes cuando hay icono derecho e icono de validación */
+.input-has-icon-right .input-icon-validation {
+  right: 44px;
+}
+
+.input-has-icon-right.input-has-validation .input-field {
+  padding-right: 76px;
+}
+
+/* Ajustes por tamaño para nuevos elementos */
+[data-size="xs"] .input-toggle-btn,
+[data-size="xs"] .input-icon-validation {
+  right: 6px;
+}
+
+[data-size="xs"] .input-toggle-btn .material-icons-outlined,
+[data-size="xs"] .input-icon-validation {
+  font-size: 14px;
+}
+
+[data-size="xs"] .input-has-password-toggle .input-field {
+  padding-right: 32px;
+}
+
+[data-size="sm"] .input-toggle-btn,
+[data-size="sm"] .input-icon-validation {
+  right: 6px;
+}
+
+[data-size="sm"] .input-toggle-btn .material-icons-outlined,
+[data-size="sm"] .input-icon-validation {
+  font-size: 16px;
+}
+
+[data-size="sm"] .input-has-password-toggle .input-field {
+  padding-right: 36px;
+}
+
+[data-size="lg"] .input-toggle-btn,
+[data-size="lg"] .input-icon-validation {
+  right: 10px;
+}
+
+[data-size="lg"] .input-toggle-btn .material-icons-outlined,
+[data-size="lg"] .input-icon-validation {
+  font-size: 20px;
+}
+
+[data-size="lg"] .input-has-password-toggle .input-field {
+  padding-right: 44px;
+}
+
+[data-size="xl"] .input-toggle-btn,
+[data-size="xl"] .input-icon-validation {
+  right: 12px;
+}
+
+[data-size="xl"] .input-toggle-btn .material-icons-outlined,
+[data-size="xl"] .input-icon-validation {
+  font-size: 22px;
+}
+
+[data-size="xl"] .input-has-password-toggle .input-field {
+  padding-right: 48px;
+}

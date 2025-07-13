@@ -1,0 +1,224 @@
+/* Contenedor principal */
+.date-input-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 250px;
+}
+
+/* Wrapper del input y botón */
+.date-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Asegurar que el tooltip se posicione correctamente */
+.date-input-wrapper .tooltip-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Input de fecha */
+.date-input {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  padding-right: 2.5rem; /* Espacio para el icono personalizado */
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  background: var(--color-background);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+/* Ocultar el icono nativo del navegador */
+.date-input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.date-input::-webkit-inner-spin-button,
+.date-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.date-input[type="date"] {
+  -moz-appearance: textfield;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+}
+
+.date-input:disabled {
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+/* Estado vencido - solo borde rojo */
+.date-input.overdue {
+  border-color: var(--color-error);
+}
+
+/* Icono personalizado de calendario */
+.calendar-icon-btn {
+  position: absolute;
+  right: var(--space-2);
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 2; /* Asegurar que esté por encima del input */
+}
+
+.calendar-icon-btn:hover:not(:disabled) {
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+}
+
+.calendar-icon-btn:disabled {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.calendar-icon-btn .material-icons-outlined {
+  font-size: 1rem;
+}
+
+/* Botón para limpiar fecha */
+.clear-date-btn {
+  position: absolute;
+  right: 2.2rem; /* Mover a la izquierda para dar espacio al icono de calendario */
+  background-color: var(--color-surface-elevated);
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.clear-date-btn:hover {
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+}
+
+.clear-date-btn .material-icons-outlined {
+  font-size: 1rem;
+}
+
+/* Ajustar padding cuando hay fecha (para el botón de limpiar) */
+.date-input-wrapper:has(.clear-date-btn) .date-input {
+  padding-right: 4rem; /* Espacio para ambos botones */
+}
+
+/* Tamaños */
+.date-input-container.size-sm {
+  max-width: 200px;
+}
+
+.date-input-container.size-sm .date-input {
+  padding: var(--space-1) var(--space-2);
+  padding-right: 2rem; /* Espacio para el icono en tamaño small */
+  font-size: 0.75rem;
+}
+
+.date-input-container.size-sm .calendar-icon-btn {
+  right: var(--space-1);
+  padding: 2px;
+}
+
+.date-input-container.size-sm .calendar-icon-btn .material-icons-outlined {
+  font-size: 0.875rem;
+}
+
+.date-input-container.size-sm .clear-date-btn {
+  right: 1.8rem;
+  padding: 2px;
+}
+
+.date-input-container.size-sm .clear-date-btn .material-icons-outlined {
+  font-size: 0.875rem;
+}
+
+.date-input-container.size-sm
+  .date-input-wrapper:has(.clear-date-btn)
+  .date-input {
+  padding-right: 3.5rem; /* Espacio para ambos botones en small */
+}
+
+.date-input-container.size-lg {
+  max-width: 300px;
+}
+
+.date-input-container.size-lg .date-input {
+  padding: var(--space-3) var(--space-4);
+  padding-right: 3rem; /* Espacio para el icono en tamaño large */
+  font-size: 1rem;
+}
+
+.date-input-container.size-lg .calendar-icon-btn {
+  right: var(--space-3);
+  padding: var(--space-2);
+}
+
+.date-input-container.size-lg .calendar-icon-btn .material-icons-outlined {
+  font-size: 1.125rem;
+}
+
+.date-input-container.size-lg .clear-date-btn {
+  right: 2.8rem;
+  padding: var(--space-2);
+}
+
+.date-input-container.size-lg .clear-date-btn .material-icons-outlined {
+  font-size: 1.125rem;
+}
+
+.date-input-container.size-lg
+  .date-input-wrapper:has(.clear-date-btn)
+  .date-input {
+  padding-right: 5rem; /* Espacio para ambos botones en large */
+}
+
+/* Tema oscuro - solo para estado vencido */
+[data-theme="dark"] .date-input.overdue {
+  border-color: #dc2626;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .date-input-container {
+    max-width: 100%;
+  }
+
+  .clear-date-btn {
+    right: var(--space-1);
+  }
+}

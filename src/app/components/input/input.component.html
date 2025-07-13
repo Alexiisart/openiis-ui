@@ -1,0 +1,116 @@
+<div
+  class="input-container"
+  [class]="containerClasses"
+  [attr.data-size]="size"
+  [attr.data-variant]="variant"
+>
+  @if (label) {
+  <label [for]="inputId" class="input-label">{{ label }}</label>
+  }
+
+  <div class="input-wrapper">
+    @if (iconLeft) {
+    <span class="material-icons-outlined input-icon input-icon-left">{{
+      iconLeft
+    }}</span>
+    } @if (isTextarea) {
+    <textarea
+      #inputElement
+      [id]="inputId"
+      class="input-field textarea-field"
+      [value]="value"
+      [placeholder]="getPlaceholder()"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [rows]="rows"
+      [attr.maxlength]="maxLength || null"
+      [attr.aria-label]="ariaLabel"
+      [attr.aria-describedby]="ariaDescribedBy"
+      [attr.title]="title || null"
+      [attr.autocomplete]="getAutocompleteValue()"
+      (input)="onInput($event)"
+      (focus)="onFocus($event)"
+      (blur)="onBlur($event)"
+      (keydown)="onKeyDown($event)"
+      (keyup)="onKeyUp($event)"
+    ></textarea>
+    } @else {
+    <input
+      #inputElement
+      [type]="getInputType()"
+      [id]="inputId"
+      class="input-field"
+      [class.input-error-state]="variant === 'error'"
+      [value]="getDisplayValue()"
+      [placeholder]="getPlaceholder()"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [attr.maxlength]="getMaxLength()"
+      [attr.minlength]="minLength || null"
+      [attr.aria-label]="ariaLabel"
+      [attr.aria-describedby]="ariaDescribedBy"
+      [attr.title]="title || null"
+      [attr.autocomplete]="getAutocompleteValue()"
+      (input)="onInput($event)"
+      (focus)="onFocus($event)"
+      (blur)="onBlur($event)"
+      (keydown)="onKeyDown($event)"
+      (keyup)="onKeyUp($event)"
+    />
+    }
+
+    <!-- Iconos de validación -->
+    @if (showValidationIcons && enableValidation && !isTextarea && type !==
+    'search' && currentValidation.isValid === false) {
+    <span
+      class="material-icons-outlined input-icon input-icon-validation error"
+    >
+      error
+    </span>
+    } @else if (showValidationIcons && enableValidation && !isTextarea && type
+    !== 'search' && value && currentValidation.isValid === true) {
+    <span
+      class="material-icons-outlined input-icon input-icon-validation success"
+    >
+      check_circle
+    </span>
+    }
+
+    <!-- Botón toggle para contraseñas -->
+    @if (type === 'password' && !disabled && value) {
+    <button
+      type="button"
+      class="input-toggle-btn"
+      (click)="togglePasswordVisibility()"
+      [attr.aria-label]="
+        passwordVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'
+      "
+    >
+      <span class="material-icons-outlined">
+        {{ passwordVisible ? "visibility_off" : "visibility" }}
+      </span>
+    </button>
+    } @else if (clearable && value && !disabled) {
+    <button
+      type="button"
+      class="input-clear-btn"
+      (click)="clearValue()"
+      [attr.aria-label]="'Limpiar'"
+    >
+      <span class="material-icons-outlined">close</span>
+    </button>
+    } @else if (iconRight) {
+    <span class="material-icons-outlined input-icon input-icon-right">{{
+      iconRight
+    }}</span>
+    }
+  </div>
+
+  @if (helpText && !errorText) {
+  <div class="input-help">{{ helpText }}</div>
+  } @if (errorText) {
+  <div class="input-error">{{ errorText }}</div>
+  } @if (showCharacterCount && maxLength) {
+  <div class="input-character-count">{{ value.length }}/{{ maxLength }}</div>
+  }
+</div>

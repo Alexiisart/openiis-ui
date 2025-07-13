@@ -1,0 +1,137 @@
+/* ===== SCROLLBAR COMPLETAMENTE OCULTO - VERSIÓN AGRESIVA ===== */
+
+/* Ocultar scrollbar en TODOS los elementos en TODOS los estados */
+*,
+*:hover,
+*:active,
+*:focus,
+*:visited {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* Internet Explorer 10+ */
+}
+
+/* Ocultar scrollbar en WebKit en TODOS los estados */
+*::-webkit-scrollbar,
+*:hover::-webkit-scrollbar,
+*:active::-webkit-scrollbar,
+*:focus::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+  background: transparent !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+*::-webkit-scrollbar-track,
+*:hover::-webkit-scrollbar-track,
+*:active::-webkit-scrollbar-track,
+*:focus::-webkit-scrollbar-track {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+*::-webkit-scrollbar-thumb,
+*:hover::-webkit-scrollbar-thumb,
+*:active::-webkit-scrollbar-thumb,
+*:focus::-webkit-scrollbar-thumb {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+*::-webkit-scrollbar-corner,
+*:hover::-webkit-scrollbar-corner,
+*:active::-webkit-scrollbar-corner,
+*:focus::-webkit-scrollbar-corner {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Específicamente para elementos problemáticos */
+html,
+body,
+div,
+section,
+article,
+main,
+aside,
+nav,
+header,
+footer,
+.modal,
+.modal-content,
+.modal-body,
+.modal-overlay,
+.lists-grid,
+.list-selection-modal,
+.lists-container,
+textarea,
+input,
+select,
+.selection-list {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+div::-webkit-scrollbar,
+section::-webkit-scrollbar,
+article::-webkit-scrollbar,
+main::-webkit-scrollbar,
+.modal::-webkit-scrollbar,
+.modal-content::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar,
+.lists-grid::-webkit-scrollbar,
+.list-selection-modal::-webkit-scrollbar,
+.lists-container::-webkit-scrollbar,
+textarea::-webkit-scrollbar,
+input::-webkit-scrollbar,
+.selection-list::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Hover states también ocultos */
+html:hover::-webkit-scrollbar,
+body:hover::-webkit-scrollbar,
+div:hover::-webkit-scrollbar,
+.modal:hover::-webkit-scrollbar,
+.modal-content:hover::-webkit-scrollbar,
+.modal-body:hover::-webkit-scrollbar,
+.lists-grid:hover::-webkit-scrollbar,
+.list-selection-modal:hover::-webkit-scrollbar,
+.lists-container:hover::-webkit-scrollbar,
+textarea:hover::-webkit-scrollbar,
+.selection-list:hover::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Scrollbars horizontales también */
+*::-webkit-scrollbar:horizontal,
+*:hover::-webkit-scrollbar:horizontal {
+  display: none !important;
+  height: 0px !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Para elementos con overflow inline */
+[style*="overflow"]::-webkit-scrollbar,
+[style*="scroll"]::-webkit-scrollbar,
+[style*="overflow"]:hover::-webkit-scrollbar,
+[style*="scroll"]:hover::-webkit-scrollbar {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}

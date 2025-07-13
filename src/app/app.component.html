@@ -1,336 +1,1589 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<div class="demo-container">
+  <!-- Botón de modo oscuro -->
+  <div class="theme-toggle-container">
+    <openiis-button-group orientation="vertical" [separated]="true">
+      <openiis-button
+        type="outline-primary"
+        iconLeft="palette"
+        size="md"
+        tooltipText="Tema Clásico"
+        tooltipPosition="left"
+        (clickEvent)="setTheme('classic')"
+      />
+      <openiis-button
+        type="outline-primary"
+        iconLeft="style"
+        size="md"
+        tooltipText="Tema Neutral"
+        tooltipPosition="left"
+        (clickEvent)="setTheme('neutral')"
+      />
+      <openiis-button
+        type="outline-primary"
+        iconLeft="format_paint"
+        size="md"
+        tooltipText="Tema Vivido"
+        tooltipPosition="left"
+        (clickEvent)="setTheme('vivid')"
+      />
+      <openiis-button
+        type="outline-primary"
+        [iconLeft]="isDarkMode ? 'light_mode' : 'dark_mode'"
+        size="md"
+        tooltipText="Cambiar modo"
+        tooltipPosition="left"
+        (clickEvent)="toggleDarkMode()"
+      />
+    </openiis-button-group>
+  </div>
 
-<style>
-  :host {
-    --bright-blue: oklch(51.01% 0.274 263.83);
-    --electric-violet: oklch(53.18% 0.28 296.97);
-    --french-violet: oklch(47.66% 0.246 305.88);
-    --vivid-pink: oklch(69.02% 0.277 332.77);
-    --hot-red: oklch(61.42% 0.238 15.34);
-    --orange-red: oklch(63.32% 0.24 31.68);
-
-    --gray-900: oklch(19.37% 0.006 300.98);
-    --gray-700: oklch(36.98% 0.014 302.71);
-    --gray-400: oklch(70.9% 0.015 304.04);
-
-    --red-to-pink-to-purple-vertical-gradient: linear-gradient(
-      180deg,
-      var(--orange-red) 0%,
-      var(--vivid-pink) 50%,
-      var(--electric-violet) 100%
-    );
-
-    --red-to-pink-to-purple-horizontal-gradient: linear-gradient(
-      90deg,
-      var(--orange-red) 0%,
-      var(--vivid-pink) 50%,
-      var(--electric-violet) 100%
-    );
-
-    --pill-accent: var(--bright-blue);
-
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-      "Segoe UI Symbol";
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  h1 {
-    font-size: 3.125rem;
-    color: var(--gray-900);
-    font-weight: 500;
-    line-height: 100%;
-    letter-spacing: -0.125rem;
-    margin: 0;
-    font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-      "Segoe UI Symbol";
-  }
-
-  p {
-    margin: 0;
-    color: var(--gray-700);
-  }
-
-  main {
-    width: 100%;
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    box-sizing: inherit;
-    position: relative;
-  }
-
-  .angular-logo {
-    max-width: 9.2rem;
-  }
-
-  .content {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    max-width: 700px;
-    margin-bottom: 3rem;
-  }
-
-  .content h1 {
-    margin-top: 1.75rem;
-  }
-
-  .content p {
-    margin-top: 1.5rem;
-  }
-
-  .divider {
-    width: 1px;
-    background: var(--red-to-pink-to-purple-vertical-gradient);
-    margin-inline: 0.5rem;
-  }
-
-  .pill-group {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-  }
-
-  .pill {
-    display: flex;
-    align-items: center;
-    --pill-accent: var(--bright-blue);
-    background: color-mix(in srgb, var(--pill-accent) 5%, transparent);
-    color: var(--pill-accent);
-    padding-inline: 0.75rem;
-    padding-block: 0.375rem;
-    border-radius: 2.75rem;
-    border: 0;
-    transition: background 0.3s ease;
-    font-family: var(--inter-font);
-    font-size: 0.875rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 1.4rem;
-    letter-spacing: -0.00875rem;
-    text-decoration: none;
-  }
-
-  .pill:hover {
-    background: color-mix(in srgb, var(--pill-accent) 15%, transparent);
-  }
-
-  .pill-group .pill:nth-child(6n + 1) {
-    --pill-accent: var(--bright-blue);
-  }
-  .pill-group .pill:nth-child(6n + 2) {
-    --pill-accent: var(--french-violet);
-  }
-  .pill-group .pill:nth-child(6n + 3),
-  .pill-group .pill:nth-child(6n + 4),
-  .pill-group .pill:nth-child(6n + 5) {
-    --pill-accent: var(--hot-red);
-  }
-
-  .pill-group svg {
-    margin-inline-start: 0.25rem;
-  }
-
-  .social-links {
-    display: flex;
-    align-items: center;
-    gap: 0.73rem;
-    margin-top: 1.5rem;
-  }
-
-  .social-links path {
-    transition: fill 0.3s ease;
-    fill: var(--gray-400);
-  }
-
-  .social-links a:hover svg path {
-    fill: var(--gray-900);
-  }
-
-  @media screen and (max-width: 650px) {
-    .content {
-      flex-direction: column;
-      width: max-content;
-    }
-
-    .divider {
-      height: 1px;
-      width: 100%;
-      background: var(--red-to-pink-to-purple-horizontal-gradient);
-      margin-block: 1.5rem;
-    }
-  }
-</style>
-
-<main class="main">
-  <div class="content">
-    <div class="left-side">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 982 239"
-        fill="none"
-        class="angular-logo"
-      >
-        <g clip-path="url(#a)">
-          <path
-            fill="url(#b)"
-            d="M388.676 191.625h30.849L363.31 31.828h-35.758l-56.215 159.797h30.848l13.174-39.356h60.061l13.256 39.356Zm-65.461-62.675 21.602-64.311h1.227l21.602 64.311h-44.431Zm126.831-7.527v70.202h-28.23V71.839h27.002v20.374h1.392c2.782-6.71 7.2-12.028 13.255-15.956 6.056-3.927 13.584-5.89 22.503-5.89 8.264 0 15.465 1.8 21.684 5.318 6.137 3.518 10.964 8.673 14.319 15.382 3.437 6.71 5.074 14.81 4.992 24.383v76.175h-28.23v-71.92c0-8.019-2.046-14.237-6.219-18.819-4.173-4.5-9.819-6.791-17.102-6.791-4.91 0-9.328 1.063-13.174 3.272-3.846 2.128-6.792 5.237-9.001 9.328-2.046 4.009-3.191 8.918-3.191 14.728ZM589.233 239c-10.147 0-18.82-1.391-26.103-4.091-7.282-2.7-13.092-6.382-17.511-10.964-4.418-4.582-7.528-9.655-9.164-15.219l25.448-6.136c1.145 2.372 2.782 4.663 4.991 6.954 2.209 2.291 5.155 4.255 8.837 5.81 3.683 1.554 8.428 2.291 14.074 2.291 8.019 0 14.647-1.964 19.884-5.81 5.237-3.845 7.856-10.227 7.856-19.064v-22.665h-1.391c-1.473 2.946-3.601 5.892-6.383 9.001-2.782 3.109-6.464 5.645-10.965 7.691-4.582 2.046-10.228 3.109-17.101 3.109-9.165 0-17.511-2.209-25.039-6.545-7.446-4.337-13.42-10.883-17.757-19.474-4.418-8.673-6.628-19.473-6.628-32.565 0-13.091 2.21-24.301 6.628-33.383 4.419-9.082 10.311-15.955 17.839-20.7 7.528-4.746 15.874-7.037 25.039-7.037 7.037 0 12.846 1.145 17.347 3.518 4.582 2.373 8.182 5.236 10.883 8.51 2.7 3.272 4.746 6.382 6.137 9.327h1.554v-19.8h27.821v121.749c0 10.228-2.454 18.737-7.364 25.447-4.91 6.709-11.538 11.7-20.048 15.055-8.509 3.355-18.165 4.991-28.884 4.991Zm.245-71.266c5.974 0 11.047-1.473 15.302-4.337 4.173-2.945 7.446-7.118 9.573-12.519 2.21-5.482 3.274-12.027 3.274-19.637 0-7.609-1.064-14.155-3.274-19.8-2.127-5.646-5.318-10.064-9.491-13.255-4.174-3.11-9.329-4.746-15.384-4.746s-11.537 1.636-15.792 4.91c-4.173 3.272-7.365 7.772-9.492 13.418-2.128 5.727-3.191 12.191-3.191 19.392 0 7.2 1.063 13.745 3.273 19.228 2.127 5.482 5.318 9.736 9.573 12.764 4.174 3.027 9.41 4.582 15.629 4.582Zm141.56-26.51V71.839h28.23v119.786h-27.412v-21.273h-1.227c-2.7 6.709-7.119 12.191-13.338 16.446-6.137 4.255-13.747 6.382-22.748 6.382-7.855 0-14.81-1.718-20.783-5.237-5.974-3.518-10.72-8.591-14.075-15.382-3.355-6.709-5.073-14.891-5.073-24.464V71.839h28.312v71.921c0 7.609 2.046 13.664 6.219 18.083 4.173 4.5 9.655 6.709 16.365 6.709 4.173 0 8.183-.982 12.111-3.028 3.927-2.045 7.118-5.072 9.655-9.082 2.537-4.091 3.764-9.164 3.764-15.218Zm65.707-109.395v159.796h-28.23V31.828h28.23Zm44.841 162.169c-7.61 0-14.402-1.391-20.457-4.091-6.055-2.7-10.883-6.791-14.32-12.109-3.518-5.319-5.237-11.946-5.237-19.801 0-6.791 1.228-12.355 3.765-16.773 2.536-4.419 5.891-7.937 10.228-10.637 4.337-2.618 9.164-4.664 14.647-6.055 5.4-1.391 11.046-2.373 16.856-3.027 7.037-.737 12.683-1.391 17.102-1.964 4.337-.573 7.528-1.555 9.574-2.782 1.963-1.309 3.027-3.273 3.027-5.973v-.491c0-5.891-1.718-10.391-5.237-13.664-3.518-3.191-8.51-4.828-15.056-4.828-6.955 0-12.356 1.473-16.447 4.5-4.009 3.028-6.71 6.546-8.183 10.719l-26.348-3.764c2.046-7.282 5.483-13.336 10.31-18.328 4.746-4.909 10.638-8.59 17.511-11.045 6.955-2.455 14.565-3.682 22.912-3.682 5.809 0 11.537.654 17.265 2.045s10.965 3.6 15.711 6.71c4.746 3.109 8.51 7.282 11.455 12.6 2.864 5.318 4.337 11.946 4.337 19.883v80.184h-27.166v-16.446h-.9c-1.719 3.355-4.092 6.464-7.201 9.328-3.109 2.864-6.955 5.237-11.619 6.955-4.828 1.718-10.229 2.536-16.529 2.536Zm7.364-20.701c5.646 0 10.556-1.145 14.729-3.354 4.173-2.291 7.364-5.237 9.655-9.001 2.292-3.763 3.355-7.854 3.355-12.273v-14.155c-.9.737-2.373 1.391-4.5 2.046-2.128.654-4.419 1.145-7.037 1.636-2.619.491-5.155.9-7.692 1.227-2.537.328-4.746.655-6.628.901-4.173.572-8.019 1.472-11.292 2.781-3.355 1.31-5.973 3.11-7.855 5.401-1.964 2.291-2.864 5.318-2.864 8.918 0 5.237 1.882 9.164 5.728 11.782 3.682 2.782 8.51 4.091 14.401 4.091Zm64.643 18.328V71.839h27.412v19.965h1.227c2.21-6.955 5.974-12.274 11.292-16.038 5.319-3.763 11.456-5.645 18.329-5.645 1.555 0 3.355.082 5.237.163 1.964.164 3.601.328 4.91.573v25.938c-1.227-.41-3.109-.819-5.646-1.146a58.814 58.814 0 0 0-7.446-.49c-5.155 0-9.738 1.145-13.829 3.354-4.091 2.209-7.282 5.236-9.655 9.164-2.373 3.927-3.519 8.427-3.519 13.5v70.448h-28.312ZM222.077 39.192l-8.019 125.923L137.387 0l84.69 39.192Zm-53.105 162.825-57.933 33.056-57.934-33.056 11.783-28.556h92.301l11.783 28.556ZM111.039 62.675l30.357 73.803H80.681l30.358-73.803ZM7.937 165.115 0 39.192 84.69 0 7.937 165.115Z"
-          />
-          <path
-            fill="url(#c)"
-            d="M388.676 191.625h30.849L363.31 31.828h-35.758l-56.215 159.797h30.848l13.174-39.356h60.061l13.256 39.356Zm-65.461-62.675 21.602-64.311h1.227l21.602 64.311h-44.431Zm126.831-7.527v70.202h-28.23V71.839h27.002v20.374h1.392c2.782-6.71 7.2-12.028 13.255-15.956 6.056-3.927 13.584-5.89 22.503-5.89 8.264 0 15.465 1.8 21.684 5.318 6.137 3.518 10.964 8.673 14.319 15.382 3.437 6.71 5.074 14.81 4.992 24.383v76.175h-28.23v-71.92c0-8.019-2.046-14.237-6.219-18.819-4.173-4.5-9.819-6.791-17.102-6.791-4.91 0-9.328 1.063-13.174 3.272-3.846 2.128-6.792 5.237-9.001 9.328-2.046 4.009-3.191 8.918-3.191 14.728ZM589.233 239c-10.147 0-18.82-1.391-26.103-4.091-7.282-2.7-13.092-6.382-17.511-10.964-4.418-4.582-7.528-9.655-9.164-15.219l25.448-6.136c1.145 2.372 2.782 4.663 4.991 6.954 2.209 2.291 5.155 4.255 8.837 5.81 3.683 1.554 8.428 2.291 14.074 2.291 8.019 0 14.647-1.964 19.884-5.81 5.237-3.845 7.856-10.227 7.856-19.064v-22.665h-1.391c-1.473 2.946-3.601 5.892-6.383 9.001-2.782 3.109-6.464 5.645-10.965 7.691-4.582 2.046-10.228 3.109-17.101 3.109-9.165 0-17.511-2.209-25.039-6.545-7.446-4.337-13.42-10.883-17.757-19.474-4.418-8.673-6.628-19.473-6.628-32.565 0-13.091 2.21-24.301 6.628-33.383 4.419-9.082 10.311-15.955 17.839-20.7 7.528-4.746 15.874-7.037 25.039-7.037 7.037 0 12.846 1.145 17.347 3.518 4.582 2.373 8.182 5.236 10.883 8.51 2.7 3.272 4.746 6.382 6.137 9.327h1.554v-19.8h27.821v121.749c0 10.228-2.454 18.737-7.364 25.447-4.91 6.709-11.538 11.7-20.048 15.055-8.509 3.355-18.165 4.991-28.884 4.991Zm.245-71.266c5.974 0 11.047-1.473 15.302-4.337 4.173-2.945 7.446-7.118 9.573-12.519 2.21-5.482 3.274-12.027 3.274-19.637 0-7.609-1.064-14.155-3.274-19.8-2.127-5.646-5.318-10.064-9.491-13.255-4.174-3.11-9.329-4.746-15.384-4.746s-11.537 1.636-15.792 4.91c-4.173 3.272-7.365 7.772-9.492 13.418-2.128 5.727-3.191 12.191-3.191 19.392 0 7.2 1.063 13.745 3.273 19.228 2.127 5.482 5.318 9.736 9.573 12.764 4.174 3.027 9.41 4.582 15.629 4.582Zm141.56-26.51V71.839h28.23v119.786h-27.412v-21.273h-1.227c-2.7 6.709-7.119 12.191-13.338 16.446-6.137 4.255-13.747 6.382-22.748 6.382-7.855 0-14.81-1.718-20.783-5.237-5.974-3.518-10.72-8.591-14.075-15.382-3.355-6.709-5.073-14.891-5.073-24.464V71.839h28.312v71.921c0 7.609 2.046 13.664 6.219 18.083 4.173 4.5 9.655 6.709 16.365 6.709 4.173 0 8.183-.982 12.111-3.028 3.927-2.045 7.118-5.072 9.655-9.082 2.537-4.091 3.764-9.164 3.764-15.218Zm65.707-109.395v159.796h-28.23V31.828h28.23Zm44.841 162.169c-7.61 0-14.402-1.391-20.457-4.091-6.055-2.7-10.883-6.791-14.32-12.109-3.518-5.319-5.237-11.946-5.237-19.801 0-6.791 1.228-12.355 3.765-16.773 2.536-4.419 5.891-7.937 10.228-10.637 4.337-2.618 9.164-4.664 14.647-6.055 5.4-1.391 11.046-2.373 16.856-3.027 7.037-.737 12.683-1.391 17.102-1.964 4.337-.573 7.528-1.555 9.574-2.782 1.963-1.309 3.027-3.273 3.027-5.973v-.491c0-5.891-1.718-10.391-5.237-13.664-3.518-3.191-8.51-4.828-15.056-4.828-6.955 0-12.356 1.473-16.447 4.5-4.009 3.028-6.71 6.546-8.183 10.719l-26.348-3.764c2.046-7.282 5.483-13.336 10.31-18.328 4.746-4.909 10.638-8.59 17.511-11.045 6.955-2.455 14.565-3.682 22.912-3.682 5.809 0 11.537.654 17.265 2.045s10.965 3.6 15.711 6.71c4.746 3.109 8.51 7.282 11.455 12.6 2.864 5.318 4.337 11.946 4.337 19.883v80.184h-27.166v-16.446h-.9c-1.719 3.355-4.092 6.464-7.201 9.328-3.109 2.864-6.955 5.237-11.619 6.955-4.828 1.718-10.229 2.536-16.529 2.536Zm7.364-20.701c5.646 0 10.556-1.145 14.729-3.354 4.173-2.291 7.364-5.237 9.655-9.001 2.292-3.763 3.355-7.854 3.355-12.273v-14.155c-.9.737-2.373 1.391-4.5 2.046-2.128.654-4.419 1.145-7.037 1.636-2.619.491-5.155.9-7.692 1.227-2.537.328-4.746.655-6.628.901-4.173.572-8.019 1.472-11.292 2.781-3.355 1.31-5.973 3.11-7.855 5.401-1.964 2.291-2.864 5.318-2.864 8.918 0 5.237 1.882 9.164 5.728 11.782 3.682 2.782 8.51 4.091 14.401 4.091Zm64.643 18.328V71.839h27.412v19.965h1.227c2.21-6.955 5.974-12.274 11.292-16.038 5.319-3.763 11.456-5.645 18.329-5.645 1.555 0 3.355.082 5.237.163 1.964.164 3.601.328 4.91.573v25.938c-1.227-.41-3.109-.819-5.646-1.146a58.814 58.814 0 0 0-7.446-.49c-5.155 0-9.738 1.145-13.829 3.354-4.091 2.209-7.282 5.236-9.655 9.164-2.373 3.927-3.519 8.427-3.519 13.5v70.448h-28.312ZM222.077 39.192l-8.019 125.923L137.387 0l84.69 39.192Zm-53.105 162.825-57.933 33.056-57.934-33.056 11.783-28.556h92.301l11.783 28.556ZM111.039 62.675l30.357 73.803H80.681l30.358-73.803ZM7.937 165.115 0 39.192 84.69 0 7.937 165.115Z"
-          />
-        </g>
-        <defs>
-          <radialGradient
-            id="c"
-            cx="0"
-            cy="0"
-            r="1"
-            gradientTransform="rotate(118.122 171.182 60.81) scale(205.794)"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="#FF41F8" />
-            <stop offset=".707" stop-color="#FF41F8" stop-opacity=".5" />
-            <stop offset="1" stop-color="#FF41F8" stop-opacity="0" />
-          </radialGradient>
-          <linearGradient
-            id="b"
-            x1="0"
-            x2="982"
-            y1="192"
-            y2="192"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="#F0060B" />
-            <stop offset="0" stop-color="#F0070C" />
-            <stop offset=".526" stop-color="#CC26D5" />
-            <stop offset="1" stop-color="#7702FF" />
-          </linearGradient>
-          <clipPath id="a"><path fill="#fff" d="M0 0h982v239H0z" /></clipPath>
-        </defs>
-      </svg>
-      <h1>Hello, {{ title }}</h1>
-      <p>Congratulations! Your app is running. 🎉</p>
-    </div>
-    <div class="divider" role="separator" aria-label="Divider"></div>
-    <div class="right-side">
-      <div class="pill-group">
-        @for (item of [
-          { title: 'Explore the Docs', link: 'https://angular.dev' },
-          { title: 'Learn with Tutorials', link: 'https://angular.dev/tutorials' },
-          { title: 'CLI Docs', link: 'https://angular.dev/tools/cli' },
-          { title: 'Angular Language Service', link: 'https://angular.dev/tools/language-service' },
-          { title: 'Angular DevTools', link: 'https://angular.dev/tools/devtools' },
-        ]; track item.title) {
-          <a
-            class="pill"
-            [href]="item.link"
-            target="_blank"
-            rel="noopener"
-          >
-            <span>{{ item.title }}</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="14"
-              viewBox="0 -960 960 960"
-              width="14"
-              fill="currentColor"
-            >
-              <path
-                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"
-              />
-            </svg>
-          </a>
-        }
+  <div class="header-text">
+    <div class="logo-container">
+      <img [src]="logoSrc" alt="Checkliist" class="main-logo" />
+      <div class="logo-text">
+        <h1>Demo Openiis UI</h1>
       </div>
-      <div class="social-links">
-        <a
-          href="https://github.com/angular/angular"
-          aria-label="Github"
-          target="_blank"
-          rel="noopener"
-        >
-          <svg
-            width="25"
-            height="24"
-            viewBox="0 0 25 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            alt="Github"
-          >
-            <path
-              d="M12.3047 0C5.50634 0 0 5.50942 0 12.3047C0 17.7423 3.52529 22.3535 8.41332 23.9787C9.02856 24.0946 9.25414 23.7142 9.25414 23.3871C9.25414 23.0949 9.24389 22.3207 9.23876 21.2953C5.81601 22.0377 5.09414 19.6444 5.09414 19.6444C4.53427 18.2243 3.72524 17.8449 3.72524 17.8449C2.61064 17.082 3.81137 17.0973 3.81137 17.0973C5.04697 17.1835 5.69604 18.3647 5.69604 18.3647C6.79321 20.2463 8.57636 19.7029 9.27978 19.3881C9.39052 18.5924 9.70736 18.0499 10.0591 17.7423C7.32641 17.4347 4.45429 16.3765 4.45429 11.6618C4.45429 10.3185 4.9311 9.22133 5.72065 8.36C5.58222 8.04931 5.16694 6.79833 5.82831 5.10337C5.82831 5.10337 6.85883 4.77319 9.2121 6.36459C10.1965 6.09082 11.2424 5.95546 12.2883 5.94931C13.3342 5.95546 14.3801 6.09082 15.3644 6.36459C17.7023 4.77319 18.7328 5.10337 18.7328 5.10337C19.3942 6.79833 18.9789 8.04931 18.8559 8.36C19.6403 9.22133 20.1171 10.3185 20.1171 11.6618C20.1171 16.3888 17.2409 17.4296 14.5031 17.7321C14.9338 18.1012 15.3337 18.8559 15.3337 20.0084C15.3337 21.6552 15.3183 22.978 15.3183 23.3779C15.3183 23.7009 15.5336 24.0854 16.1642 23.9623C21.0871 22.3484 24.6094 17.7341 24.6094 12.3047C24.6094 5.50942 19.0999 0 12.3047 0Z"
-            />
-          </svg>
-        </a>
-        <a
-          href="https://twitter.com/angular"
-          aria-label="Twitter"
-          target="_blank"
-          rel="noopener"
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            alt="Twitter"
-          >
-            <path
-              d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-            />
-          </svg>
-        </a>
-        <a
-          href="https://www.youtube.com/channel/UCbn1OgGei-DV7aSRo_HaAiw"
-          aria-label="Youtube"
-          target="_blank"
-          rel="noopener"
-        >
-          <svg
-            width="29"
-            height="20"
-            viewBox="0 0 29 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            alt="Youtube"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M27.4896 1.52422C27.9301 1.96749 28.2463 2.51866 28.4068 3.12258C29.0004 5.35161 29.0004 10 29.0004 10C29.0004 10 29.0004 14.6484 28.4068 16.8774C28.2463 17.4813 27.9301 18.0325 27.4896 18.4758C27.0492 18.9191 26.5 19.2389 25.8972 19.4032C23.6778 20 14.8068 20 14.8068 20C14.8068 20 5.93586 20 3.71651 19.4032C3.11363 19.2389 2.56449 18.9191 2.12405 18.4758C1.68361 18.0325 1.36732 17.4813 1.20683 16.8774C0.613281 14.6484 0.613281 10 0.613281 10C0.613281 10 0.613281 5.35161 1.20683 3.12258C1.36732 2.51866 1.68361 1.96749 2.12405 1.52422C2.56449 1.08095 3.11363 0.76113 3.71651 0.596774C5.93586 0 14.8068 0 14.8068 0C14.8068 0 23.6778 0 25.8972 0.596774C26.5 0.76113 27.0492 1.08095 27.4896 1.52422ZM19.3229 10L11.9036 5.77905V14.221L19.3229 10Z"
-            />
-          </svg>
-        </a>
-      </div>
+      <img [src]="sublogoSrc" alt="" class="sub-logo" />
     </div>
   </div>
-</main>
+  <p class="demo-description">
+    Aún en construcción - Todas las implementaciones posibles de cada componente
+    del sistema de diseño estarán disponibles próximamente
+  </p>
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+  <!-- Sección de Botones -->
+  <app-button-sec
+    (buttonClick)="onButtonClick($event)"
+    [loadingButton]="loadingButton"
+    [loadingButton2]="loadingButton2"
+  />
 
+  <!-- Sección de Inputs -->
+  <app-input-sec
+    (formSubmit)="onFormSubmit($event)"
+    (inputChange)="onInputChange($event.value, $event.field)"
+    (validationChange)="onValidationChange($event, 'basic')"
+    (buttonClick)="onButtonClick($event)"
+    (searchChange)="onSearchChange($event)"
+    (clearSearch)="onClearSearch()"
+    [basicInputValue]="basicInputValue"
+    [emailInputValue]="emailInputValue"
+    [passwordInputValue]="passwordInputValue"
+    [urlInputValue]="urlInputValue"
+    [usernameInputValue]="usernameInputValue"
+    [telMexicoValue]="telMexicoValue"
+    [telInputValue]="telInputValue"
+    [telInternationalValue]="telInternationalValue"
+    [numberValue]="numberValue"
+    [disabledInputValue]="disabledInputValue"
+    [readonlyInputValue]="readonlyInputValue"
+    [errorInputValue]="errorInputValue"
+    [successInputValue]="successInputValue"
+    [textareaValue]="textareaValue"
+    [searchTerm]="searchTerm"
+  />
 
-<router-outlet />
+  <!-- Selects -->
+  <app-select-sec
+    [dropdownOptions]="dropdownOptions"
+    [selectedDropdownValue]="selectedDropdownValue"
+    [searchableProductsOptions]="searchableProductsOptions"
+    [selectedSearchableProduct]="selectedSearchableProduct"
+    [searchableCountriesOptions]="searchableCountriesOptions"
+    [selectedSearchableCountry]="selectedSearchableCountry"
+    [citiesOptions]="citiesOptions"
+    [selectedCity]="selectedCity"
+    (dropdownChange)="onDropdownChange($event)"
+    (searchableProductChange)="onSearchableProductChange($event)"
+    (searchableCountryChange)="onSearchableCountryChange($event)"
+    (cityChange)="onCityChange($event)"
+  />
+
+  <!-- Checkboxes -->
+  <app-checkbox-sec
+    (checkboxChange)="onCheckboxChange($event.checked, $event.type)"
+    [basicCheckbox]="basicCheckbox"
+    [primaryCheckbox]="primaryCheckbox"
+    [successCheckbox]="successCheckbox"
+    [warningCheckbox]="warningCheckbox"
+    [dangerCheckbox]="dangerCheckbox"
+    [subtleCheckbox]="subtleCheckbox"
+    [outlineCheckbox]="outlineCheckbox"
+    [indeterminateCheckbox]="indeterminateCheckbox"
+    [disabledCheckbox]="disabledCheckbox"
+    [acceptTerms]="acceptTerms"
+    [subscribeNewsletter]="subscribeNewsletter"
+    [requiredField]="requiredField"
+    [notificationEmail]="notificationEmail"
+    [notificationPush]="notificationPush"
+    [notificationSMS]="notificationSMS"
+    [allNotifications]="allNotifications"
+    [someNotifications]="someNotifications"
+    [checkboxWithTooltip]="checkboxWithTooltip"
+    [loadingCheckbox]="loadingCheckbox"
+    [loadingCheckboxValue]="loadingCheckboxValue"
+    [validatedCheckbox]="validatedCheckbox"
+  />
+
+  <!-- Radio Buttons -->
+  <app-radio-sec
+    (radioChange)="onRadioButtonChange($event.value, $event.group)"
+    [selectedSize]="selectedSize"
+    [selectedGender]="selectedGender"
+    [selectedNotificationLevel]="selectedNotificationLevel"
+  />
+
+  <!-- Date Input -->
+  <app-date-sec
+    (dateChange)="onDateChange($event.value, $event.type)"
+    [basicDateValue]="basicDateValue"
+    [futureDate]="futureDate"
+    [overdueDate]="overdueDate"
+    [disabledDate]="disabledDate"
+    [futureDateMinimum]="futureDateMinimum"
+  />
+
+  <!-- Modales -->
+  <app-modal-sec
+    (alertClosed)="onAlertClosed()"
+    (confirmConfirmed)="onConfirmConfirmed()"
+    (confirmCancelled)="onConfirmCancelled()"
+    (confirmThirdAction)="onConfirmThirdAction()"
+    (modalConfirmed)="onModalConfirmed($event)"
+    (modalClosed)="onModalClosed()"
+    (showAlertEvent)="showAlert($event)"
+    (showConfirmEvent)="showConfirm($event)"
+    (showTextModalEvent)="showTextModal($event)"
+    [showAlertModal]="showAlertModal"
+    [showConfirmModal]="showConfirmModal"
+    [showModal]="showModal"
+    [currentAlertData]="currentAlertData"
+    [currentConfirmData]="currentConfirmData"
+    [currentModalData]="currentModalData"
+  />
+
+  <!-- Notificaciones -->
+  <app-notification-sec
+    (toastClosed)="onToastClosed($event)"
+    (showToastEvent)="showToastMessage($event)"
+    [showSuccessToast]="showSuccessToast"
+    [showWarningToast]="showWarningToast"
+    [showDangerToast]="showDangerToast"
+    [showInfoToast]="showInfoToast"
+    [successToastData]="successToastData"
+    [warningToastData]="warningToastData"
+    [dangerToastData]="dangerToastData"
+    [infoToastData]="infoToastData"
+  />
+
+  <!-- Sección de Tooltips -->
+  <section class="demo-section">
+    <h2>Tooltips - Todas las Variantes</h2>
+
+    <div class="demo-subsection">
+      <h3>Posiciones de Tooltip</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Tooltip Superior</h4>
+          <div class="tooltip-demo-container">
+            <div
+              class="tooltip-trigger"
+              (mouseenter)="showTooltipTop = true"
+              (mouseleave)="showTooltipTop = false"
+            >
+              <span>Hover aquí (Arriba)</span>
+              <openiis-tooltip
+                text="Este es un tooltip en la parte superior"
+                position="top"
+                variant="default"
+                [visible]="showTooltipTop"
+              >
+              </openiis-tooltip>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Tooltip Inferior</h4>
+          <div class="tooltip-demo-container">
+            <div
+              class="tooltip-trigger"
+              (mouseenter)="showTooltipBottom = true"
+              (mouseleave)="showTooltipBottom = false"
+            >
+              <span>Hover aquí (Abajo)</span>
+              <openiis-tooltip
+                text="Tooltip en la parte inferior"
+                position="bottom"
+                variant="default"
+                [visible]="showTooltipBottom"
+              >
+              </openiis-tooltip>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Tooltip Izquierda</h4>
+          <div class="tooltip-demo-container">
+            <div
+              class="tooltip-trigger"
+              (mouseenter)="showTooltipLeft = true"
+              (mouseleave)="showTooltipLeft = false"
+            >
+              <span>Hover aquí (Izquierda)</span>
+              <openiis-tooltip
+                text="Tooltip a la izquierda"
+                position="left"
+                variant="default"
+                [visible]="showTooltipLeft"
+              >
+              </openiis-tooltip>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Tooltip Derecha</h4>
+          <div class="tooltip-demo-container">
+            <div
+              class="tooltip-trigger"
+              (mouseenter)="showTooltipRight = true"
+              (mouseleave)="showTooltipRight = false"
+            >
+              <span>Hover aquí (Derecha)</span>
+              <openiis-tooltip
+                text="Tooltip a la derecha"
+                position="right"
+                variant="default"
+                [visible]="showTooltipRight"
+              >
+              </openiis-tooltip>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Variantes de Tooltip</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Tooltip Default</h4>
+          <div class="tooltip-demo-container">
+            <div
+              class="tooltip-trigger"
+              (mouseenter)="showTooltipDefault = true"
+              (mouseleave)="showTooltipDefault = false"
+            >
+              <span>Tooltip Normal</span>
+              <openiis-tooltip
+                text="Tooltip con variante por defecto"
+                position="top"
+                variant="default"
+                [visible]="showTooltipDefault"
+              >
+              </openiis-tooltip>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Tooltip Peligro</h4>
+          <div class="tooltip-demo-container">
+            <div
+              class="tooltip-trigger danger"
+              (mouseenter)="showTooltipDanger = true"
+              (mouseleave)="showTooltipDanger = false"
+            >
+              <span>Tooltip Peligro</span>
+              <openiis-tooltip
+                text="Tooltip con variante de peligro"
+                position="top"
+                variant="danger"
+                [visible]="showTooltipDanger"
+              >
+              </openiis-tooltip>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Estados -->
+  <section class="demo-section">
+    <h2>Estados - Todas las Variantes</h2>
+
+    <div class="demo-subsection">
+      <h3>Estados Vacíos</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Estado Vacío General</h4>
+          <openiis-empty-state
+            icon="inbox"
+            title="No hay elementos"
+            message="No se encontraron elementos para mostrar. Agrega algunos elementos para empezar."
+            buttonText="Agregar Elemento"
+            buttonType="primary"
+            buttonIcon="add"
+            (buttonClick)="onEmptyStateButtonClick()"
+          >
+          </openiis-empty-state>
+        </div>
+
+        <div class="demo-item">
+          <h4>Estado de Búsqueda Vacía</h4>
+          <openiis-empty-state
+            icon="search"
+            title="Sin resultados"
+            message="No se encontraron resultados para tu búsqueda. Intenta con otros términos."
+            buttonText="Nueva Búsqueda"
+            buttonType="secondary"
+            buttonIcon="refresh"
+            (buttonClick)="onEmptyStateSearch()"
+          >
+          </openiis-empty-state>
+        </div>
+
+        <div class="demo-item">
+          <h4>Estado de Error</h4>
+          <openiis-empty-state
+            icon="error"
+            title="Error de conexión"
+            message="No se pudo cargar el contenido. Verifica tu conexión a internet."
+            buttonText="Reintentar"
+            buttonType="danger"
+            buttonIcon="refresh"
+            (buttonClick)="onEmptyStateError()"
+          >
+          </openiis-empty-state>
+        </div>
+
+        <div class="demo-item">
+          <h4>Estado de Carga</h4>
+          <openiis-empty-state
+            icon="hourglass_empty"
+            title="Cargando..."
+            message="Estamos preparando el contenido para ti. Esto solo tomará un momento."
+            buttonText="Cancelar"
+            buttonType="outline-secondary"
+            buttonIcon="close"
+          >
+          </openiis-empty-state>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Estados Específicos</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Lista de Productos Vacía</h4>
+          <openiis-empty-state
+            icon="shopping_cart"
+            title="Carrito vacío"
+            message="Tu carrito de compras está vacío. Explora nuestros productos y agrega algunos."
+            buttonText="Ver Productos"
+            buttonType="primary"
+            buttonIcon="storefront"
+            [buttonFullWidth]="true"
+          >
+          </openiis-empty-state>
+        </div>
+
+        <div class="demo-item">
+          <h4>Mensajes Vacíos</h4>
+          <openiis-empty-state
+            icon="mail"
+            title="Sin mensajes"
+            message="No tienes mensajes nuevos. Te notificaremos cuando recibas algo."
+            buttonText="Escribir Mensaje"
+            buttonType="success"
+            buttonIcon="edit"
+            [buttonResponsive]="true"
+          >
+          </openiis-empty-state>
+        </div>
+
+        <div class="demo-item">
+          <h4>Configuración Pendiente</h4>
+          <openiis-empty-state
+            icon="settings"
+            title="Configuración requerida"
+            message="Necesitas completar la configuración inicial antes de continuar."
+            buttonText="Configurar Ahora"
+            buttonType="warning"
+            buttonIcon="tune"
+            buttonSize="lg"
+          >
+          </openiis-empty-state>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Avatares -->
+  <section class="demo-section">
+    <h2>Avatares - Todas las Variantes</h2>
+
+    <div class="demo-subsection">
+      <h3>Tamaños de Avatares</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Todos los Tamaños</h4>
+          <div class="button-group">
+            <openiis-avatar size="xs" name="Ana García"></openiis-avatar>
+            <openiis-avatar size="sm" name="Luis Martín"></openiis-avatar>
+            <openiis-avatar size="md" name="María López"></openiis-avatar>
+            <openiis-avatar size="lg" name="Carlos Ruiz"></openiis-avatar>
+            <openiis-avatar size="xl" name="Elena Jiménez"></openiis-avatar>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Con Imágenes</h4>
+          <div class="button-group">
+            <openiis-avatar
+              size="md"
+              src="https://images.unsplash.com/photo-1494790108755-2616b612b5bb?w=100"
+              alt="Usuario 1"
+              name="Ana García"
+            >
+            </openiis-avatar>
+            <openiis-avatar
+              size="md"
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100"
+              alt="Usuario 2"
+              name="Luis Martín"
+            >
+            </openiis-avatar>
+            <openiis-avatar
+              size="md"
+              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100"
+              alt="Usuario 3"
+              name="María López"
+            >
+            </openiis-avatar>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Con Estados</h4>
+          <div class="button-group">
+            <openiis-avatar
+              name="Online"
+              status="online"
+              [showStatus]="true"
+            ></openiis-avatar>
+            <openiis-avatar
+              name="Ocupado"
+              status="busy"
+              [showStatus]="true"
+            ></openiis-avatar>
+            <openiis-avatar
+              name="Ausente"
+              status="away"
+              [showStatus]="true"
+            ></openiis-avatar>
+            <openiis-avatar
+              name="Offline"
+              status="offline"
+              [showStatus]="true"
+            ></openiis-avatar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Badges -->
+  <section class="demo-section">
+    <h2>Badges - Todas las Variantes</h2>
+
+    <div class="demo-subsection">
+      <h3>Tipos de Badges</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Badges Básicos</h4>
+          <div class="button-group">
+            <openiis-badge variant="default" text="Default"></openiis-badge>
+            <openiis-badge variant="primary" text="Primary"></openiis-badge>
+            <openiis-badge variant="success" text="Success"></openiis-badge>
+            <openiis-badge variant="warning" text="Warning"></openiis-badge>
+            <openiis-badge variant="danger" text="Danger"></openiis-badge>
+            <openiis-badge variant="info" text="Info"></openiis-badge>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Tamaños</h4>
+          <div class="button-group">
+            <openiis-badge
+              size="xs"
+              text="XS"
+              variant="primary"
+            ></openiis-badge>
+            <openiis-badge
+              size="sm"
+              text="Small"
+              variant="primary"
+            ></openiis-badge>
+            <openiis-badge
+              size="md"
+              text="Medium"
+              variant="primary"
+            ></openiis-badge>
+            <openiis-badge
+              size="lg"
+              text="Large"
+              variant="primary"
+            ></openiis-badge>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Con Iconos</h4>
+          <div class="button-group">
+            <openiis-badge
+              variant="success"
+              text="Completado"
+              icon="check_circle"
+            ></openiis-badge>
+            <openiis-badge
+              variant="warning"
+              text="Pendiente"
+              icon="schedule"
+            ></openiis-badge>
+            <openiis-badge
+              variant="danger"
+              text="Error"
+              icon="cancel"
+            ></openiis-badge>
+            <openiis-badge
+              variant="info"
+              text="Información"
+              icon="info"
+            ></openiis-badge>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Breadcrumbs -->
+  <section class="demo-section">
+    <h2>Breadcrumbs - Navegación</h2>
+
+    <div class="demo-subsection">
+      <h3>Rutas de Navegación</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Breadcrumb Básico</h4>
+          <openiis-breadcrumb
+            [items]="[
+              { label: 'Inicio', url: '/' },
+              { label: 'Productos', url: '/products' },
+              { label: 'Categoría', url: '/products/category' },
+              { label: 'Producto Actual', active: true }
+            ]"
+          ></openiis-breadcrumb>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Cards -->
+  <section class="demo-section">
+    <h2>Cards - Todas las Variantes</h2>
+
+    <div class="demo-subsection">
+      <h3>Tipos de Cards</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Card Básica</h4>
+          <openiis-card
+            title="Título de la Card"
+            subtitle="Subtítulo descriptivo"
+            description="Esta es una descripción del contenido de la card. Aquí se puede incluir información relevante."
+          >
+            <div slot="footer">
+              <openiis-button
+                type="primary"
+                text="Acción"
+                size="sm"
+              ></openiis-button>
+            </div>
+          </openiis-card>
+        </div>
+
+        <div class="demo-item">
+          <h4>Card con Imagen</h4>
+          <openiis-card
+            title="Card con Media"
+            description="Card que incluye contenido multimedia en el header."
+          >
+            <img
+              slot="media"
+              src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=300&h=200&fit=crop"
+              alt="Imagen demo"
+              style="width: 100%; height: 200px; object-fit: cover"
+            />
+          </openiis-card>
+        </div>
+
+        <div class="demo-item">
+          <h4>Tamaños de Cards</h4>
+          <openiis-card
+            size="sm"
+            title="Card Pequeña"
+            description="Card con tamaño reducido."
+          >
+          </openiis-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Cards con Botones de Acción</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Card con Botones Básicos</h4>
+          <openiis-card
+            title="Producto Digital"
+            description="Un producto digital con opciones de gestión básicas."
+            [actionButtons]="cardActionButtons"
+            (actionButtonClick)="onCardActionButtonClick($event)"
+          >
+          </openiis-card>
+        </div>
+
+        <div class="demo-item">
+          <h4>Card de Producto</h4>
+          <openiis-card
+            title="Smartphone Pro"
+            subtitle="Modelo 2024"
+            description="El último smartphone con características premium y diseño elegante."
+            [actionButtons]="productCardButtons"
+            (actionButtonClick)="onCardActionButtonClick($event)"
+          >
+            <img
+              slot="media"
+              src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=300&h=200&fit=crop"
+              alt="Imagen demo"
+              style="width: 100%; height: 200px; object-fit: cover"
+            />
+          </openiis-card>
+        </div>
+
+        <div class="demo-item">
+          <h4>Card de Usuario</h4>
+          <openiis-card
+            title="Ana García"
+            subtitle="Desarrolladora Frontend"
+            description="Especialista en Angular y React con 5 años de experiencia."
+            [actionButtons]="userCardButtons"
+            (actionButtonClick)="onCardActionButtonClick($event)"
+          >
+            <img
+              slot="media"
+              src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=300&h=200&fit=crop"
+              alt="Imagen demo"
+              style="width: 100%; height: 200px; object-fit: cover"
+            />
+          </openiis-card>
+        </div>
+
+        <div class="demo-item">
+          <h4>Card con Imagen y Botones</h4>
+          <openiis-card
+            title="Dashboard Analytics"
+            description="Visualiza métricas importantes de tu negocio en tiempo real."
+            [actionButtons]="[
+              {
+                id: 'refresh',
+                icon: 'refresh',
+                tooltip: 'Actualizar datos',
+                variant: 'outline-primary',
+                ariaLabel: 'Actualizar datos'
+              },
+              {
+                id: 'settings',
+                icon: 'settings',
+                tooltip: 'Configurar',
+                variant: 'outline-secondary',
+                ariaLabel: 'Configurar dashboard'
+              },
+              {
+                id: 'download',
+                icon: 'download',
+                tooltip: 'Descargar reporte',
+                variant: 'outline-success',
+                ariaLabel: 'Descargar reporte'
+              }
+            ]"
+            (actionButtonClick)="onCardActionButtonClick($event)"
+          >
+            <img
+              slot="media"
+              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=200&fit=crop"
+              alt="Imagen demo"
+              style="width: 100%; height: 200px; object-fit: cover"
+            />
+          </openiis-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Tamaños de Cards con Botones</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Card Extra Small</h4>
+          <openiis-card
+            size="xs"
+            title="XS Card"
+            description="Card pequeña con botones."
+            [actionButtons]="[
+              {
+                id: 'edit-xs',
+                icon: 'edit',
+                tooltip: 'Editar',
+                variant: 'outline-primary',
+                ariaLabel: 'Editar elemento'
+              },
+              {
+                id: 'delete-xs',
+                icon: 'delete',
+                tooltip: 'Eliminar',
+                variant: 'outline-danger',
+                ariaLabel: 'Eliminar elemento'
+              }
+            ]"
+            actionButtonSize="xs"
+            (actionButtonClick)="onCardActionButtonClick($event)"
+          >
+          </openiis-card>
+        </div>
+
+        <div class="demo-item">
+          <h4>Card Small</h4>
+          <openiis-card
+            size="sm"
+            title="Small Card"
+            description="Card pequeña con botones de tamaño pequeño."
+            [actionButtons]="[
+              {
+                id: 'like-sm',
+                icon: 'thumb_up',
+                tooltip: 'Me gusta',
+                variant: 'outline-success',
+                ariaLabel: 'Me gusta'
+              },
+              {
+                id: 'share-sm',
+                icon: 'share',
+                tooltip: 'Compartir',
+                variant: 'outline-secondary',
+                ariaLabel: 'Compartir'
+              }
+            ]"
+            actionButtonSize="sm"
+            (actionButtonClick)="onCardActionButtonClick($event)"
+          >
+          </openiis-card>
+        </div>
+
+        <div class="demo-item">
+          <h4>Card Large</h4>
+          <openiis-card
+            size="lg"
+            title="Large Card"
+            description="Card grande con botones de tamaño mediano."
+            [actionButtons]="[
+              {
+                id: 'bookmark-lg',
+                icon: 'bookmark',
+                tooltip: 'Marcar',
+                variant: 'outline-warning',
+                ariaLabel: 'Marcar'
+              },
+              {
+                id: 'print-lg',
+                icon: 'print',
+                tooltip: 'Imprimir',
+                variant: 'outline-info',
+                ariaLabel: 'Imprimir'
+              },
+              {
+                id: 'more-lg',
+                icon: 'more_horiz',
+                tooltip: 'Más opciones',
+                variant: 'outline-secondary',
+                ariaLabel: 'Más opciones'
+              }
+            ]"
+            actionButtonSize="md"
+            (actionButtonClick)="onCardActionButtonClick($event)"
+          >
+          </openiis-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Cards con Footer y Botones</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Card Completa</h4>
+          <openiis-card
+            title="Artículo de Blog"
+            subtitle="Publicado el 15 de Marzo 2024"
+            description="Un artículo completo sobre las mejores prácticas en desarrollo web moderno."
+            [actionButtons]="[
+              {
+                id: 'read-more',
+                icon: 'arrow_forward',
+                tooltip: 'Leer más',
+                variant: 'outline-primary',
+                ariaLabel: 'Leer más'
+              },
+              {
+                id: 'bookmark-article',
+                icon: 'bookmark_border',
+                tooltip: 'Guardar artículo',
+                variant: 'outline-warning',
+                ariaLabel: 'Guardar artículo'
+              },
+              {
+                id: 'share-article',
+                icon: 'share',
+                tooltip: 'Compartir artículo',
+                variant: 'outline-secondary',
+                ariaLabel: 'Compartir artículo'
+              }
+            ]"
+            (actionButtonClick)="onCardActionButtonClick($event)"
+          >
+            <img
+              slot="media"
+              src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&h=200&fit=crop"
+              alt="Imagen demo"
+              style="width: 100%; height: 200px; object-fit: cover"
+            />
+            <div slot="footer">
+              <openiis-button
+                type="primary"
+                text="Leer Completo"
+                size="sm"
+                iconLeft="visibility"
+                (clickEvent)="onButtonClick('read-full')"
+              >
+              </openiis-button>
+            </div>
+          </openiis-card>
+        </div>
+
+        <div class="demo-item">
+          <h4>Card de Evento</h4>
+          <openiis-card
+            title="Conferencia Tech 2024"
+            subtitle="Centro de Convenciones"
+            description="Únete a la conferencia más importante de tecnología del año."
+            [actionButtons]="[
+              {
+                id: 'calendar',
+                icon: 'event',
+                tooltip: 'Añadir al calendario',
+                variant: 'outline-success',
+                ariaLabel: 'Añadir al calendario'
+              },
+              {
+                id: 'location',
+                icon: 'location_on',
+                tooltip: 'Ver ubicación',
+                variant: 'outline-info',
+                ariaLabel: 'Ver ubicación'
+              },
+              {
+                id: 'remind',
+                icon: 'notifications',
+                tooltip: 'Recordatorio',
+                variant: 'outline-warning',
+                ariaLabel: 'Activar recordatorio'
+              }
+            ]"
+            (actionButtonClick)="onCardActionButtonClick($event)"
+          >
+            <img
+              slot="media"
+              src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=300&h=200&fit=crop"
+              alt="Imagen demo"
+              style="width: 100%; height: 200px; object-fit: cover"
+            />
+            <div slot="footer">
+              <openiis-button
+                type="success"
+                text="Registrarse"
+                size="sm"
+                iconLeft="person_add"
+                (clickEvent)="onButtonClick('register')"
+              >
+              </openiis-button>
+            </div>
+          </openiis-card>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de FAB -->
+  <section class="demo-section">
+    <h2>FAB - Botones Flotantes</h2>
+
+    <div class="demo-subsection">
+      <h3>Floating Action Buttons</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>FAB Básico</h4>
+          <div
+            style="
+              position: relative;
+              height: 120px;
+              background: #f3f4f6;
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <p style="color: #6b7280; margin: 0">Área de demostración</p>
+            <openiis-fab
+              icon="add"
+              positioning="absolute"
+              position="bottom-right"
+              (fabClick)="onButtonClick('fab-add')"
+            >
+            </openiis-fab>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>FAB con Texto</h4>
+          <div
+            style="
+              position: relative;
+              height: 120px;
+              background: #f3f4f6;
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <p style="color: #6b7280; margin: 0">Área de demostración</p>
+            <openiis-fab
+              icon="edit"
+              text="Editar"
+              [extended]="true"
+              variant="secondary"
+              positioning="absolute"
+              position="bottom-right"
+              (fabClick)="onButtonClick('fab-edit')"
+            >
+            </openiis-fab>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Tamaños de FAB</h4>
+          <div
+            style="
+              display: flex;
+              gap: 1rem;
+              align-items: center;
+              justify-content: center;
+              padding: 1rem;
+            "
+          >
+            <openiis-fab
+              icon="favorite"
+              size="sm"
+              variant="danger"
+              positioning="static"
+              (fabClick)="onButtonClick('fab-sm')"
+            >
+            </openiis-fab>
+            <openiis-fab
+              icon="star"
+              size="md"
+              variant="warning"
+              positioning="static"
+              (fabClick)="onButtonClick('fab-md')"
+            >
+            </openiis-fab>
+            <openiis-fab
+              icon="share"
+              size="lg"
+              variant="success"
+              positioning="static"
+              (fabClick)="onButtonClick('fab-lg')"
+            >
+            </openiis-fab>
+            <openiis-fab
+              icon="download"
+              size="xl"
+              variant="info"
+              positioning="static"
+              (fabClick)="onButtonClick('fab-xl')"
+            >
+            </openiis-fab>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>FAB con Carga</h4>
+          <div
+            style="
+              display: flex;
+              gap: 1rem;
+              align-items: center;
+              justify-content: center;
+              padding: 1rem;
+            "
+          >
+            <openiis-fab
+              icon="cloud_upload"
+              positioning="static"
+              [loading]="loadingButton"
+              [autoHide]="false"
+              (fabClick)="onButtonClick('fab-loading')"
+            >
+            </openiis-fab>
+            <openiis-fab
+              icon="send"
+              text="Enviar"
+              [extended]="true"
+              variant="success"
+              positioning="static"
+              [loading]="loadingButton2"
+              [autoHide]="false"
+              (fabClick)="onButtonClick('fab-loading-extended')"
+            >
+            </openiis-fab>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Spinners -->
+  <section class="demo-section">
+    <h2>Spinners - Indicadores de Carga</h2>
+
+    <div class="demo-subsection">
+      <h3>Tipos de Spinners</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Variantes de Spinners</h4>
+          <div class="button-group">
+            <openiis-spinner
+              variant="circle"
+              size="md"
+              color="primary"
+            ></openiis-spinner>
+            <openiis-spinner
+              variant="dots"
+              size="md"
+              color="success"
+            ></openiis-spinner>
+            <openiis-spinner
+              variant="bars"
+              size="md"
+              color="warning"
+            ></openiis-spinner>
+            <openiis-spinner
+              variant="pulse"
+              size="md"
+              color="danger"
+            ></openiis-spinner>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Tamaños</h4>
+          <div class="button-group">
+            <openiis-spinner
+              variant="circle"
+              size="xs"
+              color="primary"
+            ></openiis-spinner>
+            <openiis-spinner
+              variant="circle"
+              size="sm"
+              color="primary"
+            ></openiis-spinner>
+            <openiis-spinner
+              variant="circle"
+              size="md"
+              color="primary"
+            ></openiis-spinner>
+            <openiis-spinner
+              variant="circle"
+              size="lg"
+              color="primary"
+            ></openiis-spinner>
+            <openiis-spinner
+              variant="circle"
+              size="xl"
+              color="primary"
+            ></openiis-spinner>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Con Texto</h4>
+          <openiis-spinner
+            variant="circle"
+            size="md"
+            color="primary"
+            text="Cargando..."
+          >
+          </openiis-spinner>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Switches -->
+  <section class="demo-section">
+    <h2>Switches - Interruptores</h2>
+
+    <div class="demo-subsection">
+      <h3>Controles Switch</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Switches Básicos</h4>
+          <div class="input-sizes">
+            <openiis-switch
+              variant="default"
+              label="Activar notificaciones"
+              size="md"
+            >
+            </openiis-switch>
+            <openiis-switch
+              variant="default"
+              label="Modo oscuro"
+              [checked]="true"
+              size="md"
+            >
+            </openiis-switch>
+            <openiis-switch
+              variant="default"
+              label="Switch deshabilitado"
+              [disabled]="true"
+              size="md"
+            >
+            </openiis-switch>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Tamaños</h4>
+          <div class="input-sizes">
+            <openiis-switch
+              variant="primary"
+              label="Pequeño"
+              size="sm"
+            ></openiis-switch>
+            <openiis-switch
+              variant="primary"
+              label="Mediano"
+              size="md"
+            ></openiis-switch>
+            <openiis-switch
+              variant="primary"
+              label="Grande"
+              size="lg"
+            ></openiis-switch>
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h4>Variantes</h4>
+          <div class="input-sizes">
+            <openiis-switch
+              label="Primary"
+              variant="primary"
+              [checked]="true"
+            ></openiis-switch>
+            <openiis-switch
+              label="Success"
+              variant="success"
+              [checked]="true"
+            ></openiis-switch>
+            <openiis-switch
+              label="Warning"
+              variant="warning"
+              [checked]="true"
+            ></openiis-switch>
+            <openiis-switch
+              label="Danger"
+              variant="danger"
+              [checked]="true"
+            ></openiis-switch>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Tabs -->
+  <section class="demo-section">
+    <h2>Tabs - Navegación por Pestañas</h2>
+
+    <div class="demo-subsection">
+      <h3>Pestañas de Navegación</h3>
+      <div class="demo-grid">
+        <div class="demo-item" style="grid-column: 1 / -1">
+          <h4>Tabs Básicos (Line)</h4>
+          <openiis-tabs variant="line" size="md">
+            <div slot="tab-content-tab1">
+              <h3>Configuración General</h3>
+              <p>Aquí puedes configurar las opciones generales del sistema.</p>
+              <ul>
+                <li>Idioma predeterminado</li>
+                <li>Zona horaria</li>
+                <li>Configuración de red</li>
+              </ul>
+            </div>
+            <div slot="tab-content-tab2">
+              <h3>Información del Perfil</h3>
+              <p>Gestiona tu información personal y preferencias.</p>
+              <ul>
+                <li>Datos personales</li>
+                <li>Foto de perfil</li>
+                <li>Información de contacto</li>
+              </ul>
+            </div>
+            <div slot="tab-content-tab3">
+              <h3>Configuración de Notificaciones</h3>
+              <p>Controla cómo y cuándo recibes notificaciones.</p>
+              <ul>
+                <li>Notificaciones por email</li>
+                <li>Notificaciones push</li>
+                <li>Frecuencia de notificaciones</li>
+              </ul>
+            </div>
+            <div slot="tab-content-tab4">
+              <h3>Configuración de Seguridad</h3>
+              <p>Mantén tu cuenta segura con estas opciones.</p>
+              <ul>
+                <li>Cambiar contraseña</li>
+                <li>Autenticación de dos factores</li>
+                <li>Historial de sesiones</li>
+              </ul>
+            </div>
+          </openiis-tabs>
+        </div>
+
+        <div class="demo-item" style="grid-column: 1 / -1">
+          <h4>Tabs Pills</h4>
+          <openiis-tabs
+            variant="pills"
+            size="md"
+            [tabs]="[
+              {
+                id: 'dashboard',
+                label: 'Dashboard',
+                active: true,
+                icon: 'dashboard'
+              },
+              { id: 'analytics', label: 'Analytics', icon: 'analytics' },
+              {
+                id: 'reports',
+                label: 'Reportes',
+                icon: 'assessment',
+                badge: '5'
+              },
+              { id: 'settings2', label: 'Configuración', icon: 'settings' }
+            ]"
+          >
+            <div slot="tab-content-dashboard">
+              <h3>Panel de Control</h3>
+              <p>Vista general de todas las métricas importantes.</p>
+            </div>
+            <div slot="tab-content-analytics">
+              <h3>Análisis de Datos</h3>
+              <p>Análisis detallado del rendimiento y tendencias.</p>
+            </div>
+            <div slot="tab-content-reports">
+              <h3>Reportes Generados</h3>
+              <p>Lista de todos los reportes disponibles y generados.</p>
+            </div>
+            <div slot="tab-content-settings2">
+              <h3>Configuración del Sistema</h3>
+              <p>Opciones avanzadas de configuración.</p>
+            </div>
+          </openiis-tabs>
+        </div>
+
+        <div class="demo-item" style="grid-column: 1 / -1">
+          <h4>Tabs Cards</h4>
+          <openiis-tabs
+            variant="cards"
+            size="md"
+            [tabs]="[
+              {
+                id: 'overview',
+                label: 'Resumen',
+                active: true,
+                icon: 'fast_forward'
+              },
+              { id: 'details', label: 'Detalles', icon: 'info' },
+              { id: 'history', label: 'Historial', icon: 'history' }
+            ]"
+          >
+            <div slot="tab-content-overview">
+              <h3>Resumen del Proyecto</h3>
+              <p>Información general y estadísticas del proyecto actual.</p>
+            </div>
+            <div slot="tab-content-details">
+              <h3>Detalles Técnicos</h3>
+              <p>Especificaciones técnicas y documentación detallada.</p>
+            </div>
+            <div slot="tab-content-history">
+              <h3>Historial de Cambios</h3>
+              <p>Log completo de todas las modificaciones realizadas.</p>
+            </div>
+          </openiis-tabs>
+        </div>
+
+        <div class="demo-item" style="grid-column: 1 / -1">
+          <h4>Tabs Buttons</h4>
+          <openiis-tabs
+            variant="buttons"
+            size="md"
+            [tabs]="[
+              { id: 'edit', label: 'Editar', active: true, icon: 'edit' },
+              { id: 'preview', label: 'Vista Previa', icon: 'preview' },
+              { id: 'publish', label: 'Publicar', icon: 'publish' }
+            ]"
+          >
+            <div slot="tab-content-edit">
+              <h3>Modo de Edición</h3>
+              <p>Editor de contenido con todas las herramientas de formateo.</p>
+            </div>
+            <div slot="tab-content-preview">
+              <h3>Vista Previa</h3>
+              <p>Previsualiza cómo se verá el contenido antes de publicar.</p>
+            </div>
+            <div slot="tab-content-publish">
+              <h3>Opciones de Publicación</h3>
+              <p>Configura las opciones de publicación y visibilidad.</p>
+            </div>
+          </openiis-tabs>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Sección de Uploader -->
+  <section class="demo-section">
+    <h2>Uploader - Subida de Archivos</h2>
+
+    <div class="demo-subsection">
+      <h3>Variantes Básicas</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Uploader Básico</h4>
+          <openiis-uploader
+            variant="basic"
+            [config]="basicUploadConfig"
+            title="Subir Archivos"
+            description="Arrastra archivos aquí o haz clic para seleccionar"
+            (filesAdded)="onFilesAdded($event)"
+          >
+          </openiis-uploader>
+        </div>
+
+        <div class="demo-item">
+          <h4>Uploader Compacto</h4>
+          <openiis-uploader
+            variant="compact"
+            size="sm"
+            [config]="compactUploadConfig"
+            (filesAdded)="onFilesAdded($event)"
+          >
+          </openiis-uploader>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Variantes Especializadas</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Galería de Imágenes</h4>
+          <openiis-uploader
+            variant="image-preview"
+            size="lg"
+            [config]="imageUploadConfig"
+            title="Galería de Fotos"
+            description="Solo imágenes - con preview automático"
+            (filesAdded)="onFilesAdded($event)"
+          >
+          </openiis-uploader>
+        </div>
+
+        <div class="demo-item">
+          <h4>Avatar de Usuario</h4>
+          <div style="max-width: 200px; margin: 0 auto">
+            <openiis-uploader
+              variant="avatar"
+              [config]="avatarUploadConfig"
+              (filesAdded)="onAvatarUploaded($event[0])"
+            >
+            </openiis-uploader>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Configuraciones Avanzadas</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Documentos Oficiales</h4>
+          <openiis-uploader
+            variant="multi-file"
+            [config]="documentUploadConfig"
+            title="Subir Documentos"
+            description="PDF, Word, Excel y PowerPoint"
+            [showInfo]="true"
+            (filesAdded)="onDocumentsAdded($event)"
+          >
+          </openiis-uploader>
+        </div>
+
+        <div class="demo-item">
+          <h4>Archivos Múltiples</h4>
+          <openiis-uploader
+            variant="basic"
+            size="md"
+            [config]="{
+              maxFileSize: 5,
+              allowedTypes: ['image/*'],
+              maxFiles: 3
+            }"
+            title="Múltiples Archivos"
+            description="Selecciona hasta 3 archivos"
+            (filesAdded)="onFilesAdded($event)"
+          >
+          </openiis-uploader>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Tamaños y Estados</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Tamaño Pequeño</h4>
+          <openiis-uploader
+            variant="basic"
+            size="sm"
+            [config]="{
+              maxFileSize: 2,
+              maxFiles: 2
+            }"
+            title="Uploader Pequeño"
+            [showInfo]="false"
+          >
+          </openiis-uploader>
+        </div>
+
+        <div class="demo-item">
+          <h4>Tamaño Extra Grande</h4>
+          <openiis-uploader
+            variant="basic"
+            size="xl"
+            [config]="{
+              maxFileSize: 50,
+              maxFiles: 10
+            }"
+            title="Área de Subida Grande"
+            description="Perfecta para múltiples archivos grandes"
+          >
+          </openiis-uploader>
+        </div>
+
+        <div class="demo-item">
+          <h4>Estado Deshabilitado</h4>
+          <openiis-uploader
+            variant="basic"
+            size="md"
+            [disabled]="true"
+            title="Uploader Deshabilitado"
+            description="No se pueden subir archivos"
+          >
+          </openiis-uploader>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-subsection">
+      <h3>Casos de Uso Reales</h3>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Currículum y Documentos</h4>
+          <openiis-uploader
+            variant="basic"
+            [config]="{
+              maxFileSize: 10,
+              allowedTypes: ['application/pdf', '.doc', '.docx'],
+              maxFiles: 3
+            }"
+            title="Sube tu CV y documentos"
+            description="PDF y documentos de Word únicamente"
+            (filesAdded)="onFilesAdded($event)"
+          >
+          </openiis-uploader>
+        </div>
+
+        <div class="demo-item">
+          <h4>Portafolio Creativo</h4>
+          <openiis-uploader
+            variant="image-preview"
+            [config]="{
+              maxFileSize: 10,
+              allowedTypes: ['image/*'],
+              maxFiles: 20,
+              enableResize: true,
+              compressionQuality: 0.9
+            }"
+            title="Sube tu portafolio"
+            description="Imágenes de alta calidad con compresión automática"
+            (filesAdded)="onGalleryUploaded($event)"
+          >
+          </openiis-uploader>
+        </div>
+
+        <div class="demo-item">
+          <h4>Archivos Mixtos</h4>
+          <openiis-uploader
+            variant="multi-file"
+            [config]="{
+              maxFileSize: 25,
+              allowedTypes: ['*'],
+              maxFiles: 15
+            }"
+            title="Cualquier tipo de archivo"
+            description="Sin restricciones de tipo, solo tamaño"
+            (filesAdded)="onFilesAdded($event)"
+          >
+          </openiis-uploader>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
