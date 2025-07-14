@@ -1,0 +1,16 @@
+<div class="layout">
+  <div class="sidebar">
+    <openiis-sidebar
+      searchSize="sm"
+      [menuItems]="menuItems"
+      class="sidebar"
+    ></openiis-sidebar>
+  </div>
+
+  <main class="main-content">
+    <app-header-sec></app-header-sec>
+    <div class="main-content-container">
+      <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+  </main>
+</div>

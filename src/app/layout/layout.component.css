@@ -1,0 +1,25 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  flex-shrink: 0;
+  padding-left: var(--space-6);
+  padding-top: var(--space-6);
+  overflow-y: auto;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+.main-content {
+  flex: 1;
+  padding-left: var(--space-6);
+}
+
+.main-content-container {
+  padding-top: var(--space-6);
+  padding-right: var(--space-12);
+}

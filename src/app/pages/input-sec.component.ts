@@ -1,20 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   OpeniisInputComponent,
   OpeniisSearchInputComponent,
 } from '../components';
 import { OpeniisButtonComponent } from '../components/buttons/button.component';
-import {
-  InputVariant,
-  ValidationResult,
-} from '../components/input/input.component';
+import { InputVariant } from '../components/input/input.component';
 
 @Component({
   selector: 'app-input-sec',
@@ -26,13 +17,12 @@ import {
     OpeniisButtonComponent,
   ],
   template: `
-    <!-- Sección de Inputs -->
-    <!-- Sección de Inputs -->
-    <section class="demo-section">
-      <h2>Inputs - Todas las Variantes</h2>
+    <!-- Sección de Entradas -->
+    <section id="basic-inputs" class="demo-section">
+      <h2>Entradas</h2>
 
       <div class="demo-subsection">
-        <h3>Tipos de Input</h3>
+        <h3>Tipos de Entrada</h3>
         <div class="demo-grid">
           <div class="demo-item">
             <h4>Formulario de Registro</h4>
@@ -218,7 +208,7 @@ import {
           </div>
 
           <div class="demo-item">
-            <h4>Input de Números</h4>
+            <h4>Entrada de Números</h4>
             <form
               class="demo-form"
               (ngSubmit)="onFormSubmit('number')"
@@ -250,13 +240,13 @@ import {
         </div>
       </div>
 
-      <div class="demo-subsection">
-        <h3>Variantes de Input</h3>
+      <div id="variants-inputs" class="demo-subsection">
+        <h3>Variantes de Entrada</h3>
         <div class="demo-grid">
           <div class="demo-item">
             <h4>Variante Default</h4>
             <openiis-input
-              label="Input Default"
+              label="Entrada Default"
               placeholder="Variante por defecto"
               size="md"
               variant="default"
@@ -267,7 +257,7 @@ import {
           <div class="demo-item">
             <h4>Variante Filled</h4>
             <openiis-input
-              label="Input Filled"
+              label="Entrada Filled"
               placeholder="Variante filled"
               size="md"
               variant="filled"
@@ -278,7 +268,7 @@ import {
           <div class="demo-item">
             <h4>Variante Outlined</h4>
             <openiis-input
-              label="Input Outlined"
+              label="Entrada Outlined"
               placeholder="Variante outlined"
               size="md"
               variant="outlined"
@@ -289,7 +279,7 @@ import {
           <div class="demo-item">
             <h4>Variante Minimal</h4>
             <openiis-input
-              label="Input Minimal"
+              label="Entrada Minimal"
               placeholder="Variante minimal"
               size="md"
               variant="minimal"
@@ -299,8 +289,8 @@ import {
         </div>
       </div>
 
-      <div class="demo-subsection">
-        <h3>Tamaños de Input</h3>
+      <div id="sizes-inputs" class="demo-subsection">
+        <h3>Tamaños de Entrada</h3>
         <div class="demo-grid">
           <div class="demo-item">
             <h4>Todos los Tamaños</h4>
@@ -346,12 +336,12 @@ import {
       </div>
 
       <div class="demo-subsection">
-        <h3>Estados de Input</h3>
+        <h3>Estados de Entrada</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Input Deshabilitado</h4>
+            <h4>Entrada Deshabilitada</h4>
             <openiis-input
-              label="Input deshabilitado"
+              label="Entrada deshabilitada"
               [(value)]="disabledInputValue"
               [disabled]="true"
               size="md"
@@ -362,9 +352,9 @@ import {
           </div>
 
           <div class="demo-item">
-            <h4>Input Solo Lectura</h4>
+            <h4>Entrada Solo Lectura</h4>
             <openiis-input
-              label="Input solo lectura"
+              label="Entrada solo lectura"
               [(value)]="readonlyInputValue"
               [readonly]="true"
               size="md"
@@ -375,9 +365,9 @@ import {
           </div>
 
           <div class="demo-item">
-            <h4>Input con Error</h4>
+            <h4>Entrada con Error</h4>
             <openiis-input
-              label="Input con error"
+              label="Entrada con error"
               placeholder="Ingresa algo..."
               [(value)]="errorInputValue"
               size="md"
@@ -389,9 +379,9 @@ import {
           </div>
 
           <div class="demo-item">
-            <h4>Input Exitoso</h4>
+            <h4>Entrada Exitosa</h4>
             <openiis-input
-              label="Input válido"
+              label="Entrada válida"
               [(value)]="successInputValue"
               size="md"
               variant="default"
@@ -421,7 +411,7 @@ import {
             </openiis-input>
           </div>
 
-          <div class="demo-item">
+          <div id="textarea-inputs" class="demo-item">
             <h4>Textarea con Límite</h4>
             <openiis-input
               label="Descripción"
@@ -439,7 +429,7 @@ import {
         </div>
       </div>
 
-      <div class="demo-subsection">
+      <div id="search-inputs" class="demo-subsection">
         <h3>Componente de Búsqueda</h3>
         <div class="demo-grid">
           <div class="demo-item">
@@ -458,58 +448,78 @@ import {
   `,
 })
 export class InputSecComponent {
-  @Input() basicInputValue = '';
-  @Input() emailInputValue = '';
-  @Input() passwordInputValue = '';
-  @Input() urlInputValue = '';
-  @Input() usernameInputValue = '';
-  @Input() telMexicoValue = '';
-  @Input() telInputValue = '';
-  @Input() telInternationalValue = '';
-  @Input() numberValue = '';
-  @Input() disabledInputValue = '';
-  @Input() readonlyInputValue = '';
-  @Input() errorInputValue = '';
-  @Input() successInputValue = '';
-  @Input() textareaValue = '';
-  @Input() searchTerm = '';
+  basicInputValue = '';
+  emailInputValue = '';
+  passwordInputValue = '';
+  searchInputValue = '';
+  urlInputValue = '';
+  telInputValue = '';
+  telMexicoValue = '';
+  telInternationalValue = '';
+  numberValue = '';
+  usernameInputValue = '';
+  textareaValue = '';
+  disabledInputValue = 'Texto no editable';
+  readonlyInputValue = 'Solo lectura';
+  errorInputValue = '';
+  successInputValue = 'Valor válido';
 
-  get variantError(): InputVariant {
-    return this.errorInputValue.length === 0 ? 'error' : 'default';
+  // Inputs de error
+  variantError: InputVariant = 'error';
+  errorText = 'Este campo es requerido';
+
+  searchTerm = '';
+  searchResults = '';
+
+  loadingButton = false;
+  loadingButton2 = false;
+
+  onFormSubmit(formType: string): void {
+    console.log(`Formulario ${formType} enviado`);
   }
 
-  get errorText(): string {
-    return this.errorInputValue.length === 0 ? 'Este campo es obligatorio' : '';
+  onSearchChange(term: string): void {
+    this.searchTerm = term;
+    this.searchResults = term ? `Búsqueda: "${term}"` : '';
+    console.log('Búsqueda cambiada:', term);
   }
 
-  @Output() formSubmit = new EventEmitter<string>();
-  @Output() inputChange = new EventEmitter<{ value: string; field: string }>();
-  @Output() validationChange = new EventEmitter<ValidationResult>();
-  @Output() buttonClick = new EventEmitter<string>();
-  @Output() searchChange = new EventEmitter<string>();
-  @Output() clearSearch = new EventEmitter<void>();
-
-  onFormSubmit(type: string) {
-    this.formSubmit.emit(type);
+  onClearSearch(): void {
+    this.searchTerm = '';
+    this.searchResults = '';
+    console.log('Búsqueda limpiada');
   }
 
-  onInputChange(value: string, field: string) {
-    console.log(`Campo ${field} cambió a:`, value);
+  onButtonClick(buttonType: string): void {
+    console.log(`Botón ${buttonType} clickeado`);
+    if (buttonType === 'loading1') {
+      this.loadingButton = true;
+      setTimeout(() => {
+        this.loadingButton = false;
+      }, 2000);
+    } else if (buttonType === 'loading2') {
+      this.loadingButton2 = true;
+      setTimeout(() => {
+        this.loadingButton2 = false;
+      }, 2000);
+    } else if (buttonType === 'fab-loading') {
+      this.loadingButton = true;
+      setTimeout(() => {
+        this.loadingButton = false;
+      }, 2000);
+    } else if (buttonType === 'fab-loading-extended') {
+      this.loadingButton2 = true;
+      setTimeout(() => {
+        this.loadingButton2 = false;
+      }, 2000);
+    }
   }
 
-  onValidationChange(result: ValidationResult, field: string) {
-    console.log(`Validación de ${field}:`, result);
+  onInputChange(value: string, type: string): void {
+    console.log(`Input ${type} cambiado:`, value);
   }
 
-  onButtonClick(type: string) {
-    this.buttonClick.emit(type);
-  }
-
-  onSearchChange(value: string) {
-    this.searchChange.emit(value);
-  }
-
-  onClearSearch() {
-    this.clearSearch.emit();
+  onValidationChange(validation: any, type: string): void {
+    console.log(`Validación ${type}:`, validation);
   }
 }

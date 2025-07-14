@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisButtonComponent } from '../components/buttons/button.component';
 import { OpeniisToastComponent } from '../components';
@@ -8,9 +8,36 @@ import { OpeniisToastComponent } from '../components';
   standalone: true,
   imports: [CommonModule, OpeniisButtonComponent, OpeniisToastComponent],
   template: `
-    <!-- Sección de Notificaciones -->
+    <!-- Toasts Implementados -->
+    <openiis-toast
+      [isVisible]="showSuccessToast"
+      [data]="successToastData"
+      (closed)="onToastClosed('success')"
+    >
+    </openiis-toast>
+
+    <openiis-toast
+      [isVisible]="showWarningToast"
+      [data]="warningToastData"
+      (closed)="onToastClosed('warning')"
+    >
+    </openiis-toast>
+
+    <openiis-toast
+      [isVisible]="showDangerToast"
+      [data]="dangerToastData"
+      (closed)="onToastClosed('danger')"
+    >
+    </openiis-toast>
+
+    <openiis-toast
+      [isVisible]="showInfoToast"
+      [data]="infoToastData"
+      (closed)="onToastClosed('info')"
+    >
+    </openiis-toast>
     <section class="demo-section">
-      <h2>Notificaciones - Todas las Variantes</h2>
+      <h2>Notificaciones</h2>
 
       <div class="demo-subsection">
         <h3>Toasts</h3>
@@ -61,55 +88,71 @@ import { OpeniisToastComponent } from '../components';
         </div>
       </div>
     </section>
-
-    <!-- Toasts Implementados -->
-    <openiis-toast
-      [isVisible]="showSuccessToast"
-      [data]="successToastData"
-      (closed)="onToastClosed('success')"
-    >
-    </openiis-toast>
-
-    <openiis-toast
-      [isVisible]="showWarningToast"
-      [data]="warningToastData"
-      (closed)="onToastClosed('warning')"
-    >
-    </openiis-toast>
-
-    <openiis-toast
-      [isVisible]="showDangerToast"
-      [data]="dangerToastData"
-      (closed)="onToastClosed('danger')"
-    >
-    </openiis-toast>
-
-    <openiis-toast
-      [isVisible]="showInfoToast"
-      [data]="infoToastData"
-      (closed)="onToastClosed('info')"
-    >
-    </openiis-toast>
   `,
 })
 export class NotificationSecComponent {
-  @Input() showSuccessToast = false;
-  @Input() showWarningToast = false;
-  @Input() showDangerToast = false;
-  @Input() showInfoToast = false;
-  @Input() successToastData: any;
-  @Input() warningToastData: any;
-  @Input() dangerToastData: any;
-  @Input() infoToastData: any;
+  showSuccessToast = false;
+  showWarningToast = false;
+  showDangerToast = false;
+  showInfoToast = false;
 
-  @Output() toastClosed = new EventEmitter<string>();
-  @Output() showToastEvent = new EventEmitter<string>();
-
-  onToastClosed(type: string) {
-    this.toastClosed.emit(type);
+  showToastMessage(type: string): void {
+    switch (type) {
+      case 'success':
+        this.showSuccessToast = true;
+        break;
+      case 'warning':
+        this.showWarningToast = true;
+        break;
+      case 'danger':
+        this.showDangerToast = true;
+        break;
+      case 'info':
+        this.showInfoToast = true;
+        break;
+    }
   }
 
-  showToastMessage(type: string) {
-    this.showToastEvent.emit(type);
+  onToastClosed(type: string): void {
+    switch (type) {
+      case 'success':
+        this.showSuccessToast = false;
+        break;
+      case 'warning':
+        this.showWarningToast = false;
+        break;
+      case 'danger':
+        this.showDangerToast = false;
+        break;
+      case 'info':
+        this.showInfoToast = false;
+        break;
+    }
+    console.log(`Toast ${type} cerrado`);
   }
+
+  /* ===== TOAST SECTION ===== */
+  successToastData = {
+    message: '¡Éxito! La operación se completó correctamente.',
+    type: 'success' as const,
+    duration: 3000,
+  };
+
+  warningToastData = {
+    message: 'Advertencia: Verifica los datos antes de continuar.',
+    type: 'warning' as const,
+    duration: 3000,
+  };
+
+  dangerToastData = {
+    message: 'Error: No se pudo completar la operación.',
+    type: 'danger' as const,
+    duration: 3000,
+  };
+
+  infoToastData = {
+    message: 'Información: Funcionalidad actualizada disponible.',
+    type: 'info' as const,
+    duration: 3000,
+  };
 }

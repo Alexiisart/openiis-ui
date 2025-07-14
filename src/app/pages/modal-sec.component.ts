@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisButtonComponent } from '../components/buttons/button.component';
 import {
@@ -19,8 +19,34 @@ import {
   ],
   template: `
     <!-- Sección de Modales -->
+    <!-- Modales Implementados -->
+    <openiis-alert-modal
+      [isVisible]="showAlertModal"
+      [data]="currentAlertData"
+      (closed)="onAlertClosed()"
+    >
+    </openiis-alert-modal>
+
+    <openiis-confirm-modal
+      [isVisible]="showConfirmModal"
+      [data]="currentConfirmData"
+      buttonLeft="outline-secondary"
+      buttonRight="primary"
+      (confirmed)="onConfirmConfirmed()"
+      (cancelled)="onConfirmCancelled()"
+      (thirdAction)="onConfirmThirdAction()"
+    >
+    </openiis-confirm-modal>
+
+    <openiis-modal
+      [isVisible]="showModal"
+      [data]="currentModalData"
+      (confirmed)="onModalConfirmed($event)"
+      (closed)="onModalClosed()"
+    >
+    </openiis-modal>
     <section class="demo-section">
-      <h2>Modales - Todas las Variantes</h2>
+      <h2>Modales</h2>
 
       <div class="demo-subsection">
         <h3>Modales de Alerta</h3>
@@ -125,86 +151,163 @@ import {
         </div>
       </div>
     </section>
-
-    <!-- Modales Implementados -->
-    <openiis-alert-modal
-      [isVisible]="showAlertModal"
-      [data]="currentAlertData"
-      (closed)="onAlertClosed()"
-    >
-    </openiis-alert-modal>
-
-    <openiis-confirm-modal
-      [isVisible]="showConfirmModal"
-      [data]="currentConfirmData"
-      buttonLeft="outline-secondary"
-      buttonRight="primary"
-      (confirmed)="onConfirmConfirmed()"
-      (cancelled)="onConfirmCancelled()"
-      (thirdAction)="onConfirmThirdAction()"
-    >
-    </openiis-confirm-modal>
-
-    <openiis-modal
-      [isVisible]="showModal"
-      [data]="currentModalData"
-      (confirmed)="onModalConfirmed($event)"
-      (closed)="onModalClosed()"
-    >
-    </openiis-modal>
   `,
 })
 export class ModalSecComponent {
-  @Input() showAlertModal = false;
-  @Input() showConfirmModal = false;
-  @Input() showModal = false;
-  @Input() currentAlertData: any;
-  @Input() currentConfirmData: any;
-  @Input() currentModalData: any;
+  /* ===== MODAL SECTION ===== */
+  showAlertModal = false;
+  showConfirmModal = false;
+  showModal = false;
+  showToast = false;
+  showSuccessToast = false;
+  showWarningToast = false;
+  showDangerToast = false;
+  showInfoToast = false;
+  currentModalType = '';
 
-  @Output() alertClosed = new EventEmitter<void>();
-  @Output() confirmConfirmed = new EventEmitter<void>();
-  @Output() confirmCancelled = new EventEmitter<void>();
-  @Output() confirmThirdAction = new EventEmitter<void>();
-  @Output() modalConfirmed = new EventEmitter<string>();
-  @Output() modalClosed = new EventEmitter<void>();
-  @Output() showAlertEvent = new EventEmitter<string>();
-  @Output() showConfirmEvent = new EventEmitter<string>();
-  @Output() showTextModalEvent = new EventEmitter<string>();
+  successAlertData = {
+    message:
+      'Operación completada exitosamente. Los datos han sido guardados correctamente.',
+    type: 'success' as const,
+  };
 
-  onAlertClosed() {
-    this.alertClosed.emit();
+  warningAlertData = {
+    message:
+      'Atención: Esta acción requerirá confirmación adicional antes de proceder.',
+    type: 'warning' as const,
+  };
+
+  dangerAlertData = {
+    message:
+      'Error crítico: No se pudo completar la operación. Por favor, intente nuevamente.',
+    type: 'danger' as const,
+  };
+
+  infoAlertData = {
+    message: 'Información: Esta funcionalidad estará disponible próximamente.',
+    type: 'info' as const,
+  };
+
+  deleteConfirmData = {
+    message:
+      '¿Estás seguro de que quieres eliminar este elemento? Esta acción no se puede deshacer.',
+    title: 'Confirmar eliminación',
+    confirmText: 'Eliminar',
+    cancelText: 'Cancelar',
+  };
+
+  saveConfirmData = {
+    message: '¿Deseas guardar los cambios realizados?',
+    title: 'Guardar cambios',
+    confirmText: 'Guardar',
+    cancelText: 'Descartar',
+    thirdButtonText: 'Guardar como borrador',
+  };
+
+  addItemModalData = {
+    title: 'Agregar nuevo elemento',
+    label: 'Descripción del elemento:',
+    placeholder: 'Escribe la descripción aquí...',
+    confirmButtonText: 'Agregar',
+  };
+
+  editItemModalData = {
+    title: 'Editar elemento existente',
+    label: 'Modificar descripción:',
+    placeholder: 'Actualiza la descripción...',
+    currentValue: 'Descripción actual del elemento',
+    confirmButtonText: 'Actualizar',
+  };
+
+  /* ===== MODAL METHODS ===== */
+  showAlert(type: string): void {
+    this.currentModalType = type;
+    this.showAlertModal = true;
   }
 
-  onConfirmConfirmed() {
-    this.confirmConfirmed.emit();
+  showConfirm(type: string): void {
+    this.currentModalType = type;
+    this.showConfirmModal = true;
   }
 
-  onConfirmCancelled() {
-    this.confirmCancelled.emit();
+  showTextModal(type: string): void {
+    this.currentModalType = type;
+    this.showModal = true;
   }
 
-  onConfirmThirdAction() {
-    this.confirmThirdAction.emit();
+  onAlertClosed(): void {
+    this.showAlertModal = false;
+    console.log('Modal de alerta cerrado');
   }
 
-  onModalConfirmed(text: string) {
-    this.modalConfirmed.emit(text);
+  onConfirmConfirmed(): void {
+    console.log('Acción confirmada');
+    this.showConfirmModal = false;
   }
 
-  onModalClosed() {
-    this.modalClosed.emit();
+  onConfirmCancelled(): void {
+    console.log('Acción cancelada');
+    this.showConfirmModal = false;
   }
 
-  showAlert(type: string) {
-    this.showAlertEvent.emit(type);
+  onConfirmThirdAction(): void {
+    console.log('Tercera acción ejecutada');
+    this.showConfirmModal = false;
   }
 
-  showConfirm(type: string) {
-    this.showConfirmEvent.emit(type);
+  onModalConfirmed(text: string): void {
+    console.log('Texto del modal:', text);
+    this.showModal = false;
   }
 
-  showTextModal(type: string) {
-    this.showTextModalEvent.emit(type);
+  onModalClosed(): void {
+    console.log('Modal cerrado');
+    this.showModal = false;
+  }
+
+  /* ===== MODAL GETTERS ===== */
+  get currentAlertData() {
+    switch (this.currentModalType) {
+      case 'success':
+        return this.successAlertData;
+      case 'warning':
+        return this.warningAlertData;
+      case 'danger':
+        return this.dangerAlertData;
+      case 'info':
+        return this.infoAlertData;
+      default:
+        return this.successAlertData;
+    }
+  }
+
+  get currentConfirmData() {
+    switch (this.currentModalType) {
+      case 'delete':
+        return this.deleteConfirmData;
+      case 'save':
+        return this.saveConfirmData;
+      default:
+        return this.deleteConfirmData;
+    }
+  }
+
+  get currentModalData() {
+    switch (this.currentModalType) {
+      case 'add':
+        return this.addItemModalData;
+      case 'edit':
+        return this.editItemModalData;
+      default:
+        return this.addItemModalData;
+    }
   }
 }
+
+// Para eliminar importaciones no utilizadas sin instalar nada:
+// En VS Code:
+// 1. Presiona Ctrl + Shift + P (Windows/Linux) o Cmd + Shift + P (Mac)
+// 2. Escribe "Organize Imports" y selecciona la opción
+// 3. O usa directamente el atajo: Alt + Shift + O
+
+// Esto funciona nativamente en VS Code sin necesidad de instalar plugins adicionales

@@ -42,6 +42,8 @@ export type DropdownSize = 'sm' | 'md' | 'lg';
           class="dropdown-select"
           [value]="selectedValue"
           (change)="onSelectionChange($event)"
+          (focus)="onFocus()"
+          (blur)="onBlur()"
           [disabled]="disabled"
         >
           @for (option of options; track option.value) {
@@ -61,17 +63,18 @@ export type DropdownSize = 'sm' | 'md' | 'lg';
             <polyline points="6,9 12,15 18,9"></polyline>
           </svg>
         </div>
-
-        @if (showTooltip && tooltip) {
-        <openiis-tooltip
-          [text]="tooltip"
-          position="top"
-          variant="default"
-          [visible]="showTooltip"
-        >
-        </openiis-tooltip>
-        }
       </div>
+
+      <!-- Tooltip fuera del dropdown-wrapper para evitar conflictos con select nativo -->
+      @if (showTooltip && tooltip && !isOpen) {
+      <openiis-tooltip
+        [text]="tooltip"
+        [position]="tooltipPosition"
+        [variant]="variant"
+        [visible]="showTooltip"
+      >
+      </openiis-tooltip>
+      }
     </div>
   `,
   styleUrls: ['./dropdown.component.css'],
@@ -92,6 +95,12 @@ export class OpeniisDropdownComponent implements OnInit, OnChanges {
   /** Texto del tooltip */
   @Input() tooltip?: string;
 
+  /** Posición del tooltip */
+  @Input() tooltipPosition: 'top' | 'bottom' | 'left' | 'right' = 'top';
+
+  /** Permite búsqueda por descripción también */
+  @Input() variant: 'default' | 'danger' = 'default';
+
   /** Estado deshabilitado */
   @Input() disabled: boolean = false;
 
@@ -100,6 +109,9 @@ export class OpeniisDropdownComponent implements OnInit, OnChanges {
 
   /** Estado del tooltip */
   showTooltip: boolean = false;
+
+  /** Estado del dropdown */
+  isOpen: boolean = false;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -115,6 +127,7 @@ export class OpeniisDropdownComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.updateSelectValue();
     }, 0);
+    this.showTooltip = false;
   }
 
   /**
@@ -154,5 +167,15 @@ export class OpeniisDropdownComponent implements OnInit, OnChanges {
   /** Oculta el tooltip */
   onMouseLeave(): void {
     this.showTooltip = false;
+  }
+
+  /** Maneja el foco del select */
+  onFocus(): void {
+    this.isOpen = true;
+  }
+
+  /** Maneja la pérdida de foco del select */
+  onBlur(): void {
+    this.isOpen = false;
   }
 }

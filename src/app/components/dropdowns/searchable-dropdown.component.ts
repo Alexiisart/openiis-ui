@@ -97,8 +97,8 @@ export type SearchableDropdownSize = 'sm' | 'md' | 'lg';
         } @if (showTooltip && tooltip && !isOpen) {
         <openiis-tooltip
           [text]="tooltip"
-          position="top"
-          variant="default"
+          [position]="tooltipPosition"
+          [variant]="variant"
           [visible]="showTooltip"
         >
         </openiis-tooltip>
@@ -132,6 +132,12 @@ export class OpeniisSearchableDropdownComponent implements OnInit, OnChanges {
 
   /** Permite búsqueda por descripción también */
   @Input() searchInDescription: boolean = true;
+
+  /** Variante del dropdown */
+  @Input() variant: 'default' | 'danger' = 'default';
+
+  /** Posición del tooltip */
+  @Input() tooltipPosition: 'top' | 'bottom' | 'left' | 'right' = 'top';
 
   /** Emite cuando cambia la selección */
   @Output() selectionChanged = new EventEmitter<string>();

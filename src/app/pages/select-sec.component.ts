@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisDropdownComponent } from '../components';
 import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/searchable-dropdown.component';
@@ -12,9 +12,8 @@ import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/sear
     OpeniisSearchableDropdownComponent,
   ],
   template: `
-    <!-- Sección de Selecciones -->
     <section class="demo-section">
-      <h2>Selecciones - Todas las Variantes</h2>
+      <h2>Selectores</h2>
 
       <div class="demo-subsection">
         <h3>Dropdowns</h3>
@@ -191,47 +190,65 @@ import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/sear
   `,
 })
 export class SelectSecComponent {
-  @Input() dropdownOptions!: {
-    value: string;
-    label: string;
-  }[];
-  @Input() selectedDropdownValue = '';
-  @Input() searchableProductsOptions!: {
-    value: string;
-    label: string;
-    description: string;
-  }[];
-  @Input() selectedSearchableProduct = '';
-  @Input() searchableCountriesOptions!: {
-    value: string;
-    label: string;
-    description: string;
-  }[];
-  @Input() selectedSearchableCountry = '';
-  @Input() citiesOptions!: {
-    value: string;
-    label: string;
-  }[];
-  @Input() selectedCity = '';
+  dropdownOptions = [
+    { value: 'option1', label: 'Opción 1' },
+    { value: 'option2', label: 'Opción 2' },
+    { value: 'option3', label: 'Opción 3' },
+    { value: 'option4', label: 'Opción 4' },
+  ];
 
-  @Output() dropdownChange = new EventEmitter<string>();
-  @Output() searchableProductChange = new EventEmitter<string>();
-  @Output() searchableCountryChange = new EventEmitter<string>();
-  @Output() cityChange = new EventEmitter<string>();
+  citiesOptions = [
+    { value: 'madrid', label: 'Madrid' },
+    { value: 'barcelona', label: 'Barcelona' },
+    { value: 'valencia', label: 'Valencia' },
+    { value: 'sevilla', label: 'Sevilla' },
+  ];
 
-  onDropdownChange(value: string) {
-    this.dropdownChange.emit(value);
+  countriesOptions = [
+    { value: 'es', label: 'España' },
+    { value: 'fr', label: 'Francia' },
+    { value: 'it', label: 'Italia' },
+    { value: 'pt', label: 'Portugal' },
+  ];
+
+  searchableProductsOptions = [
+    { value: 'product1', label: 'Producto 1' },
+    { value: 'product2', label: 'Producto 2' },
+    { value: 'product3', label: 'Producto 3' },
+    { value: 'product4', label: 'Producto 4' },
+  ];
+
+  searchableCountriesOptions = [
+    { value: 'es', label: 'España' },
+    { value: 'fr', label: 'Francia' },
+    { value: 'it', label: 'Italia' },
+    { value: 'pt', label: 'Portugal' },
+  ];
+
+  selectedDropdownValue = 'option1';
+  selectedCity = 'madrid';
+  selectedCountry = 'es';
+  selectedSearchableProduct = '';
+  selectedSearchableCountry = 'es';
+
+  /* ===== DROPDOWN METHODS ===== */
+  onDropdownChange(value: string): void {
+    this.selectedDropdownValue = value;
+    console.log('Dropdown cambiado:', value);
   }
 
-  onSearchableProductChange(value: string) {
-    this.searchableProductChange.emit(value);
+  onCityChange(value: string): void {
+    this.selectedCity = value;
+    console.log('Ciudad cambiada:', value);
   }
 
-  onSearchableCountryChange(value: string) {
-    this.searchableCountryChange.emit(value);
+  onSearchableProductChange(value: string): void {
+    this.selectedSearchableProduct = value;
+    console.log('Producto seleccionado:', value);
   }
 
-  onCityChange(value: string) {
-    this.cityChange.emit(value);
+  onSearchableCountryChange(value: string): void {
+    this.selectedSearchableCountry = value;
+    console.log('País con búsqueda seleccionado:', value);
   }
 }

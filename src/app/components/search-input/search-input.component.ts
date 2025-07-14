@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OpeniisInputComponent } from '../input';
+import { InputVariant, OpeniisInputComponent } from '../input';
 
 /**
  * Componente de barra de búsqueda reutilizable
@@ -18,9 +18,9 @@ import { OpeniisInputComponent } from '../input';
         [value]="searchTerm"
         iconLeft="search"
         [clearable]="true"
-        size="md"
-        variant="default"
-        extraClasses="search-input-custom"
+        [size]="size"
+        [variant]="variant"
+        class="search-input-custom"
         (valueChange)="onSearchChange($event)"
         (keydownEvent)="onKeyDown($event)"
       ></openiis-input>
@@ -32,7 +32,6 @@ import { OpeniisInputComponent } from '../input';
         display: flex;
         justify-content: flex-start;
         width: 100%;
-        max-width: 400px;
       }
 
       /* Estilos personalizados para el input de búsqueda */
@@ -54,6 +53,9 @@ export class OpeniisSearchInputComponent {
    * Término de búsqueda actual
    */
   @Input() searchTerm: string = '';
+
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
+  @Input() variant: InputVariant = 'default';
 
   /**
    * Placeholder del input de búsqueda

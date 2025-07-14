@@ -25,7 +25,7 @@ El componente Breadcrumb proporciona navegación jerárquica que muestra la ubic
 ```typescript
 export class MyComponent {
   breadcrumbItems: BreadcrumbItem[] = [
-    { label: "Inicio", url: "/", icon: "fas fa-home" },
+    { label: "Inicio", url: "/", icon: "home" },
     { label: "Productos", url: "/products" },
     { label: "Electrónicos", url: "/products/electronics" },
     { label: "Smartphones", active: true },
@@ -117,15 +117,6 @@ type BreadcrumbSeparator = "chevron" | "slash" | "arrow" | "dot" | "pipe" | "cus
 
 <!-- Pills -->
 <app-breadcrumb [items]="items" variant="pills"></app-breadcrumb>
-
-<!-- Arrows -->
-<app-breadcrumb [items]="items" variant="arrows"></app-breadcrumb>
-
-<!-- Slash -->
-<app-breadcrumb [items]="items" variant="slash"></app-breadcrumb>
-
-<!-- Dots -->
-<app-breadcrumb [items]="items" variant="dots"></app-breadcrumb>
 ```
 
 ### Tamaños
@@ -144,9 +135,6 @@ type BreadcrumbSeparator = "chevron" | "slash" | "arrow" | "dot" | "pipe" | "cus
 ### Separadores
 
 ```html
-<!-- Chevron -->
-<app-breadcrumb [items]="items" separator="chevron"></app-breadcrumb>
-
 <!-- Slash -->
 <app-breadcrumb [items]="items" separator="slash"></app-breadcrumb>
 
@@ -167,10 +155,10 @@ type BreadcrumbSeparator = "chevron" | "slash" | "arrow" | "dot" | "pipe" | "cus
 
 ```typescript
 breadcrumbItems: BreadcrumbItem[] = [
-  { label: 'Inicio', url: '/', icon: 'fas fa-home' },
-  { label: 'Usuarios', url: '/users', icon: 'fas fa-users' },
-  { label: 'Perfil', url: '/users/profile', icon: 'fas fa-user' },
-  { label: 'Configuración', active: true, icon: 'fas fa-cog' }
+  { label: 'Inicio', url: '/', icon: 'home' },
+  { label: 'Usuarios', url: '/users', icon: 'users' },
+  { label: 'Perfil', url: '/users/profile', icon: 'user' },
+  { label: 'Configuración', active: true, icon: 'cog' }
 ];
 ```
 
@@ -259,8 +247,8 @@ export class BreadcrumbExample {
 })
 export class ProductPageComponent {
   productBreadcrumb: BreadcrumbItem[] = [
-    { label: "Inicio", url: "/", icon: "fas fa-home" },
-    { label: "Tienda", url: "/shop", icon: "fas fa-store" },
+    { label: "Inicio", url: "/", icon: "home" },
+    { label: "Tienda", url: "/shop", icon: "store" },
     { label: "Electrónicos", url: "/shop/electronics" },
     { label: "Smartphones", url: "/shop/electronics/smartphones" },
     { label: "iPhone 15", active: true },
@@ -282,8 +270,8 @@ export class ProductPageComponent {
 })
 export class AdminPanelComponent {
   adminBreadcrumb: BreadcrumbItem[] = [
-    { label: "Dashboard", url: "/admin", icon: "fas fa-tachometer-alt" },
-    { label: "Usuarios", url: "/admin/users", icon: "fas fa-users" },
+    { label: "Dashboard", url: "/admin", icon: "tachometer-alt" },
+    { label: "Usuarios", url: "/admin/users", icon: "users" },
     { label: "Gestión", url: "/admin/users/management" },
     { label: "Editar Usuario", active: true },
   ];
@@ -309,7 +297,7 @@ export class AdminPanelComponent {
 })
 export class DocumentationComponent {
   docsBreadcrumb: BreadcrumbItem[] = [
-    { label: "Documentación", url: "/docs", icon: "fas fa-book" },
+    { label: "Documentación", url: "/docs", icon: "book" },
     { label: "Guías", url: "/docs/guides" },
     { label: "Desarrollo", url: "/docs/guides/development" },
     { label: "Componentes", url: "/docs/guides/development/components" },
@@ -326,7 +314,7 @@ export class DocumentationComponent {
 })
 export class FileManagerComponent {
   folderBreadcrumb: BreadcrumbItem[] = [
-    { label: "Archivos", url: "/files", icon: "fas fa-folder" },
+    { label: "Archivos", url: "/files", icon: "folder" },
     { label: "Documentos", url: "/files/documents" },
     { label: "Proyectos", url: "/files/documents/projects" },
     { label: "Mi Proyecto", active: true },

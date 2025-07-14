@@ -4,10 +4,10 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "inter", sans-serif;
 }
 
 body {
-  font-family: "inter", sans-serif;
   background-color: var(--color-background);
 }
 
@@ -15,24 +15,6 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--space-12) var(--space-5);
-}
-
-.theme-toggle-container {
-  position: fixed;
-  top: var(--space-5);
-  right: var(--space-5);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-@media (max-width: 768px) {
-  .theme-toggle-container {
-    position: absolute;
-    top: var(--space-2);
-    right: var(--space-2);
-  }
 }
 
 .demo-container h1 {
@@ -51,7 +33,12 @@ body {
 }
 
 .demo-section {
-  margin-bottom: calc(var(--space-12) + var(--space-8));
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.demo-section:last-child {
+  border-bottom: none;
 }
 
 .demo-section h2 {
@@ -59,10 +46,6 @@ body {
   font-size: 1.875rem;
   font-weight: 600;
   color: var(--color-text-primary);
-}
-
-.demo-subsection {
-  margin-bottom: var(--space-12);
 }
 
 .demo-subsection h3 {
@@ -92,7 +75,7 @@ body {
 
 .demo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: var(--space-8);
   margin-top: var(--space-6);
 }

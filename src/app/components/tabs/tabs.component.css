@@ -241,7 +241,6 @@
 .tabs-content {
   flex: 1;
   background: var(--color-background);
-  padding: var(--space-4);
 }
 
 .tabs-content-vertical {

@@ -140,7 +140,6 @@
   height: var(--spinner-size, 24px);
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 .spinner-circle-inner {
