@@ -1,0 +1,14 @@
+[build]
+  command = "ng build --configuration=production"
+  publish = "dist/browser"
+
+[[redirects]]
+  from = "https://*.netlify.app/*"
+  to = "https://ui.openiis.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
