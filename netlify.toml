@@ -1,6 +1,6 @@
 [build]
   command = "ng build --configuration=production"
-  publish = "dist/browser"
+  publish = "dist/openiis-ui-test/browser"
 
 [[redirects]]
   from = "https://*.netlify.app/*"
