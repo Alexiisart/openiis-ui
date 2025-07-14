@@ -357,12 +357,194 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
   `,
 })
 export class CardSecComponent {
-  @Input() cardActionButtons: CardButton[] = [];
-  @Input() productCardButtons: CardButton[] = [];
-  @Input() userCardButtons: CardButton[] = [];
-  @Input() onCardActionButtonClick: (event: {
+  /* ===== CARD SECTION ===== */
+  cardActionButtons: CardButton[] = [
+    {
+      id: 'edit',
+      icon: 'edit',
+      tooltip: 'Editar',
+      variant: 'outline-primary',
+      ariaLabel: 'Editar elemento',
+    },
+    {
+      id: 'share',
+      icon: 'share',
+      tooltip: 'Compartir',
+      variant: 'outline-secondary',
+      ariaLabel: 'Compartir elemento',
+    },
+    {
+      id: 'delete',
+      icon: 'delete',
+      tooltip: 'Eliminar',
+      variant: 'outline-danger',
+      ariaLabel: 'Eliminar elemento',
+    },
+  ];
+
+  productCardButtons: CardButton[] = [
+    {
+      id: 'favorite',
+      icon: 'favorite',
+      tooltip: 'Agregar a favoritos',
+      variant: 'outline-danger',
+      ariaLabel: 'Agregar a favoritos',
+    },
+    {
+      id: 'cart',
+      icon: 'shopping_cart',
+      tooltip: 'Agregar al carrito',
+      variant: 'outline-success',
+      ariaLabel: 'Agregar al carrito',
+    },
+    {
+      id: 'view',
+      icon: 'visibility',
+      tooltip: 'Ver detalles',
+      variant: 'outline-primary',
+      ariaLabel: 'Ver detalles',
+    },
+  ];
+
+  userCardButtons: CardButton[] = [
+    {
+      id: 'message',
+      icon: 'message',
+      tooltip: 'Enviar mensaje',
+      variant: 'outline-primary',
+      ariaLabel: 'Enviar mensaje',
+    },
+    {
+      id: 'call',
+      icon: 'phone',
+      tooltip: 'Llamar',
+      variant: 'outline-success',
+      ariaLabel: 'Llamar',
+    },
+    {
+      id: 'more',
+      icon: 'more_vert',
+      tooltip: 'Más opciones',
+      variant: 'outline-secondary',
+      ariaLabel: 'Más opciones',
+    },
+  ];
+
+  /* ===== CARD METHODS ===== */
+  showConfirmModal = false;
+  currentModalType = '';
+
+  showConfirm(type: string): void {
+    this.currentModalType = type;
+    this.showConfirmModal = true;
+  }
+
+  onCardActionButtonClick(event: {
     buttonId: string;
     event: MouseEvent;
-  }) => void = () => {};
-  @Input() onButtonClick: (buttonId: string) => void = () => {};
+  }): void {
+    console.log(`Botón de card ${event.buttonId} clickeado`);
+
+    switch (event.buttonId) {
+      case 'edit':
+        this.showToastMessage('info');
+        break;
+      case 'share':
+        this.showToastMessage('success');
+        break;
+      case 'delete':
+        this.showConfirm('delete');
+        break;
+      case 'favorite':
+        this.showToastMessage('warning');
+        break;
+      case 'cart':
+        this.showToastMessage('success');
+        break;
+      case 'view':
+        this.showToastMessage('info');
+        break;
+      case 'message':
+        this.showToastMessage('info');
+        break;
+      case 'call':
+        this.showToastMessage('success');
+        break;
+      case 'more':
+        this.showToastMessage('info');
+        break;
+      default:
+        console.log('Acción no reconocida');
+    }
+  }
+
+  /* ===== TOAST METHODS ===== */
+  showSuccessToast = false;
+  showWarningToast = false;
+  showDangerToast = false;
+  showInfoToast = false;
+
+  showToastMessage(type: string): void {
+    switch (type) {
+      case 'success':
+        this.showSuccessToast = true;
+        break;
+      case 'warning':
+        this.showWarningToast = true;
+        break;
+      case 'danger':
+        this.showDangerToast = true;
+        break;
+      case 'info':
+        this.showInfoToast = true;
+        break;
+    }
+  }
+
+  onToastClosed(type: string): void {
+    switch (type) {
+      case 'success':
+        this.showSuccessToast = false;
+        break;
+      case 'warning':
+        this.showWarningToast = false;
+        break;
+      case 'danger':
+        this.showDangerToast = false;
+        break;
+      case 'info':
+        this.showInfoToast = false;
+        break;
+    }
+    console.log(`Toast ${type} cerrado`);
+  }
+
+  /* ===== BUTTON METHODS ===== */
+  loadingButton = false;
+  loadingButton2 = false;
+
+  onButtonClick(buttonType: string): void {
+    console.log(`Botón ${buttonType} clickeado`);
+    if (buttonType === 'loading1') {
+      this.loadingButton = true;
+      setTimeout(() => {
+        this.loadingButton = false;
+      }, 2000);
+    } else if (buttonType === 'loading2') {
+      this.loadingButton2 = true;
+      setTimeout(() => {
+        this.loadingButton2 = false;
+      }, 2000);
+    } else if (buttonType === 'fab-loading') {
+      this.loadingButton = true;
+      setTimeout(() => {
+        this.loadingButton = false;
+      }, 2000);
+    } else if (buttonType === 'fab-loading-extended') {
+      this.loadingButton2 = true;
+      setTimeout(() => {
+        this.loadingButton2 = false;
+      }, 2000);
+    }
+  }
 }

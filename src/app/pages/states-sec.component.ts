@@ -121,19 +121,16 @@ import { OpeniisEmptyStateComponent } from '../components/empty-state/empty-stat
   `,
 })
 export class StatesSecComponent {
-  @Output() emptyStateButtonClick = new EventEmitter<void>();
-  @Output() emptyStateSearch = new EventEmitter<void>();
-  @Output() emptyStateError = new EventEmitter<void>();
-
+  /* ===== EMPTY STATE METHODS ===== */
   onEmptyStateButtonClick(): void {
-    this.emptyStateButtonClick.emit();
+    console.log('Botón de estado vacío clickeado');
   }
 
   onEmptyStateSearch(): void {
-    this.emptyStateSearch.emit();
+    console.log('Botón de búsqueda vacía clickeado');
   }
 
   onEmptyStateError(): void {
-    this.emptyStateError.emit();
+    console.log('Botón de error clickeado');
   }
 }

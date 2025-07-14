@@ -144,10 +144,11 @@ import { OpeniisTooltipComponent } from '../components/tooltip/tooltip.component
   `,
 })
 export class TooltipSecComponent {
-  @Input() showTooltipTop = false;
-  @Input() showTooltipBottom = false;
-  @Input() showTooltipLeft = false;
-  @Input() showTooltipRight = false;
-  @Input() showTooltipDefault = false;
-  @Input() showTooltipDanger = false;
+  /* ===== TOOLTIP SECTION ===== */
+  showTooltipTop = false;
+  showTooltipBottom = false;
+  showTooltipLeft = false;
+  showTooltipRight = false;
+  showTooltipDefault = false;
+  showTooltipDanger = false;
 }

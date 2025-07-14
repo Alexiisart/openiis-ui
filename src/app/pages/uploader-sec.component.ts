@@ -208,13 +208,107 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
   imports: [OpeniisUploaderComponent],
 })
 export class UploaderSecComponent {
-  @Input() basicUploadConfig!: UploadConfig;
-  @Input() compactUploadConfig!: UploadConfig;
-  @Input() imageUploadConfig!: UploadConfig;
-  @Input() avatarUploadConfig!: UploadConfig;
-  @Input() documentUploadConfig!: UploadConfig;
-  @Input() onFilesAdded!: (files: FileUploadItem[]) => void;
-  @Input() onAvatarUploaded!: (file: FileUploadItem) => void;
-  @Input() onDocumentsAdded!: (files: FileUploadItem[]) => void;
-  @Input() onGalleryUploaded!: (files: FileUploadItem[]) => void;
+  basicUploadConfig: UploadConfig = {
+    maxFileSize: 10,
+    allowedTypes: ['image/*', 'application/pdf', '.doc', '.docx'],
+    maxFiles: 5,
+  };
+
+  imageUploadConfig: UploadConfig = {
+    maxFileSize: 5,
+    allowedTypes: ['image/*'],
+    maxFiles: 10,
+    enableResize: true,
+    compressionQuality: 0.8,
+  };
+
+  documentUploadConfig: UploadConfig = {
+    maxFileSize: 20,
+    allowedTypes: [
+      'application/pdf',
+      '.doc',
+      '.docx',
+      '.xls',
+      '.xlsx',
+      '.ppt',
+      '.pptx',
+    ],
+    maxFiles: 5,
+  };
+
+  avatarUploadConfig: UploadConfig = {
+    maxFileSize: 2,
+    allowedTypes: ['image/jpeg', 'image/png'],
+    maxFiles: 1,
+    enableResize: true,
+    maxWidth: 400,
+    maxHeight: 400,
+  };
+
+  compactUploadConfig: UploadConfig = {
+    maxFileSize: 5,
+    allowedTypes: ['*'],
+    maxFiles: 3,
+  };
+
+  onFilesAdded(files: FileUploadItem[]): void {
+    console.log('Archivos agregados:', files);
+    files.forEach((fileItem) => {
+      console.log(`Archivo: ${fileItem.name}, Tamaño: ${fileItem.size} bytes`);
+    });
+  }
+
+  onFileRemoved(fileId: string): void {
+    console.log('Archivo eliminado:', fileId);
+  }
+
+  onFilesCleared(): void {
+    console.log('Todos los archivos eliminados');
+  }
+
+  onUploadCompleted(files: FileUploadItem[]): void {
+    console.log('Archivos listos:', files);
+    this.showToastMessage('success');
+  }
+
+  onUploadError(error: { file: FileUploadItem; error: string }): void {
+    console.log('Error con archivo:', error);
+    this.showToastMessage('danger');
+  }
+
+  onAvatarUploaded(file: FileUploadItem): void {
+    console.log('Avatar seleccionado:', file);
+    this.showToastMessage('success');
+  }
+
+  onDocumentsAdded(files: FileUploadItem[]): void {
+    console.log('Documentos agregados:', files);
+  }
+
+  onGalleryUploaded(files: FileUploadItem[]): void {
+    console.log('Imágenes agregadas a galería:', files);
+  }
+
+  /* ===== TOAST METHODS ===== */
+  showSuccessToast = false;
+  showWarningToast = false;
+  showDangerToast = false;
+  showInfoToast = false;
+
+  showToastMessage(type: string): void {
+    switch (type) {
+      case 'success':
+        this.showSuccessToast = true;
+        break;
+      case 'warning':
+        this.showWarningToast = true;
+        break;
+      case 'danger':
+        this.showDangerToast = true;
+        break;
+      case 'info':
+        this.showInfoToast = true;
+        break;
+    }
+  }
 }

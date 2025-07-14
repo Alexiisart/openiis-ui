@@ -93,23 +93,68 @@ import { OpeniisToastComponent } from '../components';
   `,
 })
 export class NotificationSecComponent {
-  @Input() showSuccessToast = false;
-  @Input() showWarningToast = false;
-  @Input() showDangerToast = false;
-  @Input() showInfoToast = false;
-  @Input() successToastData: any;
-  @Input() warningToastData: any;
-  @Input() dangerToastData: any;
-  @Input() infoToastData: any;
+  showSuccessToast = false;
+  showWarningToast = false;
+  showDangerToast = false;
+  showInfoToast = false;
 
-  @Output() toastClosed = new EventEmitter<string>();
-  @Output() showToastEvent = new EventEmitter<string>();
-
-  onToastClosed(type: string) {
-    this.toastClosed.emit(type);
+  showToastMessage(type: string): void {
+    switch (type) {
+      case 'success':
+        this.showSuccessToast = true;
+        break;
+      case 'warning':
+        this.showWarningToast = true;
+        break;
+      case 'danger':
+        this.showDangerToast = true;
+        break;
+      case 'info':
+        this.showInfoToast = true;
+        break;
+    }
   }
 
-  showToastMessage(type: string) {
-    this.showToastEvent.emit(type);
+  onToastClosed(type: string): void {
+    switch (type) {
+      case 'success':
+        this.showSuccessToast = false;
+        break;
+      case 'warning':
+        this.showWarningToast = false;
+        break;
+      case 'danger':
+        this.showDangerToast = false;
+        break;
+      case 'info':
+        this.showInfoToast = false;
+        break;
+    }
+    console.log(`Toast ${type} cerrado`);
   }
+
+  /* ===== TOAST SECTION ===== */
+  successToastData = {
+    message: '¡Éxito! La operación se completó correctamente.',
+    type: 'success' as const,
+    duration: 3000,
+  };
+
+  warningToastData = {
+    message: 'Advertencia: Verifica los datos antes de continuar.',
+    type: 'warning' as const,
+    duration: 3000,
+  };
+
+  dangerToastData = {
+    message: 'Error: No se pudo completar la operación.',
+    type: 'danger' as const,
+    duration: 3000,
+  };
+
+  infoToastData = {
+    message: 'Información: Funcionalidad actualizada disponible.',
+    type: 'info' as const,
+    duration: 3000,
+  };
 }

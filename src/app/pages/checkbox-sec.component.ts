@@ -246,51 +246,100 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
   `,
 })
 export class CheckboxSecComponent {
-  @Input() basicCheckbox = false;
-  @Input() primaryCheckbox = false;
-  @Input() successCheckbox = false;
-  @Input() warningCheckbox = false;
-  @Input() dangerCheckbox = false;
-  @Input() subtleCheckbox = false;
-  @Input() outlineCheckbox = false;
-  @Input() indeterminateCheckbox = false;
-  @Input() disabledCheckbox = true;
-  @Input() acceptTerms = false;
-  @Input() subscribeNewsletter = false;
-  @Input() requiredField = false;
-  @Input() notificationEmail = false;
-  @Input() notificationPush = false;
-  @Input() notificationSMS = false;
-  @Input() allNotifications = false;
-  @Input() someNotifications = false;
-  @Input() checkboxWithTooltip = false;
-  @Input() loadingCheckbox = false;
-  @Input() loadingCheckboxValue = false;
-  @Input() validatedCheckbox = false;
+  /* ===== CHECKBOX SECTION ===== */
+  basicCheckbox = false;
+  primaryCheckbox = true;
+  successCheckbox = false;
+  warningCheckbox = true;
+  dangerCheckbox = false;
+  subtleCheckbox = false;
+  outlineCheckbox = true;
+  disabledCheckbox = true;
+  indeterminateCheckbox = false;
+  acceptTerms = false;
+  subscribeNewsletter = false;
+  requiredField = false;
+  notificationEmail = false;
+  notificationPush = true;
+  notificationSMS = false;
+  checkboxWithTooltip = false;
+  loadingCheckbox = true;
+  loadingCheckboxValue = false;
+  validatedCheckbox = true;
 
-  @Output() checkboxChange = new EventEmitter<{
-    checked: boolean;
-    type: string;
-  }>();
+  get allNotifications(): boolean {
+    return (
+      this.notificationEmail && this.notificationPush && this.notificationSMS
+    );
+  }
 
-  onCheckboxChange(checked: boolean, type: string) {
-    this.checkboxChange.emit({ checked, type });
+  get someNotifications(): boolean {
+    const checkedCount = [
+      this.notificationEmail,
+      this.notificationPush,
+      this.notificationSMS,
+    ].filter(Boolean).length;
+    return checkedCount > 0 && checkedCount < 3;
+  }
+
+  /* ===== CHECKBOX METHODS ===== */
+  onCheckboxChange(checked: boolean, type: string): void {
+    switch (type) {
+      case 'basic':
+        this.basicCheckbox = checked;
+        break;
+      case 'primary':
+        this.primaryCheckbox = checked;
+        break;
+      case 'success':
+        this.successCheckbox = checked;
+        break;
+      case 'warning':
+        this.warningCheckbox = checked;
+        break;
+      case 'danger':
+        this.dangerCheckbox = checked;
+        break;
+      case 'subtle':
+        this.subtleCheckbox = checked;
+        break;
+      case 'outline':
+        this.outlineCheckbox = checked;
+        break;
+      case 'indeterminate':
+        this.indeterminateCheckbox = checked;
+        break;
+      case 'acceptTerms':
+        this.acceptTerms = checked;
+        break;
+      case 'subscribeNewsletter':
+        this.subscribeNewsletter = checked;
+        break;
+      case 'requiredField':
+        this.requiredField = checked;
+        break;
+      case 'notificationEmail':
+        this.notificationEmail = checked;
+        break;
+      case 'notificationPush':
+        this.notificationPush = checked;
+        break;
+      case 'notificationSMS':
+        this.notificationSMS = checked;
+        break;
+      case 'checkboxWithTooltip':
+        this.checkboxWithTooltip = checked;
+        break;
+      case 'validatedCheckbox':
+        this.validatedCheckbox = checked;
+        break;
+    }
+    console.log(`Checkbox ${type} cambiado:`, checked);
   }
 
   onSelectAllNotifications(checked: boolean) {
-    this.allNotifications = checked;
-    this.someNotifications = checked;
-  }
-
-  onCheckboxWithTooltipChange(checked: boolean) {
-    this.checkboxWithTooltip = checked;
-  }
-
-  onLoadingCheckboxChange(checked: boolean) {
-    this.loadingCheckbox = checked;
-  }
-
-  onValidatedCheckboxChange(checked: boolean) {
-    this.validatedCheckbox = checked;
+    this.notificationEmail = checked;
+    this.notificationPush = checked;
+    this.notificationSMS = checked;
   }
 }

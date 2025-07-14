@@ -160,16 +160,36 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
   `,
 })
 export class RadioSecComponent {
-  @Input() selectedSize = 'md';
-  @Input() selectedGender = 'md';
-  @Input() selectedNotificationLevel = 'md';
+  /* ===== RADIO BUTTON SECTION ===== */
+  selectedGender = '';
+  selectedPlan = '';
+  selectedNotificationLevel = '';
+  selectedPaymentMethod = '';
+  selectedShippingMethod = '';
+  selectedSize = '';
 
-  @Output() radioChange = new EventEmitter<{
-    value: string;
-    group: string;
-  }>();
-
-  onRadioButtonChange(value: string, group: string) {
-    this.radioChange.emit({ value, group });
+  /* ===== RADIO BUTTON METHODS ===== */
+  onRadioButtonChange(value: any, type: string): void {
+    console.log(`Radio button ${type} cambiado a:`, value);
+    switch (type) {
+      case 'gender':
+        this.selectedGender = value;
+        break;
+      case 'plan':
+        this.selectedPlan = value;
+        break;
+      case 'notification':
+        this.selectedNotificationLevel = value;
+        break;
+      case 'payment':
+        this.selectedPaymentMethod = value;
+        break;
+      case 'shipping':
+        this.selectedShippingMethod = value;
+        break;
+      case 'size':
+        this.selectedSize = value;
+        break;
+    }
   }
 }

@@ -87,18 +87,27 @@ import { OpeniisDateInputComponent } from '../components/input-date/date-input.c
   `,
 })
 export class DateSecComponent {
-  @Input() basicDateValue: string | null = null;
-  @Input() futureDate: string | null = null;
-  @Input() overdueDate: string | null = null;
-  @Input() disabledDate: string | null = null;
-  @Input() futureDateMinimum: string = new Date().toISOString();
+  /* ===== DATE SECTION ===== */
+  basicDateValue: string | null = null;
+  overdueDate: string | null = '2024-01-01T00:00:00.000Z';
+  futureDate: string | null = null;
+  disabledDate: string | null = null;
 
-  @Output() dateChange = new EventEmitter<{
-    value: string | null;
-    type: string;
-  }>();
+  get futureDateMinimum(): string {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  }
 
-  onDateChange(value: string | null, type: string) {
-    this.dateChange.emit({ value, type });
+  /* ===== DATE METHODS ===== */
+  onDateChange(date: string | null, type: string): void {
+    switch (type) {
+      case 'basic':
+        this.basicDateValue = date;
+        break;
+      case 'future':
+        this.futureDate = date;
+        break;
+    }
+    console.log(`Fecha ${type} cambiada:`, date);
   }
 }

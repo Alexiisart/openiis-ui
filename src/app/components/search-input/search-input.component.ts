@@ -18,7 +18,7 @@ import { OpeniisInputComponent } from '../input';
         [value]="searchTerm"
         iconLeft="search"
         [clearable]="true"
-        size="md"
+        [size]="size"
         variant="default"
         extraClasses="search-input-custom"
         (valueChange)="onSearchChange($event)"
@@ -54,6 +54,8 @@ export class OpeniisSearchInputComponent {
    * Término de búsqueda actual
    */
   @Input() searchTerm: string = '';
+
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
 
   /**
    * Placeholder del input de búsqueda

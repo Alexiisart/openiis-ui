@@ -15,7 +15,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
   ],
   template: `
     <!-- Sección de Botones -->
-    <section class="demo-section">
+    <section id="basic-buttons" class="demo-section">
       <h2>Botones</h2>
 
       <div class="demo-subsection">
@@ -329,7 +329,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
     </section>
 
     <!-- Sección de Button Groups -->
-    <section class="demo-section">
+    <section id="grouped-buttons" class="demo-section">
       <h2>Grupos de Botones</h2>
 
       <div class="demo-subsection">
@@ -450,7 +450,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
     </section>
 
     <!-- Sección de FAB -->
-    <section class="demo-section">
+    <section id="floating-buttons" class="demo-section">
       <h2>FAB - Botones Flotantes</h2>
 
       <div class="demo-subsection">
@@ -591,11 +591,31 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
   `,
 })
 export class ButtonSecComponent {
-  @Input() loadingButton = false;
-  @Input() loadingButton2 = false;
-  @Output() buttonClick = new EventEmitter<string>();
+  loadingButton = false;
+  loadingButton2 = false;
 
-  onButtonClick(type: string): void {
-    this.buttonClick.emit(type);
+  onButtonClick(buttonType: string): void {
+    console.log(`Botón ${buttonType} clickeado`);
+    if (buttonType === 'loading1') {
+      this.loadingButton = true;
+      setTimeout(() => {
+        this.loadingButton = false;
+      }, 2000);
+    } else if (buttonType === 'loading2') {
+      this.loadingButton2 = true;
+      setTimeout(() => {
+        this.loadingButton2 = false;
+      }, 2000);
+    } else if (buttonType === 'fab-loading') {
+      this.loadingButton = true;
+      setTimeout(() => {
+        this.loadingButton = false;
+      }, 2000);
+    } else if (buttonType === 'fab-loading-extended') {
+      this.loadingButton2 = true;
+      setTimeout(() => {
+        this.loadingButton2 = false;
+      }, 2000);
+    }
   }
 }
