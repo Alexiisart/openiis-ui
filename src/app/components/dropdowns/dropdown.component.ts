@@ -63,17 +63,18 @@ export type DropdownSize = 'sm' | 'md' | 'lg';
             <polyline points="6,9 12,15 18,9"></polyline>
           </svg>
         </div>
-
-        @if (showTooltip && tooltip) {
-        <openiis-tooltip
-          [text]="tooltip"
-          [position]="tooltipPosition"
-          [variant]="variant"
-          [visible]="showTooltip"
-        >
-        </openiis-tooltip>
-        }
       </div>
+
+      <!-- Tooltip fuera del dropdown-wrapper para evitar conflictos con select nativo -->
+      @if (showTooltip && tooltip && !isOpen) {
+      <openiis-tooltip
+        [text]="tooltip"
+        [position]="tooltipPosition"
+        [variant]="variant"
+        [visible]="showTooltip"
+      >
+      </openiis-tooltip>
+      }
     </div>
   `,
   styleUrls: ['./dropdown.component.css'],

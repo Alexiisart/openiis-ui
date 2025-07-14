@@ -1,14 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   OpeniisInputComponent,
   OpeniisSearchInputComponent,
 } from '../components';
 import { OpeniisButtonComponent } from '../components/buttons/button.component';
-import {
-  InputVariant,
-  ValidationResult,
-} from '../components/input/input.component';
+import { InputVariant } from '../components/input/input.component';
 
 @Component({
   selector: 'app-input-sec',
@@ -21,10 +18,10 @@ import {
   ],
   template: `
     <!-- Sección de Entradas -->
-    <section class="demo-section">
+    <section id="basic-inputs" class="demo-section">
       <h2>Entradas</h2>
 
-      <div id="basic-inputs" class="demo-subsection">
+      <div class="demo-subsection">
         <h3>Tipos de Entrada</h3>
         <div class="demo-grid">
           <div class="demo-item">

@@ -1,23 +1,5 @@
 <div class="layout">
   <div class="sidebar">
-    <div class="logo-container">
-      <img [src]="logoSrc" alt="Checkliist" class="main-logo" />
-      <img [src]="sublogoSrc" alt="" class="sub-logo" />
-    </div>
-
-    <!-- Botón de modo oscuro -->
-    <div class="theme-toggle-container">
-      <openiis-dropdown
-        [options]="dropdownOptions"
-        [selectedValue]="selectedDropdownValue"
-        size="sm"
-        tooltip="Cambiar tema"
-        tooltipPosition="right"
-        (selectionChanged)="onDropdownChange($event)"
-      >
-      </openiis-dropdown>
-    </div>
-
     <openiis-sidebar
       searchSize="sm"
       [menuItems]="menuItems"
@@ -26,6 +8,9 @@
   </div>
 
   <main class="main-content">
-    <router-outlet #outlet="outlet"></router-outlet>
+    <app-header-sec></app-header-sec>
+    <div class="main-content-container">
+      <router-outlet #outlet="outlet"></router-outlet>
+    </div>
   </main>
 </div>

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { OpeniisSearchInputComponent } from '../search-input';
 import { filter } from 'rxjs/operators';
 import { NavigationEnd } from '@angular/router';
+import { InputVariant } from '../input';
 
 export interface MenuItem {
   route: string;
@@ -37,6 +38,7 @@ export interface SubmenuItem {
       @if (searchVisible) {
       <div class="search-container">
         <openiis-search-input
+          [variant]="variant"
           [size]="searchSize"
           [placeholder]="searchPlaceholder"
           [searchTerm]="searchTerm"
@@ -132,6 +134,7 @@ export class SidebarComponent implements OnInit {
   @Input() searchPlaceholder: string = 'Buscar...';
   @Input() searchVisible: boolean = true;
   @Input() searchSize: 'sm' | 'md' | 'lg' = 'md';
+  @Input() variant: InputVariant = 'outlined';
 
   /**
    * Maneja el cambio en el término de búsqueda
