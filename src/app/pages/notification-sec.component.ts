@@ -10,7 +10,7 @@ import { OpeniisToastComponent } from '../components';
   template: `
     <!-- Sección de Notificaciones -->
     <section class="demo-section">
-      <h2>Notificaciones - Todas las Variantes</h2>
+      <h2>Notificaciones</h2>
 
       <div class="demo-subsection">
         <h3>Toasts</h3>

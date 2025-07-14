@@ -12,9 +12,8 @@ import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/sear
     OpeniisSearchableDropdownComponent,
   ],
   template: `
-    <!-- Sección de Selecciones -->
     <section class="demo-section">
-      <h2>Selecciones - Todas las Variantes</h2>
+      <h2>Selectores</h2>
 
       <div class="demo-subsection">
         <h3>Dropdowns</h3>

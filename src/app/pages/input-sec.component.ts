@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   OpeniisInputComponent,
@@ -27,9 +21,8 @@ import {
   ],
   template: `
     <!-- Sección de Inputs -->
-    <!-- Sección de Inputs -->
     <section class="demo-section">
-      <h2>Inputs - Todas las Variantes</h2>
+      <h2>Inputs</h2>
 
       <div class="demo-subsection">
         <h3>Tipos de Input</h3>

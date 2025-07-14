@@ -8,7 +8,7 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
   imports: [CommonModule, OpeniisCheckboxComponent],
   template: `
     <div class="demo-section">
-      <h2>Checkboxes - Todas las Variantes</h2>
+      <h2>Checkboxes</h2>
       <div class="demo-grid">
         <div class="demo-item">
           <h4>Tipos de Checkbox</h4>

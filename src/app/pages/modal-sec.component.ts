@@ -20,7 +20,7 @@ import {
   template: `
     <!-- Sección de Modales -->
     <section class="demo-section">
-      <h2>Modales - Todas las Variantes</h2>
+      <h2>Modales</h2>
 
       <div class="demo-subsection">
         <h3>Modales de Alerta</h3>

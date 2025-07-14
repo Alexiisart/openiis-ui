@@ -8,7 +8,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
   imports: [CommonModule, OpeniisRadioButtonComponent],
   template: `
     <div class="demo-section">
-      <h2>Radio Buttons - Todas las Variantes</h2>
+      <h2>Radio Buttons</h2>
       <div class="demo-grid">
         <div class="demo-item">
           <h4>Tipos de Radio Button</h4>

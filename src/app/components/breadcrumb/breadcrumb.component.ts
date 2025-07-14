@@ -43,18 +43,15 @@ export interface BreadcrumbItem {
         $first; let isLast = $last) {
         <li
           class="breadcrumb-item"
-          [class.active]="item.active || isLast"
+          [class.active]="item.active"
           [class.disabled]="item.disabled"
           [class.clickable]="isClickable(item)"
-          [attr.aria-current]="item.active || isLast ? 'page' : null"
+          [attr.aria-current]="item.active ? 'page' : null"
           role="listitem"
         >
           <!-- Home Icon for first item -->
           @if (showHome && isFirst && !item.icon) {
-          <i
-            class="breadcrumb-home-icon fas fa-home"
-            [attr.aria-hidden]="true"
-          ></i>
+          <span class="material-icons-outlined">home</span>
           }
 
           <!-- Item Content -->
@@ -70,10 +67,9 @@ export interface BreadcrumbItem {
             (keydown)="onKeyDown(item, i, $event)"
           >
             @if (item.icon) {
-            <i
-              [class]="'breadcrumb-icon ' + item.icon"
-              [attr.aria-hidden]="true"
-            ></i>
+            <span class="material-icons-outlined" [attr.aria-hidden]="true">{{
+              item.icon
+            }}</span>
             }
             <span class="breadcrumb-text">{{ item.label }}</span>
           </a>
@@ -84,10 +80,9 @@ export interface BreadcrumbItem {
             [attr.aria-label]="item.tooltip || item.label"
           >
             @if (item.icon) {
-            <i
-              [class]="'breadcrumb-icon ' + item.icon"
-              [attr.aria-hidden]="true"
-            ></i>
+            <span class="material-icons-outlined" [attr.aria-hidden]="true">{{
+              item.icon
+            }}</span>
             }
             {{ item.label }}
           </span>
@@ -101,11 +96,11 @@ export interface BreadcrumbItem {
             [attr.aria-hidden]="true"
           >
             @if (separator === 'chevron') {
-            <i class="fas fa-chevron-right"></i>
+            <span class="material-icons-outlined">chevron_right</span>
             } @else if (separator === 'slash') {
             <span>/</span>
             } @else if (separator === 'arrow') {
-            <i class="fas fa-arrow-right"></i>
+            <span class="material-icons-outlined">arrow_forward</span>
             } @else if (separator === 'dot') {
             <span>•</span>
             } @else if (separator === 'pipe') {
@@ -132,7 +127,7 @@ export interface BreadcrumbItem {
           (click)="toggleOverflowMenu()"
           (keydown)="onOverflowKeyDown($event)"
         >
-          <i class="fas fa-ellipsis-h"></i>
+          <span class="material-icons-outlined">more_vert</span>
         </button>
 
         @if (showOverflowMenu) {
@@ -153,10 +148,11 @@ export interface BreadcrumbItem {
             (keydown)="onOverflowItemKeyDown(item, i, $event)"
           >
             @if (item.icon) {
-            <i
-              [class]="'breadcrumb-icon ' + item.icon"
+            <span
+              class="material-icons-outlined breadcrumb-icon"
               [attr.aria-hidden]="true"
-            ></i>
+              >{{ item.icon }}</span
+            >
             }
             <span>{{ item.label }}</span>
           </button>
@@ -201,14 +197,17 @@ export class OpeniisBreadcrumbComponent implements OnInit {
   overflowItems: BreadcrumbItem[] = [];
   showOverflowMenu = false;
 
+  /** Inicializa el componente y procesa los items */
   ngOnInit() {
     this.processItems();
   }
 
+  /** Procesa los items cuando cambian las propiedades */
   ngOnChanges() {
     this.processItems();
   }
 
+  /** Obtiene las clases CSS del breadcrumb */
   getClasses(): string {
     const classes = ['breadcrumb'];
 
@@ -222,6 +221,7 @@ export class OpeniisBreadcrumbComponent implements OnInit {
     return classes.join(' ');
   }
 
+  /** Procesa los items aplicando truncado y overflow */
   processItems(): void {
     let processedItems = [...this.items];
 
@@ -236,7 +236,7 @@ export class OpeniisBreadcrumbComponent implements OnInit {
       }));
     }
 
-    // Handle overflow
+    // Maneja el overflow
     if (this.maxItems > 0 && processedItems.length > this.maxItems) {
       this.visibleItems = [
         ...processedItems.slice(0, 1), // First item
@@ -249,10 +249,12 @@ export class OpeniisBreadcrumbComponent implements OnInit {
     }
   }
 
+  /** Verifica si un item es clickeable */
   isClickable(item: BreadcrumbItem): boolean {
     return !item.disabled && item.clickable !== false && !!item.url;
   }
 
+  /** Maneja el click en un item */
   onItemClick(item: BreadcrumbItem, index: number, event: MouseEvent): void {
     if (item.disabled) {
       event.preventDefault();
@@ -262,6 +264,7 @@ export class OpeniisBreadcrumbComponent implements OnInit {
     this.itemClick.emit({ item, index, event });
   }
 
+  /** Maneja eventos de teclado en items */
   onKeyDown(item: BreadcrumbItem, index: number, event: KeyboardEvent): void {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -269,10 +272,12 @@ export class OpeniisBreadcrumbComponent implements OnInit {
     }
   }
 
+  /** Alterna la visibilidad del menú overflow */
   toggleOverflowMenu(): void {
     this.showOverflowMenu = !this.showOverflowMenu;
   }
 
+  /** Maneja eventos de teclado en el botón overflow */
   onOverflowKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -282,6 +287,7 @@ export class OpeniisBreadcrumbComponent implements OnInit {
     }
   }
 
+  /** Maneja clicks en items del menú overflow */
   onOverflowItemClick(
     item: BreadcrumbItem,
     index: number,
@@ -296,6 +302,7 @@ export class OpeniisBreadcrumbComponent implements OnInit {
     this.overflowItemClick.emit({ item, index, event });
   }
 
+  /** Maneja eventos de teclado en items del menú overflow */
   onOverflowItemKeyDown(
     item: BreadcrumbItem,
     index: number,
@@ -309,31 +316,36 @@ export class OpeniisBreadcrumbComponent implements OnInit {
     }
   }
 
-  // Public methods
+  /** Agrega un nuevo item al breadcrumb */
   addItem(item: BreadcrumbItem): void {
     this.items.push(item);
     this.processItems();
   }
 
+  /** Elimina un item del breadcrumb por índice */
   removeItem(index: number): void {
     this.items.splice(index, 1);
     this.processItems();
   }
 
+  /** Actualiza un item existente por índice */
   updateItem(index: number, item: Partial<BreadcrumbItem>): void {
     this.items[index] = { ...this.items[index], ...item };
     this.processItems();
   }
 
+  /** Elimina todos los items del breadcrumb */
   clearItems(): void {
     this.items = [];
     this.processItems();
   }
 
+  /** Obtiene el item activo actual */
   getActiveItem(): BreadcrumbItem | null {
     return this.items.find((item) => item.active) || null;
   }
 
+  /** Establece un item como activo por índice */
   setActiveItem(index: number): void {
     this.items.forEach((item, i) => {
       item.active = i === index;

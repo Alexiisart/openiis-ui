@@ -4,26 +4,10 @@ import { CommonModule } from '@angular/common';
 
 /* Components openiis*/
 import { OpeniisButtonComponent } from './components/buttons/button.component';
-import { OpeniisTooltipComponent } from './components/tooltip/tooltip.component';
-import { OpeniisEmptyStateComponent } from './components/empty-state/empty-state.component';
-import { OpeniisAvatarComponent } from './components/avatar/avatar.component';
-import { OpeniisBadgeComponent } from './components/badge/badge.component';
-import { OpeniisBreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
-import {
-  OpeniisCardComponent,
-  CardButton,
-} from './components/card/card.component';
-import { OpeniisFabComponent } from './components/fab/fab.component';
-import { OpeniisProgressBarComponent } from './components/progress-bar/progress-bar.component';
-import { OpeniisSpinnerComponent } from './components/spinner/spinner.component';
-import { OpeniisSwitchComponent } from './components/switch/switch.component';
-import {
-  OpeniisTableComponent,
-  TableColumn,
-} from './components/table/table.component';
-import { OpeniisTabsComponent } from './components/tabs/tabs.component';
-import { OpeniisUploaderComponent } from './components/uploader/uploader.component';
-import { FileUploadItem, UploadConfig } from './services/upload.service';
+import { CardButton } from './components/card/card.component';
+import { TableColumn } from './components/table/table.component';
+
+/* Pages */
 import { ButtonSecComponent } from './pages/button-sec.component';
 import { InputSecComponent } from './pages/input-sec.component';
 import { SelectSecComponent } from './pages/select-sec.component';
@@ -32,6 +16,17 @@ import { RadioSecComponent } from './pages/radio-sec.component';
 import { DateSecComponent } from './pages/date-sec.component';
 import { ModalSecComponent } from './pages/modal-sec.component';
 import { NotificationSecComponent } from './pages/notification-sec.component';
+import { OpeniisButtonGroupComponent } from './components';
+import { TooltipSecComponent } from './pages/tooltip-sec.component';
+import { StatesSecComponent } from './pages/states-sec.component';
+import { AvatarSecComponent } from './pages/avatar-sec.component';
+import { BadgeSecComponent } from './pages/badge-sec.component';
+import { BreadcrumbSecComponent } from './pages/breadcrump-sec.component';
+import { CardSecComponent } from './pages/card-sec.component';
+import { SpinnerSecComponent } from './pages/spinner-sec.component';
+import { SwitchesSecComponent } from './pages/switches-sec.component';
+import { TabSecComponent } from './pages/tab-sec.component';
+import { UploaderSecComponent } from './pages/uploader-sec.component';
 
 /* Services */
 import {
@@ -39,26 +34,13 @@ import {
   ThemeMode,
   OpeniisTheme,
 } from './services/theme.service';
-import { OpeniisButtonGroupComponent } from './components';
+import { FileUploadItem, UploadConfig } from './services/upload.service';
 
 @Component({
   selector: 'app-root',
   imports: [
     CommonModule,
     OpeniisButtonComponent,
-    OpeniisTooltipComponent,
-    OpeniisEmptyStateComponent,
-    OpeniisAvatarComponent,
-    OpeniisBadgeComponent,
-    OpeniisBreadcrumbComponent,
-    OpeniisCardComponent,
-    OpeniisFabComponent,
-    OpeniisProgressBarComponent,
-    OpeniisSpinnerComponent,
-    OpeniisSwitchComponent,
-    OpeniisTableComponent,
-    OpeniisTabsComponent,
-    OpeniisUploaderComponent,
     ButtonSecComponent,
     InputSecComponent,
     SelectSecComponent,
@@ -68,6 +50,16 @@ import { OpeniisButtonGroupComponent } from './components';
     ModalSecComponent,
     NotificationSecComponent,
     OpeniisButtonGroupComponent,
+    TooltipSecComponent,
+    StatesSecComponent,
+    AvatarSecComponent,
+    BadgeSecComponent,
+    BreadcrumbSecComponent,
+    CardSecComponent,
+    SpinnerSecComponent,
+    SwitchesSecComponent,
+    TabSecComponent,
+    UploaderSecComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

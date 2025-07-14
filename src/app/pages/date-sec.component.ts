@@ -8,7 +8,7 @@ import { OpeniisDateInputComponent } from '../components/input-date/date-input.c
   imports: [CommonModule, OpeniisDateInputComponent],
   template: `
     <div class="demo-section">
-      <h2>Selectores de fecha - Todas las Variantes</h2>
+      <h2>Selectores de fecha</h2>
 
       <div class="demo-subsection">
         <div class="demo-grid">

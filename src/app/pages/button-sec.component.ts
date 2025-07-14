@@ -2,15 +2,21 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisButtonComponent } from '../components/buttons/button.component';
 import { OpeniisButtonGroupComponent } from '../components';
+import { OpeniisFabComponent } from '../components/fab/fab.component';
 
 @Component({
   selector: 'app-button-sec',
   standalone: true,
-  imports: [CommonModule, OpeniisButtonComponent, OpeniisButtonGroupComponent],
+  imports: [
+    CommonModule,
+    OpeniisButtonComponent,
+    OpeniisButtonGroupComponent,
+    OpeniisFabComponent,
+  ],
   template: `
     <!-- Sección de Botones -->
     <section class="demo-section">
-      <h2>Botones - Todas las Variantes</h2>
+      <h2>Botones</h2>
 
       <div class="demo-subsection">
         <h3>Tipos de Botones</h3>
@@ -438,6 +444,146 @@ import { OpeniisButtonGroupComponent } from '../components';
               >
               </openiis-button>
             </openiis-button-group>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de FAB -->
+    <section class="demo-section">
+      <h2>FAB - Botones Flotantes</h2>
+
+      <div class="demo-subsection">
+        <h3>Floating Action Buttons</h3>
+        <div class="demo-grid">
+          <div class="demo-item">
+            <h4>FAB Básico</h4>
+            <div
+              style="
+              position: relative;
+              height: 120px;
+              background: #f3f4f6;
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+            >
+              <p style="color: #6b7280; margin: 0">Área de demostración</p>
+              <openiis-fab
+                icon="add"
+                positioning="absolute"
+                position="bottom-right"
+                (fabClick)="onButtonClick('fab-add')"
+              >
+              </openiis-fab>
+            </div>
+          </div>
+
+          <div class="demo-item">
+            <h4>FAB con Texto</h4>
+            <div
+              style="
+              position: relative;
+              height: 120px;
+              background: #f3f4f6;
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+            >
+              <p style="color: #6b7280; margin: 0">Área de demostración</p>
+              <openiis-fab
+                icon="edit"
+                text="Editar"
+                [extended]="true"
+                variant="secondary"
+                positioning="absolute"
+                position="bottom-right"
+                (fabClick)="onButtonClick('fab-edit')"
+              >
+              </openiis-fab>
+            </div>
+          </div>
+
+          <div class="demo-item">
+            <h4>Tamaños de FAB</h4>
+            <div
+              style="
+              display: flex;
+              gap: 1rem;
+              align-items: center;
+              justify-content: center;
+              padding: 1rem;
+            "
+            >
+              <openiis-fab
+                icon="favorite"
+                size="sm"
+                variant="danger"
+                positioning="static"
+                (fabClick)="onButtonClick('fab-sm')"
+              >
+              </openiis-fab>
+              <openiis-fab
+                icon="star"
+                size="md"
+                variant="warning"
+                positioning="static"
+                (fabClick)="onButtonClick('fab-md')"
+              >
+              </openiis-fab>
+              <openiis-fab
+                icon="share"
+                size="lg"
+                variant="success"
+                positioning="static"
+                (fabClick)="onButtonClick('fab-lg')"
+              >
+              </openiis-fab>
+              <openiis-fab
+                icon="download"
+                size="xl"
+                variant="info"
+                positioning="static"
+                (fabClick)="onButtonClick('fab-xl')"
+              >
+              </openiis-fab>
+            </div>
+          </div>
+
+          <div class="demo-item">
+            <h4>FAB con Carga</h4>
+            <div
+              style="
+              display: flex;
+              gap: 1rem;
+              align-items: center;
+              justify-content: center;
+              padding: 1rem;
+            "
+            >
+              <openiis-fab
+                icon="cloud_upload"
+                positioning="static"
+                [loading]="loadingButton"
+                [autoHide]="false"
+                (fabClick)="onButtonClick('fab-loading')"
+              >
+              </openiis-fab>
+              <openiis-fab
+                icon="send"
+                text="Enviar"
+                [extended]="true"
+                variant="success"
+                positioning="static"
+                [loading]="loadingButton2"
+                [autoHide]="false"
+                (fabClick)="onButtonClick('fab-loading-extended')"
+              >
+              </openiis-fab>
+            </div>
           </div>
         </div>
       </div>
