@@ -15,7 +15,6 @@ import { OpeniisSwitchComponent } from '../../components';
   template: `
     <div class="header-container">
       <div class="logo-container">
-        <img [src]="logoSrc" alt="Checkliist" class="main-logo" />
         <img [src]="sublogoSrc" alt="" class="sub-logo" />
       </div>
 
@@ -59,16 +58,6 @@ import { OpeniisSwitchComponent } from '../../components';
   display: flex;
   flex-direction: row;
   gap: var(--space-4);
-}
-
-.main-logo {
-  width: 100px;
-  height: auto;
-  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.main-logo:hover {
-  transform: scale(1.05);
 }
 
 .sub-logo {
@@ -128,11 +117,6 @@ export class HeaderSecComponent {
   onModeChange(value: boolean): void {
     this.selectedMode = value ? 'dark' : 'light';
     this.setMode(this.selectedMode as ThemeMode);
-  }
-
-  /* ===== LOGO SECTION ===== */
-  get logoSrc(): string {
-    return this.isDarkMode ? 'assets/logo-dark.svg' : 'assets/logo.svg';
   }
 
   get sublogoSrc(): string {
