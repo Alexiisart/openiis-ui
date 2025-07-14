@@ -10,6 +10,7 @@ export const menuItems = [
     icon: 'radio_button_checked',
     submenu: [
       {
+        title: 'Botones',
         items: [
           {
             name: 'Básico',
@@ -33,6 +34,7 @@ export const menuItems = [
     icon: 'text_fields',
     submenu: [
       {
+        title: 'Entradas',
         items: [
           {
             name: 'Básicos',
@@ -46,10 +48,20 @@ export const menuItems = [
             name: 'Tamaños',
             reference: 'sizes-inputs',
           },
+        ],
+      },
+      {
+        title: 'Textarea',
+        items: [
           {
             name: 'Textarea',
             reference: 'textarea-inputs',
           },
+        ],
+      },
+      {
+        title: 'Búsqueda',
+        items: [
           {
             name: 'Búsqueda',
             reference: 'search-inputs',
@@ -99,6 +111,7 @@ export const menuItems = [
     icon: 'layers',
     submenu: [
       {
+        title: 'Estados',
         items: [
           {
             name: 'Básicos',
@@ -133,6 +146,7 @@ export const menuItems = [
     icon: 'view_module',
     submenu: [
       {
+        title: 'Tarjetas',
         items: [
           {
             name: 'Básicas',
@@ -167,6 +181,7 @@ export const menuItems = [
     icon: 'cloud_upload',
     submenu: [
       {
+        title: 'Cargador de Archivos',
         items: [
           {
             name: 'Básicas',
@@ -179,6 +194,30 @@ export const menuItems = [
           {
             name: 'Casos Reales',
             reference: 'real-cases',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    route: '/components/sidebar',
+    name: 'Sidebar',
+    icon: 'menu',
+    submenu: [
+      {
+        title: 'Sidebar',
+        items: [
+          {
+            name: 'Básico',
+            reference: 'basic-sidebar',
+          },
+          {
+            name: 'Búsqueda',
+            reference: 'search-sidebar',
+          },
+          {
+            name: 'Estructuras',
+            reference: 'menu-structures',
           },
         ],
       },

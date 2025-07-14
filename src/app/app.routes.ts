@@ -149,6 +149,13 @@ export const routes: Routes = [
               ),
           },
           {
+            path: 'sidebar',
+            loadComponent: () =>
+              import('./pages/sidebar-sec.component').then(
+                (m) => m.SidebarSecComponent
+              ),
+          },
+          {
             path: '',
             redirectTo: 'buttons',
             pathMatch: 'full',

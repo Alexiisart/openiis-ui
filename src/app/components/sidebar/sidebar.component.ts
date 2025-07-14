@@ -318,22 +318,15 @@ export class SidebarComponent implements OnInit {
     if (this.isExpanded(index)) {
       this.expandedItems.delete(index);
     } else {
-      // Si está en modo acordeón, cerrar otros submenús
+      // Si está en modo acordeón, cerrar otros submenús ANTES de abrir el nuevo
       if (this.accordionMode) {
-        this.closeOtherSubmenus(index);
+        // Crear un nuevo Set con solo el item que queremos abrir
+        // Esto cierra todos los demás y abre solo el nuevo de manera sincronizada
+        this.expandedItems = new Set([index]);
+      } else {
+        this.expandedItems.add(index);
       }
-      this.expandedItems.add(index);
     }
-  }
-
-  /**
-   * Cierra todos los submenús excepto el indicado
-   * @param excludeIndex Índice del submenú a mantener abierto
-   * @private
-   */
-  private closeOtherSubmenus(excludeIndex: number) {
-    // Cerrar todos los submenús excepto el que se está abriendo
-    this.expandedItems.clear();
   }
 
   /**
