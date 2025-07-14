@@ -6,7 +6,6 @@
 .sidebar {
   flex-shrink: 0;
   padding-left: var(--space-6);
-  padding-top: var(--space-6);
   overflow-y: auto;
   height: 100vh;
   position: sticky;

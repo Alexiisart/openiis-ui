@@ -62,7 +62,7 @@
 .arrow-icon {
   font-size: 1rem;
   color: var(--color-text-primary);
-  transition: transform 0.3s ease;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Animación de la flecha cuando se expande */
@@ -74,13 +74,13 @@
 .submenu-container {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease;
-  background-color: var(--color-background);
+  transition: max-height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Estado expandido del submenú */
 .submenu-container.expanded {
   max-height: 500px;
+  transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Secciones dentro del submenú */
