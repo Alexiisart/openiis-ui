@@ -6,13 +6,13 @@ import { OpeniisSpinnerComponent } from '../components/spinner/spinner.component
   template: `
     <!-- Sección de Spinners -->
     <section class="demo-section">
-      <h2>Spinners</h2>
+      <h2>Indicadores de Carga</h2>
 
       <div class="demo-subsection">
-        <h3>Tipos de Spinners</h3>
+        <h3>Tipos de Indicadores de Carga</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Variantes de Spinners</h4>
+            <h4>Variantes de Indicadores de Carga</h4>
             <div class="button-group">
               <openiis-spinner
                 variant="circle"

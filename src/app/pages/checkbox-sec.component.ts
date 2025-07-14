@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.component';
 
@@ -8,7 +8,7 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
   imports: [CommonModule, OpeniisCheckboxComponent],
   template: `
     <div class="demo-section">
-      <h2>Checkboxes</h2>
+      <h2>Casillas de Verificación</h2>
       <div class="demo-grid">
         <div class="demo-item">
           <h4>Tipos de Checkbox</h4>

@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-button.component';
 
 @Component({
   selector: 'app-radio-sec',
   standalone: true,
-  imports: [CommonModule, OpeniisRadioButtonComponent],
+  imports: [CommonModule, FormsModule, OpeniisRadioButtonComponent],
   template: `
     <div class="demo-section">
-      <h2>Radio Buttons</h2>
+      <h2>Botones de Radio</h2>
       <div class="demo-grid">
         <div class="demo-item">
           <h4>Tipos de Radio Button</h4>
@@ -19,8 +20,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
               name="tipo-demo"
               value="success"
               size="md"
-              [value]="selectedSize"
-              (checkedChange)="onRadioButtonChange($event, 'size')"
+              [(ngModel)]="selectedSize"
             >
             </openiis-radio-button>
             <openiis-radio-button
@@ -29,8 +29,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
               name="tipo-demo"
               value="warning"
               size="md"
-              [value]="selectedSize"
-              (checkedChange)="onRadioButtonChange($event, 'size')"
+              [(ngModel)]="selectedSize"
             >
             </openiis-radio-button>
             <openiis-radio-button
@@ -39,8 +38,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
               name="tipo-demo"
               value="danger"
               size="md"
-              [value]="selectedSize"
-              (checkedChange)="onRadioButtonChange($event, 'size')"
+              [(ngModel)]="selectedSize"
             >
             </openiis-radio-button>
             <openiis-radio-button
@@ -49,8 +47,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
               name="tipo-demo"
               value="subtle"
               size="md"
-              [value]="selectedSize"
-              (checkedChange)="onRadioButtonChange($event, 'size')"
+              [(ngModel)]="selectedSize"
             >
             </openiis-radio-button>
           </div>
@@ -65,8 +62,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
               name="tamaño-demo"
               value="xs"
               size="xs"
-              [value]="selectedGender"
-              (checkedChange)="onRadioButtonChange($event, 'gender')"
+              [(ngModel)]="selectedGender"
             >
             </openiis-radio-button>
             <openiis-radio-button
@@ -75,8 +71,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
               name="tamaño-demo"
               value="sm"
               size="sm"
-              [value]="selectedGender"
-              (checkedChange)="onRadioButtonChange($event, 'gender')"
+              [(ngModel)]="selectedGender"
             >
             </openiis-radio-button>
             <openiis-radio-button
@@ -85,8 +80,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
               name="tamaño-demo"
               value="md"
               size="md"
-              [value]="selectedGender"
-              (checkedChange)="onRadioButtonChange($event, 'gender')"
+              [(ngModel)]="selectedGender"
             >
             </openiis-radio-button>
             <openiis-radio-button
@@ -95,8 +89,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
               name="tamaño-demo"
               value="lg"
               size="lg"
-              [value]="selectedGender"
-              (checkedChange)="onRadioButtonChange($event, 'gender')"
+              [(ngModel)]="selectedGender"
             >
             </openiis-radio-button>
             <openiis-radio-button
@@ -105,8 +98,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
               name="tamaño-demo"
               value="xl"
               size="xl"
-              [value]="selectedGender"
-              (checkedChange)="onRadioButtonChange($event, 'gender')"
+              [(ngModel)]="selectedGender"
             >
             </openiis-radio-button>
           </div>
@@ -115,7 +107,6 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
         <div class="demo-item">
           <h4>Grupo de Notificaciones</h4>
           <div class="radio-group">
-            <h5>Nivel de notificaciones</h5>
             <openiis-radio-button
               label="Todas las notificaciones"
               type="success"
@@ -123,8 +114,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
               value="todas"
               size="md"
               helpText="Recibirás todas las actualizaciones"
-              [value]="selectedNotificationLevel"
-              (checkedChange)="onRadioButtonChange($event, 'notification')"
+              [(ngModel)]="selectedNotificationLevel"
             >
             </openiis-radio-button>
             <openiis-radio-button
@@ -134,8 +124,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
               value="importantes"
               size="md"
               helpText="Solo notificaciones críticas"
-              [value]="selectedNotificationLevel"
-              (checkedChange)="onRadioButtonChange($event, 'notification')"
+              [(ngModel)]="selectedNotificationLevel"
             >
             </openiis-radio-button>
             <openiis-radio-button
@@ -145,8 +134,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
               value="ninguna"
               size="md"
               helpText="No recibirás notificaciones"
-              [value]="selectedNotificationLevel"
-              (checkedChange)="onRadioButtonChange($event, 'notification')"
+              [(ngModel)]="selectedNotificationLevel"
             >
             </openiis-radio-button>
             <p class="selection-result">
@@ -167,29 +155,4 @@ export class RadioSecComponent {
   selectedPaymentMethod = '';
   selectedShippingMethod = '';
   selectedSize = '';
-
-  /* ===== RADIO BUTTON METHODS ===== */
-  onRadioButtonChange(value: any, type: string): void {
-    console.log(`Radio button ${type} cambiado a:`, value);
-    switch (type) {
-      case 'gender':
-        this.selectedGender = value;
-        break;
-      case 'plan':
-        this.selectedPlan = value;
-        break;
-      case 'notification':
-        this.selectedNotificationLevel = value;
-        break;
-      case 'payment':
-        this.selectedPaymentMethod = value;
-        break;
-      case 'shipping':
-        this.selectedShippingMethod = value;
-        break;
-      case 'size':
-        this.selectedSize = value;
-        break;
-    }
-  }
 }

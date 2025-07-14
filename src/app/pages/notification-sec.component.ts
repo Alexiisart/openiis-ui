@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisButtonComponent } from '../components/buttons/button.component';
 import { OpeniisToastComponent } from '../components';
@@ -8,7 +8,34 @@ import { OpeniisToastComponent } from '../components';
   standalone: true,
   imports: [CommonModule, OpeniisButtonComponent, OpeniisToastComponent],
   template: `
-    <!-- Sección de Notificaciones -->
+    <!-- Toasts Implementados -->
+    <openiis-toast
+      [isVisible]="showSuccessToast"
+      [data]="successToastData"
+      (closed)="onToastClosed('success')"
+    >
+    </openiis-toast>
+
+    <openiis-toast
+      [isVisible]="showWarningToast"
+      [data]="warningToastData"
+      (closed)="onToastClosed('warning')"
+    >
+    </openiis-toast>
+
+    <openiis-toast
+      [isVisible]="showDangerToast"
+      [data]="dangerToastData"
+      (closed)="onToastClosed('danger')"
+    >
+    </openiis-toast>
+
+    <openiis-toast
+      [isVisible]="showInfoToast"
+      [data]="infoToastData"
+      (closed)="onToastClosed('info')"
+    >
+    </openiis-toast>
     <section class="demo-section">
       <h2>Notificaciones</h2>
 
@@ -61,35 +88,6 @@ import { OpeniisToastComponent } from '../components';
         </div>
       </div>
     </section>
-
-    <!-- Toasts Implementados -->
-    <openiis-toast
-      [isVisible]="showSuccessToast"
-      [data]="successToastData"
-      (closed)="onToastClosed('success')"
-    >
-    </openiis-toast>
-
-    <openiis-toast
-      [isVisible]="showWarningToast"
-      [data]="warningToastData"
-      (closed)="onToastClosed('warning')"
-    >
-    </openiis-toast>
-
-    <openiis-toast
-      [isVisible]="showDangerToast"
-      [data]="dangerToastData"
-      (closed)="onToastClosed('danger')"
-    >
-    </openiis-toast>
-
-    <openiis-toast
-      [isVisible]="showInfoToast"
-      [data]="infoToastData"
-      (closed)="onToastClosed('info')"
-    >
-    </openiis-toast>
   `,
 })
 export class NotificationSecComponent {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   CardButton,
@@ -11,19 +11,19 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
   standalone: true,
   imports: [CommonModule, OpeniisCardComponent, OpeniisButtonComponent],
   template: `
-    <!-- Sección de Cards -->
-    <section class="demo-section">
-      <h2>Cards</h2>
+    <!-- Sección de Tarjetas -->
+    <section id="basic-cards" class="demo-section">
+      <h2>Tarjetas</h2>
 
       <div class="demo-subsection">
-        <h3>Tipos de Cards</h3>
+        <h3>Tipos de Tarjetas</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Card Básica</h4>
+            <h4>Tarjeta Básica</h4>
             <openiis-card
-              title="Título de la Card"
+              title="Título de la Tarjeta"
               subtitle="Subtítulo descriptivo"
-              description="Esta es una descripción del contenido de la card. Aquí se puede incluir información relevante."
+              description="Esta es una descripción del contenido de la tarjeta. Aquí se puede incluir información relevante."
             >
               <div slot="footer">
                 <openiis-button
@@ -36,10 +36,10 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
           </div>
 
           <div class="demo-item">
-            <h4>Card con Imagen</h4>
+            <h4>Tarjeta con Imagen</h4>
             <openiis-card
-              title="Card con Media"
-              description="Card que incluye contenido multimedia en el header."
+              title="Tarjeta con Media"
+              description="Tarjeta que incluye contenido multimedia en el header."
             >
               <img
                 slot="media"
@@ -51,11 +51,11 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
           </div>
 
           <div class="demo-item">
-            <h4>Tamaños de Cards</h4>
+            <h4>Tamaños de Tarjetas</h4>
             <openiis-card
               size="sm"
-              title="Card Pequeña"
-              description="Card con tamaño reducido."
+              title="Tarjetas Pequeña"
+              description="Tarjeta con tamaño reducido."
             >
             </openiis-card>
           </div>
@@ -63,10 +63,10 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
       </div>
 
       <div class="demo-subsection">
-        <h3>Cards con Botones de Acción</h3>
+        <h3>Tarjetas con Botones de Acción</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Card con Botones Básicos</h4>
+            <h4>Tarjetas con Botones Básicos</h4>
             <openiis-card
               title="Producto Digital"
               description="Un producto digital con opciones de gestión básicas."
@@ -77,7 +77,7 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
           </div>
 
           <div class="demo-item">
-            <h4>Card de Producto</h4>
+            <h4>Tarjetas de Producto</h4>
             <openiis-card
               title="Smartphone Pro"
               subtitle="Modelo 2024"
@@ -95,7 +95,7 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
           </div>
 
           <div class="demo-item">
-            <h4>Card de Usuario</h4>
+            <h4>Tarjetas de Usuario</h4>
             <openiis-card
               title="Ana García"
               subtitle="Desarrolladora Frontend"
@@ -113,7 +113,7 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
           </div>
 
           <div class="demo-item">
-            <h4>Card con Imagen y Botones</h4>
+            <h4>Tarjetas con Imagen y Botones</h4>
             <openiis-card
               title="Dashboard Analytics"
               description="Visualiza métricas importantes de tu negocio en tiempo real."
@@ -153,15 +153,15 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
         </div>
       </div>
 
-      <div class="demo-subsection">
-        <h3>Tamaños de Cards con Botones</h3>
+      <div id="card-sizes" class="demo-subsection">
+        <h3>Tamaños de Tarjetas con Botones</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Card Extra Small</h4>
+            <h4>Tarjeta Extra Small</h4>
             <openiis-card
               size="xs"
-              title="XS Card"
-              description="Card pequeña con botones."
+              title="XS Tarjeta"
+              description="Tarjeta pequeña con botones."
               [actionButtons]="[
                 {
                   id: 'edit-xs',
@@ -185,11 +185,11 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
           </div>
 
           <div class="demo-item">
-            <h4>Card Small</h4>
+            <h4>Tarjetas Small</h4>
             <openiis-card
               size="sm"
-              title="Small Card"
-              description="Card pequeña con botones de tamaño pequeño."
+              title="Small Tarjeta"
+              description="Tarjeta pequeña con botones de tamaño pequeño."
               [actionButtons]="[
                 {
                   id: 'like-sm',
@@ -213,11 +213,11 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
           </div>
 
           <div class="demo-item">
-            <h4>Card Large</h4>
+            <h4>Tarjetas Large</h4>
             <openiis-card
               size="lg"
-              title="Large Card"
-              description="Card grande con botones de tamaño mediano."
+              title="Large Tarjeta"
+              description="Tarjeta grande con botones de tamaño mediano."
               [actionButtons]="[
                 {
                   id: 'bookmark-lg',
@@ -250,10 +250,10 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
       </div>
 
       <div class="demo-subsection">
-        <h3>Cards con Footer y Botones</h3>
+        <h3>Tarjetas con Footer y Botones</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Card Completa</h4>
+            <h4>Tarjetas Completa</h4>
             <openiis-card
               title="Artículo de Blog"
               subtitle="Publicado el 15 de Marzo 2024"
@@ -303,7 +303,7 @@ import { OpeniisButtonComponent } from '../components/buttons/button.component';
           </div>
 
           <div class="demo-item">
-            <h4>Card de Evento</h4>
+            <h4>Tarjetas de Evento</h4>
             <openiis-card
               title="Conferencia Tech 2024"
               subtitle="Centro de Convenciones"
@@ -443,7 +443,7 @@ export class CardSecComponent {
     buttonId: string;
     event: MouseEvent;
   }): void {
-    console.log(`Botón de card ${event.buttonId} clickeado`);
+    console.log(`Botón de tarjeta ${event.buttonId} clickeado`);
 
     switch (event.buttonId) {
       case 'edit':

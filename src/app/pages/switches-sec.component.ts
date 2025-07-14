@@ -9,10 +9,10 @@ import { OpeniisSwitchComponent } from '../components/switch/switch.component';
       <h2>Switches</h2>
 
       <div class="demo-subsection">
-        <h3>Controles Switch</h3>
+        <h3>Controles Interruptores</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Switches Básicos</h4>
+            <h4>Interruptores Básicos</h4>
             <div class="input-sizes">
               <openiis-switch
                 variant="default"

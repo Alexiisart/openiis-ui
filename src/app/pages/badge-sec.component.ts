@@ -9,13 +9,13 @@ import { OpeniisBadgeComponent } from '../components/badge/badge.component';
   template: `
     <!-- Sección de Badges -->
     <section class="demo-section">
-      <h2>Badges</h2>
+      <h2>Insignias</h2>
 
       <div class="demo-subsection">
-        <h3>Tipos de Badges</h3>
+        <h3>Tipos de Insignias</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Badges Básicos</h4>
+            <h4>Insignias Básicos</h4>
             <div class="button-group">
               <openiis-badge variant="default" text="Default"></openiis-badge>
               <openiis-badge variant="primary" text="Primary"></openiis-badge>

@@ -97,6 +97,20 @@ export const menuItems = [
     route: '/components/states',
     name: 'Estados',
     icon: 'layers',
+    submenu: [
+      {
+        items: [
+          {
+            name: 'Básicos',
+            reference: 'basic-states',
+          },
+          {
+            name: 'Específicos',
+            reference: 'specific-states',
+          },
+        ],
+      },
+    ],
   },
   {
     route: '/components/avatars',
@@ -110,13 +124,27 @@ export const menuItems = [
   },
   {
     route: '/components/breadcrumbs',
-    name: 'Migas de Pan',
+    name: 'Navegación',
     icon: 'chevron_right',
   },
   {
     route: '/components/cards',
     name: 'Tarjetas',
     icon: 'view_module',
+    submenu: [
+      {
+        items: [
+          {
+            name: 'Básicas',
+            reference: 'basic-cards',
+          },
+          {
+            name: 'Tamaños',
+            reference: 'card-sizes',
+          },
+        ],
+      },
+    ],
   },
   {
     route: '/components/spinners',
@@ -137,5 +165,23 @@ export const menuItems = [
     route: '/components/uploader',
     name: 'Cargador de Archivos',
     icon: 'cloud_upload',
+    submenu: [
+      {
+        items: [
+          {
+            name: 'Básicas',
+            reference: 'basic-uploader',
+          },
+          {
+            name: 'Avanzadas',
+            reference: 'advanced-uploader',
+          },
+          {
+            name: 'Casos Reales',
+            reference: 'real-cases',
+          },
+        ],
+      },
+    ],
   },
 ];

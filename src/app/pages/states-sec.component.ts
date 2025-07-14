@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisEmptyStateComponent } from '../components/empty-state/empty-state.component';
 
@@ -8,7 +8,7 @@ import { OpeniisEmptyStateComponent } from '../components/empty-state/empty-stat
   imports: [CommonModule, OpeniisEmptyStateComponent],
   template: `
     <!-- Sección de Estados -->
-    <section class="demo-section">
+    <section id="basic-states" class="demo-section">
       <h2>Estados</h2>
 
       <div class="demo-subsection">
@@ -71,7 +71,7 @@ import { OpeniisEmptyStateComponent } from '../components/empty-state/empty-stat
         </div>
       </div>
 
-      <div class="demo-subsection">
+      <div id="specific-states" class="demo-subsection">
         <h3>Estados Específicos</h3>
         <div class="demo-grid">
           <div class="demo-item">

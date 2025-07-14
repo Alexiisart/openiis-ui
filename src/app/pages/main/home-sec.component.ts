@@ -55,10 +55,10 @@ import { Component } from '@angular/core';
 
     h1 {
       color: var(--color-text-primary);
-      font-size: 4rem;
+      font-size: 3rem;
       line-height: 1.1;
       font-weight: 800;
-      margin-bottom: var(--space-6);
+      margin-bottom: var(--space-3);
       letter-spacing: -0.02em;
     }
 

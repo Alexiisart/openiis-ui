@@ -10,10 +10,10 @@ import { ActivatedRoute, Router } from '@angular/router';
   template: `
     <!-- Sección de Breadcrumbs -->
     <section class="demo-section">
-      <h2>Breadcrumbs - Navegación</h2>
+      <h2>Navegación</h2>
 
       <div class="demo-subsection">
-        <h3>Variantes de Breadcrumb</h3>
+        <h3>Variantes de navegación</h3>
         <div class="demo-grid">
           <div class="demo-item">
             <h4>Default</h4>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisButtonComponent } from '../components/buttons/button.component';
 import {
@@ -19,6 +19,32 @@ import {
   ],
   template: `
     <!-- Sección de Modales -->
+    <!-- Modales Implementados -->
+    <openiis-alert-modal
+      [isVisible]="showAlertModal"
+      [data]="currentAlertData"
+      (closed)="onAlertClosed()"
+    >
+    </openiis-alert-modal>
+
+    <openiis-confirm-modal
+      [isVisible]="showConfirmModal"
+      [data]="currentConfirmData"
+      buttonLeft="outline-secondary"
+      buttonRight="primary"
+      (confirmed)="onConfirmConfirmed()"
+      (cancelled)="onConfirmCancelled()"
+      (thirdAction)="onConfirmThirdAction()"
+    >
+    </openiis-confirm-modal>
+
+    <openiis-modal
+      [isVisible]="showModal"
+      [data]="currentModalData"
+      (confirmed)="onModalConfirmed($event)"
+      (closed)="onModalClosed()"
+    >
+    </openiis-modal>
     <section class="demo-section">
       <h2>Modales</h2>
 
@@ -125,33 +151,6 @@ import {
         </div>
       </div>
     </section>
-
-    <!-- Modales Implementados -->
-    <openiis-alert-modal
-      [isVisible]="showAlertModal"
-      [data]="currentAlertData"
-      (closed)="onAlertClosed()"
-    >
-    </openiis-alert-modal>
-
-    <openiis-confirm-modal
-      [isVisible]="showConfirmModal"
-      [data]="currentConfirmData"
-      buttonLeft="outline-secondary"
-      buttonRight="primary"
-      (confirmed)="onConfirmConfirmed()"
-      (cancelled)="onConfirmCancelled()"
-      (thirdAction)="onConfirmThirdAction()"
-    >
-    </openiis-confirm-modal>
-
-    <openiis-modal
-      [isVisible]="showModal"
-      [data]="currentModalData"
-      (confirmed)="onModalConfirmed($event)"
-      (closed)="onModalClosed()"
-    >
-    </openiis-modal>
   `,
 })
 export class ModalSecComponent {
@@ -304,3 +303,11 @@ export class ModalSecComponent {
     }
   }
 }
+
+// Para eliminar importaciones no utilizadas sin instalar nada:
+// En VS Code:
+// 1. Presiona Ctrl + Shift + P (Windows/Linux) o Cmd + Shift + P (Mac)
+// 2. Escribe "Organize Imports" y selecciona la opción
+// 3. O usa directamente el atajo: Alt + Shift + O
+
+// Esto funciona nativamente en VS Code sin necesidad de instalar plugins adicionales

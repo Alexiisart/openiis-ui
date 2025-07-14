@@ -53,6 +53,12 @@
   color: var(--color-text-primary);
 }
 
+.nav-icon.active {
+  color: var(--primary-900);
+  background-color: var(--primary-50);
+  border-color: var(--primary-500);
+}
+
 .arrow-icon {
   font-size: 1rem;
   color: var(--color-text-primary);

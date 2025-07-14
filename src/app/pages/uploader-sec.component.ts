@@ -1,23 +1,23 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { OpeniisUploaderComponent } from '../components/uploader/uploader.component';
 import { FileUploadItem, UploadConfig } from '../components/uploader';
 
 @Component({
   selector: 'app-uploader-sec',
   template: `
-    <!-- Sección de Uploader -->
-    <section class="demo-section">
-      <h2>Uploader</h2>
+    <!-- Sección de Cargador de Archivos -->
+    <section id="basic-uploader" class="demo-section">
+      <h2>Cargador de Archivos</h2>
 
       <div class="demo-subsection">
         <h3>Variantes Básicas</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Uploader Básico</h4>
+            <h4>Cargador de Archivos Básico</h4>
             <openiis-uploader
               variant="basic"
               [config]="basicUploadConfig"
-              title="Subir Archivos"
+              title="Cargar Archivos"
               description="Arrastra archivos aquí o haz clic para seleccionar"
               (filesAdded)="onFilesAdded($event)"
             >
@@ -25,7 +25,7 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
           </div>
 
           <div class="demo-item">
-            <h4>Uploader Compacto</h4>
+            <h4>Cargador de Archivos Compacto</h4>
             <openiis-uploader
               variant="compact"
               size="sm"
@@ -67,7 +67,7 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
         </div>
       </div>
 
-      <div class="demo-subsection">
+      <div id="advanced-uploader" class="demo-subsection">
         <h3>Configuraciones Avanzadas</h3>
         <div class="demo-grid">
           <div class="demo-item">
@@ -75,7 +75,7 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
             <openiis-uploader
               variant="multi-file"
               [config]="documentUploadConfig"
-              title="Subir Documentos"
+              title="Cargar Documentos"
               description="PDF, Word, Excel y PowerPoint"
               [showInfo]="true"
               (filesAdded)="onDocumentsAdded($event)"
@@ -114,7 +114,7 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
                 maxFileSize: 2,
                 maxFiles: 2
               }"
-              title="Uploader Pequeño"
+              title="Cargador de Archivos Pequeño"
               [showInfo]="false"
             >
             </openiis-uploader>
@@ -129,7 +129,7 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
                 maxFileSize: 50,
                 maxFiles: 10
               }"
-              title="Área de Subida Grande"
+              title="Área de Carga Grande"
               description="Perfecta para múltiples archivos grandes"
             >
             </openiis-uploader>
@@ -141,15 +141,15 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
               variant="basic"
               size="md"
               [disabled]="true"
-              title="Uploader Deshabilitado"
-              description="No se pueden subir archivos"
+              title="Cargador de Archivos Deshabilitado"
+              description="No se pueden cargar archivos"
             >
             </openiis-uploader>
           </div>
         </div>
       </div>
 
-      <div class="demo-subsection">
+      <div id="real-cases" class="demo-subsection">
         <h3>Casos de Uso Reales</h3>
         <div class="demo-grid">
           <div class="demo-item">
@@ -161,7 +161,7 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
                 allowedTypes: ['application/pdf', '.doc', '.docx'],
                 maxFiles: 3
               }"
-              title="Sube tu CV y documentos"
+              title="Carga tu CV y documentos"
               description="PDF y documentos de Word únicamente"
               (filesAdded)="onFilesAdded($event)"
             >
@@ -179,7 +179,7 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
                 enableResize: true,
                 compressionQuality: 0.9
               }"
-              title="Sube tu portafolio"
+              title="Carga tu portafolio"
               description="Imágenes de alta calidad con compresión automática"
               (filesAdded)="onGalleryUploaded($event)"
             >

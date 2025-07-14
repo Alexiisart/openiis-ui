@@ -61,9 +61,11 @@ export interface SubmenuItem {
             (click)="handleItemClick(item, i)"
           >
             @if (item.icon) {
-            <span class="material-icons-outlined nav-icon">{{
-              item.icon
-            }}</span>
+            <span
+              class="material-icons-outlined nav-icon"
+              [class.active]="isMenuItemActive(item)"
+              >{{ item.icon }}</span
+            >
             }
 
             <div class="nav-text-container">

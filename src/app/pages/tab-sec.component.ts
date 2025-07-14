@@ -5,14 +5,14 @@ import { OpeniisTabsComponent } from '../components/tabs/tabs.component';
   selector: 'app-tab-sec',
   template: `
     <!-- Sección de Tabs -->
-    <section class="demo-section">
-      <h2>Tabs - Navegación por Pestañas</h2>
+    <section id="basic-tabs" class="demo-section">
+      <h2>Pestañas</h2>
 
       <div class="demo-subsection">
-        <h3>Pestañas de Navegación</h3>
+        <h3>Tipos de Pestañas</h3>
         <div class="demo-grid">
           <div class="demo-item" style="grid-column: 1 / -1">
-            <h4>Tabs Básicos (Line)</h4>
+            <h4>Pestañas Básicas (Line)</h4>
             <openiis-tabs variant="line" size="md">
               <div slot="tab-content-tab1">
                 <h3>Configuración General</h3>
@@ -56,7 +56,7 @@ import { OpeniisTabsComponent } from '../components/tabs/tabs.component';
           </div>
 
           <div class="demo-item" style="grid-column: 1 / -1">
-            <h4>Tabs Pills</h4>
+            <h4>Pestañas Pills</h4>
             <openiis-tabs
               variant="pills"
               size="md"
@@ -97,7 +97,7 @@ import { OpeniisTabsComponent } from '../components/tabs/tabs.component';
           </div>
 
           <div class="demo-item" style="grid-column: 1 / -1">
-            <h4>Tabs Cards</h4>
+            <h4>Pestañas Cards</h4>
             <openiis-tabs
               variant="cards"
               size="md"
@@ -128,7 +128,7 @@ import { OpeniisTabsComponent } from '../components/tabs/tabs.component';
           </div>
 
           <div class="demo-item" style="grid-column: 1 / -1">
-            <h4>Tabs Buttons</h4>
+            <h4>Pestañas Buttons</h4>
             <openiis-tabs
               variant="buttons"
               size="md"

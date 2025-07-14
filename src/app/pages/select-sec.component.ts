@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisDropdownComponent } from '../components';
 import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/searchable-dropdown.component';
