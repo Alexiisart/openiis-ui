@@ -7,6 +7,7 @@ import {
   ContentChild,
   ElementRef,
   AfterContentInit,
+  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisButtonComponent } from '../buttons/button.component';
@@ -271,6 +272,16 @@ export class OpeniisCardComponent implements AfterContentInit {
     | undefined;
   @ContentChild('[slot="media"]') mediaContent: ElementRef | undefined;
   @ContentChild('[slot="footer"]') footerContent: ElementRef | undefined;
+
+  /**
+   * Maneja los cambios en el input de menús
+   * @param changes Cambios en el input de menús
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['actionButtons']) {
+      this.actionButtons = [...this.actionButtons];
+    }
+  }
 
   /**
    * Verificar si hay contenido en el header

@@ -8,9 +8,10 @@ import {
   OnDestroy,
   ViewChild,
   ElementRef,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import {
   OpeniisUploadService,
   UploadConfig,
@@ -112,7 +113,7 @@ export type UploaderSize = 'sm' | 'md' | 'lg' | 'xl';
             }
             <openiis-button
               type="outline-primary"
-              text="Seleccionar archivos"
+              text="{{ selectFile || 'Seleccionar archivos' }}"
               iconLeft="folder_open"
               size="sm"
               [disabled]="disabled"
@@ -151,7 +152,7 @@ export type UploaderSize = 'sm' | 'md' | 'lg' | 'xl';
                   type="icon"
                   iconLeft="close"
                   size="xs"
-                  tooltipText="Eliminar archivo"
+                  tooltipText="{{ removeTooltipFile || 'Eliminar archivo' }}"
                   (clickEvent)="removeFile(file.id)"
                 >
                 </openiis-button>
@@ -180,7 +181,7 @@ export type UploaderSize = 'sm' | 'md' | 'lg' | 'xl';
                 type="icon"
                 iconLeft="close"
                 size="xs"
-                tooltipText="Eliminar archivo"
+                tooltipText="{{ removeTooltipFile || 'Eliminar archivo' }}"
                 (clickEvent)="removeFile(file.id)"
               >
               </openiis-button>
@@ -194,7 +195,7 @@ export type UploaderSize = 'sm' | 'md' | 'lg' | 'xl';
           <div class="upload-actions">
             <openiis-button
               type="outline-secondary"
-              text="Limpiar todo"
+              text="{{ clearAllText || 'Limpiar todo' }}"
               iconLeft="clear_all"
               size="sm"
               (clickEvent)="clearAll()"
@@ -240,6 +241,15 @@ export class OpeniisUploaderComponent implements OnInit, OnDestroy {
   /** Mostrar información adicional */
   @Input() showInfo: boolean = true;
 
+  /** Texto para el botón de selección de archivos */
+  @Input() selectFile: string = 'Seleccionar archivos';
+
+  /** Texto para el tooltip de eliminación de archivos */
+  @Input() removeTooltipFile: string = 'Eliminar archivo';
+
+  /** Texto para el botón de limpiar todo */
+  @Input() clearAllText: string = 'Limpiar todo';
+
   /** Evento emitido cuando se agregan archivos */
   @Output() filesAdded = new EventEmitter<FileUploadItem[]>();
 
@@ -249,7 +259,7 @@ export class OpeniisUploaderComponent implements OnInit, OnDestroy {
   /** Evento emitido cuando se limpian todos los archivos */
   @Output() filesCleared = new EventEmitter<void>();
 
-  /** Lista de archivos cargados */
+  /** Lista de archivos cargados - ahora cada instancia tiene su propia lista */
   files: FileUploadItem[] = [];
 
   /** Estado de arrastre sobre la zona de drop */
@@ -257,14 +267,13 @@ export class OpeniisUploaderComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private uploadService: OpeniisUploadService) {}
+  constructor(
+    private uploadService: OpeniisUploadService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.uploadService.uploadQueue
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((files) => {
-        this.files = files;
-      });
+    // Ya no nos suscribimos al servicio global, cada componente maneja sus propios archivos
   }
 
   ngOnDestroy(): void {
@@ -374,37 +383,94 @@ export class OpeniisUploaderComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Agrega archivos al uploader
+   * Agrega archivos al uploader (ahora maneja su propia lista)
    * @param fileList Lista de archivos a agregar
    */
-  addFiles(fileList: FileList): void {
+  async addFiles(fileList: FileList): Promise<void> {
+    const fileArray = Array.from(fileList);
     const effectiveConfig = { ...this.config };
+    const maxFiles = effectiveConfig.maxFiles || 5;
 
-    this.uploadService.addFiles(fileList, effectiveConfig).subscribe({
-      next: (newFiles) => {
-        this.filesAdded.emit(newFiles);
-      },
-      error: (error) => {
-        console.error('Error adding files:', error);
-      },
-    });
+    // Validar límite de archivos
+    if (this.files.length + fileArray.length > maxFiles) {
+      console.error(`Máximo ${maxFiles} archivos permitidos`);
+      return;
+    }
+
+    const newItems: FileUploadItem[] = [];
+
+    for (const file of fileArray) {
+      // Validar archivo usando el servicio
+      const validation = this.uploadService.validateFile(file, effectiveConfig);
+      if (!validation.valid) {
+        console.error(validation.error);
+        continue;
+      }
+
+      const item: FileUploadItem = {
+        id: this.generateId(),
+        file: file,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      };
+
+      // Generar preview para imágenes
+      if (file.type.startsWith('image/')) {
+        try {
+          item.thumbnailUrl = await this.generatePreview(file);
+        } catch (error) {
+          console.error('Error generando preview:', error);
+        }
+      }
+
+      newItems.push(item);
+    }
+
+    // Agregar a la lista local del componente
+    this.files = [...this.files, ...newItems];
+    this.cdr.detectChanges();
+
+    // Emitir evento
+    this.filesAdded.emit(newItems);
   }
 
   /**
-   * Elimina un archivo por su ID
+   * Elimina un archivo por su ID (de la lista local)
    * @param id ID del archivo a eliminar
    */
   removeFile(id: string): void {
-    this.uploadService.removeFile(id);
+    this.files = this.files.filter((item) => item.id !== id);
+    this.cdr.detectChanges();
     this.fileRemoved.emit(id);
   }
 
   /**
-   * Limpia todos los archivos
+   * Limpia todos los archivos (de la lista local)
    */
   clearAll(): void {
-    this.uploadService.clearQueue();
+    this.files = [];
+    this.cdr.detectChanges();
     this.filesCleared.emit();
+  }
+
+  /**
+   * Obtiene todos los archivos de esta instancia específica
+   */
+  getAllFiles(): { id: string; file: File; name: string }[] {
+    return this.files.map((item) => ({
+      id: item.id,
+      file: item.file,
+      name: item.name,
+    }));
+  }
+
+  /**
+   * Obtiene un archivo específico por ID
+   */
+  getFile(id: string): File | null {
+    const item = this.files.find((item) => item.id === id);
+    return item ? item.file : null;
   }
 
   /**
@@ -523,5 +589,24 @@ export class OpeniisUploaderComponent implements OnInit, OnDestroy {
     }
 
     return info;
+  }
+
+  /**
+   * Generar preview de imagen
+   */
+  private generatePreview(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target?.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /**
+   * Generar ID único
+   */
+  private generateId(): string {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
   }
 }

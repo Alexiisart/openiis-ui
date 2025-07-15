@@ -6,6 +6,7 @@ import {
   OpeniisModalComponent,
   OpeniisAlertModalComponent,
 } from '../components';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-modal-sec',
@@ -16,6 +17,7 @@ import {
     OpeniisConfirmModalComponent,
     OpeniisModalComponent,
     OpeniisAlertModalComponent,
+    TranslateModule,
   ],
   template: `
     <!-- Sección de Modales -->
@@ -46,16 +48,16 @@ import {
     >
     </openiis-modal>
     <section class="demo-section">
-      <h2>Modales</h2>
+      <h2>{{ 'modal.modales' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Modales de Alerta</h3>
+        <h3>{{ 'modal.modales_de_alerta' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Alerta de Éxito</h4>
+            <h4>{{ 'modal.alerta_de_éxito' | translate }}</h4>
             <openiis-button
               type="success"
-              text="Mostrar Éxito"
+              [text]="'modal.mostrar_éxito' | translate"
               iconLeft="check_circle"
               (clickEvent)="showAlert('success')"
             >
@@ -63,10 +65,10 @@ import {
           </div>
 
           <div class="demo-item">
-            <h4>Alerta de Advertencia</h4>
+            <h4>{{ 'modal.alerta_de_advertencia' | translate }}</h4>
             <openiis-button
               type="warning"
-              text="Mostrar Advertencia"
+              [text]="'modal.mostrar_advertencia' | translate"
               iconLeft="warning"
               (clickEvent)="showAlert('warning')"
             >
@@ -74,10 +76,10 @@ import {
           </div>
 
           <div class="demo-item">
-            <h4>Alerta de Error</h4>
+            <h4>{{ 'modal.alerta_de_error' | translate }}</h4>
             <openiis-button
               type="danger"
-              text="Mostrar Error"
+              [text]="'modal.mostrar_error' | translate"
               iconLeft="error"
               (clickEvent)="showAlert('danger')"
             >
@@ -85,10 +87,10 @@ import {
           </div>
 
           <div class="demo-item">
-            <h4>Alerta de Información</h4>
+            <h4>{{ 'modal.alerta_de_información' | translate }}</h4>
             <openiis-button
               type="primary"
-              text="Mostrar Info"
+              [text]="'modal.mostrar_info' | translate"
               iconLeft="info"
               (clickEvent)="showAlert('info')"
             >
@@ -98,13 +100,13 @@ import {
       </div>
 
       <div class="demo-subsection">
-        <h3>Modales de Confirmación</h3>
+        <h3>{{ 'modal.modales_de_confirmación' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Confirmación de Eliminación</h4>
+            <h4>{{ 'modal.confirmación_de_eliminación' | translate }}</h4>
             <openiis-button
               type="danger"
-              text="Eliminar Elemento"
+              [text]="'modal.eliminar_elemento' | translate"
               iconLeft="delete"
               (clickEvent)="showConfirm('delete')"
             >
@@ -112,10 +114,10 @@ import {
           </div>
 
           <div class="demo-item">
-            <h4>Confirmación de Guardado</h4>
+            <h4>{{ 'modal.confirmación_de_guardado' | translate }}</h4>
             <openiis-button
               type="primary"
-              text="Guardar Cambios"
+              [text]="'modal.guardar_cambios' | translate"
               iconLeft="save"
               (clickEvent)="showConfirm('save')"
             >
@@ -125,13 +127,13 @@ import {
       </div>
 
       <div class="demo-subsection">
-        <h3>Modales de Texto</h3>
+        <h3>{{ 'modal.modales_de_texto' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Agregar Elemento</h4>
+            <h4>{{ 'modal.agregar_elemento' | translate }}</h4>
             <openiis-button
               type="primary"
-              text="Agregar Nuevo"
+              [text]="'modal.agregar_nuevo' | translate"
               iconLeft="add"
               (clickEvent)="showTextModal('add')"
             >
@@ -139,10 +141,10 @@ import {
           </div>
 
           <div class="demo-item">
-            <h4>Editar Elemento</h4>
+            <h4>{{ 'modal.editar_elemento' | translate }}</h4>
             <openiis-button
               type="secondary"
-              text="Editar Existente"
+              [text]="'modal.editar_existente' | translate"
               iconLeft="edit"
               (clickEvent)="showTextModal('edit')"
             >
@@ -165,59 +167,28 @@ export class ModalSecComponent {
   showInfoToast = false;
   currentModalType = '';
 
-  successAlertData = {
-    message:
-      'Operación completada exitosamente. Los datos han sido guardados correctamente.',
-    type: 'success' as const,
-  };
+  constructor(private translate: TranslateService) {
+    // Suscribirse a cambios de idioma
+    this.translate.onLangChange.subscribe(() => {
+      this.getSuccessAlertData();
+      this.getWarningAlertData();
+      this.getDangerAlertData();
+      this.getInfoAlertData();
+      this.getDeleteConfirmData();
+      this.getSaveConfirmData();
+      this.getAddItemModalData();
+      this.getEditItemModalData();
+    });
 
-  warningAlertData = {
-    message:
-      'Atención: Esta acción requerirá confirmación adicional antes de proceder.',
-    type: 'warning' as const,
-  };
-
-  dangerAlertData = {
-    message:
-      'Error crítico: No se pudo completar la operación. Por favor, intente nuevamente.',
-    type: 'danger' as const,
-  };
-
-  infoAlertData = {
-    message: 'Información: Esta funcionalidad estará disponible próximamente.',
-    type: 'info' as const,
-  };
-
-  deleteConfirmData = {
-    message:
-      '¿Estás seguro de que quieres eliminar este elemento? Esta acción no se puede deshacer.',
-    title: 'Confirmar eliminación',
-    confirmText: 'Eliminar',
-    cancelText: 'Cancelar',
-  };
-
-  saveConfirmData = {
-    message: '¿Deseas guardar los cambios realizados?',
-    title: 'Guardar cambios',
-    confirmText: 'Guardar',
-    cancelText: 'Descartar',
-    thirdButtonText: 'Guardar como borrador',
-  };
-
-  addItemModalData = {
-    title: 'Agregar nuevo elemento',
-    label: 'Descripción del elemento:',
-    placeholder: 'Escribe la descripción aquí...',
-    confirmButtonText: 'Agregar',
-  };
-
-  editItemModalData = {
-    title: 'Editar elemento existente',
-    label: 'Modificar descripción:',
-    placeholder: 'Actualiza la descripción...',
-    currentValue: 'Descripción actual del elemento',
-    confirmButtonText: 'Actualizar',
-  };
+    this.getSuccessAlertData();
+    this.getWarningAlertData();
+    this.getDangerAlertData();
+    this.getInfoAlertData();
+    this.getDeleteConfirmData();
+    this.getSaveConfirmData();
+    this.getAddItemModalData();
+    this.getEditItemModalData();
+  }
 
   /* ===== MODAL METHODS ===== */
   showAlert(type: string): void {
@@ -265,49 +236,118 @@ export class ModalSecComponent {
     this.showModal = false;
   }
 
+  /* ===== ALERT DATA GETTERS ===== */
+  getSuccessAlertData() {
+    return {
+      message: this.translate.instant('modal.alerta_de_éxito'),
+      type: 'success' as const,
+      buttonText: this.translate.instant('modal.aceptar'),
+    };
+  }
+
+  getWarningAlertData() {
+    return {
+      message: this.translate.instant('modal.alerta_de_advertencia'),
+      type: 'warning' as const,
+      buttonText: this.translate.instant('modal.aceptar'),
+    };
+  }
+
+  getDangerAlertData() {
+    return {
+      message: this.translate.instant('modal.alerta_de_error'),
+      type: 'danger' as const,
+      buttonText: this.translate.instant('modal.aceptar'),
+    };
+  }
+
+  getInfoAlertData() {
+    return {
+      message: this.translate.instant('modal.alerta_de_información'),
+      type: 'info' as const,
+      buttonText: this.translate.instant('modal.aceptar'),
+    };
+  }
+
+  /* ===== CONFIRM DATA GETTERS ===== */
+  getDeleteConfirmData() {
+    return {
+      message: this.translate.instant('modal.confirmación_de_eliminación'),
+      title: this.translate.instant('modal.eliminar_elemento'),
+      confirmText: this.translate.instant('modal.eliminar_elemento'),
+      cancelText: this.translate.instant('modal.cancelar'),
+    };
+  }
+
+  getSaveConfirmData() {
+    return {
+      message: this.translate.instant('modal.confirmación_de_guardado'),
+      title: this.translate.instant('modal.guardar_cambios'),
+      confirmText: this.translate.instant('modal.guardar_cambios'),
+      cancelText: this.translate.instant('modal.cancelar'),
+      thirdButtonText: this.translate.instant('modal.guardar_como_borrador'),
+    };
+  }
+
+  /* ===== MODAL DATA GETTERS ===== */
+  getAddItemModalData() {
+    return {
+      title: this.translate.instant('modal.agregar_nuevo'),
+      label: this.translate.instant('modal.descripción_del_elemento'),
+      placeholder: this.translate.instant('modal.escribe_la_descripción_aquí'),
+      confirmButtonText: this.translate.instant('modal.agregar_elemento'),
+      cancelButtonText: this.translate.instant('modal.cancelar'),
+    };
+  }
+
+  getEditItemModalData() {
+    return {
+      title: this.translate.instant('modal.editar_existente'),
+      label: this.translate.instant('modal.modificar_descripción'),
+      placeholder: this.translate.instant('modal.actualiza_la_descripción'),
+      currentValue: this.translate.instant(
+        'modal.descripción_actual_del_elemento'
+      ),
+      confirmButtonText: this.translate.instant('modal.editar_elemento'),
+      cancelButtonText: this.translate.instant('modal.cancelar'),
+    };
+  }
+
   /* ===== MODAL GETTERS ===== */
   get currentAlertData() {
     switch (this.currentModalType) {
       case 'success':
-        return this.successAlertData;
+        return this.getSuccessAlertData();
       case 'warning':
-        return this.warningAlertData;
+        return this.getWarningAlertData();
       case 'danger':
-        return this.dangerAlertData;
+        return this.getDangerAlertData();
       case 'info':
-        return this.infoAlertData;
+        return this.getInfoAlertData();
       default:
-        return this.successAlertData;
+        return this.getSuccessAlertData();
     }
   }
 
   get currentConfirmData() {
     switch (this.currentModalType) {
       case 'delete':
-        return this.deleteConfirmData;
+        return this.getDeleteConfirmData();
       case 'save':
-        return this.saveConfirmData;
+        return this.getSaveConfirmData();
       default:
-        return this.deleteConfirmData;
+        return this.getDeleteConfirmData();
     }
   }
 
   get currentModalData() {
     switch (this.currentModalType) {
       case 'add':
-        return this.addItemModalData;
+        return this.getAddItemModalData();
       case 'edit':
-        return this.editItemModalData;
+        return this.getEditItemModalData();
       default:
-        return this.addItemModalData;
+        return this.getAddItemModalData();
     }
   }
 }
-
-// Para eliminar importaciones no utilizadas sin instalar nada:
-// En VS Code:
-// 1. Presiona Ctrl + Shift + P (Windows/Linux) o Cmd + Shift + P (Mac)
-// 2. Escribe "Organize Imports" y selecciona la opción
-// 3. O usa directamente el atajo: Alt + Shift + O
-
-// Esto funciona nativamente en VS Code sin necesidad de instalar plugins adicionales

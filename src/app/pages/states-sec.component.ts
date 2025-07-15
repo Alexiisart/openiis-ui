@@ -1,26 +1,27 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisEmptyStateComponent } from '../components/empty-state/empty-state.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-states-sec',
   standalone: true,
-  imports: [CommonModule, OpeniisEmptyStateComponent],
+  imports: [CommonModule, OpeniisEmptyStateComponent, TranslateModule],
   template: `
     <!-- Sección de Estados -->
     <section id="basic-states" class="demo-section">
-      <h2>Estados</h2>
+      <h2>{{ 'states.estados' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Estados Vacíos</h3>
+        <h3>{{ 'states.estados_vacíos' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Estado Vacío General</h4>
+            <h4>{{ 'states.estado_vacío_general' | translate }}</h4>
             <openiis-empty-state
               icon="inbox"
-              title="No hay elementos"
-              message="No se encontraron elementos para mostrar. Agrega algunos elementos para empezar."
-              buttonText="Agregar Elemento"
+              [title]="'states.no_hay_elementos' | translate"
+              [message]="'states.no_hay_elementos_mensaje' | translate"
+              [buttonText]="'states.no_hay_elementos_botón' | translate"
               buttonType="primary"
               buttonIcon="add"
               (buttonClick)="onEmptyStateButtonClick()"
@@ -29,12 +30,12 @@ import { OpeniisEmptyStateComponent } from '../components/empty-state/empty-stat
           </div>
 
           <div class="demo-item">
-            <h4>Estado de Búsqueda Vacía</h4>
+            <h4>{{ 'states.estado_de_búsqueda_vacía' | translate }}</h4>
             <openiis-empty-state
               icon="search"
-              title="Sin resultados"
-              message="No se encontraron resultados para tu búsqueda. Intenta con otros términos."
-              buttonText="Nueva Búsqueda"
+              [title]="'states.sin_resultados' | translate"
+              [message]="'states.sin_resultados_mensaje' | translate"
+              [buttonText]="'states.sin_resultados_botón' | translate"
               buttonType="secondary"
               buttonIcon="refresh"
               (buttonClick)="onEmptyStateSearch()"
@@ -43,12 +44,12 @@ import { OpeniisEmptyStateComponent } from '../components/empty-state/empty-stat
           </div>
 
           <div class="demo-item">
-            <h4>Estado de Error</h4>
+            <h4>{{ 'states.estado_de_error' | translate }}</h4>
             <openiis-empty-state
               icon="error"
-              title="Error de conexión"
-              message="No se pudo cargar el contenido. Verifica tu conexión a internet."
-              buttonText="Reintentar"
+              [title]="'states.error_de_conexión' | translate"
+              [message]="'states.error_de_conexión_mensaje' | translate"
+              [buttonText]="'states.error_de_conexión_botón' | translate"
               buttonType="danger"
               buttonIcon="refresh"
               (buttonClick)="onEmptyStateError()"
@@ -57,12 +58,12 @@ import { OpeniisEmptyStateComponent } from '../components/empty-state/empty-stat
           </div>
 
           <div class="demo-item">
-            <h4>Estado de Carga</h4>
+            <h4>{{ 'states.estado_de_carga' | translate }}</h4>
             <openiis-empty-state
               icon="hourglass_empty"
-              title="Cargando..."
-              message="Estamos preparando el contenido para ti. Esto solo tomará un momento."
-              buttonText="Cancelar"
+              [title]="'states.cargando' | translate"
+              [message]="'states.estado_de_carga_mensaje' | translate"
+              [buttonText]="'states.estado_de_carga_botón' | translate"
               buttonType="outline-secondary"
               buttonIcon="close"
             >
@@ -72,15 +73,15 @@ import { OpeniisEmptyStateComponent } from '../components/empty-state/empty-stat
       </div>
 
       <div id="specific-states" class="demo-subsection">
-        <h3>Estados Específicos</h3>
+        <h3>{{ 'states.estados_específicos' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Lista de Productos Vacía</h4>
+            <h4>{{ 'states.lista_de_productos_vacía' | translate }}</h4>
             <openiis-empty-state
               icon="shopping_cart"
-              title="Carrito vacío"
-              message="Tu carrito de compras está vacío. Explora nuestros productos y agrega algunos."
-              buttonText="Ver Productos"
+              [title]="'states.carrito_vacío' | translate"
+              [message]="'states.carrito_vacío_mensaje' | translate"
+              [buttonText]="'states.carrito_vacío_botón' | translate"
               buttonType="primary"
               buttonIcon="storefront"
               [buttonFullWidth]="true"
@@ -89,12 +90,12 @@ import { OpeniisEmptyStateComponent } from '../components/empty-state/empty-stat
           </div>
 
           <div class="demo-item">
-            <h4>Mensajes Vacíos</h4>
+            <h4>{{ 'states.mensajes_vacíos' | translate }}</h4>
             <openiis-empty-state
               icon="mail"
-              title="Sin mensajes"
-              message="No tienes mensajes nuevos. Te notificaremos cuando recibas algo."
-              buttonText="Escribir Mensaje"
+              [title]="'states.sin_mensajes' | translate"
+              [message]="'states.sin_mensajes_mensaje' | translate"
+              [buttonText]="'states.sin_mensajes_botón' | translate"
               buttonType="success"
               buttonIcon="edit"
               [buttonResponsive]="true"
@@ -103,12 +104,12 @@ import { OpeniisEmptyStateComponent } from '../components/empty-state/empty-stat
           </div>
 
           <div class="demo-item">
-            <h4>Configuración Pendiente</h4>
+            <h4>{{ 'states.configuración_pendiente' | translate }}</h4>
             <openiis-empty-state
               icon="settings"
-              title="Configuración requerida"
-              message="Necesitas completar la configuración inicial antes de continuar."
-              buttonText="Configurar Ahora"
+              [title]="'states.configuración_requerida' | translate"
+              [message]="'states.configuración_requerida_mensaje' | translate"
+              [buttonText]="'states.configuración_requerida_botón' | translate"
               buttonType="warning"
               buttonIcon="tune"
               buttonSize="lg"

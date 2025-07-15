@@ -1,30 +1,34 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisTooltipComponent } from '../components/tooltip/tooltip.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tooltip-sec',
   standalone: true,
-  imports: [CommonModule, OpeniisTooltipComponent],
+  imports: [CommonModule, OpeniisTooltipComponent, TranslateModule],
   template: `
     <!-- Sección de Tooltips -->
     <section class="demo-section">
-      <h2>Tooltips</h2>
+      <h2>{{ 'tooltip.tooltips' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Posiciones de Tooltip</h3>
+        <h3>{{ 'tooltip.posiciones_de_tooltip' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Tooltip Superior</h4>
+            <h4>{{ 'tooltip.tooltip_superior' | translate }}</h4>
             <div class="tooltip-demo-container">
               <div
                 class="tooltip-trigger"
                 (mouseenter)="showTooltipTop = true"
                 (mouseleave)="showTooltipTop = false"
               >
-                <span>Hover aquí (Arriba)</span>
+                <span>{{ 'tooltip.hover_aquí_arriba' | translate }}</span>
                 <openiis-tooltip
-                  text="Este es un tooltip en la parte superior"
+                  text="{{
+                    'tooltip.este_es_un_tooltip_en_la_parte_superior'
+                      | translate
+                  }}"
                   position="top"
                   variant="default"
                   [visible]="showTooltipTop"
@@ -35,16 +39,18 @@ import { OpeniisTooltipComponent } from '../components/tooltip/tooltip.component
           </div>
 
           <div class="demo-item">
-            <h4>Tooltip Inferior</h4>
+            <h4>{{ 'tooltip.tooltip_inferior' | translate }}</h4>
             <div class="tooltip-demo-container">
               <div
                 class="tooltip-trigger"
                 (mouseenter)="showTooltipBottom = true"
                 (mouseleave)="showTooltipBottom = false"
               >
-                <span>Hover aquí (Abajo)</span>
+                <span>{{ 'tooltip.hover_aquí_abajo' | translate }}</span>
                 <openiis-tooltip
-                  text="Tooltip en la parte inferior"
+                  text="{{
+                    'tooltip.tooltip_en_la_parte_inferior' | translate
+                  }}"
                   position="bottom"
                   variant="default"
                   [visible]="showTooltipBottom"
@@ -55,16 +61,16 @@ import { OpeniisTooltipComponent } from '../components/tooltip/tooltip.component
           </div>
 
           <div class="demo-item">
-            <h4>Tooltip Izquierda</h4>
+            <h4>{{ 'tooltip.tooltip_izquierda' | translate }}</h4>
             <div class="tooltip-demo-container">
               <div
                 class="tooltip-trigger"
                 (mouseenter)="showTooltipLeft = true"
                 (mouseleave)="showTooltipLeft = false"
               >
-                <span>Hover aquí (Izquierda)</span>
+                <span>{{ 'tooltip.hover_aquí_izquierda' | translate }}</span>
                 <openiis-tooltip
-                  text="Tooltip a la izquierda"
+                  text="{{ 'tooltip.tooltip_a_la_izquierda' | translate }}"
                   position="left"
                   variant="default"
                   [visible]="showTooltipLeft"
@@ -75,16 +81,16 @@ import { OpeniisTooltipComponent } from '../components/tooltip/tooltip.component
           </div>
 
           <div class="demo-item">
-            <h4>Tooltip Derecha</h4>
+            <h4>{{ 'tooltip.tooltip_derecha' | translate }}</h4>
             <div class="tooltip-demo-container">
               <div
                 class="tooltip-trigger"
                 (mouseenter)="showTooltipRight = true"
                 (mouseleave)="showTooltipRight = false"
               >
-                <span>Hover aquí (Derecha)</span>
+                <span>{{ 'tooltip.hover_aquí_derecha' | translate }}</span>
                 <openiis-tooltip
-                  text="Tooltip a la derecha"
+                  text="{{ 'tooltip.tooltip_a_la_derecha' | translate }}"
                   position="right"
                   variant="default"
                   [visible]="showTooltipRight"
@@ -97,19 +103,21 @@ import { OpeniisTooltipComponent } from '../components/tooltip/tooltip.component
       </div>
 
       <div class="demo-subsection">
-        <h3>Variantes de Tooltip</h3>
+        <h3>{{ 'tooltip.variantes_de_tooltip' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Tooltip Default</h4>
+            <h4>{{ 'tooltip.tooltip_default' | translate }}</h4>
             <div class="tooltip-demo-container">
               <div
                 class="tooltip-trigger"
                 (mouseenter)="showTooltipDefault = true"
                 (mouseleave)="showTooltipDefault = false"
               >
-                <span>Tooltip Normal</span>
+                <span>{{ 'tooltip.tooltip_normal' | translate }}</span>
                 <openiis-tooltip
-                  text="Tooltip con variante por defecto"
+                  text="{{
+                    'tooltip.tooltip_con_variante_por_defecto' | translate
+                  }}"
                   position="top"
                   variant="default"
                   [visible]="showTooltipDefault"
@@ -120,16 +128,18 @@ import { OpeniisTooltipComponent } from '../components/tooltip/tooltip.component
           </div>
 
           <div class="demo-item">
-            <h4>Tooltip Peligro</h4>
+            <h4>{{ 'tooltip.tooltip_peligro' | translate }}</h4>
             <div class="tooltip-demo-container">
               <div
                 class="tooltip-trigger danger"
                 (mouseenter)="showTooltipDanger = true"
                 (mouseleave)="showTooltipDanger = false"
               >
-                <span>Tooltip Peligro</span>
+                <span>{{ 'tooltip.tooltip_peligro' | translate }}</span>
                 <openiis-tooltip
-                  text="Tooltip con variante de peligro"
+                  text="{{
+                    'tooltip.tooltip_con_variante_de_peligro' | translate
+                  }}"
                   position="top"
                   variant="danger"
                   [visible]="showTooltipDanger"

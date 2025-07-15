@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { OpeniisButtonComponent } from '../components/buttons/button.component';
 import { OpeniisButtonGroupComponent } from '../components';
 import { OpeniisFabComponent } from '../components/fab/fab.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-button-sec',
@@ -12,49 +13,50 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
     OpeniisButtonComponent,
     OpeniisButtonGroupComponent,
     OpeniisFabComponent,
+    TranslateModule,
   ],
   template: `
     <!-- Sección de Botones -->
     <section id="basic-buttons" class="demo-section">
-      <h2>Botones</h2>
+      <h2>{{ 'button.botones' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Tipos de Botones</h3>
+        <h3>{{ 'button.tipos_de_botones' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Botones Principales</h4>
+            <h4>{{ 'button.botones_principales' | translate }}</h4>
             <div class="button-group">
               <openiis-button
                 type="primary"
-                text="Primary"
+                [text]="'button.primary' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('primary')"
               >
               </openiis-button>
               <openiis-button
                 type="secondary"
-                text="Secondary"
+                [text]="'button.secondary' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('secondary')"
               >
               </openiis-button>
               <openiis-button
                 type="danger"
-                text="Danger"
+                [text]="'button.danger' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('danger')"
               >
               </openiis-button>
               <openiis-button
                 type="success"
-                text="Success"
+                [text]="'button.success' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('success')"
               >
               </openiis-button>
               <openiis-button
                 type="warning"
-                text="Warning"
+                [text]="'button.warning' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('warning')"
               >
@@ -63,25 +65,25 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
           </div>
 
           <div class="demo-item">
-            <h4>Botones Outline</h4>
+            <h4>{{ 'button.botones_outline' | translate }}</h4>
             <div class="button-group">
               <openiis-button
                 type="outline-primary"
-                text="Outline Primary"
+                [text]="'button.outline_primary' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('outline-primary')"
               >
               </openiis-button>
               <openiis-button
                 type="outline-secondary"
-                text="Outline Secondary"
+                [text]="'button.outline_secondary' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('outline-secondary')"
               >
               </openiis-button>
               <openiis-button
                 type="outline-danger"
-                text="Outline Danger"
+                [text]="'button.outline_danger' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('outline-danger')"
               >
@@ -90,32 +92,32 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
           </div>
 
           <div class="demo-item">
-            <h4>Botones Especiales</h4>
+            <h4>{{ 'button.botones_especiales' | translate }}</h4>
             <div class="button-group">
               <openiis-button
                 type="ghost"
-                text="Ghost"
+                [text]="'button.ghost' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('ghost')"
               >
               </openiis-button>
               <openiis-button
                 type="text"
-                text="Text Button"
+                [text]="'button.text_button' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('text')"
               >
               </openiis-button>
               <openiis-button
                 type="subtle"
-                text="Subtle"
+                [text]="'button.subtle' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('subtle')"
               >
               </openiis-button>
               <openiis-button
                 type="link"
-                text="Link Button"
+                [text]="'button.link_button' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('link')"
               >
@@ -126,42 +128,42 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
       </div>
 
       <div class="demo-subsection">
-        <h3>Tamaños de Botones</h3>
+        <h3>{{ 'button.tamaños_de_botones' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Todos los Tamaños</h4>
+            <h4>{{ 'button.todos_los_tamaños' | translate }}</h4>
             <div class="button-group">
               <openiis-button
                 type="primary"
-                text="XS"
+                [text]="'button.xs' | translate"
                 size="xs"
                 (clickEvent)="onButtonClick('xs')"
               >
               </openiis-button>
               <openiis-button
                 type="primary"
-                text="Small"
+                [text]="'button.small' | translate"
                 size="sm"
                 (clickEvent)="onButtonClick('sm')"
               >
               </openiis-button>
               <openiis-button
                 type="primary"
-                text="Medium"
+                [text]="'button.medium' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('md')"
               >
               </openiis-button>
               <openiis-button
                 type="primary"
-                text="Large"
+                [text]="'button.large' | translate"
                 size="lg"
                 (clickEvent)="onButtonClick('lg')"
               >
               </openiis-button>
               <openiis-button
                 type="primary"
-                text="Extra Large"
+                [text]="'button.extra_large' | translate"
                 size="xl"
                 (clickEvent)="onButtonClick('xl')"
               >
@@ -172,39 +174,43 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
       </div>
 
       <div class="demo-subsection">
-        <h3>Botones con Iconos</h3>
+        <h3>{{ 'button.botones_con_iconos' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Iconos Izquierda</h4>
+            <h4>{{ 'button.iconos_izquierda' | translate }}</h4>
             <div class="button-group">
               <openiis-button
                 type="primary"
-                text="Agregar"
+                [text]="'button.agregar' | translate"
                 iconLeft="add"
+                tooltipText="{{ 'button.agregar' | translate }}"
                 size="md"
                 (clickEvent)="onButtonClick('add')"
               >
               </openiis-button>
               <openiis-button
                 type="secondary"
-                text="Editar"
+                [text]="'button.editar' | translate"
                 iconLeft="edit"
+                tooltipText="{{ 'button.editar' | translate }}"
                 size="md"
                 (clickEvent)="onButtonClick('edit')"
               >
               </openiis-button>
               <openiis-button
                 type="danger"
-                text="Eliminar"
+                [text]="'button.eliminar' | translate"
                 iconLeft="delete"
+                tooltipText="{{ 'button.eliminar' | translate }}"
                 size="md"
                 (clickEvent)="onButtonClick('delete')"
               >
               </openiis-button>
               <openiis-button
                 type="success"
-                text="Guardar"
+                [text]="'button.guardar' | translate"
                 iconLeft="save"
+                tooltipText="{{ 'button.guardar' | translate }}"
                 size="md"
                 (clickEvent)="onButtonClick('save')"
               >
@@ -213,11 +219,11 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
           </div>
 
           <div class="demo-item">
-            <h4>Iconos Derecha</h4>
+            <h4>{{ 'button.iconos_derecha' | translate }}</h4>
             <div class="button-group">
               <openiis-button
                 type="primary"
-                text="Siguiente"
+                [text]="'button.siguiente' | translate"
                 iconRight="arrow_forward"
                 size="md"
                 (clickEvent)="onButtonClick('next')"
@@ -225,7 +231,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
               </openiis-button>
               <openiis-button
                 type="secondary"
-                text="Descargar"
+                [text]="'button.descargar' | translate"
                 iconRight="download"
                 size="md"
                 (clickEvent)="onButtonClick('download')"
@@ -233,7 +239,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
               </openiis-button>
               <openiis-button
                 type="outline-primary"
-                text="Enviar"
+                [text]="'button.enviar' | translate"
                 iconRight="send"
                 size="md"
                 (clickEvent)="onButtonClick('send')"
@@ -243,13 +249,12 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
           </div>
 
           <div class="demo-item">
-            <h4>Botones Solo Icono</h4>
+            <h4>{{ 'button.botones_solo_icono' | translate }}</h4>
             <div class="button-group">
               <openiis-button
                 type="icon"
                 iconLeft="edit"
                 size="xs"
-                tooltipText="Editar elemento"
                 (clickEvent)="onButtonClick('icon-edit')"
               >
               </openiis-button>
@@ -257,7 +262,6 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
                 type="icon"
                 iconLeft="delete"
                 size="sm"
-                tooltipText="Eliminar elemento"
                 (clickEvent)="onButtonClick('icon-delete')"
               >
               </openiis-button>
@@ -265,7 +269,6 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
                 type="icon"
                 iconLeft="settings"
                 size="md"
-                tooltipText="Configuración"
                 (clickEvent)="onButtonClick('icon-settings')"
               >
               </openiis-button>
@@ -273,16 +276,13 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
                 type="icon"
                 iconLeft="info"
                 size="lg"
-                tooltipText="Información"
                 (clickEvent)="onButtonClick('icon-info')"
               >
               </openiis-button>
-
               <openiis-button
                 type="icon"
                 iconLeft="info"
                 size="xl"
-                tooltipText="Información"
                 (clickEvent)="onButtonClick('icon-info')"
               >
               </openiis-button>
@@ -292,14 +292,14 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
       </div>
 
       <div class="demo-subsection">
-        <h3>Estados de Botones</h3>
+        <h3>{{ 'button.estados_de_botones' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Estados Especiales</h4>
+            <h4>{{ 'button.estados_especiales' | translate }}</h4>
             <div class="button-group">
               <openiis-button
                 type="primary"
-                text="Deshabilitado"
+                [text]="'button.deshabilitado' | translate"
                 size="md"
                 [disabled]="true"
                 (clickEvent)="onButtonClick('disabled')"
@@ -307,7 +307,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
               </openiis-button>
               <openiis-button
                 type="primary"
-                text="Cargando..."
+                [text]="'button.cargando' | translate"
                 size="md"
                 [loading]="loadingButton"
                 (clickEvent)="onButtonClick('loading1')"
@@ -315,7 +315,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
               </openiis-button>
               <openiis-button
                 type="success"
-                text="Cargar Datos"
+                [text]="'button.cargar_datos' | translate"
                 size="md"
                 [loading]="loadingButton2"
                 iconLeft="refresh"
@@ -330,31 +330,31 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
 
     <!-- Sección de Button Groups -->
     <section id="grouped-buttons" class="demo-section">
-      <h2>Grupos de Botones</h2>
+      <h2>{{ 'button.grupos_de_botones' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Agrupaciones de Botones</h3>
+        <h3>{{ 'button.agrupaciones_de_botones' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Grupo Básico</h4>
+            <h4>{{ 'button.grupo_básico' | translate }}</h4>
             <openiis-button-group>
               <openiis-button
                 type="secondary"
-                text="Izquierda"
+                [text]="'button.izquierda' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('left')"
               >
               </openiis-button>
               <openiis-button
                 type="secondary"
-                text="Centro"
+                [text]="'button.centro' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('center')"
               >
               </openiis-button>
               <openiis-button
                 type="secondary"
-                text="Derecha"
+                [text]="'button.derecha' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('right')"
               >
@@ -363,7 +363,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
           </div>
 
           <div class="demo-item">
-            <h4>Grupo con Iconos</h4>
+            <h4>{{ 'button.grupo_con_iconos' | translate }}</h4>
             <openiis-button-group>
               <openiis-button
                 type="outline-primary"
@@ -390,25 +390,25 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
           </div>
 
           <div class="demo-item">
-            <h4>Grupo Vertical</h4>
+            <h4>{{ 'button.grupo_vertical' | translate }}</h4>
             <openiis-button-group orientation="vertical">
               <openiis-button
                 type="primary"
-                text="Arriba"
+                [text]="'button.arriba' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('up')"
               >
               </openiis-button>
               <openiis-button
                 type="primary"
-                text="Medio"
+                [text]="'button.medio' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('middle')"
               >
               </openiis-button>
               <openiis-button
                 type="primary"
-                text="Abajo"
+                [text]="'button.abajo' | translate"
                 size="md"
                 (clickEvent)="onButtonClick('down')"
               >
@@ -417,11 +417,11 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
           </div>
 
           <div class="demo-item">
-            <h4>Grupo Separado</h4>
+            <h4>{{ 'button.grupo_separado' | translate }}</h4>
             <openiis-button-group [separated]="true">
               <openiis-button
                 type="success"
-                text="Guardar"
+                [text]="'button.guardar' | translate"
                 iconLeft="save"
                 size="md"
                 (clickEvent)="onButtonClick('save')"
@@ -429,7 +429,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
               </openiis-button>
               <openiis-button
                 type="warning"
-                text="Editar"
+                [text]="'button.editar' | translate"
                 iconLeft="edit"
                 size="md"
                 (clickEvent)="onButtonClick('edit')"
@@ -437,7 +437,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
               </openiis-button>
               <openiis-button
                 type="danger"
-                text="Eliminar"
+                [text]="'button.eliminar' | translate"
                 iconLeft="delete"
                 size="md"
                 (clickEvent)="onButtonClick('delete')"
@@ -451,13 +451,13 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
 
     <!-- Sección de FAB -->
     <section id="floating-buttons" class="demo-section">
-      <h2>FAB - Botones Flotantes</h2>
+      <h2>{{ 'button.fab_botones_flotantes' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Floating Action Buttons</h3>
+        <h3>{{ 'button.floating_action_buttons' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>FAB Básico</h4>
+            <h4>{{ 'button.fab_básico' | translate }}</h4>
             <div
               style="
               position: relative;
@@ -469,7 +469,9 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
               justify-content: center;
             "
             >
-              <p style="color: #6b7280; margin: 0">Área de demostración</p>
+              <p style="color: #6b7280; margin: 0">
+                {{ 'button.área_de_demostración' | translate }}
+              </p>
               <openiis-fab
                 icon="add"
                 positioning="absolute"
@@ -481,7 +483,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
           </div>
 
           <div class="demo-item">
-            <h4>FAB con Texto</h4>
+            <h4>{{ 'button.fab_con_texto' | translate }}</h4>
             <div
               style="
               position: relative;
@@ -493,10 +495,12 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
               justify-content: center;
             "
             >
-              <p style="color: #6b7280; margin: 0">Área de demostración</p>
+              <p style="color: #6b7280; margin: 0">
+                {{ 'button.área_de_demostración' | translate }}
+              </p>
               <openiis-fab
                 icon="edit"
-                text="Editar"
+                [text]="'button.editar' | translate"
                 [extended]="true"
                 variant="secondary"
                 positioning="absolute"
@@ -508,7 +512,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
           </div>
 
           <div class="demo-item">
-            <h4>Tamaños de FAB</h4>
+            <h4>{{ 'button.tamaños_de_fab' | translate }}</h4>
             <div
               style="
               display: flex;
@@ -554,7 +558,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
           </div>
 
           <div class="demo-item">
-            <h4>FAB con Carga</h4>
+            <h4>{{ 'button.fab_con_carga' | translate }}</h4>
             <div
               style="
               display: flex;
@@ -574,7 +578,7 @@ import { OpeniisFabComponent } from '../components/fab/fab.component';
               </openiis-fab>
               <openiis-fab
                 icon="send"
-                text="Enviar"
+                [text]="'button.enviar' | translate"
                 [extended]="true"
                 variant="success"
                 positioning="static"

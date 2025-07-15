@@ -2,20 +2,26 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-button.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-radio-sec',
   standalone: true,
-  imports: [CommonModule, FormsModule, OpeniisRadioButtonComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    OpeniisRadioButtonComponent,
+    TranslateModule,
+  ],
   template: `
     <div class="demo-section">
-      <h2>Botones de Radio</h2>
+      <h2>{{ 'radio.botones_de_radio' | translate }}</h2>
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Tipos de Radio Button</h4>
+          <h4>{{ 'radio.tipos_de_radio_button' | translate }}</h4>
           <div class="radio-group">
             <openiis-radio-button
-              label="Opción Success"
+              [label]="'radio.opción_success' | translate"
               type="success"
               name="tipo-demo"
               value="success"
@@ -24,7 +30,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
             >
             </openiis-radio-button>
             <openiis-radio-button
-              label="Opción Warning"
+              [label]="'radio.opción_warning' | translate"
               type="warning"
               name="tipo-demo"
               value="warning"
@@ -33,7 +39,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
             >
             </openiis-radio-button>
             <openiis-radio-button
-              label="Opción Danger"
+              [label]="'radio.opción_danger' | translate"
               type="danger"
               name="tipo-demo"
               value="danger"
@@ -42,7 +48,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
             >
             </openiis-radio-button>
             <openiis-radio-button
-              label="Opción Subtle"
+              [label]="'radio.opción_subtle' | translate"
               type="subtle"
               name="tipo-demo"
               value="subtle"
@@ -54,10 +60,10 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
         </div>
 
         <div class="demo-item">
-          <h4>Tamaños de Radio Button</h4>
+          <h4>{{ 'radio.tamaños_de_radio_button' | translate }}</h4>
           <div class="radio-group">
             <openiis-radio-button
-              label="Extra Small"
+              [label]="'radio.extra_small' | translate"
               type="success"
               name="tamaño-demo"
               value="xs"
@@ -66,7 +72,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
             >
             </openiis-radio-button>
             <openiis-radio-button
-              label="Small"
+              [label]="'radio.small' | translate"
               type="success"
               name="tamaño-demo"
               value="sm"
@@ -75,7 +81,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
             >
             </openiis-radio-button>
             <openiis-radio-button
-              label="Medium"
+              [label]="'radio.medium' | translate"
               type="success"
               name="tamaño-demo"
               value="md"
@@ -84,7 +90,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
             >
             </openiis-radio-button>
             <openiis-radio-button
-              label="Large"
+              [label]="'radio.large' | translate"
               type="success"
               name="tamaño-demo"
               value="lg"
@@ -93,7 +99,7 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
             >
             </openiis-radio-button>
             <openiis-radio-button
-              label="Extra Large"
+              [label]="'radio.extra_large' | translate"
               type="success"
               name="tamaño-demo"
               value="xl"
@@ -105,40 +111,37 @@ import { OpeniisRadioButtonComponent } from '../components/radio-button/radio-bu
         </div>
 
         <div class="demo-item">
-          <h4>Grupo de Notificaciones</h4>
+          <h4>{{ 'radio.grupo_de_notificaciones' | translate }}</h4>
           <div class="radio-group">
             <openiis-radio-button
-              label="Todas las notificaciones"
+              [label]="'radio.todas_las_notificaciones' | translate"
               type="success"
               name="notificaciones"
               value="todas"
               size="md"
-              helpText="Recibirás todas las actualizaciones"
               [(ngModel)]="selectedNotificationLevel"
             >
             </openiis-radio-button>
             <openiis-radio-button
-              label="Solo importantes"
+              [label]="'radio.solo_importantes' | translate"
               type="warning"
               name="notificaciones"
               value="importantes"
               size="md"
-              helpText="Solo notificaciones críticas"
               [(ngModel)]="selectedNotificationLevel"
             >
             </openiis-radio-button>
             <openiis-radio-button
-              label="Ninguna"
+              [label]="'radio.ninguna' | translate"
               type="danger"
               name="notificaciones"
               value="ninguna"
               size="md"
-              helpText="No recibirás notificaciones"
               [(ngModel)]="selectedNotificationLevel"
             >
             </openiis-radio-button>
             <p class="selection-result">
-              Notificaciones:
+              {{ 'radio.notificaciones' | translate }}:
               {{ selectedNotificationLevel || 'No seleccionado' }}
             </p>
           </div>

@@ -1,78 +1,97 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisBadgeComponent } from '../components/badge/badge.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-badge-sec',
   standalone: true,
-  imports: [CommonModule, OpeniisBadgeComponent],
+  imports: [CommonModule, OpeniisBadgeComponent, TranslateModule],
   template: `
     <!-- Sección de Badges -->
     <section class="demo-section">
-      <h2>Insignias</h2>
+      <h2>{{ 'badge.insignias' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Tipos de Insignias</h3>
+        <h3>{{ 'badge.tipos_de_insignias' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Insignias Básicos</h4>
+            <h4>{{ 'badge.insignias_básicos' | translate }}</h4>
             <div class="button-group">
-              <openiis-badge variant="default" text="Default"></openiis-badge>
-              <openiis-badge variant="primary" text="Primary"></openiis-badge>
-              <openiis-badge variant="success" text="Success"></openiis-badge>
-              <openiis-badge variant="warning" text="Warning"></openiis-badge>
-              <openiis-badge variant="danger" text="Danger"></openiis-badge>
-              <openiis-badge variant="info" text="Info"></openiis-badge>
+              <openiis-badge
+                variant="default"
+                [text]="'badge.default' | translate"
+              ></openiis-badge>
+              <openiis-badge
+                variant="primary"
+                [text]="'badge.primary' | translate"
+              ></openiis-badge>
+              <openiis-badge
+                variant="success"
+                [text]="'badge.success' | translate"
+              ></openiis-badge>
+              <openiis-badge
+                variant="warning"
+                [text]="'badge.warning' | translate"
+              ></openiis-badge>
+              <openiis-badge
+                variant="danger"
+                [text]="'badge.danger' | translate"
+              ></openiis-badge>
+              <openiis-badge
+                variant="info"
+                [text]="'badge.info' | translate"
+              ></openiis-badge>
             </div>
           </div>
 
           <div class="demo-item">
-            <h4>Tamaños</h4>
+            <h4>{{ 'badge.tamaños' | translate }}</h4>
             <div class="button-group">
               <openiis-badge
                 size="xs"
-                text="XS"
+                [text]="'badge.xs' | translate"
                 variant="primary"
               ></openiis-badge>
               <openiis-badge
                 size="sm"
-                text="Small"
+                [text]="'badge.small' | translate"
                 variant="primary"
               ></openiis-badge>
               <openiis-badge
                 size="md"
-                text="Medium"
+                [text]="'badge.medium' | translate"
                 variant="primary"
               ></openiis-badge>
               <openiis-badge
                 size="lg"
-                text="Large"
+                [text]="'badge.large' | translate"
                 variant="primary"
               ></openiis-badge>
             </div>
           </div>
 
           <div class="demo-item">
-            <h4>Con Iconos</h4>
+            <h4>{{ 'badge.con_iconos' | translate }}</h4>
             <div class="button-group">
               <openiis-badge
                 variant="success"
-                text="Completado"
+                [text]="'badge.completado' | translate"
                 icon="check_circle"
               ></openiis-badge>
               <openiis-badge
                 variant="warning"
-                text="Pendiente"
+                [text]="'badge.pendiente' | translate"
                 icon="schedule"
               ></openiis-badge>
               <openiis-badge
                 variant="danger"
-                text="Error"
+                [text]="'badge.error' | translate"
                 icon="cancel"
               ></openiis-badge>
               <openiis-badge
                 variant="info"
-                text="Información"
+                [text]="'badge.información' | translate"
                 icon="info"
               ></openiis-badge>
             </div>

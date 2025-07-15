@@ -10,6 +10,7 @@ import { OpeniisButtonComponent } from '../buttons/button.component';
 
 interface AlertData {
   message: string; // Mensaje de la alerta
+  buttonText: string; // Texto del botón de aceptar
   type: 'success' | 'warning' | 'danger' | 'info'; // Tipo de alerta
   duration?: number; // Duración en milisegundos (opcional)
 }
@@ -47,7 +48,7 @@ interface AlertData {
           <openiis-button
             (clickEvent)="close()"
             [type]="data?.type"
-            text="Aceptar"
+            [text]="data?.buttonText || 'Aceptar'"
             size="sm"
           >
           </openiis-button>

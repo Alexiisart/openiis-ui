@@ -55,7 +55,8 @@
   padding: 20px 24px;
 }
 
-.modal-body label {
+.modal-body label,
+.modal-body p {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;

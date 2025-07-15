@@ -2,42 +2,43 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisBreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-breadcrumb-sec',
   standalone: true,
-  imports: [CommonModule, OpeniisBreadcrumbComponent],
+  imports: [CommonModule, OpeniisBreadcrumbComponent, TranslateModule],
   template: `
     <!-- Sección de Breadcrumbs -->
     <section class="demo-section">
-      <h2>Navegación</h2>
+      <h2>{{ 'breadcrumb.navegacion' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Variantes de navegación</h3>
+        <h3>{{ 'breadcrumb.variantes_de_navegacion' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Default</h4>
+            <h4>{{ 'breadcrumb.default' | translate }}</h4>
             <div class="button-group">
               <openiis-breadcrumb
                 [items]="[
                   {
-                    label: 'Inicio',
+                    label: 'breadcrumb.inicio' | translate,
                     url: '/',
                     icon: 'home',
                     active: isActive('/')
                   },
                   {
-                    label: 'Productos',
+                    label: 'breadcrumb.productos' | translate,
                     url: '/products',
                     active: isActive('/products')
                   },
                   {
-                    label: 'Categoría',
+                    label: 'breadcrumb.categorias' | translate,
                     url: '/products/category',
                     active: isActive('/products/category')
                   },
                   {
-                    label: 'Producto Actual',
+                    label: 'breadcrumb.producto_actual' | translate,
                     url: '/products/product',
                     active: isActive('/products/product')
                   }
@@ -47,59 +48,62 @@ import { ActivatedRoute, Router } from '@angular/router';
           </div>
 
           <div class="demo-item">
-            <h4>Pills</h4>
+            <h4>{{ 'breadcrumb.pills' | translate }}</h4>
             <div class="button-group">
               <openiis-breadcrumb
                 variant="pills"
                 [showHome]="false"
                 [items]="[
                   {
-                    label: 'Inicio',
+                    label: 'breadcrumb.inicio' | translate,
                     url: '/',
                     icon: 'home',
                     active: isActive('/')
                   },
                   {
-                    label: 'Usuarios',
+                    label: 'breadcrumb.usuarios' | translate,
                     url: '/users',
                     active: isActive('/users')
                   },
                   {
-                    label: 'Perfil',
+                    label: 'breadcrumb.perfil' | translate,
                     url: '/users/profile',
                     active: isActive('/users/profile')
                   },
-                  { label: 'Configuración', active: isActive('/users/profile') }
+                  {
+                    label: 'breadcrumb.configuracion' | translate,
+                    active: isActive('/users/profile')
+                  }
                 ]"
               ></openiis-breadcrumb>
             </div>
           </div>
 
           <div class="demo-item">
-            <h4>Arrows</h4>
+            <h4>{{ 'breadcrumb.arrows' | translate }}</h4>
             <div class="button-group">
               <openiis-breadcrumb
                 variant="arrows"
                 [showHome]="false"
                 [items]="[
                   {
-                    label: 'Dashboard',
+                    label: 'breadcrumb.dashboard' | translate,
                     url: '/admin',
                     icon: 'dashboard',
                     active: isActive('/admin')
                   },
                   {
-                    label: 'Usuarios',
+                    label: 'breadcrumb.usuarios' | translate,
                     url: '/admin/users',
                     active: isActive('/admin/users')
                   },
                   {
-                    label: 'Gestión',
+                    label: 'breadcrumb.gestion' | translate,
                     url: '/admin/users/management',
                     active: isActive('/admin/users/management')
                   },
                   {
-                    label: 'Editar Usuario',
+                    label: 'breadcrumb.editar_usuario' | translate,
                     active: isActive('/admin/users/management')
                   }
                 ]"
@@ -108,23 +112,27 @@ import { ActivatedRoute, Router } from '@angular/router';
           </div>
         </div>
 
-        <h3>Tamaños</h3>
+        <h3>{{ 'breadcrumb.tamaños' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Pequeño (sm)</h4>
+            <h4>{{ 'breadcrumb.pequeño_sm' | translate }}</h4>
             <div class="button-group">
               <openiis-breadcrumb
                 size="sm"
                 [showHome]="false"
                 [items]="[
-                  { label: 'Inicio', url: '/', active: isActive('/') },
                   {
-                    label: 'Categorías',
+                    label: 'breadcrumb.inicio' | translate,
+                    url: '/',
+                    active: isActive('/')
+                  },
+                  {
+                    label: 'breadcrumb.categorias' | translate,
                     url: '/categories',
                     active: isActive('/categories')
                   },
                   {
-                    label: 'Actual',
+                    label: 'breadcrumb.actual' | translate,
                     url: '/actual',
                     active: isActive('/actual')
                   }
@@ -134,20 +142,24 @@ import { ActivatedRoute, Router } from '@angular/router';
           </div>
 
           <div class="demo-item">
-            <h4>Mediano (md)</h4>
+            <h4>{{ 'breadcrumb.mediano_md' | translate }}</h4>
             <div class="button-group">
               <openiis-breadcrumb
                 size="md"
                 [showHome]="false"
                 [items]="[
-                  { label: 'Inicio', url: '/', active: isActive('/') },
                   {
-                    label: 'Categorías',
+                    label: 'breadcrumb.inicio' | translate,
+                    url: '/',
+                    active: isActive('/')
+                  },
+                  {
+                    label: 'breadcrumb.categorias' | translate,
                     url: '/categories',
                     active: isActive('/categories')
                   },
                   {
-                    label: 'Actual',
+                    label: 'breadcrumb.actual' | translate,
                     url: '/actual',
                     active: isActive('/actual')
                   }
@@ -157,20 +169,24 @@ import { ActivatedRoute, Router } from '@angular/router';
           </div>
 
           <div class="demo-item">
-            <h4>Grande (lg)</h4>
+            <h4>{{ 'breadcrumb.grande_lg' | translate }}</h4>
             <div class="button-group">
               <openiis-breadcrumb
                 size="lg"
                 [showHome]="false"
                 [items]="[
-                  { label: 'Inicio', url: '/', active: isActive('/') },
                   {
-                    label: 'Categorías',
+                    label: 'breadcrumb.inicio' | translate,
+                    url: '/',
+                    active: isActive('/')
+                  },
+                  {
+                    label: 'breadcrumb.categorias' | translate,
                     url: '/categories',
                     active: isActive('/categories')
                   },
                   {
-                    label: 'Actual',
+                    label: 'breadcrumb.actual' | translate,
                     url: '/actual',
                     active: isActive('/actual')
                   }
@@ -180,23 +196,27 @@ import { ActivatedRoute, Router } from '@angular/router';
           </div>
         </div>
 
-        <h3>Separadores</h3>
+        <h3>{{ 'breadcrumb.separadores' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Slash</h4>
+            <h4>{{ 'breadcrumb.slash' | translate }}</h4>
             <div class="button-group">
               <openiis-breadcrumb
                 separator="slash"
                 [showHome]="false"
                 [items]="[
-                  { label: 'Inicio', url: '/', active: isActive('/') },
                   {
-                    label: 'Sección',
+                    label: 'breadcrumb.inicio' | translate,
+                    url: '/',
+                    active: isActive('/')
+                  },
+                  {
+                    label: 'breadcrumb.seccion' | translate,
                     url: '/section',
                     active: isActive('/section')
                   },
                   {
-                    label: 'Actual',
+                    label: 'breadcrumb.actual' | translate,
                     url: '/actual',
                     active: isActive('/actual')
                   }
@@ -206,20 +226,24 @@ import { ActivatedRoute, Router } from '@angular/router';
           </div>
 
           <div class="demo-item">
-            <h4>Dot</h4>
+            <h4>{{ 'breadcrumb.dot' | translate }}</h4>
             <div class="button-group">
               <openiis-breadcrumb
                 separator="dot"
                 [showHome]="false"
                 [items]="[
-                  { label: 'Inicio', url: '/', active: isActive('/') },
                   {
-                    label: 'Sección',
+                    label: 'breadcrumb.inicio' | translate,
+                    url: '/',
+                    active: isActive('/')
+                  },
+                  {
+                    label: 'breadcrumb.seccion' | translate,
                     url: '/section',
                     active: isActive('/section')
                   },
                   {
-                    label: 'Actual',
+                    label: 'breadcrumb.actual' | translate,
                     url: '/actual',
                     active: isActive('/actual')
                   }
@@ -229,20 +253,24 @@ import { ActivatedRoute, Router } from '@angular/router';
           </div>
 
           <div class="demo-item">
-            <h4>Pipe</h4>
+            <h4>{{ 'breadcrumb.pipe' | translate }}</h4>
             <div class="button-group">
               <openiis-breadcrumb
                 separator="pipe"
                 [showHome]="false"
                 [items]="[
-                  { label: 'Inicio', url: '/', active: isActive('/') },
                   {
-                    label: 'Sección',
+                    label: 'breadcrumb.inicio' | translate,
+                    url: '/',
+                    active: isActive('/')
+                  },
+                  {
+                    label: 'breadcrumb.seccion' | translate,
                     url: '/section',
                     active: isActive('/section')
                   },
                   {
-                    label: 'Actual',
+                    label: 'breadcrumb.actual' | translate,
                     url: '/actual',
                     active: isActive('/actual')
                   }
@@ -252,21 +280,25 @@ import { ActivatedRoute, Router } from '@angular/router';
           </div>
 
           <div class="demo-item">
-            <h4>Custom</h4>
+            <h4>{{ 'breadcrumb.custom' | translate }}</h4>
             <div class="button-group">
               <openiis-breadcrumb
                 separator="custom"
                 customSeparator="→"
                 [showHome]="false"
                 [items]="[
-                  { label: 'Inicio', url: '/', active: isActive('/') },
                   {
-                    label: 'Sección',
+                    label: 'breadcrumb.inicio' | translate,
+                    url: '/',
+                    active: isActive('/')
+                  },
+                  {
+                    label: 'breadcrumb.seccion' | translate,
                     url: '/section',
                     active: isActive('/section')
                   },
                   {
-                    label: 'Actual',
+                    label: 'breadcrumb.actual' | translate,
                     url: '/actual',
                     active: isActive('/actual')
                   }

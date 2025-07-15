@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-checkbox-sec',
   standalone: true,
-  imports: [CommonModule, OpeniisCheckboxComponent],
+  imports: [CommonModule, OpeniisCheckboxComponent, TranslateModule],
   template: `
     <div class="demo-section">
-      <h2>Casillas de Verificación</h2>
+      <h2>{{ 'checkbox.casillas_de_verificación' | translate }}</h2>
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Tipos de Checkbox</h4>
+          <h4>{{ 'checkbox.tipos_de_checkbox' | translate }}</h4>
           <div class="checkbox-group">
             <openiis-checkbox
-              label="Checkbox Default"
+              [label]="'checkbox.checkbox_default' | translate"
               type="default"
               size="md"
               [checked]="basicCheckbox"
@@ -22,7 +23,7 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Checkbox Primary"
+              [label]="'checkbox.checkbox_primary' | translate"
               type="primary"
               size="md"
               [checked]="primaryCheckbox"
@@ -30,7 +31,7 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Checkbox Success"
+              [label]="'checkbox.checkbox_success' | translate"
               type="success"
               size="md"
               [checked]="successCheckbox"
@@ -38,7 +39,7 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Checkbox Warning"
+              [label]="'checkbox.checkbox_warning' | translate"
               type="warning"
               size="md"
               [checked]="warningCheckbox"
@@ -46,7 +47,7 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Checkbox Danger"
+              [label]="'checkbox.checkbox_danger' | translate"
               type="danger"
               size="md"
               [checked]="dangerCheckbox"
@@ -57,10 +58,10 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
         </div>
 
         <div class="demo-item">
-          <h4>Variantes Especiales</h4>
+          <h4>{{ 'checkbox.variantes_especiales' | translate }}</h4>
           <div class="checkbox-group">
             <openiis-checkbox
-              label="Checkbox Subtle"
+              [label]="'checkbox.checkbox_subtle' | translate"
               type="subtle"
               size="md"
               [checked]="subtleCheckbox"
@@ -68,7 +69,7 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Checkbox Outline"
+              [label]="'checkbox.checkbox_outline' | translate"
               type="outline"
               size="md"
               [checked]="outlineCheckbox"
@@ -76,7 +77,7 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Checkbox Indeterminado"
+              [label]="'checkbox.checkbox_indeterminado' | translate"
               type="primary"
               size="md"
               [checked]="indeterminateCheckbox"
@@ -85,7 +86,7 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Checkbox Deshabilitado"
+              [label]="'checkbox.checkbox_deshabilitado' | translate"
               type="default"
               size="md"
               [checked]="disabledCheckbox"
@@ -96,38 +97,38 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
         </div>
 
         <div class="demo-item">
-          <h4>Tamaños de Checkbox</h4>
+          <h4>{{ 'checkbox.tamaños_de_checkbox' | translate }}</h4>
           <div class="checkbox-group">
             <openiis-checkbox
-              label="Checkbox XS"
+              [label]="'checkbox.checkbox_xs' | translate"
               type="primary"
               size="xs"
               [checked]="true"
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Checkbox Small"
+              [label]="'checkbox.checkbox_small' | translate"
               type="primary"
               size="sm"
               [checked]="true"
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Checkbox Medium"
+              [label]="'checkbox.checkbox_medium' | translate"
               type="primary"
               size="md"
               [checked]="true"
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Checkbox Large"
+              [label]="'checkbox.checkbox_large' | translate"
               type="primary"
               size="lg"
               [checked]="true"
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Checkbox XL"
+              [label]="'checkbox.checkbox_xl' | translate"
               type="primary"
               size="xl"
               [checked]="true"
@@ -137,31 +138,28 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
         </div>
 
         <div class="demo-item">
-          <h4>Checkboxes con Ayuda</h4>
+          <h4>{{ 'checkbox.checkboxes_con_ayuda' | translate }}</h4>
           <div class="checkbox-group">
             <openiis-checkbox
-              label="Acepto términos y condiciones"
+              [label]="'checkbox.acepto_términos_y_condiciones' | translate"
               type="primary"
               size="md"
-              helpText="Lee nuestros términos antes de continuar"
               [checked]="acceptTerms"
               (checkedChange)="onCheckboxChange($event, 'acceptTerms')"
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Suscribirse al newsletter"
+              [label]="'checkbox.suscribirse_al_newsletter' | translate"
               type="success"
               size="md"
-              helpText="Recibirás actualizaciones semanales"
               [checked]="subscribeNewsletter"
               (checkedChange)="onCheckboxChange($event, 'subscribeNewsletter')"
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Campo obligatorio"
+              [label]="'checkbox.campo_obligatorio' | translate"
               type="danger"
               size="md"
-              errorText="Este campo es obligatorio"
               [checked]="requiredField"
               (checkedChange)="onCheckboxChange($event, 'requiredField')"
             >
@@ -170,11 +168,11 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
         </div>
 
         <div class="demo-item">
-          <h4>Grupos de Checkboxes</h4>
+          <h4>{{ 'checkbox.grupos_de_checkboxes' | translate }}</h4>
           <div class="checkbox-group">
-            <h5>Preferencias de Notificación</h5>
+            <h5>{{ 'checkbox.preferencias_de_notificación' | translate }}</h5>
             <openiis-checkbox
-              label="Notificaciones por email"
+              [label]="'checkbox.notificaciones_por_email' | translate"
               type="primary"
               size="md"
               [checked]="notificationEmail"
@@ -182,7 +180,7 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Notificaciones push"
+              [label]="'checkbox.notificaciones_push' | translate"
               type="primary"
               size="md"
               [checked]="notificationPush"
@@ -190,7 +188,7 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Notificaciones SMS"
+              [label]="'checkbox.notificaciones_sms' | translate"
               type="primary"
               size="md"
               [checked]="notificationSMS"
@@ -198,45 +196,12 @@ import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.comp
             >
             </openiis-checkbox>
             <openiis-checkbox
-              label="Seleccionar todo"
+              [label]="'checkbox.seleccionar_todo' | translate"
               type="outline"
               size="md"
               [checked]="allNotifications"
               [indeterminate]="someNotifications"
               (checkedChange)="onSelectAllNotifications($event)"
-            >
-            </openiis-checkbox>
-          </div>
-        </div>
-
-        <div class="demo-item">
-          <h4>Estados Especiales</h4>
-          <div class="checkbox-group">
-            <openiis-checkbox
-              label="Checkbox con tooltip"
-              type="primary"
-              size="md"
-              title="Este checkbox tiene un tooltip informativo"
-              [checked]="checkboxWithTooltip"
-              (checkedChange)="onCheckboxChange($event, 'checkboxWithTooltip')"
-            >
-            </openiis-checkbox>
-            <openiis-checkbox
-              label="Checkbox con estado de carga"
-              type="subtle"
-              size="md"
-              [disabled]="loadingCheckbox"
-              helpText="Simulando estado de carga..."
-              [checked]="loadingCheckboxValue"
-            >
-            </openiis-checkbox>
-            <openiis-checkbox
-              label="Checkbox con validación"
-              type="success"
-              size="md"
-              helpText="✓ Validado correctamente"
-              [checked]="validatedCheckbox"
-              (checkedChange)="onCheckboxChange($event, 'validatedCheckbox')"
             >
             </openiis-checkbox>
           </div>

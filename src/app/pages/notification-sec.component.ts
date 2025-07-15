@@ -2,51 +2,57 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisButtonComponent } from '../components/buttons/button.component';
 import { OpeniisToastComponent } from '../components';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-notification-sec',
   standalone: true,
-  imports: [CommonModule, OpeniisButtonComponent, OpeniisToastComponent],
+  imports: [
+    CommonModule,
+    OpeniisButtonComponent,
+    OpeniisToastComponent,
+    TranslateModule,
+  ],
   template: `
     <!-- Toasts Implementados -->
     <openiis-toast
       [isVisible]="showSuccessToast"
-      [data]="successToastData"
+      [data]="successToastData()"
       (closed)="onToastClosed('success')"
     >
     </openiis-toast>
 
     <openiis-toast
       [isVisible]="showWarningToast"
-      [data]="warningToastData"
+      [data]="warningToastData()"
       (closed)="onToastClosed('warning')"
     >
     </openiis-toast>
 
     <openiis-toast
       [isVisible]="showDangerToast"
-      [data]="dangerToastData"
+      [data]="dangerToastData()"
       (closed)="onToastClosed('danger')"
     >
     </openiis-toast>
 
     <openiis-toast
       [isVisible]="showInfoToast"
-      [data]="infoToastData"
+      [data]="infoToastData()"
       (closed)="onToastClosed('info')"
     >
     </openiis-toast>
     <section class="demo-section">
-      <h2>Notificaciones</h2>
+      <h2>{{ 'notification.notificaciones' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Toasts</h3>
+        <h3>{{ 'notification.toasts' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Toast de Éxito</h4>
+            <h4>{{ 'notification.toast_de_éxito' | translate }}</h4>
             <openiis-button
               type="success"
-              text="Mostrar Éxito"
+              [text]="'notification.mostrar_éxito' | translate"
               iconLeft="check_circle"
               (clickEvent)="showToastMessage('success')"
             >
@@ -54,10 +60,10 @@ import { OpeniisToastComponent } from '../components';
           </div>
 
           <div class="demo-item">
-            <h4>Toast de Advertencia</h4>
+            <h4>{{ 'notification.toast_de_advertencia' | translate }}</h4>
             <openiis-button
               type="warning"
-              text="Mostrar Advertencia"
+              [text]="'notification.mostrar_advertencia' | translate"
               iconLeft="warning"
               (clickEvent)="showToastMessage('warning')"
             >
@@ -65,10 +71,10 @@ import { OpeniisToastComponent } from '../components';
           </div>
 
           <div class="demo-item">
-            <h4>Toast de Error</h4>
+            <h4>{{ 'notification.toast_de_error' | translate }}</h4>
             <openiis-button
               type="danger"
-              text="Mostrar Error"
+              [text]="'notification.mostrar_error' | translate"
               iconLeft="error"
               (clickEvent)="showToastMessage('danger')"
             >
@@ -76,10 +82,10 @@ import { OpeniisToastComponent } from '../components';
           </div>
 
           <div class="demo-item">
-            <h4>Toast de Información</h4>
+            <h4>{{ 'notification.toast_de_información' | translate }}</h4>
             <openiis-button
               type="primary"
-              text="Mostrar Info"
+              [text]="'notification.mostrar_info' | translate"
               iconLeft="info"
               (clickEvent)="showToastMessage('info')"
             >
@@ -95,6 +101,8 @@ export class NotificationSecComponent {
   showWarningToast = false;
   showDangerToast = false;
   showInfoToast = false;
+
+  constructor(private translate: TranslateService) {}
 
   showToastMessage(type: string): void {
     switch (type) {
@@ -132,27 +140,35 @@ export class NotificationSecComponent {
   }
 
   /* ===== TOAST SECTION ===== */
-  successToastData = {
-    message: '¡Éxito! La operación se completó correctamente.',
-    type: 'success' as const,
-    duration: 3000,
-  };
 
-  warningToastData = {
-    message: 'Advertencia: Verifica los datos antes de continuar.',
-    type: 'warning' as const,
-    duration: 3000,
-  };
+  successToastData(): any {
+    return {
+      message: this.translate.instant('notification.toast_de_éxito'),
+      type: 'success' as const,
+      duration: 3000,
+    };
+  }
 
-  dangerToastData = {
-    message: 'Error: No se pudo completar la operación.',
-    type: 'danger' as const,
-    duration: 3000,
-  };
+  warningToastData(): any {
+    return {
+      message: this.translate.instant('notification.toast_de_advertencia'),
+      type: 'warning' as const,
+      duration: 3000,
+    };
+  }
+  dangerToastData(): any {
+    return {
+      message: this.translate.instant('notification.toast_de_error'),
+      type: 'danger' as const,
+      duration: 3000,
+    };
+  }
 
-  infoToastData = {
-    message: 'Información: Funcionalidad actualizada disponible.',
-    type: 'info' as const,
-    duration: 3000,
-  };
+  infoToastData(): any {
+    return {
+      message: this.translate.instant('notification.toast_de_información'),
+      type: 'info' as const,
+      duration: 3000,
+    };
+  }
 }

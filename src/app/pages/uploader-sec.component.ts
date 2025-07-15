@@ -1,35 +1,44 @@
 import { Component } from '@angular/core';
 import { OpeniisUploaderComponent } from '../components/uploader/uploader.component';
 import { FileUploadItem, UploadConfig } from '../components/uploader';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-uploader-sec',
   template: `
     <!-- Sección de Cargador de Archivos -->
     <section id="basic-uploader" class="demo-section">
-      <h2>Cargador de Archivos</h2>
+      <h2>{{ 'uploader.cargador_de_archivos' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Variantes Básicas</h3>
+        <h3>{{ 'uploader.variantes_básicas' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Cargador de Archivos Básico</h4>
+            <h4>{{ 'uploader.cargador_de_archivos_básico' | translate }}</h4>
             <openiis-uploader
               variant="basic"
               [config]="basicUploadConfig"
-              title="Cargar Archivos"
-              description="Arrastra archivos aquí o haz clic para seleccionar"
+              title="{{ 'uploader.cargar_archivos' | translate }}"
+              description="{{
+                'uploader.cualquier_tipo_de_archivo' | translate
+              }}"
+              selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
+              removeTooltipFile="{{ 'uploader.eliminar_archivo' | translate }}"
+              clearAllText="{{ 'uploader.limpiar_todo' | translate }}"
               (filesAdded)="onFilesAdded($event)"
             >
             </openiis-uploader>
           </div>
 
           <div class="demo-item">
-            <h4>Cargador de Archivos Compacto</h4>
+            <h4>{{ 'uploader.cargador_de_archivos_compacto' | translate }}</h4>
             <openiis-uploader
               variant="compact"
               size="sm"
               [config]="compactUploadConfig"
+              selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
+              removeTooltipFile="{{ 'uploader.eliminar_archivo' | translate }}"
+              clearAllText="{{ 'uploader.limpiar_todo' | translate }}"
               (filesAdded)="onFilesAdded($event)"
             >
             </openiis-uploader>
@@ -38,27 +47,35 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
       </div>
 
       <div class="demo-subsection">
-        <h3>Variantes Especializadas</h3>
+        <h3>{{ 'uploader.variantes_especializadas' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Galería de Imágenes</h4>
+            <h4>{{ 'uploader.galería_de_imágenes' | translate }}</h4>
             <openiis-uploader
               variant="image-preview"
               size="lg"
               [config]="imageUploadConfig"
-              title="Galería de Fotos"
-              description="Solo imágenes - con preview automático"
+              title="{{ 'uploader.galería_de_fotos' | translate }}"
+              description="{{ 'uploader.múltiples_archivos' | translate }}"
+              selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
+              removeTooltipFile="{{ 'uploader.eliminar_archivo' | translate }}"
+              clearAllText="{{ 'uploader.limpiar_todo' | translate }}"
               (filesAdded)="onFilesAdded($event)"
             >
             </openiis-uploader>
           </div>
 
           <div class="demo-item">
-            <h4>Avatar de Usuario</h4>
+            <h4>{{ 'uploader.avatar_de_usuario' | translate }}</h4>
             <div style="max-width: 200px; margin: 0 auto">
               <openiis-uploader
                 variant="avatar"
                 [config]="avatarUploadConfig"
+                selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
+                removeTooltipFile="{{
+                  'uploader.eliminar_archivo' | translate
+                }}"
+                clearAllText="{{ 'uploader.limpiar_todo' | translate }}"
                 (filesAdded)="onAvatarUploaded($event[0])"
               >
               </openiis-uploader>
@@ -68,15 +85,18 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
       </div>
 
       <div id="advanced-uploader" class="demo-subsection">
-        <h3>Configuraciones Avanzadas</h3>
+        <h3>{{ 'uploader.configuraciones_avanzadas' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Documentos Oficiales</h4>
+            <h4>{{ 'uploader.documentos_oficiales' | translate }}</h4>
             <openiis-uploader
               variant="multi-file"
               [config]="documentUploadConfig"
-              title="Cargar Documentos"
-              description="PDF, Word, Excel y PowerPoint"
+              title="{{ 'uploader.cargar_documentos' | translate }}"
+              description="{{ 'uploader.currículum_y_documentos' | translate }}"
+              selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
+              removeTooltipFile="{{ 'uploader.eliminar_archivo' | translate }}"
+              clearAllText="{{ 'uploader.limpiar_todo' | translate }}"
               [showInfo]="true"
               (filesAdded)="onDocumentsAdded($event)"
             >
@@ -84,7 +104,7 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
           </div>
 
           <div class="demo-item">
-            <h4>Archivos Múltiples</h4>
+            <h4>{{ 'uploader.archivos_múltiples' | translate }}</h4>
             <openiis-uploader
               variant="basic"
               size="md"
@@ -93,8 +113,11 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
                 allowedTypes: ['image/*'],
                 maxFiles: 3
               }"
-              title="Múltiples Archivos"
-              description="Selecciona hasta 3 archivos"
+              title="{{ 'uploader.múltiples_archivos' | translate }}"
+              description="{{ 'uploader.archivos_múltiples' | translate }}"
+              selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
+              removeTooltipFile="{{ 'uploader.eliminar_archivo' | translate }}"
+              clearAllText="{{ 'uploader.limpiar_todo' | translate }}"
               (filesAdded)="onFilesAdded($event)"
             >
             </openiis-uploader>
@@ -103,10 +126,10 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
       </div>
 
       <div class="demo-subsection">
-        <h3>Tamaños y Estados</h3>
+        <h3>{{ 'uploader.tamaños_y_estados' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Tamaño Pequeño</h4>
+            <h4>{{ 'uploader.tamaño_pequeño' | translate }}</h4>
             <openiis-uploader
               variant="basic"
               size="sm"
@@ -114,14 +137,17 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
                 maxFileSize: 2,
                 maxFiles: 2
               }"
-              title="Cargador de Archivos Pequeño"
+              title="{{ 'uploader.cargador_de_archivos_pequeño' | translate }}"
+              selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
+              removeTooltipFile="{{ 'uploader.eliminar_archivo' | translate }}"
+              clearAllText="{{ 'uploader.limpiar_todo' | translate }}"
               [showInfo]="false"
             >
             </openiis-uploader>
           </div>
 
           <div class="demo-item">
-            <h4>Tamaño Extra Grande</h4>
+            <h4>{{ 'uploader.tamaño_extra_grande' | translate }}</h4>
             <openiis-uploader
               variant="basic"
               size="xl"
@@ -129,20 +155,28 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
                 maxFileSize: 50,
                 maxFiles: 10
               }"
-              title="Área de Carga Grande"
-              description="Perfecta para múltiples archivos grandes"
+              title="{{ 'uploader.área_de_carga_grande' | translate }}"
+              description="{{ 'uploader.múltiples_archivos' | translate }}"
+              selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
+              removeTooltipFile="{{ 'uploader.eliminar_archivo' | translate }}"
+              clearAllText="{{ 'uploader.limpiar_todo' | translate }}"
             >
             </openiis-uploader>
           </div>
 
           <div class="demo-item">
-            <h4>Estado Deshabilitado</h4>
+            <h4>{{ 'uploader.estado_deshabilitado' | translate }}</h4>
             <openiis-uploader
               variant="basic"
               size="md"
               [disabled]="true"
-              title="Cargador de Archivos Deshabilitado"
-              description="No se pueden cargar archivos"
+              title="{{
+                'uploader.cargador_de_archivos_deshabilitado' | translate
+              }}"
+              description="{{ 'uploader.archivos_múltiples' | translate }}"
+              selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
+              removeTooltipFile="{{ 'uploader.eliminar_archivo' | translate }}"
+              clearAllText="{{ 'uploader.limpiar_todo' | translate }}"
             >
             </openiis-uploader>
           </div>
@@ -150,10 +184,10 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
       </div>
 
       <div id="real-cases" class="demo-subsection">
-        <h3>Casos de Uso Reales</h3>
+        <h3>{{ 'uploader.casos_de_uso_reales' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Currículum y Documentos</h4>
+            <h4>{{ 'uploader.currículum_y_documentos' | translate }}</h4>
             <openiis-uploader
               variant="basic"
               [config]="{
@@ -161,15 +195,18 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
                 allowedTypes: ['application/pdf', '.doc', '.docx'],
                 maxFiles: 3
               }"
-              title="Carga tu CV y documentos"
-              description="PDF y documentos de Word únicamente"
+              title="{{ 'uploader.carga_tu_cv_y_documentos' | translate }}"
+              description="{{ 'uploader.documentos_oficiales' | translate }}"
+              selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
+              removeTooltipFile="{{ 'uploader.eliminar_archivo' | translate }}"
+              clearAllText="{{ 'uploader.limpiar_todo' | translate }}"
               (filesAdded)="onFilesAdded($event)"
             >
             </openiis-uploader>
           </div>
 
           <div class="demo-item">
-            <h4>Portafolio Creativo</h4>
+            <h4>{{ 'uploader.portafolio_creativo' | translate }}</h4>
             <openiis-uploader
               variant="image-preview"
               [config]="{
@@ -179,15 +216,18 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
                 enableResize: true,
                 compressionQuality: 0.9
               }"
-              title="Carga tu portafolio"
-              description="Imágenes de alta calidad con compresión automática"
+              title="{{ 'uploader.carga_tu_portafolio' | translate }}"
+              description="{{ 'uploader.galería_de_imágenes' | translate }}"
+              selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
+              removeTooltipFile="{{ 'uploader.eliminar_archivo' | translate }}"
+              clearAllText="{{ 'uploader.limpiar_todo' | translate }}"
               (filesAdded)="onGalleryUploaded($event)"
             >
             </openiis-uploader>
           </div>
 
           <div class="demo-item">
-            <h4>Archivos Mixtos</h4>
+            <h4>{{ 'uploader.archivos_mixtos' | translate }}</h4>
             <openiis-uploader
               variant="multi-file"
               [config]="{
@@ -195,8 +235,11 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
                 allowedTypes: ['*'],
                 maxFiles: 15
               }"
-              title="Cualquier tipo de archivo"
-              description="Sin restricciones de tipo, solo tamaño"
+              title="{{ 'uploader.cualquier_tipo_de_archivo' | translate }}"
+              description="{{ 'uploader.archivos_múltiples' | translate }}"
+              selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
+              removeTooltipFile="{{ 'uploader.eliminar_archivo' | translate }}"
+              clearAllText="{{ 'uploader.limpiar_todo' | translate }}"
               (filesAdded)="onFilesAdded($event)"
             >
             </openiis-uploader>
@@ -205,7 +248,7 @@ import { FileUploadItem, UploadConfig } from '../components/uploader';
       </div>
     </section>
   `,
-  imports: [OpeniisUploaderComponent],
+  imports: [OpeniisUploaderComponent, TranslateModule],
 })
 export class UploaderSecComponent {
   basicUploadConfig: UploadConfig = {

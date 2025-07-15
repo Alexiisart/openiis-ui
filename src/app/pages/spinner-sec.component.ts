@@ -1,18 +1,22 @@
 import { Component } from '@angular/core';
 import { OpeniisSpinnerComponent } from '../components/spinner/spinner.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-spinner-sec',
+  imports: [OpeniisSpinnerComponent, TranslateModule],
   template: `
     <!-- Sección de Spinners -->
     <section class="demo-section">
-      <h2>Indicadores de Carga</h2>
+      <h2>{{ 'spinner.indicadores_de_carga' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Tipos de Indicadores de Carga</h3>
+        <h3>{{ 'spinner.tipos_de_indicadores_de_carga' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Variantes de Indicadores de Carga</h4>
+            <h4>
+              {{ 'spinner.variantes_de_indicadores_de_carga' | translate }}
+            </h4>
             <div class="button-group">
               <openiis-spinner
                 variant="circle"
@@ -38,7 +42,7 @@ import { OpeniisSpinnerComponent } from '../components/spinner/spinner.component
           </div>
 
           <div class="demo-item">
-            <h4>Tamaños</h4>
+            <h4>{{ 'spinner.tamaños' | translate }}</h4>
             <div class="button-group">
               <openiis-spinner
                 variant="circle"
@@ -69,12 +73,12 @@ import { OpeniisSpinnerComponent } from '../components/spinner/spinner.component
           </div>
 
           <div class="demo-item">
-            <h4>Con Texto</h4>
+            <h4>{{ 'spinner.con_texto' | translate }}</h4>
             <openiis-spinner
               variant="circle"
               size="md"
               color="primary"
-              text="Cargando..."
+              [text]="'spinner.cargando' | translate"
             >
             </openiis-spinner>
           </div>
@@ -82,6 +86,5 @@ import { OpeniisSpinnerComponent } from '../components/spinner/spinner.component
       </div>
     </section>
   `,
-  imports: [OpeniisSpinnerComponent],
 })
 export class SpinnerSecComponent {}

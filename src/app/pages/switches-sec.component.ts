@@ -1,35 +1,36 @@
 import { Component } from '@angular/core';
 import { OpeniisSwitchComponent } from '../components/switch/switch.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-switches-sec',
   template: `
     <!-- Sección de Switches -->
     <section class="demo-section">
-      <h2>Switches</h2>
+      <h2>{{ 'switches.switches' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Controles Interruptores</h3>
+        <h3>{{ 'switches.controles_interruptores' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Interruptores Básicos</h4>
+            <h4>{{ 'switches.interruptores_básicos' | translate }}</h4>
             <div class="input-sizes">
               <openiis-switch
                 variant="default"
-                label="Activar notificaciones"
+                [label]="'switches.activar_notificaciones' | translate"
                 size="md"
               >
               </openiis-switch>
               <openiis-switch
                 variant="default"
-                label="Modo oscuro"
+                [label]="'switches.modo_oscuro' | translate"
                 [checked]="true"
                 size="md"
               >
               </openiis-switch>
               <openiis-switch
                 variant="default"
-                label="Switch deshabilitado"
+                [label]="'switches.switch_deshabilitado' | translate"
                 [disabled]="true"
                 size="md"
               >
@@ -38,46 +39,46 @@ import { OpeniisSwitchComponent } from '../components/switch/switch.component';
           </div>
 
           <div class="demo-item">
-            <h4>Tamaños</h4>
+            <h4>{{ 'switches.tamaños' | translate }}</h4>
             <div class="input-sizes">
               <openiis-switch
                 variant="primary"
-                label="Pequeño"
+                [label]="'switches.pequeño' | translate"
                 size="sm"
               ></openiis-switch>
               <openiis-switch
                 variant="primary"
-                label="Mediano"
+                [label]="'switches.mediano' | translate"
                 size="md"
               ></openiis-switch>
               <openiis-switch
                 variant="primary"
-                label="Grande"
+                [label]="'switches.grande' | translate"
                 size="lg"
               ></openiis-switch>
             </div>
           </div>
 
           <div class="demo-item">
-            <h4>Variantes</h4>
+            <h4>{{ 'switches.variantes' | translate }}</h4>
             <div class="input-sizes">
               <openiis-switch
-                label="Primary"
+                [label]="'switches.primary' | translate"
                 variant="primary"
                 [checked]="true"
               ></openiis-switch>
               <openiis-switch
-                label="Success"
+                [label]="'switches.success' | translate"
                 variant="success"
                 [checked]="true"
               ></openiis-switch>
               <openiis-switch
-                label="Warning"
+                [label]="'switches.warning' | translate"
                 variant="warning"
                 [checked]="true"
               ></openiis-switch>
               <openiis-switch
-                label="Danger"
+                [label]="'switches.danger' | translate"
                 variant="danger"
                 [checked]="true"
               ></openiis-switch>
@@ -88,6 +89,6 @@ import { OpeniisSwitchComponent } from '../components/switch/switch.component';
     </section>
   `,
   standalone: true,
-  imports: [OpeniisSwitchComponent],
+  imports: [OpeniisSwitchComponent, TranslateModule],
 })
 export class SwitchesSecComponent {}

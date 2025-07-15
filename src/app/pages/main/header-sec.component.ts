@@ -140,6 +140,10 @@ export class HeaderSecComponent {
         value: 'en',
         label: this.translate.instant('header.en'),
       },
+      {
+        value: 'cn',
+        label: this.translate.instant('header.cn'),
+      },
     ];
   }
 

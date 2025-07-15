@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisDropdownComponent } from '../components';
 import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/searchable-dropdown.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-select-sec',
@@ -10,36 +11,37 @@ import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/sear
     CommonModule,
     OpeniisDropdownComponent,
     OpeniisSearchableDropdownComponent,
+    TranslateModule,
   ],
   template: `
     <section class="demo-section">
-      <h2>Selectores</h2>
+      <h2>{{ 'select.selectores' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Dropdowns</h3>
+        <h3>{{ 'select.dropdowns' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Dropdown Básico</h4>
+            <h4>{{ 'select.dropdown_básico' | translate }}</h4>
             <openiis-dropdown
               [options]="dropdownOptions"
               [selectedValue]="selectedDropdownValue"
               size="md"
-              tooltip="Selecciona una opción"
+              tooltip="{{ 'select.buscar' | translate }}"
               (selectionChanged)="onDropdownChange($event)"
             >
             </openiis-dropdown>
             <p class="selection-result">
-              Seleccionado: {{ selectedDropdownValue }}
+              {{ selectedDropdownValue }}
             </p>
           </div>
         </div>
       </div>
 
       <div class="demo-subsection">
-        <h3>Tamaños de Dropdown</h3>
+        <h3>{{ 'select.tamaños_de_dropdown' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Dropdown Small</h4>
+            <h4>{{ 'select.dropdown_small' | translate }}</h4>
             <openiis-dropdown
               [options]="dropdownOptions"
               [selectedValue]="selectedDropdownValue"
@@ -49,7 +51,7 @@ import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/sear
           </div>
 
           <div class="demo-item">
-            <h4>Dropdown Medium</h4>
+            <h4>{{ 'select.dropdown_medium' | translate }}</h4>
             <openiis-dropdown
               [options]="dropdownOptions"
               [selectedValue]="selectedDropdownValue"
@@ -59,7 +61,7 @@ import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/sear
           </div>
 
           <div class="demo-item">
-            <h4>Dropdown Large</h4>
+            <h4>{{ 'select.dropdown_large' | translate }}</h4>
             <openiis-dropdown
               [options]="dropdownOptions"
               [selectedValue]="selectedDropdownValue"
@@ -69,7 +71,7 @@ import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/sear
           </div>
 
           <div class="demo-item">
-            <h4>Dropdown Deshabilitado</h4>
+            <h4>{{ 'select.dropdown_deshabilitado' | translate }}</h4>
             <openiis-dropdown
               [options]="dropdownOptions"
               [selectedValue]="selectedDropdownValue"
@@ -82,105 +84,107 @@ import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/sear
       </div>
 
       <div class="demo-subsection">
-        <h3>Dropdowns con Búsqueda</h3>
+        <h3>{{ 'select.dropdowns_con_búsqueda' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Dropdown de Productos</h4>
+            <h4>{{ 'select.dropdown_de_productos' | translate }}</h4>
             <openiis-searchable-dropdown
               [options]="searchableProductsOptions"
               [selectedValue]="selectedSearchableProduct"
-              placeholder="Buscar productos..."
+              placeholder="{{ 'select.buscar_productos' | translate }}"
               size="md"
-              tooltip="Busca y selecciona un producto"
+              tooltip="{{ 'select.tooltip_buscar_producto' | translate }}"
               (selectionChanged)="onSearchableProductChange($event)"
             >
             </openiis-searchable-dropdown>
             <p class="selection-result">
-              Producto seleccionado: {{ selectedSearchableProduct }}
+              {{ selectedSearchableProduct }}
             </p>
           </div>
 
           <div class="demo-item">
-            <h4>Dropdown de Países</h4>
+            <h4>{{ 'select.dropdown_de_países' | translate }}</h4>
             <openiis-searchable-dropdown
               [options]="searchableCountriesOptions"
               [selectedValue]="selectedSearchableCountry"
-              placeholder="Buscar países..."
+              placeholder="{{ 'select.buscar_países' | translate }}"
               size="md"
-              tooltip="Busca y selecciona un país"
+              tooltip="{{ 'select.tooltip_buscar_pais' | translate }}"
               (selectionChanged)="onSearchableCountryChange($event)"
             >
             </openiis-searchable-dropdown>
             <p class="selection-result">
-              País seleccionado: {{ selectedSearchableCountry }}
+              {{ selectedSearchableCountry }}
             </p>
           </div>
 
           <div class="demo-item">
-            <h4>Dropdown Solo Etiquetas</h4>
+            <h4>{{ 'select.dropdown_solo_etiquetas' | translate }}</h4>
             <openiis-searchable-dropdown
               [options]="citiesOptions"
               [selectedValue]="selectedCity"
-              placeholder="Buscar ciudades..."
+              placeholder="{{ 'select.buscar_ciudades' | translate }}"
               size="md"
               [searchInDescription]="false"
-              tooltip="Busca solo en las etiquetas"
+              tooltip="{{ 'select.tooltip_buscar_etiquetas' | translate }}"
               (selectionChanged)="onCityChange($event)"
             >
             </openiis-searchable-dropdown>
-            <p class="selection-result">Ciudad: {{ selectedCity }}</p>
+            <p class="selection-result">
+              {{ selectedCity }}
+            </p>
           </div>
         </div>
       </div>
 
       <div class="demo-subsection">
-        <h3>Tamaños de Dropdown con Búsqueda</h3>
+        <h3>{{ 'select.tamaños_de_dropdown_con_búsqueda' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Dropdown Small</h4>
+            <h4>{{ 'select.dropdown_small' | translate }}</h4>
             <openiis-searchable-dropdown
               [options]="searchableProductsOptions"
               [selectedValue]="selectedSearchableProduct"
-              placeholder="Buscar..."
+              placeholder="{{ 'select.buscar' | translate }}"
               size="sm"
-              tooltip="Tamaño pequeño"
+              tooltip="{{ 'select.tooltip_tamaño_pequeño' | translate }}"
             >
             </openiis-searchable-dropdown>
           </div>
 
           <div class="demo-item">
-            <h4>Dropdown Medium</h4>
+            <h4>{{ 'select.dropdown_medium' | translate }}</h4>
             <openiis-searchable-dropdown
               [options]="searchableProductsOptions"
               [selectedValue]="selectedSearchableProduct"
-              placeholder="Buscar productos..."
+              placeholder="{{ 'select.buscar_productos' | translate }}"
               size="md"
-              tooltip="Tamaño mediano"
+              tooltip="{{ 'select.tooltip_tamaño_mediano' | translate }}"
             >
             </openiis-searchable-dropdown>
           </div>
 
           <div class="demo-item">
-            <h4>Dropdown Large</h4>
+            <h4>{{ 'select.dropdown_large' | translate }}</h4>
             <openiis-searchable-dropdown
               [options]="searchableProductsOptions"
               [selectedValue]="selectedSearchableProduct"
-              placeholder="Buscar productos..."
+              placeholder="{{ 'select.buscar_productos' | translate }}"
               size="lg"
-              tooltip="Tamaño grande"
+              tooltip="{{ 'select.tooltip_tamaño_grande' | translate }}"
             >
             </openiis-searchable-dropdown>
           </div>
 
           <div class="demo-item">
-            <h4>Dropdown Deshabilitado</h4>
+            <h4>{{ 'select.dropdown_deshabilitado' | translate }}</h4>
             <openiis-searchable-dropdown
               [options]="searchableProductsOptions"
               [selectedValue]="selectedSearchableProduct"
-              placeholder="Campo deshabilitado"
+              placeholder="{{ 'select.campo_deshabilitado' | translate }}"
               size="md"
               [disabled]="true"
-              tooltip="Dropdown deshabilitado"
+              tooltip="{{ 'select.tooltip_deshabilitado' | translate }}"
             >
             </openiis-searchable-dropdown>
           </div>
@@ -191,10 +195,10 @@ import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/sear
 })
 export class SelectSecComponent {
   dropdownOptions = [
-    { value: 'option1', label: 'Opción 1' },
-    { value: 'option2', label: 'Opción 2' },
-    { value: 'option3', label: 'Opción 3' },
-    { value: 'option4', label: 'Opción 4' },
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+    { value: 'option4', label: 'Option 4' },
   ];
 
   citiesOptions = [
@@ -212,10 +216,10 @@ export class SelectSecComponent {
   ];
 
   searchableProductsOptions = [
-    { value: 'product1', label: 'Producto 1' },
-    { value: 'product2', label: 'Producto 2' },
-    { value: 'product3', label: 'Producto 3' },
-    { value: 'product4', label: 'Producto 4' },
+    { value: 'product1', label: 'Product 1' },
+    { value: 'product2', label: 'Product 2' },
+    { value: 'product3', label: 'Product 3' },
+    { value: 'product4', label: 'Product 4' },
   ];
 
   searchableCountriesOptions = [
@@ -234,21 +238,17 @@ export class SelectSecComponent {
   /* ===== DROPDOWN METHODS ===== */
   onDropdownChange(value: string): void {
     this.selectedDropdownValue = value;
-    console.log('Dropdown cambiado:', value);
   }
 
   onCityChange(value: string): void {
     this.selectedCity = value;
-    console.log('Ciudad cambiada:', value);
   }
 
   onSearchableProductChange(value: string): void {
     this.selectedSearchableProduct = value;
-    console.log('Producto seleccionado:', value);
   }
 
   onSearchableCountryChange(value: string): void {
     this.selectedSearchableCountry = value;
-    console.log('País con búsqueda seleccionado:', value);
   }
 }

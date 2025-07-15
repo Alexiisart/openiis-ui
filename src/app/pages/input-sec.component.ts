@@ -6,6 +6,7 @@ import {
 } from '../components';
 import { OpeniisButtonComponent } from '../components/buttons/button.component';
 import { InputVariant } from '../components/input/input.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-input-sec',
@@ -15,44 +16,44 @@ import { InputVariant } from '../components/input/input.component';
     OpeniisInputComponent,
     OpeniisSearchInputComponent,
     OpeniisButtonComponent,
+    TranslateModule,
   ],
   template: `
     <!-- Sección de Entradas -->
     <section id="basic-inputs" class="demo-section">
-      <h2>Entradas</h2>
+      <h2>{{ 'input.entradas' | translate }}</h2>
 
       <div class="demo-subsection">
-        <h3>Tipos de Entrada</h3>
+        <h3>{{ 'input.tipos_de_entrada' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Formulario de Registro</h4>
+            <h4>{{ 'input.formulario_de_registro' | translate }}</h4>
             <form
               class="demo-form"
               (ngSubmit)="onFormSubmit('register')"
               novalidate
             >
               <openiis-input
-                label="Nombre completo"
-                placeholder="Ingresa tu nombre"
+                [label]="'input.nombre_completo' | translate"
+                [placeholder]="'input.ingresa_tu_nombre' | translate"
                 type="text"
                 [(value)]="basicInputValue"
                 size="md"
                 variant="default"
-                helpText="Ingresa tu nombre y apellido"
                 (valueChange)="onInputChange($event, 'basic')"
               >
               </openiis-input>
 
               <openiis-input
-                label="Correo electrónico"
-                placeholder="ejemplo@correo.com"
+                [label]="'input.correo_electrónico' | translate"
+                [placeholder]="'input.ejemplocorreocom' | translate"
                 type="email"
                 [(value)]="emailInputValue"
                 iconLeft="mail"
                 [clearable]="true"
                 size="md"
                 variant="outlined"
-                helpText="Usa un correo válido"
+                [helpText]="'input.usa_un_correo_válido' | translate"
                 [enableValidation]="true"
                 [showValidationIcons]="true"
                 (valueChange)="onInputChange($event, 'email')"
@@ -61,14 +62,14 @@ import { InputVariant } from '../components/input/input.component';
               </openiis-input>
 
               <openiis-input
-                label="Contraseña"
-                placeholder="Ingresa tu contraseña"
+                [label]="'input.contraseña' | translate"
+                [placeholder]="'input.ingresa_tu_contraseña' | translate"
                 type="password"
                 [(value)]="passwordInputValue"
                 iconLeft="lock"
                 size="md"
                 variant="filled"
-                helpText="Mínimo 8 caracteres"
+                [helpText]="'input.mínimo_8_caracteres' | translate"
                 [minLength]="8"
                 [enableValidation]="true"
                 [showValidationIcons]="true"
@@ -79,7 +80,7 @@ import { InputVariant } from '../components/input/input.component';
 
               <openiis-button
                 type="primary"
-                text="Registrarse"
+                [text]="'input.registrarse' | translate"
                 size="md"
                 iconLeft="person_add"
                 (clickEvent)="onButtonClick('register')"
@@ -89,32 +90,32 @@ import { InputVariant } from '../components/input/input.component';
           </div>
 
           <div class="demo-item">
-            <h4>Formulario de Perfil</h4>
+            <h4>{{ 'input.formulario_de_perfil' | translate }}</h4>
             <form
               class="demo-form"
               (ngSubmit)="onFormSubmit('profile')"
               novalidate
             >
               <openiis-input
-                label="Sitio web"
-                placeholder="https://ejemplo.com"
+                [label]="'input.sitio_web' | translate"
+                [placeholder]="'input.httpsejemplocom' | translate"
                 type="url"
                 [(value)]="urlInputValue"
                 iconLeft="link"
                 size="md"
                 variant="minimal"
-                helpText="Incluye https://"
+                [helpText]="'input.incluye_https' | translate"
                 (valueChange)="onInputChange($event, 'url')"
               >
               </openiis-input>
 
               <openiis-input
-                label="Nombre de usuario"
-                placeholder="Entre 3 y 20 caracteres"
+                [label]="'input.nombre_de_usuario' | translate"
+                [placeholder]="'input.entre_3_y_20_caracteres' | translate"
                 [(value)]="usernameInputValue"
                 size="md"
                 variant="default"
-                helpText="Mínimo 3 caracteres, máximo 20"
+                [helpText]="'input.entre_3_y_20_caracteres' | translate"
                 [minLength]="3"
                 [maxLength]="20"
                 [showCharacterCount]="true"
@@ -127,7 +128,7 @@ import { InputVariant } from '../components/input/input.component';
 
               <openiis-button
                 type="secondary"
-                text="Actualizar Perfil"
+                [text]="'input.actualizar_perfil' | translate"
                 size="md"
                 iconLeft="person"
                 (clickEvent)="onButtonClick('profile')"
@@ -137,14 +138,14 @@ import { InputVariant } from '../components/input/input.component';
           </div>
 
           <div class="demo-item">
-            <h4>Formulario de Contacto</h4>
+            <h4>{{ 'input.formulario_de_contacto' | translate }}</h4>
             <form
               class="demo-form"
               (ngSubmit)="onFormSubmit('contact')"
               novalidate
             >
               <openiis-input
-                label="Número de teléfono (México)"
+                [label]="'input.número_de_teléfono_méxico' | translate"
                 type="tel"
                 [(value)]="telMexicoValue"
                 customFormat="(XXX) XXX-XXXX"
@@ -152,7 +153,7 @@ import { InputVariant } from '../components/input/input.component';
                 size="md"
                 [maxLength]="14"
                 variant="default"
-                helpText="Formato: (123) 456-7890"
+                [helpText]="'input.formato_teléfono_méxico' | translate"
                 [enableValidation]="true"
                 [showValidationIcons]="true"
                 (valueChange)="onInputChange($event, 'tel-mx')"
@@ -161,7 +162,7 @@ import { InputVariant } from '../components/input/input.component';
               </openiis-input>
 
               <openiis-input
-                label="Número de teléfono (España)"
+                [label]="'input.número_de_teléfono_españa' | translate"
                 type="tel"
                 [(value)]="telInputValue"
                 customFormat="XXX XXX XXX"
@@ -169,7 +170,7 @@ import { InputVariant } from '../components/input/input.component';
                 [maxLength]="11"
                 size="md"
                 variant="outlined"
-                helpText="Formato: 612 345 678"
+                [helpText]="'input.formato_teléfono_españa' | translate"
                 [enableValidation]="true"
                 [showValidationIcons]="true"
                 (valueChange)="onInputChange($event, 'tel-es')"
@@ -178,7 +179,7 @@ import { InputVariant } from '../components/input/input.component';
               </openiis-input>
 
               <openiis-input
-                label="Número telefónico internacional"
+                [label]="'input.número_telefónico_internacional' | translate"
                 type="tel"
                 [(value)]="telInternationalValue"
                 customFormat="+XX XXX XXX XXXX"
@@ -186,7 +187,7 @@ import { InputVariant } from '../components/input/input.component';
                 [maxLength]="16"
                 size="md"
                 variant="filled"
-                helpText="Formato: +52 555 123 4567"
+                [helpText]="'input.formato_teléfono_internacional' | translate"
                 [enableValidation]="true"
                 [showValidationIcons]="true"
                 (valueChange)="onInputChange($event, 'tel-international')"
@@ -198,7 +199,7 @@ import { InputVariant } from '../components/input/input.component';
 
               <openiis-button
                 type="success"
-                text="Enviar Contacto"
+                [text]="'input.enviar_contacto' | translate"
                 size="md"
                 iconLeft="send"
                 (clickEvent)="onButtonClick('contact')"
@@ -208,20 +209,20 @@ import { InputVariant } from '../components/input/input.component';
           </div>
 
           <div class="demo-item">
-            <h4>Entrada de Números</h4>
+            <h4>{{ 'input.entrada_de_números' | translate }}</h4>
             <form
               class="demo-form"
               (ngSubmit)="onFormSubmit('number')"
               novalidate
             >
               <openiis-input
-                label="Solo números"
+                [label]="'input.solo_números' | translate"
                 type="number"
                 [(value)]="numberValue"
                 iconLeft="tag"
                 size="md"
                 variant="minimal"
-                helpText="Solo permite dígitos"
+                [helpText]="'input.solo_dígitos' | translate"
                 [maxLength]="10"
                 (valueChange)="onInputChange($event, 'number')"
               >
@@ -229,7 +230,7 @@ import { InputVariant } from '../components/input/input.component';
 
               <openiis-button
                 type="outline-primary"
-                text="Procesar Número"
+                [text]="'input.procesar_número' | translate"
                 size="md"
                 iconLeft="calculate"
                 (clickEvent)="onButtonClick('number')"
@@ -241,13 +242,13 @@ import { InputVariant } from '../components/input/input.component';
       </div>
 
       <div id="variants-inputs" class="demo-subsection">
-        <h3>Variantes de Entrada</h3>
+        <h3>{{ 'input.variantes_de_entrada' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Variante Default</h4>
+            <h4>{{ 'input.variante_default' | translate }}</h4>
             <openiis-input
-              label="Entrada Default"
-              placeholder="Variante por defecto"
+              [label]="'input.entrada_default' | translate"
+              [placeholder]="'input.variante_por_defecto' | translate"
               size="md"
               variant="default"
             >
@@ -255,10 +256,10 @@ import { InputVariant } from '../components/input/input.component';
           </div>
 
           <div class="demo-item">
-            <h4>Variante Filled</h4>
+            <h4>{{ 'input.variante_filled' | translate }}</h4>
             <openiis-input
-              label="Entrada Filled"
-              placeholder="Variante filled"
+              [label]="'input.entrada_filled' | translate"
+              [placeholder]="'input.variante_filled_1' | translate"
               size="md"
               variant="filled"
             >
@@ -266,10 +267,10 @@ import { InputVariant } from '../components/input/input.component';
           </div>
 
           <div class="demo-item">
-            <h4>Variante Outlined</h4>
+            <h4>{{ 'input.variante_outlined' | translate }}</h4>
             <openiis-input
-              label="Entrada Outlined"
-              placeholder="Variante outlined"
+              [label]="'input.entrada_outlined' | translate"
+              [placeholder]="'input.variante_outlined_1' | translate"
               size="md"
               variant="outlined"
             >
@@ -277,10 +278,10 @@ import { InputVariant } from '../components/input/input.component';
           </div>
 
           <div class="demo-item">
-            <h4>Variante Minimal</h4>
+            <h4>{{ 'input.variante_minimal' | translate }}</h4>
             <openiis-input
-              label="Entrada Minimal"
-              placeholder="Variante minimal"
+              [label]="'input.entrada_minimal' | translate"
+              [placeholder]="'input.variante_minimal_1' | translate"
               size="md"
               variant="minimal"
             >
@@ -290,42 +291,42 @@ import { InputVariant } from '../components/input/input.component';
       </div>
 
       <div id="sizes-inputs" class="demo-subsection">
-        <h3>Tamaños de Entrada</h3>
+        <h3>{{ 'input.tamaños_de_entrada' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Todos los Tamaños</h4>
+            <h4>{{ 'input.todos_los_tamaños' | translate }}</h4>
             <div class="input-sizes">
               <openiis-input
-                label="Extra Small"
-                placeholder="Tamaño XS"
+                [label]="'input.extra_small' | translate"
+                [placeholder]="'input.tamaño_xs' | translate"
                 size="xs"
                 variant="default"
               >
               </openiis-input>
               <openiis-input
-                label="Small"
-                placeholder="Tamaño SM"
+                [label]="'input.small' | translate"
+                [placeholder]="'input.tamaño_sm' | translate"
                 size="sm"
                 variant="default"
               >
               </openiis-input>
               <openiis-input
-                label="Medium"
-                placeholder="Tamaño MD"
+                [label]="'input.medium' | translate"
+                [placeholder]="'input.tamaño_md' | translate"
                 size="md"
                 variant="default"
               >
               </openiis-input>
               <openiis-input
-                label="Large"
-                placeholder="Tamaño LG"
+                [label]="'input.large' | translate"
+                [placeholder]="'input.tamaño_lg' | translate"
                 size="lg"
                 variant="default"
               >
               </openiis-input>
               <openiis-input
-                label="Extra Large"
-                placeholder="Tamaño XL"
+                [label]="'input.extra_large' | translate"
+                [placeholder]="'input.tamaño_xl' | translate"
                 size="xl"
                 variant="default"
               >
@@ -336,39 +337,39 @@ import { InputVariant } from '../components/input/input.component';
       </div>
 
       <div class="demo-subsection">
-        <h3>Estados de Entrada</h3>
+        <h3>{{ 'input.estados_de_entrada' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Entrada Deshabilitada</h4>
+            <h4>{{ 'input.entrada_deshabilitada' | translate }}</h4>
             <openiis-input
-              label="Entrada deshabilitada"
+              [label]="'input.entrada_deshabilitada_1' | translate"
               [(value)]="disabledInputValue"
               [disabled]="true"
               size="md"
               variant="default"
-              helpText="Este campo está deshabilitado"
+              [helpText]="'input.entrada_deshabilitada' | translate"
             >
             </openiis-input>
           </div>
 
           <div class="demo-item">
-            <h4>Entrada Solo Lectura</h4>
+            <h4>{{ 'input.entrada_solo_lectura' | translate }}</h4>
             <openiis-input
-              label="Entrada solo lectura"
+              [label]="'input.entrada_solo_lectura_1' | translate"
               [(value)]="readonlyInputValue"
               [readonly]="true"
               size="md"
               variant="default"
-              helpText="Este campo es solo lectura"
+              [helpText]="'input.entrada_solo_lectura' | translate"
             >
             </openiis-input>
           </div>
 
           <div class="demo-item">
-            <h4>Entrada con Error</h4>
+            <h4>{{ 'input.entrada_con_error' | translate }}</h4>
             <openiis-input
-              label="Entrada con error"
-              placeholder="Ingresa algo..."
+              [label]="'input.entrada_con_error_1' | translate"
+              [placeholder]="'input.ingresa_algo' | translate"
               [(value)]="errorInputValue"
               size="md"
               [variant]="variantError"
@@ -379,13 +380,13 @@ import { InputVariant } from '../components/input/input.component';
           </div>
 
           <div class="demo-item">
-            <h4>Entrada Exitosa</h4>
+            <h4>{{ 'input.entrada_exitosa' | translate }}</h4>
             <openiis-input
-              label="Entrada válida"
+              [label]="'input.entrada_válida' | translate"
               [(value)]="successInputValue"
               size="md"
               variant="default"
-              helpText="¡Valor válido!"
+              [helpText]="'input.valor_válido' | translate"
             >
             </openiis-input>
           </div>
@@ -393,36 +394,36 @@ import { InputVariant } from '../components/input/input.component';
       </div>
 
       <div class="demo-subsection">
-        <h3>Textarea</h3>
+        <h3>{{ 'input.textarea' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Textarea Básico</h4>
+            <h4>{{ 'input.textarea_básico' | translate }}</h4>
             <openiis-input
-              label="Comentarios"
-              placeholder="Escribe tus comentarios aquí..."
+              [label]="'input.comentarios' | translate"
+              [placeholder]="'input.escribe_tus_comentarios_aquí' | translate"
               [(value)]="textareaValue"
               [isTextarea]="true"
               [rows]="4"
               size="md"
               variant="default"
-              helpText="Máximo 500 caracteres"
+              [helpText]="'input.máximo_500_caracteres' | translate"
               (valueChange)="onInputChange($event, 'textarea')"
             >
             </openiis-input>
           </div>
 
           <div id="textarea-inputs" class="demo-item">
-            <h4>Textarea con Límite</h4>
+            <h4>{{ 'input.textarea_con_límite' | translate }}</h4>
             <openiis-input
-              label="Descripción"
-              placeholder="Describe el producto..."
+              [label]="'input.descripción' | translate"
+              [placeholder]="'input.describe_el_producto' | translate"
               [isTextarea]="true"
               [rows]="3"
               [maxLength]="200"
               [showCharacterCount]="true"
               size="md"
               variant="outlined"
-              helpText="Describe brevemente el producto"
+              [helpText]="'input.describe_brevemente_el_producto' | translate"
             >
             </openiis-input>
           </div>
@@ -430,12 +431,12 @@ import { InputVariant } from '../components/input/input.component';
       </div>
 
       <div id="search-inputs" class="demo-subsection">
-        <h3>Componente de Búsqueda</h3>
+        <h3>{{ 'input.componente_de_búsqueda' | translate }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Barra de Búsqueda</h4>
+            <h4>{{ 'input.barra_de_búsqueda' | translate }}</h4>
             <openiis-search-input
-              placeholder="Buscar elementos..."
+              [placeholder]="'input.buscar_elementos' | translate"
               [searchTerm]="searchTerm"
               (searchChange)="onSearchChange($event)"
               (clearSearch)="onClearSearch()"
@@ -459,14 +460,14 @@ export class InputSecComponent {
   numberValue = '';
   usernameInputValue = '';
   textareaValue = '';
-  disabledInputValue = 'Texto no editable';
-  readonlyInputValue = 'Solo lectura';
+  disabledInputValue = '';
+  readonlyInputValue = '';
   errorInputValue = '';
-  successInputValue = 'Valor válido';
+  successInputValue = '';
 
   // Inputs de error
   variantError: InputVariant = 'error';
-  errorText = 'Este campo es requerido';
+  errorText = '';
 
   searchTerm = '';
   searchResults = '';

@@ -10,6 +10,7 @@ interface ModalData {
   currentValue?: string; // Valor actual del campo (opcional)
   isTextarea?: boolean; // Si debe mostrarse como textarea o input normal (opcional, por defecto true)
   confirmButtonText?: string; // Texto del botón de confirmación (opcional, por defecto "Agregar")
+  cancelButtonText?: string; // Texto del botón de cancelación (opcional, por defecto "Cancelar")
 }
 
 /**
@@ -54,7 +55,7 @@ interface ModalData {
         <div class="modal-footer">
           <openiis-button
             type="secondary"
-            text="Cancelar"
+            [text]="data?.cancelButtonText || 'Cancelar'"
             size="md"
             (clickEvent)="close()"
           >

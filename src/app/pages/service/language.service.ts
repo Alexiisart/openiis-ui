@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LanguageService {
-  private availableLangs = ['en', 'es'];
+  private availableLangs = ['cn', 'en', 'es'];
   private defaultLang = 'es';
   private readonly LANGUAGE_STORAGE_KEY = 'openiis-language';
 

@@ -5,12 +5,17 @@ import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 import { HeaderSecComponent } from '../pages/main/header-sec.component';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent, HeaderSecComponent],
+  imports: [
+    RouterOutlet,
+    SidebarComponent,
+    HeaderSecComponent,
+    TranslateModule,
+  ],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
 })

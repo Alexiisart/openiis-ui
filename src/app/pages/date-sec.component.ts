@@ -1,63 +1,64 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisDateInputComponent } from '../components/input-date/date-input.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-date-sec',
   standalone: true,
-  imports: [CommonModule, OpeniisDateInputComponent],
+  imports: [CommonModule, OpeniisDateInputComponent, TranslateModule],
   template: `
     <div class="demo-section">
-      <h2>Selectores de fecha</h2>
+      <h2>{{ 'date.selectores_de_fecha' | translate }}</h2>
 
       <div class="demo-subsection">
         <div class="demo-grid">
           <div class="demo-item">
-            <h4>Fecha Básica</h4>
+            <h4>{{ 'date.fecha_básica' | translate }}</h4>
             <openiis-date-input
-              placeholder="Selecciona una fecha"
+              [placeholder]="'date.selecciona_una_fecha' | translate"
               [value]="basicDateValue"
               size="md"
-              title="Fecha de nacimiento"
+              [title]="'date.fecha_de_nacimiento' | translate"
               (valueChange)="onDateChange($event, 'basic')"
             >
             </openiis-date-input>
           </div>
 
           <div class="demo-item">
-            <h4>Fecha Futura</h4>
+            <h4>{{ 'date.fecha_futura' | translate }}</h4>
             <openiis-date-input
-              placeholder="Fecha límite"
+              [placeholder]="'date.fecha_límite' | translate"
               [value]="futureDate"
               size="md"
               [minDate]="futureDateMinimum"
-              title="Selecciona fecha futura"
+              [title]="'date.selecciona_fecha_futura' | translate"
               (valueChange)="onDateChange($event, 'future')"
             >
             </openiis-date-input>
           </div>
 
           <div class="demo-item">
-            <h4>Fecha Vencida</h4>
+            <h4>{{ 'date.fecha_vencida' | translate }}</h4>
             <openiis-date-input
-              placeholder="Fecha vencida"
+              [placeholder]="'date.fecha_vencida_1' | translate"
               [value]="overdueDate"
               size="md"
               [markOverdue]="true"
-              title="Esta fecha está vencida"
+              [title]="'date.esta_fecha_está_vencida' | translate"
               (valueChange)="onDateChange($event, 'overdue')"
             >
             </openiis-date-input>
           </div>
 
           <div class="demo-item">
-            <h4>Fecha Deshabilitada</h4>
+            <h4>{{ 'date.fecha_deshabilitada' | translate }}</h4>
             <openiis-date-input
-              placeholder="Fecha no editable"
+              [placeholder]="'date.fecha_no_editable' | translate"
               [value]="disabledDate"
               size="md"
               [disabled]="true"
-              title="Campo deshabilitado"
+              [title]="'date.campo_deshabilitado' | translate"
             >
             </openiis-date-input>
           </div>
@@ -66,20 +67,29 @@ import { OpeniisDateInputComponent } from '../components/input-date/date-input.c
 
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Fecha Small</h4>
-          <openiis-date-input placeholder="Fecha pequeña" size="sm">
+          <h4>{{ 'date.fecha_small' | translate }}</h4>
+          <openiis-date-input
+            [placeholder]="'date.fecha_pequeña' | translate"
+            size="sm"
+          >
           </openiis-date-input>
         </div>
 
         <div class="demo-item">
-          <h4>Fecha Medium</h4>
-          <openiis-date-input placeholder="Fecha mediana" size="md">
+          <h4>{{ 'date.fecha_medium' | translate }}</h4>
+          <openiis-date-input
+            [placeholder]="'date.fecha_mediana' | translate"
+            size="md"
+          >
           </openiis-date-input>
         </div>
 
         <div class="demo-item">
-          <h4>Fecha Large</h4>
-          <openiis-date-input placeholder="Fecha grande" size="lg">
+          <h4>{{ 'date.fecha_large' | translate }}</h4>
+          <openiis-date-input
+            [placeholder]="'date.fecha_grande' | translate"
+            size="lg"
+          >
           </openiis-date-input>
         </div>
       </div>
