@@ -4,14 +4,16 @@ import {
   OpeniisTheme,
   OpeniisThemeService,
   ThemeMode,
-} from '../../services/theme.service';
+} from '../../components/services/theme.service';
 import { Subscription } from 'rxjs';
 import { OpeniisSwitchComponent } from '../../components';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../service/language.service';
 
 @Component({
   selector: 'app-header-sec',
   standalone: true,
-  imports: [OpeniisDropdownComponent, OpeniisSwitchComponent],
+  imports: [OpeniisDropdownComponent, OpeniisSwitchComponent, TranslateModule],
   template: `
     <div class="header-container">
       <div class="logo-container">
@@ -24,7 +26,7 @@ import { OpeniisSwitchComponent } from '../../components';
           [options]="themeOptions"
           [selectedValue]="selectedTheme"
           size="sm"
-          tooltip="Cambiar tema"
+          [tooltip]="'header.cambiar_tema' | translate"
           tooltipPosition="left"
           (selectionChanged)="onThemeChange($event)"
         >
@@ -33,10 +35,22 @@ import { OpeniisSwitchComponent } from '../../components';
           [checked]="isDarkMode"
           size="sm"
           variant="primary"
-          [label]="isDarkMode ? 'Oscuro' : 'Claro'"
+          [label]="(isDarkMode ? 'header.oscuro' : 'header.claro') | translate"
           (checkedChange)="onModeChange($event)"
         >
         </openiis-switch>
+
+        <div class="language-container">
+          <openiis-dropdown
+            [options]="languageOptions"
+            [selectedValue]="selectedLanguage"
+            size="sm"
+            [tooltip]="'header.cambiar_idioma' | translate"
+            tooltipPosition="left"
+            (selectionChanged)="onLanguageChange($event)"
+          >
+          </openiis-dropdown>
+        </div>
       </div>
     </div>
   `,
@@ -66,24 +80,27 @@ import { OpeniisSwitchComponent } from '../../components';
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.sub-logo:hover {
-  transform: scale(1.02);
-}
-
 .theme-container {
   display: flex;
   gap: var(--space-4);
   align-items: center;
 }
 
+.language-container {
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--color-border);
+}
   `,
 })
 export class HeaderSecComponent {
   private subscription: Subscription = new Subscription();
+  themeOptions: Array<{ value: string; label: string }> = [];
+  languageOptions: Array<{ value: string; label: string }> = [];
 
-  /* ===== THEME SECTION ===== */
+  /* ===== SECCIÓN DE TEMA ===== */
   currentMode: ThemeMode = 'light';
   currentTheme: OpeniisTheme = 'classic';
+  currentLanguage: string = 'es';
   isDarkMode = false;
 
   setTheme(theme: OpeniisTheme): void {
@@ -94,19 +111,41 @@ export class HeaderSecComponent {
     this.themeService.setMode(mode);
   }
 
-  themeOptions = [
-    { value: 'classic', label: 'Clásico' },
-    { value: 'neutral', label: 'Neutro' },
-    { value: 'vivid', label: 'Vivido' },
-  ];
+  setLanguage(language: string): void {
+    this.languageService.setLanguage(language);
+  }
 
-  modeOptions = [
-    { value: 'light', label: 'Claro' },
-    { value: 'dark', label: 'Oscuro' },
-  ];
+  private setTranslatedOptions() {
+    this.themeOptions = [
+      {
+        value: 'classic',
+        label: this.translate.instant('header.clasico'),
+      },
+      {
+        value: 'neutral',
+        label: this.translate.instant('header.neutro'),
+      },
+      {
+        value: 'vivid',
+        label: this.translate.instant('header.vivido'),
+      },
+    ];
+
+    this.languageOptions = [
+      {
+        value: 'es',
+        label: this.translate.instant('header.es'),
+      },
+      {
+        value: 'en',
+        label: this.translate.instant('header.en'),
+      },
+    ];
+  }
 
   selectedTheme: string = '';
   selectedMode: string = '';
+  selectedLanguage: string = '';
 
   /* ===== DROPDOWN METHODS ===== */
   onThemeChange(value: string): void {
@@ -119,6 +158,11 @@ export class HeaderSecComponent {
     this.setMode(this.selectedMode as ThemeMode);
   }
 
+  onLanguageChange(value: string): void {
+    this.selectedLanguage = value;
+    this.languageService.setLanguage(value);
+  }
+
   get sublogoSrc(): string {
     return this.isDarkMode ? 'assets/sublogo-dark.svg' : 'assets/sublogo.svg';
   }
@@ -127,7 +171,11 @@ export class HeaderSecComponent {
     this.subscription.unsubscribe();
   }
 
-  constructor(private themeService: OpeniisThemeService) {
+  constructor(
+    private themeService: OpeniisThemeService,
+    private languageService: LanguageService,
+    private translate: TranslateService
+  ) {
     this.themeService.currentTheme$.subscribe((theme) => {
       this.currentTheme = theme;
     });
@@ -135,10 +183,20 @@ export class HeaderSecComponent {
       this.currentMode = mode;
       this.isDarkMode = mode === 'dark';
     });
+    this.languageService.currentLang$.subscribe((lang) => {
+      this.currentLanguage = lang;
+    });
+
+    this.translate.onLangChange.subscribe(() => {
+      this.setTranslatedOptions();
+    });
+
+    this.setTranslatedOptions();
   }
 
   ngOnInit() {
     this.selectedTheme = this.currentTheme;
     this.selectedMode = this.currentMode;
+    this.selectedLanguage = this.currentLanguage;
   }
 }

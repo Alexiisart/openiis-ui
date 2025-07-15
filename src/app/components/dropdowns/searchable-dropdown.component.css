@@ -97,7 +97,6 @@
 }
 
 .dropdown-option.selected {
-  background: var(--primary-50);
   color: var(--primary-700);
 }
 

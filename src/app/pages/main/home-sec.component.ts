@@ -1,14 +1,21 @@
 import { Component } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home-sec',
   standalone: true,
-  imports: [],
+  imports: [TranslateModule],
   template: `
     <div class="home-container">
       <div class="hero-section">
-        <h1>Diseño Elegante, <br />Código Excepcional</h1>
-        <p class="subtitle">Openiis UI -> El siguiente nivel</p>
+        <h1>
+          {{ 'home.diseño_elegante' | translate }}<br />{{
+            'home.código_excepcional' | translate
+          }}
+        </h1>
+        <p class="subtitle">
+          Openiis UI -> {{ 'home.el_siguiente_nivel' | translate }}
+        </p>
       </div>
 
       <div class="features">
@@ -17,32 +24,40 @@ import { Component } from '@angular/core';
             <span class="icon">
               < <span class="material-icons-outlined">arrow_outward</span> />
             </span>
-            <h3>Moderno</h3>
-            <p>Componentes actualizados con las últimas tendencias de diseño</p>
+            <h3>{{ 'home.moderno' | translate }}</h3>
+            <p>
+              {{ 'home.componentes_actualizados_con_las_últimas' | translate }}
+            </p>
           </div>
 
           <div class="feature-card">
             <span class="icon">
               < <span class="material-icons-outlined">colorize</span> />
             </span>
-            <h3>Personalizable</h3>
-            <p>Sistema de temas flexible que se adapta a tu marca</p>
+            <h3>{{ 'home.personalizable' | translate }}</h3>
+            <p>
+              {{ 'home.sistema_de_temas_flexible_que_se_adapta_' | translate }}
+            </p>
           </div>
 
           <div class="feature-card">
             <span class="icon">
               < <span class="material-icons-outlined">bolt</span> />
             </span>
-            <h3>Optimizado</h3>
-            <p>Máximo rendimiento con mínimo overhead</p>
+            <h3>{{ 'home.optimizado' | translate }}</h3>
+            <p>
+              {{ 'home.máximo_rendimiento_con_mínimo_overhead' | translate }}
+            </p>
           </div>
 
           <div class="feature-card">
             <span class="icon">
               < <span class="material-icons-outlined">shield</span> />
             </span>
-            <h3>Robusto</h3>
-            <p>Código robusto y claro, gracias a la potencia de TypeScript.</p>
+            <h3>{{ 'home.robusto' | translate }}</h3>
+            <p>
+              {{ 'home.código_robusto_y_claro_gracias_a_la_pote' | translate }}
+            </p>
           </div>
         </div>
       </div>

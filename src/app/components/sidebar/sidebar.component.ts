@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { OpeniisSearchInputComponent } from '../search-input';
@@ -131,12 +131,23 @@ export class SidebarComponent implements OnInit {
   searchTerm: string = '';
   filteredMenuItems: MenuItem[] = [];
 
-  @Input() menuItems!: MenuItem[];
+  @Input() menuItems: MenuItem[] = [];
   @Input() accordionMode: boolean = true; // Controla si solo un submenu puede estar abierto
   @Input() searchPlaceholder: string = 'Buscar...';
   @Input() searchVisible: boolean = true;
   @Input() searchSize: 'sm' | 'md' | 'lg' = 'md';
   @Input() variant: InputVariant = 'outlined';
+
+  /**
+   * Maneja los cambios en el input de menús
+   * @param changes Cambios en el input de menús
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['menuItems']) {
+      this.filteredMenuItems = [...this.menuItems];
+      this.expandActiveMenus();
+    }
+  }
 
   /**
    * Maneja el cambio en el término de búsqueda

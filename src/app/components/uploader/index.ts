@@ -4,4 +4,4 @@ export {
   OpeniisUploadService,
   type UploadConfig,
   type FileUploadItem,
-} from '../../services/upload.service';
+} from '../services/upload.service';

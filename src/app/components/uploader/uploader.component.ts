@@ -15,7 +15,7 @@ import {
   OpeniisUploadService,
   UploadConfig,
   FileUploadItem,
-} from '../../services/upload.service';
+} from '../services/upload.service';
 import { OpeniisButtonComponent } from '../buttons/button.component';
 
 /**

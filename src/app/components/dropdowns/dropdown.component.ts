@@ -138,6 +138,7 @@ export class OpeniisDropdownComponent implements OnInit, OnChanges {
     const value = target.value;
     this.selectedValue = value;
     this.selectionChanged.emit(value);
+    this.isOpen = false;
   }
 
   /**
