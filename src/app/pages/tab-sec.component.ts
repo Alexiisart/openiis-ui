@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OpeniisTabsComponent } from '../components/tabs/tabs.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tab-sec',
@@ -14,8 +14,8 @@ import { TranslateModule } from '@ngx-translate/core';
         <div class="demo-grid">
           <div class="demo-item" style="grid-column: 1 / -1">
             <h4>{{ 'tab.pestañas_básicas_line' | translate }}</h4>
-            <openiis-tabs variant="line" size="md">
-              <div slot="tab-content-tab1">
+            <openiis-tabs variant="line" size="md" [tabs]="basicLineTabs">
+              <div slot="tab-content-general">
                 <h3>{{ 'tab.configuración_general' | translate }}</h3>
                 <p>
                   {{
@@ -28,7 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
                   <li>{{ 'tab.configuración_de_red' | translate }}</li>
                 </ul>
               </div>
-              <div slot="tab-content-tab2">
+              <div slot="tab-content-perfil">
                 <h3>{{ 'tab.información_del_perfil' | translate }}</h3>
                 <p>
                   {{
@@ -41,7 +41,7 @@ import { TranslateModule } from '@ngx-translate/core';
                   <li>{{ 'tab.información_de_contacto' | translate }}</li>
                 </ul>
               </div>
-              <div slot="tab-content-tab3">
+              <div slot="tab-content-notificaciones">
                 <h3>{{ 'tab.configuración_de_notificaciones' | translate }}</h3>
                 <p>
                   {{
@@ -54,7 +54,7 @@ import { TranslateModule } from '@ngx-translate/core';
                   <li>{{ 'tab.frecuencia_de_notificaciones' | translate }}</li>
                 </ul>
               </div>
-              <div slot="tab-content-tab4">
+              <div slot="tab-content-seguridad">
                 <h3>{{ 'tab.configuración_de_seguridad' | translate }}</h3>
                 <p>
                   {{
@@ -72,34 +72,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
           <div class="demo-item" style="grid-column: 1 / -1">
             <h4>{{ 'tab.pestañas_pills' | translate }}</h4>
-            <openiis-tabs
-              variant="pills"
-              size="md"
-              [tabs]="[
-                {
-                  id: 'dashboard',
-                  label: 'tab.panel_de_control' | translate,
-                  active: true,
-                  icon: 'dashboard'
-                },
-                {
-                  id: 'analytics',
-                  label: 'tab.análisis_de_datos' | translate,
-                  icon: 'analytics'
-                },
-                {
-                  id: 'reports',
-                  label: 'tab.reportes_generados' | translate,
-                  icon: 'assessment',
-                  badge: '5'
-                },
-                {
-                  id: 'settings2',
-                  label: 'tab.configuración_del_sistema' | translate,
-                  icon: 'settings'
-                }
-              ]"
-            >
+            <openiis-tabs variant="pills" size="md" [tabs]="pillsTabs">
               <div slot="tab-content-dashboard">
                 <h3>{{ 'tab.panel_de_control' | translate }}</h3>
                 <p>
@@ -135,28 +108,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
           <div class="demo-item" style="grid-column: 1 / -1">
             <h4>{{ 'tab.pestañas_cards' | translate }}</h4>
-            <openiis-tabs
-              variant="cards"
-              size="md"
-              [tabs]="[
-                {
-                  id: 'overview',
-                  label: 'tab.resumen_del_proyecto' | translate,
-                  active: true,
-                  icon: 'fast_forward'
-                },
-                {
-                  id: 'details',
-                  label: 'tab.detalles_técnicos' | translate,
-                  icon: 'info'
-                },
-                {
-                  id: 'history',
-                  label: 'tab.historial_de_cambios' | translate,
-                  icon: 'history'
-                }
-              ]"
-            >
+            <openiis-tabs variant="cards" size="md" [tabs]="cardsTabs">
               <div slot="tab-content-overview">
                 <h3>{{ 'tab.resumen_del_proyecto' | translate }}</h3>
                 <p>
@@ -186,28 +138,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
           <div class="demo-item" style="grid-column: 1 / -1">
             <h4>{{ 'tab.pestañas_buttons' | translate }}</h4>
-            <openiis-tabs
-              variant="buttons"
-              size="md"
-              [tabs]="[
-                {
-                  id: 'edit',
-                  label: 'tab.modo_de_edición' | translate,
-                  active: true,
-                  icon: 'edit'
-                },
-                {
-                  id: 'preview',
-                  label: 'tab.vista_previa' | translate,
-                  icon: 'preview'
-                },
-                {
-                  id: 'publish',
-                  label: 'tab.opciones_de_publicación' | translate,
-                  icon: 'publish'
-                }
-              ]"
-            >
+            <openiis-tabs variant="buttons" size="md" [tabs]="buttonsTabs">
               <div slot="tab-content-edit">
                 <h3>{{ 'tab.modo_de_edición' | translate }}</h3>
                 <p>
@@ -238,7 +169,155 @@ import { TranslateModule } from '@ngx-translate/core';
       </div>
     </section>
   `,
+  styles: [
+    `
+      ul,
+      p,
+      li {
+        color: var(--color-text-primary);
+      }
+    `,
+  ],
   standalone: true,
   imports: [OpeniisTabsComponent, TranslateModule],
 })
-export class TabSecComponent {}
+export class TabSecComponent implements OnInit {
+  basicLineTabs = [
+    {
+      id: 'general',
+      label: 'General',
+      active: true,
+      icon: 'settings',
+    },
+    {
+      id: 'perfil',
+      label: 'Perfil',
+      icon: 'person',
+    },
+    {
+      id: 'notificaciones',
+      label: 'Notificaciones',
+      icon: 'notifications',
+      badge: '3',
+    },
+    {
+      id: 'seguridad',
+      label: 'Seguridad',
+      icon: 'security',
+    },
+  ];
+
+  pillsTabs = [
+    {
+      id: 'dashboard',
+      label: 'Panel de Control',
+      active: true,
+      icon: 'dashboard',
+    },
+    {
+      id: 'analytics',
+      label: 'Análisis de Datos',
+      icon: 'analytics',
+    },
+    {
+      id: 'reports',
+      label: 'Reportes Generados',
+      icon: 'assessment',
+      badge: '5',
+    },
+    {
+      id: 'settings2',
+      label: 'Configuración del Sistema',
+      icon: 'settings',
+    },
+  ];
+
+  cardsTabs = [
+    {
+      id: 'overview',
+      label: 'Resumen del Proyecto',
+      active: true,
+      icon: 'fast_forward',
+    },
+    {
+      id: 'details',
+      label: 'Detalles Técnicos',
+      icon: 'info',
+    },
+    {
+      id: 'history',
+      label: 'Historial de Cambios',
+      icon: 'history',
+    },
+  ];
+
+  buttonsTabs = [
+    {
+      id: 'edit',
+      label: 'Modo de Edición',
+      active: true,
+      icon: 'edit',
+    },
+    {
+      id: 'preview',
+      label: 'Vista Previa',
+      icon: 'preview',
+    },
+    {
+      id: 'publish',
+      label: 'Opciones de Publicación',
+      icon: 'publish',
+    },
+  ];
+
+  constructor(private translate: TranslateService) {}
+
+  ngOnInit() {
+    this.updateTabLabels();
+
+    // Subscribe to language changes to update tab labels
+    this.translate.onLangChange.subscribe(() => {
+      this.updateTabLabels();
+    });
+  }
+
+  private updateTabLabels() {
+    // Update basic line tabs labels
+    this.basicLineTabs[0].label = this.translate.instant(
+      'tab.configuración_general'
+    );
+    this.basicLineTabs[1].label = this.translate.instant(
+      'tab.información_del_perfil'
+    );
+    this.basicLineTabs[2].label = this.translate.instant(
+      'tab.configuración_de_notificaciones'
+    );
+    this.basicLineTabs[3].label = this.translate.instant(
+      'tab.configuración_de_seguridad'
+    );
+
+    // Update pills tabs labels
+    this.pillsTabs[0].label = this.translate.instant('tab.panel_de_control');
+    this.pillsTabs[1].label = this.translate.instant('tab.análisis_de_datos');
+    this.pillsTabs[2].label = this.translate.instant('tab.reportes_generados');
+    this.pillsTabs[3].label = this.translate.instant(
+      'tab.configuración_del_sistema'
+    );
+
+    // Update cards tabs labels
+    this.cardsTabs[0].label = this.translate.instant(
+      'tab.resumen_del_proyecto'
+    );
+    this.cardsTabs[1].label = this.translate.instant('tab.detalles_técnicos');
+    this.cardsTabs[2].label = this.translate.instant(
+      'tab.historial_de_cambios'
+    );
+
+    // Update buttons tabs labels
+    this.buttonsTabs[0].label = this.translate.instant('tab.modo_de_edición');
+    this.buttonsTabs[1].label = this.translate.instant('tab.vista_previa');
+    this.buttonsTabs[2].label = this.translate.instant(
+      'tab.opciones_de_publicación'
+    );
+  }
+}

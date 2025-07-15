@@ -4,63 +4,23 @@ import {
   Output,
   EventEmitter,
   OnInit,
-  OnDestroy,
-  ViewChild,
   ElementRef,
+  ViewChild,
   AfterViewInit,
-  ContentChildren,
-  QueryList,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Subject } from 'rxjs';
 
 export type TabsVariant = 'line' | 'pills' | 'cards' | 'buttons';
-export type TabsPosition = 'top' | 'bottom' | 'left' | 'right';
 export type TabsSize = 'sm' | 'md' | 'lg';
-export type TabsJustify =
-  | 'start'
-  | 'center'
-  | 'end'
-  | 'space-between'
-  | 'space-around';
 
 export interface TabItem {
   id: string;
   label: string;
   active?: boolean;
   disabled?: boolean;
-  removable?: boolean;
   icon?: string;
   badge?: string | number;
   tooltip?: string;
-  lazy?: boolean;
-  [key: string]: any;
-}
-
-// Individual Tab Component
-@Component({
-  selector: 'openiis-tab',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
-    <div class="tab-content" [class.active]="active">
-      <ng-content></ng-content>
-    </div>
-  `,
-  styles: [
-    `
-      .tab-content {
-        display: none;
-      }
-      .tab-content.active {
-        display: block;
-      }
-    `,
-  ],
-})
-export class OpeniisTabComponent {
-  @Input() tabId: string = '';
-  @Input() active: boolean = false;
 }
 
 @Component({
@@ -68,21 +28,15 @@ export class OpeniisTabComponent {
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="tabs" [class]="getClasses()">
+    <div class="tabs" [class]="getTabsClasses()">
       <!-- Tab Navigation -->
-      <div
-        class="tabs-nav"
-        [class]="getNavClasses()"
-        role="tablist"
-        [attr.aria-label]="ariaLabel"
-      >
-        <div class="tabs-nav-wrapper" #tabsNavWrapper>
+      <div class="tabs-nav" role="tablist">
+        <div class="tabs-nav-scroll">
           @for (tab of tabs; track tab.id; let i = $index) {
           <button
             class="tab-item"
             [class.active]="tab.active"
             [class.disabled]="tab.disabled"
-            [class.removable]="tab.removable"
             [attr.id]="'tab-' + tab.id"
             [attr.aria-controls]="'panel-' + tab.id"
             [attr.aria-selected]="tab.active"
@@ -92,213 +46,295 @@ export class OpeniisTabComponent {
             type="button"
             role="tab"
             (click)="selectTab(tab.id)"
-            (keydown)="onTabKeyDown($event, i)"
           >
             @if (tab.icon) {
-            <span
-              class="material-icons-outlined tab-icon"
-              [attr.aria-hidden]="true"
-              >{{ tab.icon }}</span
-            >
+            <span class="material-icons-outlined tab-icon">{{ tab.icon }}</span>
             }
             <span class="tab-label">{{ tab.label }}</span>
             @if (tab.badge) {
             <span class="tab-badge">{{ tab.badge }}</span>
-            } @if (tab.removable && !tab.disabled) {
-            <button
-              class="tab-remove"
-              type="button"
-              [attr.aria-label]="'Cerrar ' + tab.label"
-              (click)="removeTab(tab.id, $event)"
-              (keydown)="onRemoveKeyDown($event, tab.id)"
-            >
-              <span class="material-icons-outlined" [attr.aria-hidden]="true"
-                >close</span
-              >
-            </button>
             }
           </button>
           }
         </div>
-
-        <!-- Scroll Buttons -->
-        @if (showScrollButtons && canScrollLeft) {
-        <button
-          class="tab-scroll-left"
-          type="button"
-          [attr.aria-label]="'Desplazar pestañas hacia la izquierda'"
-          (click)="scrollTabs('left')"
-        >
-          <span class="material-icons-outlined" [attr.aria-hidden]="true"
-            >chevron_left</span
-          >
-        </button>
-        } @if (showScrollButtons && canScrollRight) {
-        <button
-          class="tab-scroll-right"
-          type="button"
-          [attr.aria-label]="'Desplazar pestañas hacia la derecha'"
-          (click)="scrollTabs('right')"
-        >
-          <span class="material-icons-outlined" [attr.aria-hidden]="true"
-            >chevron_right</span
-          >
-        </button>
-        }
-
-        <!-- Add Tab Button -->
-        @if (allowAddTab) {
-        <button
-          class="tab-add"
-          type="button"
-          [attr.aria-label]="'Agregar nueva pestaña'"
-          (click)="addTab()"
-        >
-          <span class="material-icons-outlined" [attr.aria-hidden]="true"
-            >add</span
-          >
-        </button>
-        }
       </div>
 
       <!-- Tab Content -->
-      <div class="tabs-content" [class]="getContentClasses()">
-        @for (tab of tabs; track tab.id) {
-        <div
-          class="tab-panel"
-          [class.active]="tab.active"
-          [attr.id]="'panel-' + tab.id"
-          [attr.aria-labelledby]="'tab-' + tab.id"
-          [attr.aria-hidden]="!tab.active"
-          [attr.tabindex]="tab.active ? 0 : -1"
-          role="tabpanel"
-        >
-          @if (!tab.lazy || tab.active || hasBeenActive(tab.id)) {
-          <ng-content select="[slot=tab-content-{{ tab.id }}]"></ng-content>
-          }
-        </div>
-        }
+      <div class="tabs-content" #tabsContent>
+        <ng-content></ng-content>
       </div>
     </div>
   `,
-  styleUrls: ['./tabs.component.css'],
-  host: {
-    '[class.tabs-host]': 'true',
-  },
-})
-export class OpeniisTabsComponent implements OnInit, OnDestroy, AfterViewInit {
-  @Input() variant: TabsVariant = 'line';
-  @Input() position: TabsPosition = 'top';
-  @Input() size: TabsSize = 'md';
-  @Input() justify: TabsJustify = 'start';
-  @Input() tabs: TabItem[] = [];
-  @Input() activeTab?: string;
-  @Input() scrollable = false;
-  @Input() allowAddTab = false;
-  @Input() ariaLabel = 'Pestañas';
-  @Input() destroyInactiveTabContent = false;
-  @Input() animation = true;
-  @Input() customClass?: string;
-
-  @Output() tabChange = new EventEmitter<string>();
-  @Output() tabRemove = new EventEmitter<string>();
-  @Output() tabAdd = new EventEmitter<void>();
-  @Output() tabsReorder = new EventEmitter<TabItem[]>();
-
-  @ViewChild('tabsNavWrapper', { static: false }) tabsNavWrapper!: ElementRef;
-  @ContentChildren(OpeniisTabComponent)
-  tabComponents!: QueryList<OpeniisTabComponent>;
-
-  private destroy$ = new Subject<void>();
-  private activatedTabs = new Set<string>();
-
-  showScrollButtons = false;
-  canScrollLeft = false;
-  canScrollRight = false;
-
-  ngOnInit() {
-    // Si no hay tabs definidos, crear algunos por defecto para la demo
-    if (this.tabs.length === 0) {
-      this.tabs = [
-        { id: 'tab1', label: 'General', active: true, icon: 'settings' },
-        { id: 'tab2', label: 'Perfil', icon: 'person' },
-        {
-          id: 'tab3',
-          label: 'Notificaciones',
-          icon: 'notifications',
-          badge: '3',
-        },
-        { id: 'tab4', label: 'Seguridad', icon: 'security' },
-      ];
+  styles: `
+    .tabs {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      background: var(--color-background);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
     }
 
+    .tabs-nav {
+      display: flex;
+      background: var(--color-surface);
+      overflow: hidden;
+    }
+
+    .tabs-nav-scroll {
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: var(--space-2); /* Espacio para scrollbar */
+      margin-bottom: calc(var(--space-2) * -1); /* Compensar padding */
+    }
+
+    /* Estilizar scrollbar para Webkit */
+    .tabs-nav-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .tabs-nav-scroll::-webkit-scrollbar-track {
+      background: var(--color-surface);
+    }
+
+    .tabs-nav-scroll::-webkit-scrollbar-thumb {
+      background: var(--color-border);
+      border-radius: 2px;
+    }
+
+    .tab-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-3) var(--space-4);
+      border: none;
+      background: transparent;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 14px;
+      font-weight: 500;
+      position: relative;
+      gap: var(--space-2);
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+    }
+
+    .tab-item:hover:not(.disabled) {
+      color: var(--color-text-primary);
+    }
+
+    .tab-item.active {
+      color: var(--primary-600);
+      border-bottom-color: var(--primary-600);
+    }
+
+    .tab-item.disabled {
+      color: var(--color-text-muted);
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .tab-icon {
+      font-size: 16px;
+    }
+
+    .tab-label {
+      line-height: 1.5;
+    }
+
+    .tab-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 var(--space-1);
+      background: var(--color-error);
+      color: var(--color-text-inverse);
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 9px;
+      line-height: 1;
+    }
+
+    .tabs-content {
+      flex: 1;
+      padding: var(--space-4);
+      background: var(--color-background);
+    }
+
+    /* Variant: Pills */
+    .tabs.tabs-pills .tab-item {
+      border-radius: 20px;
+      margin: 2px;
+      border-bottom: none;
+    }
+
+    .tabs.tabs-pills .tab-item.active {
+      background: var(--primary-600);
+      color: var(--color-text-inverse);
+    }
+
+    /* Variant: Cards */
+    .tabs.tabs-cards .tabs-nav {
+      background: transparent;
+      border-bottom: none;
+      padding: 0 0 var(--space-4) 0;
+    }
+
+    .tabs.tabs-cards .tab-item {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      margin: 0 var(--space-1) 0 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .tabs.tabs-cards .tab-item.active {
+      background: var(--color-background);
+      border-color: var(--primary-600);
+      color: var(--primary-600);
+    }
+
+    /* Variant: Buttons */
+    .tabs.tabs-buttons .tab-item {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 0;
+      margin: 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .tabs.tabs-buttons .tab-item:first-child {
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+    }
+
+    .tabs.tabs-buttons .tab-item:last-child {
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+
+    .tabs.tabs-buttons .tab-item:not(:first-child) {
+      border-left: none;
+    }
+
+    .tabs.tabs-buttons .tab-item.active {
+      background: var(--primary-600);
+      color: var(--color-text-inverse);
+      border-color: var(--primary-600);
+    }
+
+    /* Sizes */
+    .tabs.tabs-sm .tab-item {
+      padding: var(--space-2) var(--space-3);
+      font-size: 12px;
+    }
+
+    .tabs.tabs-lg .tab-item {
+      padding: var(--space-4) var(--space-5);
+      font-size: 16px;
+    }
+
+    /* Hide all tab content by default */
+    .tabs-content ::ng-deep [slot^="tab-content-"] {
+      display: none;
+    }
+
+    /* Show only active tab content */
+    .tabs-content.show-general ::ng-deep [slot="tab-content-general"] {
+      display: block;
+    }
+    .tabs-content.show-perfil ::ng-deep [slot="tab-content-perfil"] {
+      display: block;
+    }
+    .tabs-content.show-notificaciones ::ng-deep [slot="tab-content-notificaciones"] {
+      display: block;
+    }
+    .tabs-content.show-seguridad ::ng-deep [slot="tab-content-seguridad"] {
+      display: block;
+    }
+    .tabs-content.show-dashboard ::ng-deep [slot="tab-content-dashboard"] {
+      display: block;
+    }
+    .tabs-content.show-analytics ::ng-deep [slot="tab-content-analytics"] {
+      display: block;
+    }
+    .tabs-content.show-reports ::ng-deep [slot="tab-content-reports"] {
+      display: block;
+    }
+    .tabs-content.show-settings2 ::ng-deep [slot="tab-content-settings2"] {
+      display: block;
+    }
+    .tabs-content.show-overview ::ng-deep [slot="tab-content-overview"] {
+      display: block;
+    }
+    .tabs-content.show-details ::ng-deep [slot="tab-content-details"] {
+      display: block;
+    }
+    .tabs-content.show-history ::ng-deep [slot="tab-content-history"] {
+      display: block;
+    }
+    .tabs-content.show-edit ::ng-deep [slot="tab-content-edit"] {
+      display: block;
+    }
+    .tabs-content.show-preview ::ng-deep [slot="tab-content-preview"] {
+      display: block;
+    }
+    .tabs-content.show-publish ::ng-deep [slot="tab-content-publish"] {
+      display: block;
+    }
+  `,
+})
+export class OpeniisTabsComponent implements OnInit, AfterViewInit {
+  @Input() variant: TabsVariant = 'line';
+  @Input() size: TabsSize = 'md';
+  @Input() tabs: TabItem[] = [];
+  @Input() activeTab?: string;
+
+  @Output() tabChange = new EventEmitter<string>();
+
+  @ViewChild('tabsContent', { static: false }) tabsContent!: ElementRef;
+
+  ngOnInit() {
     this.initializeTabs();
-    this.updateScrollButtons();
   }
 
   ngAfterViewInit() {
-    this.setupScrollListeners();
-    this.updateScrollButtons();
+    // Ensure content visibility is updated after view initialization
+    const activeTab = this.tabs.find((tab) => tab.active);
+    if (activeTab) {
+      this.updateContentVisibility(activeTab.id);
+    }
   }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  getClasses(): string {
+  getTabsClasses(): string {
     const classes = ['tabs'];
-
     classes.push(`tabs-${this.variant}`);
-    classes.push(`tabs-${this.position}`);
     classes.push(`tabs-${this.size}`);
-    classes.push(`tabs-justify-${this.justify}`);
-
-    if (this.scrollable) classes.push('tabs-scrollable');
-    if (this.allowAddTab) classes.push('tabs-addable');
-    if (!this.animation) classes.push('tabs-no-animation');
-    if (this.customClass) classes.push(this.customClass);
-
-    return classes.join(' ');
-  }
-
-  getNavClasses(): string {
-    const classes = ['tabs-nav'];
-
-    if (this.position === 'left' || this.position === 'right') {
-      classes.push('tabs-nav-vertical');
-    } else {
-      classes.push('tabs-nav-horizontal');
-    }
-
-    return classes.join(' ');
-  }
-
-  getContentClasses(): string {
-    const classes = ['tabs-content'];
-
-    if (this.position === 'left' || this.position === 'right') {
-      classes.push('tabs-content-vertical');
-    } else {
-      classes.push('tabs-content-horizontal');
-    }
-
     return classes.join(' ');
   }
 
   initializeTabs(): void {
     if (this.tabs.length === 0) return;
 
-    // Set active tab
-    const activeTabExists = this.tabs.some((tab) => tab.active);
+    // Find active tab or set first enabled tab as active
+    let activeTab = this.tabs.find((tab) => tab.active);
 
     if (this.activeTab) {
-      this.selectTab(this.activeTab);
-    } else if (!activeTabExists) {
-      const firstEnabledTab = this.tabs.find((tab) => !tab.disabled);
-      if (firstEnabledTab) {
-        this.selectTab(firstEnabledTab.id);
+      const specifiedTab = this.tabs.find((tab) => tab.id === this.activeTab);
+      if (specifiedTab && !specifiedTab.disabled) {
+        activeTab = specifiedTab;
       }
+    }
+
+    if (!activeTab) {
+      activeTab = this.tabs.find((tab) => !tab.disabled);
+    }
+
+    if (activeTab) {
+      this.selectTab(activeTab.id);
     }
   }
 
@@ -309,259 +345,26 @@ export class OpeniisTabsComponent implements OnInit, OnDestroy, AfterViewInit {
     // Update active states
     this.tabs.forEach((t) => (t.active = t.id === tabId));
 
-    // Track activated tabs for lazy loading
-    this.activatedTabs.add(tabId);
+    // Update content visibility
+    this.updateContentVisibility(tabId);
 
-    // Update tab components
-    this.tabComponents.forEach((component) => {
-      component.active = component.tabId === tabId;
-    });
-
+    // Emit change event
     this.tabChange.emit(tabId);
-    this.scrollToActiveTab();
   }
 
-  removeTab(tabId: string, event: Event): void {
-    event.preventDefault();
-    event.stopPropagation();
+  private updateContentVisibility(activeTabId: string): void {
+    if (!this.tabsContent) return;
 
-    const tabIndex = this.tabs.findIndex((tab) => tab.id === tabId);
-    if (tabIndex === -1) return;
+    const contentElement = this.tabsContent.nativeElement;
 
-    const tab = this.tabs[tabIndex];
-    const wasActive = tab.active;
+    // Remove all show-* classes
+    const classesToRemove = Array.from(contentElement.classList).filter(
+      (cls) => typeof cls === 'string' && cls.startsWith('show-')
+    ) as string[];
 
-    // Remove tab
-    this.tabs.splice(tabIndex, 1);
+    classesToRemove.forEach((cls) => contentElement.classList.remove(cls));
 
-    // If removed tab was active, select another tab
-    if (wasActive && this.tabs.length > 0) {
-      const newActiveIndex = Math.min(tabIndex, this.tabs.length - 1);
-      const newActiveTab = this.tabs[newActiveIndex];
-      if (newActiveTab) {
-        this.selectTab(newActiveTab.id);
-      }
-    }
-
-    this.tabRemove.emit(tabId);
-    this.updateScrollButtons();
-  }
-
-  addTab(): void {
-    this.tabAdd.emit();
-  }
-
-  hasBeenActive(tabId: string): boolean {
-    return this.activatedTabs.has(tabId);
-  }
-
-  onTabKeyDown(event: KeyboardEvent, index: number): void {
-    let newIndex = index;
-
-    switch (event.key) {
-      case 'ArrowRight':
-      case 'ArrowDown':
-        event.preventDefault();
-        newIndex = this.findNextEnabledTab(index);
-        break;
-      case 'ArrowLeft':
-      case 'ArrowUp':
-        event.preventDefault();
-        newIndex = this.findPreviousEnabledTab(index);
-        break;
-      case 'Home':
-        event.preventDefault();
-        newIndex = this.findFirstEnabledTab();
-        break;
-      case 'End':
-        event.preventDefault();
-        newIndex = this.findLastEnabledTab();
-        break;
-      case 'Enter':
-      case ' ':
-        event.preventDefault();
-        this.selectTab(this.tabs[index].id);
-        return;
-      default:
-        return;
-    }
-
-    if (newIndex !== index && newIndex >= 0 && newIndex < this.tabs.length) {
-      this.focusTab(newIndex);
-    }
-  }
-
-  findNextEnabledTab(currentIndex: number): number {
-    for (let i = currentIndex + 1; i < this.tabs.length; i++) {
-      if (!this.tabs[i].disabled) return i;
-    }
-    return this.findFirstEnabledTab();
-  }
-
-  findPreviousEnabledTab(currentIndex: number): number {
-    for (let i = currentIndex - 1; i >= 0; i--) {
-      if (!this.tabs[i].disabled) return i;
-    }
-    return this.findLastEnabledTab();
-  }
-
-  onRemoveKeyDown(event: KeyboardEvent, tabId: string): void {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      this.removeTab(tabId, event);
-    }
-  }
-
-  findFirstEnabledTab(): number {
-    for (let i = 0; i < this.tabs.length; i++) {
-      if (!this.tabs[i].disabled) return i;
-    }
-    return 0;
-  }
-
-  findLastEnabledTab(): number {
-    for (let i = this.tabs.length - 1; i >= 0; i--) {
-      if (!this.tabs[i].disabled) return i;
-    }
-    return this.tabs.length - 1;
-  }
-
-  focusTab(index: number): void {
-    const tabElement = document.getElementById(`tab-${this.tabs[index].id}`);
-    if (tabElement) {
-      tabElement.focus();
-    }
-  }
-
-  setupScrollListeners(): void {
-    if (!this.scrollable || !this.tabsNavWrapper) return;
-
-    const wrapper = this.tabsNavWrapper.nativeElement;
-    wrapper.addEventListener('scroll', () => {
-      this.updateScrollButtons();
-    });
-
-    // Watch for resize
-    const resizeObserver = new ResizeObserver(() => {
-      this.updateScrollButtons();
-    });
-    resizeObserver.observe(wrapper);
-  }
-
-  updateScrollButtons(): void {
-    if (!this.scrollable || !this.tabsNavWrapper) {
-      this.showScrollButtons = false;
-      return;
-    }
-
-    const wrapper = this.tabsNavWrapper.nativeElement;
-    const isHorizontal = this.position === 'top' || this.position === 'bottom';
-
-    if (isHorizontal) {
-      this.showScrollButtons = wrapper.scrollWidth > wrapper.clientWidth;
-      this.canScrollLeft = wrapper.scrollLeft > 0;
-      this.canScrollRight =
-        wrapper.scrollLeft < wrapper.scrollWidth - wrapper.clientWidth;
-    } else {
-      this.showScrollButtons = wrapper.scrollHeight > wrapper.clientHeight;
-      this.canScrollLeft = wrapper.scrollTop > 0;
-      this.canScrollRight =
-        wrapper.scrollTop < wrapper.scrollHeight - wrapper.clientHeight;
-    }
-  }
-
-  scrollTabs(direction: 'left' | 'right'): void {
-    if (!this.tabsNavWrapper) return;
-
-    const wrapper = this.tabsNavWrapper.nativeElement;
-    const isHorizontal = this.position === 'top' || this.position === 'bottom';
-    const scrollAmount = 200;
-
-    if (isHorizontal) {
-      const scrollLeft = direction === 'left' ? -scrollAmount : scrollAmount;
-      wrapper.scrollBy({ left: scrollLeft, behavior: 'smooth' });
-    } else {
-      const scrollTop = direction === 'left' ? -scrollAmount : scrollAmount;
-      wrapper.scrollBy({ top: scrollTop, behavior: 'smooth' });
-    }
-  }
-
-  scrollToActiveTab(): void {
-    if (!this.scrollable || !this.tabsNavWrapper) return;
-
-    const activeTab = this.tabs.find((tab) => tab.active);
-    if (!activeTab) return;
-
-    const activeTabElement = document.getElementById(`tab-${activeTab.id}`);
-    if (activeTabElement) {
-      activeTabElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  }
-
-  // Public methods
-  getActiveTab(): TabItem | null {
-    return this.tabs.find((tab) => tab.active) || null;
-  }
-
-  addTabItem(tab: TabItem): void {
-    this.tabs.push(tab);
-    if (tab.active) {
-      this.selectTab(tab.id);
-    }
-    this.updateScrollButtons();
-  }
-
-  removeTabItem(tabId: string): void {
-    const event = new Event('remove');
-    this.removeTab(tabId, event);
-  }
-
-  updateTab(tabId: string, updates: Partial<TabItem>): void {
-    const tab = this.tabs.find((t) => t.id === tabId);
-    if (tab) {
-      Object.assign(tab, updates);
-      if (updates.active) {
-        this.selectTab(tabId);
-      }
-    }
-  }
-
-  moveTab(fromIndex: number, toIndex: number): void {
-    if (
-      fromIndex === toIndex ||
-      fromIndex < 0 ||
-      toIndex < 0 ||
-      fromIndex >= this.tabs.length ||
-      toIndex >= this.tabs.length
-    ) {
-      return;
-    }
-
-    const tab = this.tabs.splice(fromIndex, 1)[0];
-    this.tabs.splice(toIndex, 0, tab);
-    this.tabsReorder.emit([...this.tabs]);
-    this.updateScrollButtons();
-  }
-
-  enableTab(tabId: string): void {
-    const tab = this.tabs.find((t) => t.id === tabId);
-    if (tab) {
-      tab.disabled = false;
-    }
-  }
-
-  disableTab(tabId: string): void {
-    const tab = this.tabs.find((t) => t.id === tabId);
-    if (tab) {
-      tab.disabled = true;
-      if (tab.active) {
-        const firstEnabledTab = this.tabs.find(
-          (t) => !t.disabled && t.id !== tabId
-        );
-        if (firstEnabledTab) {
-          this.selectTab(firstEnabledTab.id);
-        }
-      }
-    }
+    // Add class for active tab
+    contentElement.classList.add(`show-${activeTabId}`);
   }
 }

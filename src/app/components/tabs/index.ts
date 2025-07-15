@@ -1,8 +1,2 @@
-export { OpeniisTabsComponent, OpeniisTabComponent } from './tabs.component';
-export type {
-  TabItem,
-  TabsVariant,
-  TabsPosition,
-  TabsSize,
-  TabsJustify,
-} from './tabs.component';
+export { OpeniisTabsComponent } from './tabs.component';
+export type { TabItem, TabsVariant, TabsSize } from './tabs.component';
