@@ -12,7 +12,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
       <div class="demo-subsection">
         <h3>{{ 'tab.tipos_de_pestañas' | translate }}</h3>
         <div class="demo-grid">
-          <div class="demo-item" style="grid-column: 1 / -1">
+          <div class="demo-item">
             <h4>{{ 'tab.pestañas_básicas_line' | translate }}</h4>
             <openiis-tabs variant="line" size="md" [tabs]="basicLineTabs">
               <div slot="tab-content-general">
@@ -70,7 +70,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
             </openiis-tabs>
           </div>
 
-          <div class="demo-item" style="grid-column: 1 / -1">
+          <div class="demo-item">
             <h4>{{ 'tab.pestañas_pills' | translate }}</h4>
             <openiis-tabs variant="pills" size="md" [tabs]="pillsTabs">
               <div slot="tab-content-dashboard">
@@ -106,7 +106,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
             </openiis-tabs>
           </div>
 
-          <div class="demo-item" style="grid-column: 1 / -1">
+          <div class="demo-item">
             <h4>{{ 'tab.pestañas_cards' | translate }}</h4>
             <openiis-tabs variant="cards" size="md" [tabs]="cardsTabs">
               <div slot="tab-content-overview">
@@ -136,7 +136,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
             </openiis-tabs>
           </div>
 
-          <div class="demo-item" style="grid-column: 1 / -1">
+          <div class="demo-item">
             <h4>{{ 'tab.pestañas_buttons' | translate }}</h4>
             <openiis-tabs variant="buttons" size="md" [tabs]="buttonsTabs">
               <div slot="tab-content-edit">
@@ -175,6 +175,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
       p,
       li {
         color: var(--color-text-primary);
+      }
+
+      @media (max-width: 768px) {
+        .demo-item {
+          grid-column: 1 / -1 !important;
+          width: calc(100vw - var(--space-12)) !important;
+        }
       }
     `,
   ],
