@@ -70,14 +70,12 @@ export interface TabItem {
       display: flex;
       flex-direction: column;
       width: 100%;
-      background: var(--color-background);
       border-radius: var(--radius-lg);
       overflow: hidden;
     }
 
     .tabs-nav {
       display: flex;
-      background: var(--color-surface);
       overflow: hidden;
     }
 
@@ -87,7 +85,6 @@ export interface TabItem {
       scrollbar-width: thin;
       -webkit-overflow-scrolling: touch;
       padding-bottom: var(--space-2); /* Espacio para scrollbar */
-      margin-bottom: calc(var(--space-2) * -1); /* Compensar padding */
     }
 
     /* Estilizar scrollbar para Webkit */

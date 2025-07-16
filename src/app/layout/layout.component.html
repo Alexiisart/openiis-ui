@@ -10,7 +10,10 @@
   }
 
   <main class="main-content">
-    <app-header-sec [SidebarData]="menuItems"></app-header-sec>
+    <app-header-sec
+      class="header-sec"
+      [SidebarData]="menuItems"
+    ></app-header-sec>
     <div class="main-content-container">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>

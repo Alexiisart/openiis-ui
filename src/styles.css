@@ -7,6 +7,23 @@
   font-family: "inter", sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  scrollbar-color: var(--color-border) transparent;
+  scrollbar-width: thin;
+}
+
+:hover::-webkit-scrollbar {
+  opacity: 1;
+}
+
+::-webkit-scrollbar-thumb {
+  scrollbar-color: var(--color-border) transparent;
+  scrollbar-width: thin;
+  border-radius: 4px;
+}
+
 body {
   background-color: var(--color-background);
 }
