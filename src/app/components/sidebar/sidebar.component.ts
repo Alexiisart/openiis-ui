@@ -1,7 +1,16 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  SimpleChanges,
+  HostListener,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { OpeniisSearchInputComponent } from '../search-input';
+import { OpeniisButtonComponent } from '../buttons/button.component';
 import { filter } from 'rxjs/operators';
 import { NavigationEnd } from '@angular/router';
 import { InputVariant } from '../input';
@@ -32,9 +41,29 @@ export interface SubmenuItem {
     RouterLinkActive,
     CommonModule,
     OpeniisSearchInputComponent,
+    OpeniisButtonComponent,
   ],
   template: `
-    <aside class="sidebar">
+    <!-- Botón hamburguesa para móviles -->
+    @if (isMobile) {
+    <openiis-button
+      [type]="'icon'"
+      [iconLeft]="'menu'"
+      [size]="'xl'"
+      [extraClasses]="'hamburger-button'"
+      (clickEvent)="toggleSidebar()"
+    ></openiis-button>
+    }
+
+    <!-- Overlay para móviles -->
+    @if (isMobile && isOpen) {
+    <div class="sidebar-overlay" (click)="closeSidebar()"></div>
+    }
+
+    <aside [class]="sidebarClasses">
+      <!-- Contenido extra -->
+      <ng-content></ng-content>
+
       @if (searchVisible) {
       <div class="search-container">
         <openiis-search-input
@@ -138,6 +167,55 @@ export class SidebarComponent implements OnInit {
   @Input() searchSize: 'sm' | 'md' | 'lg' = 'md';
   @Input() variant: InputVariant = 'outlined';
 
+  // Propiedades para responsive
+  @Output() openChange = new EventEmitter<boolean>();
+  isOpen: boolean = false;
+  isMobile: boolean = false;
+
+  constructor(private router: Router) {
+    this.checkScreenSize();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+    if (!this.isMobile && this.isOpen) {
+      this.isOpen = false;
+      this.openChange.emit(false);
+    }
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapeKey() {
+    if (this.isMobile && this.isOpen) {
+      this.closeSidebar();
+    }
+  }
+
+  private checkScreenSize() {
+    this.isMobile = window.innerWidth <= 820;
+  }
+
+  get sidebarClasses(): string {
+    return [
+      'sidebar',
+      this.isMobile && this.isOpen ? 'sidebar-mobile-open' : '',
+      this.isMobile && !this.isOpen ? 'sidebar-mobile-closed' : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+  }
+
+  toggleSidebar(): void {
+    this.isOpen = !this.isOpen;
+    this.openChange.emit(this.isOpen);
+  }
+
+  closeSidebar(): void {
+    this.isOpen = false;
+    this.openChange.emit(false);
+  }
+
   /**
    * Maneja los cambios en el input de menús
    * @param changes Cambios en el input de menús
@@ -221,8 +299,6 @@ export class SidebarComponent implements OnInit {
 
   /** Set para trackear qué items están expandidos (por índice) */
   private expandedItems = new Set<number>();
-
-  constructor(private router: Router) {}
 
   /**
    * Inicializa el componente
@@ -318,6 +394,11 @@ export class SidebarComponent implements OnInit {
     } else {
       // Navegar a la ruta
       this.navigateToRoute(item.route);
+
+      // Auto-cerrar en móviles después de hacer clic
+      if (this.isMobile) {
+        this.closeSidebar();
+      }
     }
   }
 
@@ -352,6 +433,11 @@ export class SidebarComponent implements OnInit {
     } else {
       // Navegar sin fragmento
       this.router.navigate([route]);
+    }
+
+    // Auto-cerrar en móviles después de navegar
+    if (this.isMobile) {
+      this.closeSidebar();
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { OpeniisDropdownComponent } from '../../components/dropdowns/dropdown.component';
 import {
   OpeniisTheme,
@@ -9,19 +9,56 @@ import { Subscription } from 'rxjs';
 import { OpeniisSwitchComponent } from '../../components';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../service/language.service';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-header-sec',
   standalone: true,
-  imports: [OpeniisDropdownComponent, OpeniisSwitchComponent, TranslateModule],
+  imports: [
+    OpeniisDropdownComponent,
+    OpeniisSwitchComponent,
+    TranslateModule,
+    SidebarComponent,
+  ],
   template: `
     <div class="header-container">
+      @if (isMobile) {
+      <openiis-sidebar
+        searchPlaceholder="{{ 'menu.buscar' | translate }}"
+        searchSize="sm"
+        [menuItems]="SidebarData"
+        class="sidebar"
+      >
+        <!-- Dropdown de tema -->
+        <div class="language-container">
+          <openiis-dropdown
+            [options]="themeOptions"
+            [selectedValue]="selectedTheme"
+            size="sm"
+            tooltipPosition="left"
+            (selectionChanged)="onThemeChange($event)"
+          >
+          </openiis-dropdown>
+
+          <!-- Dropdown de idioma -->
+          <openiis-dropdown
+            [options]="languageOptions"
+            [selectedValue]="selectedLanguage"
+            size="sm"
+            tooltipPosition="left"
+            (selectionChanged)="onLanguageChange($event)"
+          >
+          </openiis-dropdown>
+        </div>
+      </openiis-sidebar>
+      }
       <div class="logo-container">
         <img [src]="sublogoSrc" alt="" class="sub-logo" />
       </div>
 
       <!-- Botón de modo oscuro y temas -->
       <div class="theme-container">
+        @if (!isMobile) {
         <openiis-dropdown
           [options]="themeOptions"
           [selectedValue]="selectedTheme"
@@ -31,6 +68,8 @@ import { LanguageService } from '../service/language.service';
           (selectionChanged)="onThemeChange($event)"
         >
         </openiis-dropdown>
+        }
+
         <openiis-switch
           [checked]="isDarkMode"
           size="sm"
@@ -40,6 +79,7 @@ import { LanguageService } from '../service/language.service';
         >
         </openiis-switch>
 
+        @if (!isMobile) {
         <div class="language-container">
           <openiis-dropdown
             [options]="languageOptions"
@@ -51,22 +91,23 @@ import { LanguageService } from '../service/language.service';
           >
           </openiis-dropdown>
         </div>
+        }
       </div>
     </div>
   `,
   styles: `
-    .header-container {
-      background: var(--color-surface);
-      border-bottom: 1px solid var(--color-border);
-      border-left: 1px solid var(--color-border);
-      padding: var(--space-6);
-      border-bottom-left-radius:var(--radius-xl);
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-
+.header-container {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  border-left: 1px solid var(--color-border);
+  padding: var(--space-6);
+  border-bottom-left-radius:var(--radius-xl);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+ 
+}
     
 .logo-container {
   display: flex;
@@ -80,6 +121,8 @@ import { LanguageService } from '../service/language.service';
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+
+
 .theme-container {
   display: flex;
   gap: var(--space-4);
@@ -90,12 +133,31 @@ import { LanguageService } from '../service/language.service';
   padding-left: var(--space-4);
   border-left: 1px solid var(--color-border);
 }
+
+@media (max-width: 820px) {
+  .sub-logo {
+    width: 80px;
+  }
+
+  .header-container {
+    padding: 0 var(--space-4);
+  }
+
+  .language-container {
+    padding: var(--space-4) var(--space-6) ;
+    padding-bottom: var(--space-2);
+    display: flex;
+    gap: var(--space-2);
+  }
+}
   `,
 })
 export class HeaderSecComponent {
   private subscription: Subscription = new Subscription();
   themeOptions: Array<{ value: string; label: string }> = [];
   languageOptions: Array<{ value: string; label: string }> = [];
+
+  @Input() SidebarData: any;
 
   /* ===== SECCIÓN DE TEMA ===== */
   currentMode: ThemeMode = 'light';
@@ -150,6 +212,7 @@ export class HeaderSecComponent {
   selectedTheme: string = '';
   selectedMode: string = '';
   selectedLanguage: string = '';
+  isMobile: boolean = false;
 
   /* ===== DROPDOWN METHODS ===== */
   onThemeChange(value: string): void {
@@ -202,5 +265,11 @@ export class HeaderSecComponent {
     this.selectedTheme = this.currentTheme;
     this.selectedMode = this.currentMode;
     this.selectedLanguage = this.currentLanguage;
+    this.onResize();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.isMobile = window.innerWidth <= 820;
   }
 }

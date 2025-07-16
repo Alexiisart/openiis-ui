@@ -22,3 +22,18 @@
   padding-top: var(--space-6);
   padding-right: var(--space-12);
 }
+
+@media screen and (max-width: 820px) {
+  .sidebar {
+    padding-left: 0;
+  }
+
+  .main-content {
+    padding-left: 0;
+    width: 100vw !important;
+  }
+
+  .main-content-container {
+    padding: var(--space-6);
+  }
+}

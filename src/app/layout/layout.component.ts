@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { SidebarComponent } from '../components/sidebar/sidebar.component';
 import { filter } from 'rxjs/operators';
@@ -37,6 +37,8 @@ export class LayoutComponent {
     }>;
   }> = [];
 
+  isMobile: boolean = false;
+
   private subscription = new Subscription();
 
   constructor(private router: Router, private translate: TranslateService) {
@@ -49,6 +51,7 @@ export class LayoutComponent {
   }
 
   ngOnInit() {
+    this.onResize();
     // Escuchar cambios de navegación para hacer scroll a los fragmentos
     this.subscription.add(
       this.router.events
@@ -302,5 +305,10 @@ export class LayoutComponent {
         ],
       },
     ];
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.isMobile = window.innerWidth <= 820;
   }
 }
