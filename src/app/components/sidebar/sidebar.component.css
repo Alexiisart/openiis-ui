@@ -7,6 +7,9 @@
 
 .nav-menu {
   overflow-y: auto;
+  /* Estilos mejorados para scroll en todos los dispositivos */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 /* Contenedor para cada item del menú */
@@ -176,8 +179,8 @@
     border-right: 1px solid var(--color-border);
     z-index: 1000;
     transition: transform 0.3s ease;
-    overflow-y: auto;
-    padding: var(--space-16) var(--space-4) var(--space-4);
+    overflow: hidden; /* Cambiado para que solo el nav-menu haga scroll */
+    padding: var(--space-4);
     animation: slideIn 0.3s ease;
 
     /* Mejorar el comportamiento del scroll en móvil */
@@ -186,6 +189,10 @@
     /* Prevenir el bounce scroll en iOS cuando llega al final */
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
+
+    /* Estructura de flexbox para mejor control */
+    display: flex;
+    flex-direction: column;
   }
 
   .sidebar.sidebar-mobile-closed {
@@ -196,11 +203,30 @@
     transform: translateX(0);
   }
 
-  /* Mejorar el scroll del nav-menu en móvil */
+  /* El search-container tiene altura fija */
+  .search-container {
+    flex-shrink: 0;
+    padding: var(--space-2) var(--space-2) var(--space-4);
+  }
+
+  /* El nav-menu usa el espacio restante y puede hacer scroll */
   .nav-menu {
+    flex: 1;
     overflow-y: auto;
     overscroll-behavior: contain;
-    /* Altura máxima para asegurar scroll interno */
-    max-height: calc(100vh - var(--space-12));
+    -webkit-overflow-scrolling: touch;
+    /* Padding bottom para asegurar que se puede llegar al final */
+    padding-bottom: var(--space-8);
+
+    /* Solución para el problema del scroll que no llega al final */
+    min-height: 0; /* Importante para flexbox */
+  }
+
+  /* Agregar espacio extra al final del menú para que el último item sea visible */
+  .nav-menu::after {
+    content: "";
+    display: block;
+    height: var(--space-8);
+    flex-shrink: 0;
   }
 }

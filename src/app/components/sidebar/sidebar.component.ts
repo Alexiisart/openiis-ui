@@ -15,6 +15,7 @@ import { OpeniisButtonComponent } from '../buttons/button.component';
 import { filter } from 'rxjs/operators';
 import { NavigationEnd } from '@angular/router';
 import { InputVariant } from '../input';
+import { ScrollService } from '../services/scroll.service';
 
 export interface MenuItem {
   route: string;
@@ -173,7 +174,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isOpen: boolean = false;
   isMobile: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private scrollService: ScrollService) {
     this.checkScreenSize();
   }
 
@@ -184,7 +185,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     // Si cambiamos de móvil a desktop y el sidebar estaba abierto
     if (wasMobile && !this.isMobile && this.isOpen) {
-      this.unlockBodyScroll(); // Desbloquear scroll antes de cerrar
+      this.scrollService.unlockBodyScroll(); // Desbloquear scroll antes de cerrar
       this.isOpen = false;
       this.openChange.emit(false);
     }
@@ -197,54 +198,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Variables para body scroll lock
-  private scrollPosition = 0;
-  private originalBodyOverflow = '';
-
   private checkScreenSize() {
     this.isMobile = window.innerWidth <= 820;
-  }
-
-  /**
-   * Bloquea el scroll del body y preserva la posición actual
-   * @private
-   */
-  private lockBodyScroll(): void {
-    if (typeof document === 'undefined') return;
-
-    // Guardar la posición actual del scroll
-    this.scrollPosition =
-      window.pageYOffset || document.documentElement.scrollTop;
-    this.originalBodyOverflow = document.body.style.overflow;
-
-    // Aplicar estilos para bloquear el scroll
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${this.scrollPosition}px`;
-    document.body.style.width = '100%';
-    document.body.style.overflow = 'hidden';
-
-    // Prevenir scroll en el html también
-    document.documentElement.style.overflow = 'hidden';
-  }
-
-  /**
-   * Desbloquea el scroll del body y restaura la posición
-   * @private
-   */
-  private unlockBodyScroll(): void {
-    if (typeof document === 'undefined') return;
-
-    // Restaurar estilos del body
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    document.body.style.overflow = this.originalBodyOverflow;
-
-    // Restaurar scroll del html
-    document.documentElement.style.overflow = '';
-
-    // Restaurar la posición del scroll
-    window.scrollTo(0, this.scrollPosition);
   }
 
   get sidebarClasses(): string {
@@ -264,9 +219,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
     // Manejar body scroll lock en móviles
     if (this.isMobile) {
       if (this.isOpen) {
-        this.lockBodyScroll();
+        this.scrollService.lockBodyScroll();
       } else {
-        this.unlockBodyScroll();
+        this.scrollService.unlockBodyScroll();
       }
     }
   }
@@ -277,7 +232,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     // Desbloquear scroll cuando se cierra en móviles
     if (this.isMobile) {
-      this.unlockBodyScroll();
+      this.scrollService.unlockBodyScroll();
     }
   }
 
@@ -390,7 +345,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     // Asegurar que el scroll se desbloquee si el componente se destruye
     // mientras el sidebar está abierto en móvil
     if (this.isMobile && this.isOpen) {
-      this.unlockBodyScroll();
+      this.scrollService.unlockBodyScroll();
     }
   }
 

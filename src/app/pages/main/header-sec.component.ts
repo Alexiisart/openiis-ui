@@ -121,8 +121,6 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-
-
 .theme-container {
   display: flex;
   gap: var(--space-4);
@@ -144,8 +142,9 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
   }
 
   .language-container {
-    padding: var(--space-4) var(--space-6) ;
+    padding-left: var(--space-2);
     padding-bottom: var(--space-2);
+    border-left: none;
     display: flex;
     gap: var(--space-2);
   }
