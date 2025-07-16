@@ -282,6 +282,12 @@ export interface TabItem {
     .tabs-content.show-publish ::ng-deep [slot="tab-content-publish"] {
       display: block;
     }
+
+    @media (max-width: 820px) {
+      .tabs-nav-scroll {
+        scrollbar-width: initial;
+      }
+    }
   `,
 })
 export class OpeniisTabsComponent implements OnInit, AfterViewInit {

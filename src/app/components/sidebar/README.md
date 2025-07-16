@@ -14,6 +14,7 @@ El `SidebarComponent` es un componente de navegación vertical altamente configu
 - ✅ **Navegación a Referencias:** Permite navegar a secciones específicas dentro de una página usando IDs.
 - ✅ **Personalizable:** Permite configurar la visibilidad y el placeholder de la búsqueda.
 - ✅ **Iconos:** Soporte para [Material Icons](https://fonts.google.com/icons) en cada elemento del menú.
+- ✅ **Responsive con Body Scroll Lock:** En dispositivos móviles, bloquea automáticamente el scroll del contenido de fondo cuando el sidebar está abierto, previniendo problemas de scroll propagation.
 
 ## Estructura de Datos (MenuItem)
 
@@ -102,6 +103,27 @@ export class TuComponente {
 - Hacer clic en un elemento con submenú expande o colapsa el submenú.
 - Si un subitem tiene una `reference`, al hacer clic se navegará primero a la ruta y luego se desplazará suavemente hasta el elemento con ese ID.
 - El componente detecta la ruta activa y las referencias visibles para mantener actualizado el estado de selección.
+
+### Comportamiento Responsive y Body Scroll Lock
+
+En dispositivos móviles (≤ 820px), el sidebar se convierte en un overlay que se desliza desde la izquierda. Para proporcionar una experiencia de usuario óptima:
+
+**Funcionalidades automáticas:**
+
+- **Body Scroll Lock:** Cuando el sidebar está abierto, el scroll del contenido de fondo se bloquea automáticamente
+- **Preservación de posición:** La posición actual del scroll se preserva y restaura cuando se cierra el sidebar
+- **Gestión de eventos:** Maneja automáticamente cambios de tamaño de pantalla y destrucción del componente
+- **Scroll interno:** Solo el contenido del sidebar puede hacer scroll cuando está abierto
+
+**Ventajas:**
+
+- ❌ **Sin scroll propagation:** Evita que el scroll dentro del sidebar se propague al contenido de fondo
+- ❌ **Sin bounce effects:** Previene efectos de rebote no deseados en iOS
+- ✅ **UX fluida:** Mantiene el foco del usuario en el sidebar sin distracciones
+- ✅ **Sin dependencias externas:** Implementación pura en CSS y TypeScript
+- ✅ **Universal:** Funciona en cualquier aplicación sin requerir configuración en componentes padre
+
+Esta funcionalidad se activa automáticamente sin requerir configuración adicional, proporcionando una experiencia móvil profesional sin esfuerzo del desarrollador.
 
 ## Ejemplo con Referencias
 

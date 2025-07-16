@@ -152,6 +152,16 @@
   opacity: 1;
   transition: opacity 0.3s ease;
   animation: fadeIn 0.3s ease;
+
+  /* Bloquear completamente la interacción con el contenido de fondo */
+  pointer-events: auto;
+  touch-action: none;
+  overscroll-behavior: contain;
+  height: 100vh;
+  overflow: hidden;
+
+  /* Prevenir scroll momentum en iOS */
+  -webkit-overflow-scrolling: auto;
 }
 
 /* Responsive behavior para pantallas <= 820px */
@@ -169,6 +179,13 @@
     overflow-y: auto;
     padding: var(--space-16) var(--space-4) var(--space-4);
     animation: slideIn 0.3s ease;
+
+    /* Mejorar el comportamiento del scroll en móvil */
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    /* Prevenir el bounce scroll en iOS cuando llega al final */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
 
   .sidebar.sidebar-mobile-closed {
@@ -177,5 +194,13 @@
 
   .sidebar.sidebar-mobile-open {
     transform: translateX(0);
+  }
+
+  /* Mejorar el scroll del nav-menu en móvil */
+  .nav-menu {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* Altura máxima para asegurar scroll interno */
+    max-height: calc(100vh - var(--space-12));
   }
 }
