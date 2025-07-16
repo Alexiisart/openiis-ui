@@ -1,98 +1,120 @@
 # Servicios de OpenIIS UI
 
-## ScrollService
+Esta sección documenta todos los servicios disponibles en el sistema de componentes OpenIIS UI, diseñados para proporcionar funcionalidades transversales y reutilizables.
 
-### Descripción
+## Servicios Disponibles
 
-El `ScrollService` es un servicio Angular reutilizable que proporciona funcionalidades para bloquear y desbloquear el scroll del body de manera segura. Es especialmente útil para componentes como modales, sidebars, y overlays que necesitan prevenir el scroll del contenido de fondo mientras están activos.
+Cada servicio tiene su propia documentación detallada:
 
-### Características
+- **[ScrollService](./scroll/README.md)** - Gestión del bloqueo de scroll del body para modales y overlays
+- **[ModeService](./mode/README.md)** - Gestión del modo claro/oscuro con persistencia automática
+- **[ThemeService](./theme/README.md)** - Gestión de temas personalizados con paletas de colores
+- **[UploadService](./upload/README.md)** - Manejo de carga de archivos con validación y compresión
+- **[SvgIconService](./svg-icon/README.md)** - Carga y procesamiento dinámico de iconos SVG con transformaciones
 
-- ✅ **Body Scroll Lock:** Bloquea completamente el scroll del contenido de fondo
-- ✅ **Preservación de posición:** Mantiene y restaura la posición exacta del scroll
-- ✅ **Detección de estado:** Verifica si el scroll está bloqueado actualmente
-- ✅ **Cleanup automático:** Manejo seguro de recursos y estados
-- ✅ **SSR compatible:** Funciona correctamente en entornos de Server-Side Rendering
-- ✅ **Sin dependencias:** Implementación pura en TypeScript
+## Resumen de Funcionalidades
 
-### Uso Básico
+### ScrollService
 
-#### 1. Inyectar el servicio
+Proporciona control completo del scroll del body, ideal para:
+
+- Modales y diálogos
+- Sidebars y menús overlay
+- Cualquier componente que requiera bloqueo de scroll
+
+**Características principales:**
+
+- Preservación de posición de scroll
+- Compatible con SSR
+- Detección de estado
+- Cleanup automático
+
+### ModeService
+
+Gestión reactiva del modo claro/oscuro con:
+
+- Detección automática de preferencias del sistema
+- Persistencia en localStorage
+- Observable para cambios en tiempo real
+- Toggle sencillo entre modos
+
+**Características principales:**
+
+- Integración CSS automática
+- Persistencia de preferencias
+- Detección de sistema
+- API reactiva
+
+### ThemeService
+
+Sistema completo de temas con soporte para:
+
+- 4 temas predefinidos (classic, neutral, vivid, custom)
+- Configuración de colores personalizada
+- Generación automática de paletas
+- Persistencia de configuraciones
+
+**Características principales:**
+
+- Temas predefinidos profesionales
+- Editor de temas custom
+- Generación automática de variaciones
+- Variables CSS dinámicas
+
+### UploadService
+
+Gestión local de archivos con funcionalidades avanzadas:
+
+- Validación completa de archivos
+- Compresión automática de imágenes
+- Generación de previews
+- Cola de archivos reactiva
+
+**Características principales:**
+
+- Múltiples tipos de archivo
+- Compresión y redimensionado
+- Drag & Drop integration
+- Validación robusta
+
+### SvgIconService
+
+Carga y procesa iconos SVG con transformaciones dinámicas avanzadas:
+
+- Carga HTTP con caché automático
+- Procesamiento de colores (fill, stroke, currentColor)
+- Transformaciones: tamaño, fondo, opacidad, rotación, volteo
+- Directivas para uso sencillo o control detallado
+
+**Características principales:**
+
+- API ultra-simple con directiva easyIcon
+- Transformaciones dinámicas en tiempo real
+- Sistema de caché inteligente
+- Manejo robusto de errores con SVG de respaldo
+
+## Integración entre Servicios
+
+Los servicios están diseñados para trabajar en conjunto:
+
+### Ejemplo: Modal con Tema Dinámico
 
 ```typescript
-import { Component } from "@angular/core";
-import { ScrollService } from "../services/scroll.service";
-
 @Component({
-  selector: "mi-modal",
-  templateUrl: "./mi-modal.component.html",
-})
-export class MiModalComponent {
-  constructor(private scrollService: ScrollService) {}
-}
-```
-
-#### 2. Bloquear scroll cuando se abre el modal
-
-```typescript
-openModal(): void {
-  this.isOpen = true;
-  this.scrollService.lockBodyScroll();
-}
-```
-
-#### 3. Desbloquear scroll cuando se cierra el modal
-
-```typescript
-closeModal(): void {
-  this.isOpen = false;
-  this.scrollService.unlockBodyScroll();
-}
-```
-
-#### 4. Cleanup en ngOnDestroy
-
-```typescript
-ngOnDestroy(): void {
-  // Asegurar que el scroll se desbloquee si el componente se destruye
-  if (this.scrollService.isScrollLocked()) {
-    this.scrollService.unlockBodyScroll();
-  }
-}
-```
-
-### Métodos Disponibles
-
-| Método               | Descripción                                              | Parámetros | Retorno   |
-| -------------------- | -------------------------------------------------------- | ---------- | --------- |
-| `lockBodyScroll()`   | Bloquea el scroll del body y preserva la posición actual | Ninguno    | `void`    |
-| `unlockBodyScroll()` | Desbloquea el scroll del body y restaura la posición     | Ninguno    | `void`    |
-| `isScrollLocked()`   | Verifica si el scroll está bloqueado actualmente         | Ninguno    | `boolean` |
-| `forceUnlock()`      | Fuerza el desbloqueo del scroll (útil para cleanup)      | Ninguno    | `void`    |
-
-### Ejemplo Completo: Modal Component
-
-```typescript
-import { Component, OnDestroy } from "@angular/core";
-import { ScrollService } from "../services/scroll.service";
-
-@Component({
-  selector: "mi-modal",
   template: `
     <div class="modal-overlay" *ngIf="isOpen" (click)="closeModal()">
       <div class="modal-content" (click)="$event.stopPropagation()">
-        <h2>Mi Modal</h2>
-        <p>Contenido del modal...</p>
-        <button (click)="closeModal()">Cerrar</button>
+        <h2>Configuración</h2>
+        <app-theme-selector></app-theme-selector>
+        <app-mode-toggle></app-mode-toggle>
       </div>
     </div>
   `,
-  styleUrls: ["./mi-modal.component.css"],
 })
-export class MiModalComponent implements OnDestroy {
+export class ConfigModalComponent implements OnDestroy {
   isOpen = false;
 
-  constructor(private scrollService: ScrollService) {}
+  constructor(private scrollService: ScrollService, private themeService: OpeniisThemeService, private modeService: OpeniisModeService) {}
 
   openModal(): void {
     this.isOpen = true;
@@ -105,7 +127,6 @@ export class MiModalComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Cleanup: Asegurar que el scroll se desbloquee
     if (this.scrollService.isScrollLocked()) {
       this.scrollService.unlockBodyScroll();
     }
@@ -113,124 +134,100 @@ export class MiModalComponent implements OnDestroy {
 }
 ```
 
-### Ejemplo Completo: Sidebar Responsive
+### Ejemplo: Uploader con Temas
 
 ```typescript
-import { Component, HostListener, OnDestroy } from "@angular/core";
-import { ScrollService } from "../services/scroll.service";
-
 @Component({
-  selector: "mi-sidebar",
   template: `
-    <!-- Botón toggle para móviles -->
-    <button (click)="toggleSidebar()" class="mobile-toggle">☰</button>
-
-    <!-- Overlay para móviles -->
-    <div class="overlay" *ngIf="isMobile && isOpen" (click)="closeSidebar()"></div>
-
-    <!-- Sidebar -->
-    <aside [class.open]="isOpen" [class.mobile]="isMobile">
-      <nav>
-        <!-- Contenido del menú -->
-      </nav>
-    </aside>
+    <div class="themed-uploader" [attr.data-theme]="currentTheme">
+      <app-file-uploader [config]="uploadConfig"></app-file-uploader>
+    </div>
   `,
 })
-export class MiSidebarComponent implements OnDestroy {
-  isOpen = false;
-  isMobile = false;
+export class ThemedUploaderComponent {
+  currentTheme: OpeniisTheme = "classic";
+  uploadConfig: UploadConfig = {
+    maxFileSize: 10,
+    allowedTypes: ["image/*"],
+    maxFiles: 5,
+  };
 
-  constructor(private scrollService: ScrollService) {
-    this.checkScreenSize();
-  }
-
-  @HostListener("window:resize")
-  onResize(): void {
-    const wasMobile = this.isMobile;
-    this.checkScreenSize();
-
-    // Si cambiamos de móvil a desktop, cerrar sidebar y desbloquear scroll
-    if (wasMobile && !this.isMobile && this.isOpen) {
-      this.scrollService.unlockBodyScroll();
-      this.isOpen = false;
-    }
-  }
-
-  toggleSidebar(): void {
-    this.isOpen = !this.isOpen;
-
-    if (this.isMobile) {
-      if (this.isOpen) {
-        this.scrollService.lockBodyScroll();
-      } else {
-        this.scrollService.unlockBodyScroll();
-      }
-    }
-  }
-
-  closeSidebar(): void {
-    this.isOpen = false;
-    if (this.isMobile) {
-      this.scrollService.unlockBodyScroll();
-    }
-  }
-
-  private checkScreenSize(): void {
-    this.isMobile = window.innerWidth <= 768;
-  }
-
-  ngOnDestroy(): void {
-    if (this.isMobile && this.isOpen) {
-      this.scrollService.unlockBodyScroll();
-    }
+  constructor(private themeService: OpeniisThemeService, private uploadService: OpeniisUploadService) {
+    this.themeService.currentTheme$.subscribe((theme) => {
+      this.currentTheme = theme;
+    });
   }
 }
 ```
 
-### Mejores Prácticas
+## Arquitectura General
 
-#### ✅ DO - Buenas Prácticas
+### Patrón de Diseño
 
-- **Usar en ngOnDestroy:** Siempre desbloquear el scroll en el cleanup del componente
-- **Verificar estado:** Usar `isScrollLocked()` antes de desbloquear si no estás seguro del estado
-- **Responsive handling:** Desbloquear automáticamente cuando cambie el tamaño de pantalla
-- **Event listeners:** Manejar tecla Escape y otros eventos para cerrar overlays
+Todos los servicios siguen el mismo patrón:
 
-#### ❌ DON'T - Evitar
+- **Injectable Singleton:** Una instancia por aplicación
+- **Observable Pattern:** Cambios reactivos con RxJS
+- **Persistencia:** LocalStorage para configuraciones del usuario
+- **TypeScript:** Tipado completo para mejor DX
 
-- **Múltiples locks:** No llamar `lockBodyScroll()` múltiples veces sin desbloquear
-- **Olvidar cleanup:** No omitir el desbloqueo en ngOnDestroy
-- **Lock innecesario:** No usar en desktop si no es necesario
-- **Ignorar errores:** No asumir que el DOM está disponible (SSR)
+### Gestión de Estado
 
-### Consideraciones Técnicas
+- **BehaviorSubject:** Para estados que requieren valor inicial
+- **LocalStorage:** Para persistencia entre sesiones
+- **Memory Management:** Cleanup automático en ngOnDestroy
 
-#### Compatibilidad
+### Integración CSS
 
-- ✅ **iOS Safari:** Previene bounce scroll
-- ✅ **Android Chrome:** Funciona con touch events
-- ✅ **Desktop:** Compatible con todos los navegadores modernos
-- ✅ **SSR:** Safe checks para entornos sin DOM
+- **CSS Custom Properties:** Para cambios dinámicos de tema
+- **Data Attributes:** Para aplicar modos y temas
+- **Transiciones:** Para cambios suaves y naturales
 
-#### Rendimiento
+## Mejores Prácticas Generales
 
-- **Mínimo impacto:** Solo manipula estilos CSS cuando es necesario
-- **Sin polling:** No hay listeners constantes o timeouts
-- **Eficiente:** Reutiliza la misma instancia del servicio
+### ✅ DO - Recomendaciones
 
-### Troubleshooting
+1. **Inyección de dependencias:** Usar constructor injection
+2. **Cleanup automático:** Implementar ngOnDestroy correctamente
+3. **Error handling:** Manejar errores apropiadamente
+4. **Tipado fuerte:** Usar interfaces TypeScript
+5. **Observable patterns:** Suscribirse y desuscribirse correctamente
 
-#### El scroll no se bloquea completamente
+### ❌ DON'T - Evitar
 
-- Verificar que no hay `overflow: auto` en contenedores padre
-- Revisar que no hay `position: fixed` conflictivo en CSS
+1. **Memory leaks:** No olvidar desuscribirse de observables
+2. **Múltiples instancias:** No crear servicios fuera del DI
+3. **Estados inconsistentes:** No asumir estados sin verificar
+4. **Uso incorrecto:** No usar servicios para propósitos diferentes
 
-#### La posición no se restaura correctamente
+## Dependencias Comunes
 
-- Asegurar que `unlockBodyScroll()` se llama correctamente
-- Verificar que no hay navegación entre llamadas
+Todos los servicios utilizan:
 
-#### Problemas en móvil
+- **@angular/core** - Para funcionalidad básica de Angular
+- **rxjs** - Para programación reactiva y observables
+- **Browser APIs** - localStorage, CSS Custom Properties, File API
 
-- Revisar `touch-action` y `overscroll-behavior` en CSS
-- Confirmar que el viewport meta tag está configurado correctamente
+## Compatibilidad
+
+- **Angular 15+** - Versión mínima requerida
+- **TypeScript 4.7+** - Para mejor tipado
+- **Navegadores modernos** - Chrome 80+, Firefox 75+, Safari 13+
+- **SSR compatible** - Funciona con Angular Universal
+
+## Contribución
+
+Para contribuir a los servicios:
+
+1. Seguir los patrones establecidos
+2. Mantener compatibilidad con versiones existentes
+3. Incluir tests unitarios
+4. Actualizar documentación correspondiente
+
+## Soporte
+
+Para problemas o preguntas:
+
+- Revisar la documentación individual de cada servicio
+- Verificar ejemplos de integración
+- Consultar mejores prácticas

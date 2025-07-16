@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export type OpeniisTheme = 'classic' | 'neutral' | 'vivid' | 'custom';
-export type ThemeMode = 'light' | 'dark';
 
 export interface CustomThemeConfig {
   primary: string;
@@ -14,7 +13,6 @@ export interface CustomThemeConfig {
 
 export interface ThemeConfig {
   theme: OpeniisTheme;
-  mode: ThemeMode;
   customConfig?: CustomThemeConfig;
 }
 
@@ -28,11 +26,9 @@ export interface ThemeConfig {
 })
 export class OpeniisThemeService {
   private readonly THEME_STORAGE_KEY = 'openiis-theme';
-  private readonly MODE_STORAGE_KEY = 'openiis-theme-mode';
   private readonly CUSTOM_CONFIG_STORAGE_KEY = 'openiis-custom-theme';
 
   private _currentTheme$ = new BehaviorSubject<OpeniisTheme>('classic');
-  private _currentMode$ = new BehaviorSubject<ThemeMode>('light');
   private _customConfig$ = new BehaviorSubject<CustomThemeConfig | null>(null);
 
   constructor() {
@@ -47,13 +43,6 @@ export class OpeniisThemeService {
   }
 
   /**
-   * Observable del modo actual (claro/oscuro)
-   */
-  get currentMode$(): Observable<ThemeMode> {
-    return this._currentMode$.asObservable();
-  }
-
-  /**
    * Observable de la configuración custom
    */
   get customConfig$(): Observable<CustomThemeConfig | null> {
@@ -65,13 +54,6 @@ export class OpeniisThemeService {
    */
   getCurrentTheme(): OpeniisTheme {
     return this._currentTheme$.value;
-  }
-
-  /**
-   * Obtiene el modo actual
-   */
-  getCurrentMode(): ThemeMode {
-    return this._currentMode$.value;
   }
 
   /**
@@ -91,23 +73,6 @@ export class OpeniisThemeService {
   }
 
   /**
-   * Establece el modo (claro/oscuro)
-   */
-  setMode(mode: ThemeMode): void {
-    this._currentMode$.next(mode);
-    localStorage.setItem(this.MODE_STORAGE_KEY, mode);
-    this.applyTheme();
-  }
-
-  /**
-   * Alterna entre modo claro y oscuro
-   */
-  toggleMode(): void {
-    const newMode = this._currentMode$.value === 'light' ? 'dark' : 'light';
-    this.setMode(newMode);
-  }
-
-  /**
    * Establece un tema custom con una paleta generada automáticamente
    */
   setCustomTheme(config: CustomThemeConfig): void {
@@ -123,28 +88,16 @@ export class OpeniisThemeService {
   }
 
   /**
-   * Establece el tema completo (tema + modo + config custom)
-   */
-  setThemeConfig(config: ThemeConfig): void {
-    if (config.customConfig) {
-      this.setCustomTheme(config.customConfig);
-    }
-    this.setTheme(config.theme);
-    this.setMode(config.mode);
-  }
-
-  /**
    * Restablece al tema por defecto
    */
   resetToDefault(): void {
     this.setTheme('classic');
-    this.setMode('light');
     this._customConfig$.next(null);
     localStorage.removeItem(this.CUSTOM_CONFIG_STORAGE_KEY);
   }
 
   /**
-   * Inicializa el tema desde localStorage o detecta preferencias del sistema
+   * Inicializa el tema desde localStorage
    */
   private initializeTheme(): void {
     // Cargar tema guardado
@@ -156,18 +109,6 @@ export class OpeniisThemeService {
       ['classic', 'neutral', 'vivid', 'custom'].includes(savedTheme)
     ) {
       this._currentTheme$.next(savedTheme);
-    }
-
-    // Cargar modo guardado o detectar preferencia del sistema
-    const savedMode = localStorage.getItem(this.MODE_STORAGE_KEY) as ThemeMode;
-    if (savedMode && ['light', 'dark'].includes(savedMode)) {
-      this._currentMode$.next(savedMode);
-    } else {
-      // Detectar preferencia del sistema
-      const prefersDark = window.matchMedia(
-        '(prefers-color-scheme: dark)'
-      ).matches;
-      this._currentMode$.next(prefersDark ? 'dark' : 'light');
     }
 
     // Cargar configuración custom
@@ -191,12 +132,10 @@ export class OpeniisThemeService {
    */
   private applyTheme(): void {
     const theme = this._currentTheme$.value;
-    const mode = this._currentMode$.value;
     const customConfig = this._customConfig$.value;
 
     // Aplicar atributos al body
     document.body.setAttribute('data-openiis-theme', theme);
-    document.body.setAttribute('data-theme', mode);
 
     // Si es tema custom, aplicar variables
     if (theme === 'custom' && customConfig) {

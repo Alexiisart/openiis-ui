@@ -15,7 +15,7 @@ import { OpeniisButtonComponent } from '../buttons/button.component';
 import { filter } from 'rxjs/operators';
 import { NavigationEnd } from '@angular/router';
 import { InputVariant } from '../input';
-import { ScrollService } from '../services/scroll.service';
+import { ScrollService } from '../services/scroll/scroll.service';
 
 export interface MenuItem {
   route: string;

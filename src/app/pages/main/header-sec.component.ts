@@ -3,13 +3,18 @@ import { OpeniisDropdownComponent } from '../../components/dropdowns/dropdown.co
 import {
   OpeniisTheme,
   OpeniisThemeService,
-  ThemeMode,
-} from '../../components/services/theme.service';
+} from '../../components/services/theme/theme.service';
+
 import { Subscription } from 'rxjs';
 import { OpeniisSwitchComponent } from '../../components';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../service/language.service';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import {
+  OpeniisModeService,
+  ThemeMode,
+} from '../../components/services/mode/mode.service';
+import { EasyIconDirective } from '../../components/services/svg/svg-icon.directive';
 
 @Component({
   selector: 'app-header-sec',
@@ -19,6 +24,7 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
     OpeniisSwitchComponent,
     TranslateModule,
     SidebarComponent,
+    EasyIconDirective,
   ],
   template: `
     <div class="header-container">
@@ -53,7 +59,9 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
       </openiis-sidebar>
       }
       <div class="logo-container">
-        <img [src]="sublogoSrc" alt="" class="sub-logo" />
+        <span
+          easyIcon="assets/sublogo.svg, var(--color-text-primary), 100px, auto"
+        ></span>
       </div>
 
       <!-- Botón de modo oscuro y temas -->
@@ -169,7 +177,7 @@ export class HeaderSecComponent {
   }
 
   setMode(mode: ThemeMode): void {
-    this.themeService.setMode(mode);
+    this.modeService.setMode(mode);
   }
 
   setLanguage(language: string): void {
@@ -240,12 +248,13 @@ export class HeaderSecComponent {
   constructor(
     private themeService: OpeniisThemeService,
     private languageService: LanguageService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private modeService: OpeniisModeService
   ) {
     this.themeService.currentTheme$.subscribe((theme) => {
       this.currentTheme = theme;
     });
-    this.themeService.currentMode$.subscribe((mode) => {
+    this.modeService.currentMode$.subscribe((mode) => {
       this.currentMode = mode;
       this.isDarkMode = mode === 'dark';
     });

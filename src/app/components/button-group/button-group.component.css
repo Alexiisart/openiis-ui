@@ -1,8 +1,9 @@
 /* Contenedor principal del button group */
 .button-group {
   display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
   position: relative;
-  width: fit-content;
   gap: 0;
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -29,6 +30,7 @@
   background: transparent;
   border-radius: 0;
   overflow: visible;
+  flex-wrap: wrap;
 }
 
 .button-group.separated openiis-button {
@@ -264,10 +266,6 @@
 @media (max-width: 768px) {
   .button-group {
     width: 100%;
-  }
-
-  .button-group[data-orientation="horizontal"] {
-    flex-direction: column;
   }
 
   .button-group[data-orientation="horizontal"] .btn-group-item:first-child {

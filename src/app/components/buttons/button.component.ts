@@ -10,6 +10,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { OpeniisSpinnerComponent } from '../spinner/spinner.component';
 import { OpeniisTooltipComponent } from '../tooltip/tooltip.component';
+import { SvgIconDirective } from '../services/svg/svg-icon.directive';
 
 export type ButtonVariant =
   | undefined
@@ -37,7 +38,12 @@ export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 @Component({
   selector: 'openiis-button',
   standalone: true,
-  imports: [CommonModule, OpeniisSpinnerComponent, OpeniisTooltipComponent],
+  imports: [
+    CommonModule,
+    OpeniisSpinnerComponent,
+    OpeniisTooltipComponent,
+    SvgIconDirective,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css'],
@@ -46,118 +52,82 @@ export class OpeniisButtonComponent {
   @ViewChild('buttonElement', { static: true })
   buttonElement!: ElementRef<HTMLButtonElement>;
 
-  /**
-   * Texto del botón
-   */
+  /** Texto del botón */
   @Input() text: string = '';
 
-  /**
-   * Tipo de botón para compatibilidad (primary, secondary, etc.)
-   */
+  /** Tipo de botón para compatibilidad (primary, secondary, etc.) */
   @Input() type: ButtonVariant = 'primary';
 
-  /**
-   * Tamaño del botón
-   */
+  /** Tamaño del botón */
   @Input() size: ButtonSize = 'md';
 
-  /**
-   * Tipo HTML del botón
-   */
+  /** Tipo HTML del botón */
   @Input() htmlType: ButtonType = 'button';
 
-  /**
-   * Estado deshabilitado
-   */
+  /** Estado deshabilitado */
   @Input() disabled: boolean = false;
 
-  /**
-   * Estado de carga
-   */
+  /** Estado de carga */
   @Input() loading: boolean = false;
 
-  /**
-   * Icono izquierdo (material icon name)
-   */
+  /** Icono izquierdo (material icon name) */
   @Input() iconLeft: string = '';
 
-  /**
-   * Icono derecho (material icon name)
-   */
+  /** Icono derecho (material icon name) */
   @Input() iconRight: string = '';
 
-  /**
-   * Solo mostrar icono (ocultar texto)
-   */
+  /** Solo mostrar icono (ocultar texto) */
   @Input() iconOnly: boolean = false;
 
-  /**
-   * Botón de ancho completo
-   */
+  /** Botón de ancho completo */
   @Input() fullWidth: boolean = false;
 
-  /**
-   * Texto del tooltip
-   */
+  /** Texto del tooltip */
   @Input() tooltipText: string = '';
 
-  /**
-   * Posición del tooltip
-   */
+  /** Posición del tooltip */
   @Input() tooltipPosition: 'top' | 'bottom' | 'left' | 'right' = 'top';
 
-  /**
-   * Variante del tooltip
-   */
+  /** Variante del tooltip */
   @Input() tooltipVariant: 'default' | 'danger' = 'default';
 
-  /**
-   * Título del botón
-   */
+  /** Título del botón */
   @Input() title: string = '';
 
-  /**
-   * Botón con dropdown
-   */
+  /** Botón con dropdown */
   @Input() hasDropdown: boolean = false;
 
-  /**
-   * Estado del dropdown
-   */
+  /** Estado del dropdown */
   @Input() dropdownOpen: boolean = false;
 
-  /**
-   * Etiqueta aria
-   */
+  /** Etiqueta aria */
   @Input() ariaLabel: string = '';
 
-  /**
-   * Referencia aria describedby
-   */
+  /** Referencia aria describedby */
   @Input() ariaDescribedBy: string = '';
 
-  /**
-   * Clases CSS adicionales
-   */
+  /** Clases CSS adicionales */
   @Input() extraClasses: string = '';
 
-  /**
-   * Botón responsivo
-   */
+  /** Botón responsivo */
   @Input() responsive: boolean = false;
 
-  /**
-   * Evento de clic
-   */
+  /** Evento de clic */
   @Output() clickEvent = new EventEmitter<MouseEvent>();
 
-  /**
-   * Evento de toggle del dropdown
-   */
+  /** Evento de toggle del dropdown */
   @Output() dropdownToggle = new EventEmitter<boolean>();
 
   // Estado interno del tooltip
   showTooltip: boolean = false;
+
+  // Icono SVG
+  @Input() iconAsset: string = '';
+  @Input() colorSvg: string = 'inherit';
+  @Input() backgroundSvg: string = 'transparent';
+  @Input() widthSvg: string = '24px';
+  @Input() heightSvg: string = '24px';
+  @Input() sizeSvg: string = '24px';
 
   /**
    * Clases CSS del botón

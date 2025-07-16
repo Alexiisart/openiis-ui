@@ -400,6 +400,31 @@
   font-size: 1.4em;
 }
 
+.icon-asset {
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.btn-xs .icon-asset {
+  width: 1em;
+  height: 1em;
+}
+
+.btn-sm .icon-asset {
+  width: 1em;
+  height: 1em;
+}
+
+.btn-lg .icon-asset {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.btn-xl .icon-asset {
+  width: 1.4em;
+  height: 1.4em;
+}
+
 /* Botones solo con icono */
 .btn-icon-only {
   padding: 0;

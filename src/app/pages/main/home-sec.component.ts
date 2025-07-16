@@ -1,10 +1,18 @@
 import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { OpeniisBadgeComponent } from '../../components/badge/badge.component';
+import { OpeniisButtonComponent } from '../../components/buttons/button.component';
+import { OpeniisButtonGroupComponent } from '../../components';
 
 @Component({
   selector: 'app-home-sec',
   standalone: true,
-  imports: [TranslateModule],
+  imports: [
+    TranslateModule,
+    OpeniisBadgeComponent,
+    OpeniisButtonComponent,
+    OpeniisButtonGroupComponent,
+  ],
   template: `
     <div class="home-container">
       <div class="hero-section">
@@ -16,6 +24,43 @@ import { TranslateModule } from '@ngx-translate/core';
         <p class="subtitle">
           Openiis UI -> {{ 'home.el_siguiente_nivel' | translate }}
         </p>
+
+        <div class="info-badge">
+          <openiis-badge
+            leftIcon="info"
+            variant="primary"
+            text="Aún en beta. Síguenos en LinkedIn y GitHub mientras preparamos el lanzamiento en npm."
+            size="lg"
+            [style]="'outline'"
+            [shape]="'pill'"
+          />
+        </div>
+      </div>
+
+      <!-- Social buttons -->
+      <div class="social-buttons">
+        <openiis-button-group [separated]="true" orientation="horizontal">
+          <a
+            href="https://www.linkedin.com/company/openiisorg/"
+            target="_blank"
+          >
+            <openiis-button
+              size="lg"
+              type="icon"
+              iconAsset="assets/linkedin.svg"
+              [colorSvg]="'var(--color-text-primary)'"
+            />
+          </a>
+
+          <a href="https://github.com/Alexiisart/openiis-ui" target="_blank">
+            <openiis-button
+              size="lg"
+              type="icon"
+              iconAsset="assets/github.svg"
+              [colorSvg]="'var(--color-text-primary)'"
+            />
+          </a>
+        </openiis-button-group>
       </div>
 
       <div class="features">
@@ -67,6 +112,15 @@ import { TranslateModule } from '@ngx-translate/core';
     .hero-section {
       text-align: left;
     }
+
+    .social-buttons {
+      margin-top: var(--space-2);
+    }
+
+    .info-badge {
+      margin-top: var(--space-4);
+    }
+
 
     h1 {
       color: var(--color-text-primary);

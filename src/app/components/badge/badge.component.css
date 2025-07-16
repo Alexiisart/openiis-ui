@@ -8,16 +8,19 @@
   border-radius: var(--radius-md);
   font-size: 0.75rem;
   font-weight: 600;
-  line-height: 1;
   text-align: center;
   vertical-align: middle;
-  white-space: nowrap;
+  white-space: pre-wrap; /* Permite saltos de línea controlados */
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: default;
   user-select: none;
   background: var(--color-error);
   color: var(--color-text-inverse);
   border: 1px solid transparent;
+  width: fit-content; /* Ocupa el 100% del ancho disponible */
+  max-width: fit-content; /* Asegura que no exceda el ancho del contenedor */
+  word-break: break-word; /* Rompe palabras solo cuando es necesario */
+  hyphens: auto; /* Agrega guiones para mejorar los saltos */
 }
 
 /* Variantes */
@@ -85,11 +88,6 @@
   padding: var(--space-2) var(--space-3);
   font-size: 1rem;
   gap: var(--space-2);
-}
-
-/* Estilos */
-.badge-filled {
-  /* Estilo por defecto, ya aplicado */
 }
 
 .badge-outline {
@@ -293,9 +291,10 @@
   display: flex;
   align-items: center;
   gap: var(--space-1);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
+  flex-wrap: wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Botón de cierre */

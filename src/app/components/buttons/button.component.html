@@ -23,7 +23,18 @@
     <span class="button-text">{{ text }}</span>
     } @if (iconRight && !loading) {
     <span class="material-icons-outlined icon-right">{{ iconRight }}</span>
-    }
+    } @if (iconAsset) { @if (iconAsset.endsWith('.svg')) {
+    <span
+      [svgIcon]="iconAsset"
+      [svgColor]="colorSvg"
+      [svgBackground]="backgroundSvg"
+      [svgWidth]="widthSvg"
+      [svgHeight]="heightSvg"
+    >
+    </span>
+    } @else {
+    <img class="icon-asset" [src]="iconAsset" />
+    } }
   </button>
 
   @if (shouldShowTooltip) {
