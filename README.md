@@ -28,7 +28,7 @@ OpenIIS UI es una biblioteca de componentes Angular moderna y altamente personal
 
 ### Navegación
 
-- **Tabs**: ⭐ **NUEVO** - Sistema de pestañas simplificado y eficiente
+- **Tabs**:Sistema de pestañas simplificado y eficiente
   - Variantes: Line, Pills, Cards, Buttons
   - Tamaños: SM, MD, LG
   - Soporte para iconos y badges
@@ -205,33 +205,22 @@ npm install
 npm start
 ```
 
-## 📚 Documentación
-
-Visita nuestra [documentación completa](https://github.com/tuusuario/openiis-ui/wiki) para ver:
-
-- Guías detalladas
-- API de componentes
-- Ejemplos de uso
-- Mejores prácticas
-- Personalización avanzada
-
 ## 🤝 Contribuir
 
 ¡Las contribuciones son bienvenidas! Por favor, lee nuestra [guía de contribución](CONTRIBUTING.md).
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE.md) para más detalles.
 
 ## 🙋‍♂️ Soporte
 
-- 📧 Email: tu@email.com
-- 🐛 Issues: [GitHub Issues](https://github.com/tuusuario/openiis-ui/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/tuusuario/openiis-ui/discussions)
+- 📧 Email: openiis.org@gmail.com
+- 🐛 Issues: [GitHub Issues](https://github.com/Alexiisart/openiis-ui/issues)
 
 ## 🌟 Showcase
 
-¿Usando OpenIIS UI? ¡Nos encantaría ver tu proyecto! Agrégalo a nuestra [galería de proyectos](https://github.com/tuusuario/openiis-ui/wiki/Showcase).
+¿Usando OpenIIS UI? ¡Nos encantaría ver tu proyecto! Agrégalo a nuestra [galería de proyectos](https://github.com/Alexiisart/openiis-ui/wiki/Showcase).
 
 ---
 
