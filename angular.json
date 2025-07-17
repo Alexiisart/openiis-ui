@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "openiis-ui-test:build:production"
+              "buildTarget": "openiis-ui:build:production"
             },
             "development": {
-              "buildTarget": "openiis-ui-test:build:development"
+              "buildTarget": "openiis-ui:build:development"
             }
           },
           "defaultConfiguration": "development"

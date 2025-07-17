@@ -189,15 +189,6 @@ El nuevo componente de tabs utiliza:
 - **Renderizado condicional**: Solo el contenido activo es visible
 - **Accesibilidad nativa**: Atributos ARIA y navegación por teclado
 
-## 🧪 Proyecto de Testing
-
-Este repositorio (`openiis-ui-test`) es un entorno de desarrollo y testing para los componentes de OpenIIS UI. Incluye:
-
-- 📋 **Demos interactivos** de todos los componentes
-- 🎛️ **Panel de control** para temas e idiomas
-- 🧪 **Casos de uso** reales y ejemplos
-- 📊 **Testing visual** de todos los estados y variantes
-
 Para ejecutar el proyecto:
 
 ```bash
