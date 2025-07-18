@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OpeniisCheckboxComponent } from '../components/checkboxes/checkbox.component';
+import { OpeniisCheckboxComponent } from 'openiis-ui';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

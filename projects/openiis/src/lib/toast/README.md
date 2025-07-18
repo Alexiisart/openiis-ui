@@ -60,7 +60,7 @@ export interface ToastData {
 // En el componente
 successToast: ToastData = {
   message: 'Elemento guardado correctamente',
-  type: 'success',
+  type: 'success' as 'success' | 'warning' | 'danger' | 'info',,
   duration: 3000
 };
 

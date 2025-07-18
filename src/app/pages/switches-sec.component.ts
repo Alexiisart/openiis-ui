@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OpeniisSwitchComponent } from '../components/switch/switch.component';
+import { OpeniisSwitchComponent } from 'openiis-ui';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

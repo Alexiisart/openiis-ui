@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { OpeniisUploaderComponent } from '../components/uploader/uploader.component';
-import { FileUploadItem, UploadConfig } from '../components/uploader';
+import { OpeniisUploaderComponent } from 'openiis-ui';
+import { FileUploadItem, UploadConfig } from 'openiis-ui';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -111,7 +111,7 @@ import { TranslateModule } from '@ngx-translate/core';
               [config]="{
                 maxFileSize: 5,
                 allowedTypes: ['image/*'],
-                maxFiles: 3
+                maxFiles: 3,
               }"
               title="{{ 'uploader.múltiples_archivos' | translate }}"
               description="{{ 'uploader.archivos_múltiples' | translate }}"
@@ -135,7 +135,7 @@ import { TranslateModule } from '@ngx-translate/core';
               size="sm"
               [config]="{
                 maxFileSize: 2,
-                maxFiles: 2
+                maxFiles: 2,
               }"
               title="{{ 'uploader.cargador_de_archivos_pequeño' | translate }}"
               selectFile="{{ 'uploader.seleccionar_archivos' | translate }}"
@@ -153,7 +153,7 @@ import { TranslateModule } from '@ngx-translate/core';
               size="xl"
               [config]="{
                 maxFileSize: 50,
-                maxFiles: 10
+                maxFiles: 10,
               }"
               title="{{ 'uploader.área_de_carga_grande' | translate }}"
               description="{{ 'uploader.múltiples_archivos' | translate }}"
@@ -193,7 +193,7 @@ import { TranslateModule } from '@ngx-translate/core';
               [config]="{
                 maxFileSize: 10,
                 allowedTypes: ['application/pdf', '.doc', '.docx'],
-                maxFiles: 3
+                maxFiles: 3,
               }"
               title="{{ 'uploader.carga_tu_cv_y_documentos' | translate }}"
               description="{{ 'uploader.documentos_oficiales' | translate }}"
@@ -214,7 +214,7 @@ import { TranslateModule } from '@ngx-translate/core';
                 allowedTypes: ['image/*'],
                 maxFiles: 20,
                 enableResize: true,
-                compressionQuality: 0.9
+                compressionQuality: 0.9,
               }"
               title="{{ 'uploader.carga_tu_portafolio' | translate }}"
               description="{{ 'uploader.galería_de_imágenes' | translate }}"
@@ -233,7 +233,7 @@ import { TranslateModule } from '@ngx-translate/core';
               [config]="{
                 maxFileSize: 25,
                 allowedTypes: ['*'],
-                maxFiles: 15
+                maxFiles: 15,
               }"
               title="{{ 'uploader.cualquier_tipo_de_archivo' | translate }}"
               description="{{ 'uploader.archivos_múltiples' | translate }}"

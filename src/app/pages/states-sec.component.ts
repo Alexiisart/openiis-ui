@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OpeniisEmptyStateComponent } from '../components/empty-state/empty-state.component';
+import { OpeniisEmptyStateComponent } from 'openiis-ui';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

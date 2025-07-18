@@ -284,7 +284,11 @@
     "personalizable": "Personalizable",
     "robusto": "Robusto",
     "shield": "shield",
-    "sistema_de_temas_flexible_que_se_adapta_": "Sistema de temas flexible que se adapta a tu marca"
+    "sistema_de_temas_flexible_que_se_adapta_": "Sistema de temas flexible que se adapta a tu marca",
+    "instalar": "Instalar",
+    "importante": "IMPORTANTE",
+    "para_aprovechar_al_máximo_los_componentes_de_esta": "Para aprovechar al máximo los componentes de esta biblioteca, se recomienda encarecidamente leer la documentación proporcionada. Esta guía le ofrecerá una comprensión profunda de las características y mejores prácticas para su implementación efectiva.",
+    "documentación": "Leer documentación"
   },
   "input": {
     "actualizar_perfil": "Actualizar Perfil",

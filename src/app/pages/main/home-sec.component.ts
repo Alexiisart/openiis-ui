@@ -1,19 +1,26 @@
 import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { OpeniisBadgeComponent } from '../../components/badge/badge.component';
-import { OpeniisButtonComponent } from '../../components/buttons/button.component';
-import { OpeniisButtonGroupComponent } from '../../components';
+import {
+  OpeniisButtonGroupComponent,
+  OpeniisButtonComponent,
+  OpeniisToastComponent,
+} from 'openiis-ui';
 
 @Component({
   selector: 'app-home-sec',
   standalone: true,
   imports: [
     TranslateModule,
-    OpeniisBadgeComponent,
     OpeniisButtonComponent,
     OpeniisButtonGroupComponent,
+    OpeniisToastComponent,
   ],
   template: `
+    <openiis-toast
+      [data]="data"
+      [isVisible]="showToast"
+      (closed)="onToastClosed()"
+    />
     <div class="home-container">
       <div class="hero-section">
         <h1>
@@ -26,14 +33,13 @@ import { OpeniisButtonGroupComponent } from '../../components';
         </p>
 
         <div class="info-badge">
-          <openiis-badge
-            leftIcon="info"
-            variant="primary"
-            text="Aún en beta. Síguenos en LinkedIn y GitHub mientras preparamos el lanzamiento en npm."
-            size="lg"
-            [style]="'outline'"
-            [shape]="'pill'"
-          />
+          <openiis-button
+            type="outline-primary"
+            text="{{ 'home.instalar' | translate }} ng add openiis-ui"
+            size="md"
+            (clickEvent)="copyCommand()"
+          ></openiis-button>
+          <p id="comando" style="display: none;">ng add openiis-ui</p>
         </div>
       </div>
 
@@ -61,6 +67,24 @@ import { OpeniisButtonGroupComponent } from '../../components';
             />
           </a>
         </openiis-button-group>
+      </div>
+
+      <!-- Sección IMPORTANTE -->
+      <div class="important-section">
+        <h2>{{ 'home.importante' | translate }}</h2>
+        <p>
+          {{
+            'home.para_aprovechar_al_máximo_los_componentes_de_esta' | translate
+          }}
+        </p>
+
+        <openiis-button
+          type="outline-primary"
+          text="{{ 'home.documentación' | translate }}"
+          iconLeft="book"
+          size="md"
+          (clickEvent)="openDocumentation()"
+        ></openiis-button>
       </div>
 
       <div class="features">
@@ -121,6 +145,28 @@ import { OpeniisButtonGroupComponent } from '../../components';
       margin-top: var(--space-4);
     }
 
+    .important-section {
+      display: flex;
+      gap: var(--space-2);
+      flex-direction: column;
+      padding: var(--space-4);
+      background-color: var(--color-background-alt);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+    }
+
+    .important-section h2 {
+      color: var(--color-text-primary);
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+
+    .important-section p {
+      color: var(--color-text-secondary);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
 
     h1 {
       color: var(--color-text-primary);
@@ -143,7 +189,7 @@ import { OpeniisButtonGroupComponent } from '../../components';
 
     .feature-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: var(--space-6);
     }
 
@@ -198,4 +244,45 @@ import { OpeniisButtonGroupComponent } from '../../components';
     }
   `,
 })
-export class HomeSecComponent {}
+export class HomeSecComponent {
+  showToast = false;
+  data = {
+    message: 'Comando copiado al portapapeles',
+    type: 'success' as 'success' | 'warning' | 'danger' | 'info',
+    duration: 3000,
+  };
+
+  copyCommand() {
+    const comando = document.getElementById('comando')?.innerText;
+    if (comando) {
+      navigator.clipboard.writeText(comando).then(
+        () => {
+          console.log('Comando copiado al portapapeles');
+          this.data = {
+            message: 'Comando copiado al portapapeles',
+            type: 'success',
+            duration: 3000,
+          };
+          this.showToast = true;
+        },
+        (err: any) => {
+          console.error('Error al copiar el comando: ', err);
+          this.data = {
+            message: 'Error al copiar el comando',
+            type: 'danger',
+            duration: 3000,
+          };
+          this.showToast = true;
+        },
+      );
+    }
+  }
+
+  onToastClosed() {
+    this.showToast = false;
+  }
+
+  openDocumentation() {
+    window.open('https://github.com/Alexiisart/openiis-ui/wiki', '_blank');
+  }
+}

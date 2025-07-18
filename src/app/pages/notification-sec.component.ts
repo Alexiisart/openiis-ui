@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OpeniisButtonComponent } from '../components/buttons/button.component';
-import { OpeniisToastComponent } from '../components';
+import { OpeniisButtonComponent } from 'openiis-ui';
+import { OpeniisToastComponent } from 'openiis-ui';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({

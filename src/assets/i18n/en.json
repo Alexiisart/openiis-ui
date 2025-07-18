@@ -288,7 +288,11 @@
     "personalizable": "Customizable",
     "robusto": "Robust",
     "shield": "shield",
-    "sistema_de_temas_flexible_que_se_adapta_": "Flexible theme system that adapts to your brand"
+    "sistema_de_temas_flexible_que_se_adapta_": "Flexible theme system that adapts to your brand",
+    "instalar": "Install",
+    "importante": "IMPORTANT",
+    "para_aprovechar_al_máximo_los_componentes_de_esta": "To make the most of the components in this library, it is highly recommended to read the provided documentation. This guide will provide a deep understanding of the features and best practices for effective implementation.",
+    "documentación": "Read Documentation"
   },
   "input": {
     "actualizar_perfil": "Update profile",

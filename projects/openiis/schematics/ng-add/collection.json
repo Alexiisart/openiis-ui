@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "ng-add": {
+      "description": "Agrega estilos y configuración a un proyecto Angular",
+      "factory": "./index#ngAdd",
+      "schema": "./schema.json"
+    }
+  }
+}

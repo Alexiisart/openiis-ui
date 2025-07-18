@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OpeniisAvatarComponent } from '../components/avatar/avatar.component';
+import { OpeniisAvatarComponent } from 'openiis-ui';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

@@ -1,0 +1,50 @@
+{
+  "name": "openiis-ui",
+  "version": "0.1.1",
+  "description": "Una librería moderna de componentes UI para Angular con temas personalizables",
+  "keywords": [
+    "angular",
+    "ui",
+    "components",
+    "design-system",
+    "openiis",
+    "themes",
+    "custom-themes"
+  ],
+  "author": "OpenIIS Team",
+  "license": "MIT",
+  "homepage": "https://github.com/alexiisart/openiis-ui#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexiisart/openiis-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alexiisart/openiis-ui/issues"
+  },
+  "files": [
+    "bundles/",
+    "fesm2022/",
+    "fesm2015/",
+    "esm2022/",
+    "esm2015/",
+    "lib/",
+    "index.d.ts",
+    "public-api.d.ts",
+    "src/",
+    "schematics/",
+    "package.json",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/core": "^19.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "schematics": "./schematics/ng-add/collection.json",
+  "ng-add": {
+    "save": "dependencies"
+  },
+  "sideEffects": false
+}

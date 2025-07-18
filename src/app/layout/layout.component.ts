@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
-import { SidebarComponent } from '../components/sidebar/sidebar.component';
+import { SidebarComponent } from 'openiis-ui';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
@@ -41,7 +41,10 @@ export class LayoutComponent {
 
   private subscription = new Subscription();
 
-  constructor(private router: Router, private translate: TranslateService) {
+  constructor(
+    private router: Router,
+    private translate: TranslateService,
+  ) {
     // Suscribirse a cambios de idioma
     this.translate.onLangChange.subscribe(() => {
       this.menuItems = this.buildMenuItems();
@@ -74,7 +77,7 @@ export class LayoutComponent {
               }
             }, 100);
           }
-        })
+        }),
     );
   }
 

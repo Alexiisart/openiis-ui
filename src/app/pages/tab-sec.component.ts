@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OpeniisTabsComponent } from '../components/tabs/tabs.component';
+import { OpeniisTabsComponent } from 'openiis-ui';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -291,16 +291,16 @@ export class TabSecComponent implements OnInit {
   private updateTabLabels() {
     // Update basic line tabs labels
     this.basicLineTabs[0].label = this.translate.instant(
-      'tab.configuración_general'
+      'tab.configuración_general',
     );
     this.basicLineTabs[1].label = this.translate.instant(
-      'tab.información_del_perfil'
+      'tab.información_del_perfil',
     );
     this.basicLineTabs[2].label = this.translate.instant(
-      'tab.configuración_de_notificaciones'
+      'tab.configuración_de_notificaciones',
     );
     this.basicLineTabs[3].label = this.translate.instant(
-      'tab.configuración_de_seguridad'
+      'tab.configuración_de_seguridad',
     );
 
     // Update pills tabs labels
@@ -308,23 +308,23 @@ export class TabSecComponent implements OnInit {
     this.pillsTabs[1].label = this.translate.instant('tab.análisis_de_datos');
     this.pillsTabs[2].label = this.translate.instant('tab.reportes_generados');
     this.pillsTabs[3].label = this.translate.instant(
-      'tab.configuración_del_sistema'
+      'tab.configuración_del_sistema',
     );
 
     // Update cards tabs labels
     this.cardsTabs[0].label = this.translate.instant(
-      'tab.resumen_del_proyecto'
+      'tab.resumen_del_proyecto',
     );
     this.cardsTabs[1].label = this.translate.instant('tab.detalles_técnicos');
     this.cardsTabs[2].label = this.translate.instant(
-      'tab.historial_de_cambios'
+      'tab.historial_de_cambios',
     );
 
     // Update buttons tabs labels
     this.buttonsTabs[0].label = this.translate.instant('tab.modo_de_edición');
     this.buttonsTabs[1].label = this.translate.instant('tab.vista_previa');
     this.buttonsTabs[2].label = this.translate.instant(
-      'tab.opciones_de_publicación'
+      'tab.opciones_de_publicación',
     );
   }
 }

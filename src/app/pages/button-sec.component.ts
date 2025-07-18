@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OpeniisButtonComponent } from '../components/buttons/button.component';
-import { OpeniisButtonGroupComponent } from '../components';
-import { OpeniisFabComponent } from '../components/fab/fab.component';
 import { TranslateModule } from '@ngx-translate/core';
+import {
+  OpeniisButtonComponent,
+  OpeniisFabComponent,
+  OpeniisButtonGroupComponent,
+} from 'openiis-ui';
 
 @Component({
   selector: 'app-button-sec',

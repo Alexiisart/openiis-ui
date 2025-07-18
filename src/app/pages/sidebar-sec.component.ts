@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidebarComponent } from '../components/sidebar/sidebar.component';
-import { MenuItem } from '../components/sidebar/sidebar.component';
+import { SidebarComponent } from 'openiis-ui';
+import { MenuItem } from 'openiis-ui';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({

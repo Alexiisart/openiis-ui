@@ -7,7 +7,7 @@ OpenIIS UI es una biblioteca de componentes Angular moderna y altamente personal
 - 🎯 **Diseño Moderno**: Componentes con estética contemporánea y profesional
 - 🌗 **Modo Oscuro**: Soporte completo para temas claro y oscuro
 - 🎨 **Temas Personalizables**: Sistema de temas flexible (Classic, Neutral, Vivid)
-- 🌐 **Multiidioma**: Soporte para español, inglés y chino
+- 🌐 **Multiidioma**: i18n -> Cualquier idioma
 - ♿ **Accesibilidad**: Componentes diseñados siguiendo WCAG 2.1
 - 📱 **Responsive**: Diseño adaptable para todas las pantallas
 - 🚀 **Alto Rendimiento**: Optimizado para máxima eficiencia
@@ -43,20 +43,23 @@ OpenIIS UI es una biblioteca de componentes Angular moderna y altamente personal
 - **Modals**: Alert, confirm y custom
 - **Toast**: Notificaciones emergentes
 - **Badges**: Estados y tamaños variados
-- **Progress Bar**: Lineal con estados
 - **Spinner**: Indicadores de carga
 
 ### Contenido
 
 - **Cards**: Múltiples layouts y acciones
-- **Tables**: Ordenamiento y paginación
 - **Empty States**: Estados vacíos personalizables
 - **Avatar**: Imágenes de perfil con fallback
+
+### ⚙️ Servicios
+
+- [**Dark Mode Service**](https://github.com/Alexiisart/openiis-ui/wiki/Mode-Service) - Gestión de temas claro/oscuro
+- [**SVG Icon Service**](https://github.com/Alexiisart/openiis-ui/wiki/SVG-Icon-Service) - Gestión de iconos SVG
 
 ## 🚀 Instalación
 
 ```bash
-npm install openiis-ui
+ng add openiis-ui
 ```
 
 ## 📖 Uso
@@ -79,115 +82,6 @@ npm install openiis-ui
    ```html
    <openiis-button type="primary" text="Mi Botón" iconLeft="add" size="md" (clickEvent)="onButtonClick()"> </openiis-button>
    ```
-
-### Componente Tabs (Nuevo)
-
-```typescript
-// En tu componente
-export class MyComponent {
-  tabs = [
-    { id: "general", label: "General", active: true, icon: "settings" },
-    { id: "profile", label: "Perfil", icon: "person" },
-    { id: "notifications", label: "Notificaciones", icon: "notifications", badge: "3" },
-  ];
-
-  onTabChange(tabId: string) {
-    console.log("Tab seleccionado:", tabId);
-  }
-}
-```
-
-```html
-<!-- Pestañas básicas -->
-<openiis-tabs variant="line" size="md" [tabs]="tabs" (tabChange)="onTabChange($event)">
-  <div slot="tab-content-general">
-    <h3>Configuración General</h3>
-    <p>Contenido de configuración...</p>
-  </div>
-
-  <div slot="tab-content-profile">
-    <h3>Información del Perfil</h3>
-    <p>Datos del usuario...</p>
-  </div>
-
-  <div slot="tab-content-notifications">
-    <h3>Notificaciones</h3>
-    <p>Configuración de alertas...</p>
-  </div>
-</openiis-tabs>
-```
-
-#### Variantes de Tabs
-
-```html
-<!-- Pestañas tipo Pills -->
-<openiis-tabs variant="pills" [tabs]="tabs">
-  <!-- contenido -->
-</openiis-tabs>
-
-<!-- Pestañas tipo Cards -->
-<openiis-tabs variant="cards" [tabs]="tabs">
-  <!-- contenido -->
-</openiis-tabs>
-
-<!-- Pestañas tipo Buttons -->
-<openiis-tabs variant="buttons" [tabs]="tabs">
-  <!-- contenido -->
-</openiis-tabs>
-```
-
-## 🎨 Temas
-
-OpenIIS UI incluye tres temas predefinidos:
-
-- **Classic**: Diseño tradicional y profesional
-- **Neutral**: Paleta de colores suave y minimalista
-- **Vivid**: Colores vibrantes y modernos
-
-Para cambiar el tema:
-
-```typescript
-this.themeService.setTheme("vivid");
-```
-
-## 🌙 Modo Oscuro
-
-Activar/desactivar el modo oscuro:
-
-```typescript
-this.themeService.setMode("dark");
-this.themeService.setMode("light");
-```
-
-## 🌐 Multiidioma
-
-Cambiar idioma de la interfaz:
-
-```typescript
-this.languageService.setLanguage("es"); // Español
-this.languageService.setLanguage("en"); // Inglés
-this.languageService.setLanguage("cn"); // Chino
-```
-
-## ⚡ Mejoras Recientes
-
-### v2024.1 - Componente Tabs Refactorizado
-
-- ✅ **Simplificación completa**: Reducción de +600 líneas de código complejo
-- ✅ **Mayor rendimiento**: Implementación directa sin abstracciones innecesarias
-- ✅ **Mejor mantenibilidad**: Código más limpio y fácil de entender
-- ✅ **CSS optimizado**: Estilos inline para mejor encapsulación
-- ✅ **TypeScript mejorado**: Tipos más estrictos y mejor inferencia
-- ✅ **Compatibilidad total**: API compatible con versiones anteriores
-
-### Arquitectura del Componente Tabs
-
-El nuevo componente de tabs utiliza:
-
-- **Proyección de contenido simple**: `ng-content` directo sin complejidad
-- **Gestión de estado eficiente**: Manejo directo de clases CSS
-- **Renderizado condicional**: Solo el contenido activo es visible
-- **Accesibilidad nativa**: Atributos ARIA y navegación por teclado
 
 Para ejecutar el proyecto:
 

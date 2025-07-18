@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OpeniisCardComponent } from '../components/card/card.component';
-import { OpeniisButtonComponent } from '../components/buttons/button.component';
+import { OpeniisCardComponent } from 'openiis-ui';
+import { OpeniisButtonComponent } from 'openiis-ui';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { OpeniisToastComponent } from '../components';
+import { OpeniisToastComponent } from 'openiis-ui';
 
 @Component({
   selector: 'app-card-sec',
@@ -149,22 +149,22 @@ import { OpeniisToastComponent } from '../components';
                   icon: 'refresh',
                   tooltip: 'card.actualizar_datos' | translate,
                   variant: 'outline-primary',
-                  ariaLabel: 'card.actualizar_datos' | translate
+                  ariaLabel: 'card.actualizar_datos' | translate,
                 },
                 {
                   id: 'settings',
                   icon: 'settings',
                   tooltip: 'card.configurar' | translate,
                   variant: 'outline-secondary',
-                  ariaLabel: 'card.configurar_dashboard' | translate
+                  ariaLabel: 'card.configurar_dashboard' | translate,
                 },
                 {
                   id: 'download',
                   icon: 'download',
                   tooltip: 'card.descargar_reporte' | translate,
                   variant: 'outline-success',
-                  ariaLabel: 'card.descargar_reporte' | translate
-                }
+                  ariaLabel: 'card.descargar_reporte' | translate,
+                },
               ]"
               (actionButtonClick)="onCardActionButtonClick($event)"
             >
@@ -194,15 +194,15 @@ import { OpeniisToastComponent } from '../components';
                   icon: 'edit',
                   tooltip: 'card.editar' | translate,
                   variant: 'outline-primary',
-                  ariaLabel: 'card.editar_elemento' | translate
+                  ariaLabel: 'card.editar_elemento' | translate,
                 },
                 {
                   id: 'delete-xs',
                   icon: 'delete',
                   tooltip: 'card.eliminar' | translate,
                   variant: 'outline-danger',
-                  ariaLabel: 'card.eliminar_elemento' | translate
-                }
+                  ariaLabel: 'card.eliminar_elemento' | translate,
+                },
               ]"
               actionButtonSize="xs"
               (actionButtonClick)="onCardActionButtonClick($event)"
@@ -222,15 +222,15 @@ import { OpeniisToastComponent } from '../components';
                   icon: 'thumb_up',
                   tooltip: 'card.me_gusta' | translate,
                   variant: 'outline-success',
-                  ariaLabel: 'card.me_gusta' | translate
+                  ariaLabel: 'card.me_gusta' | translate,
                 },
                 {
                   id: 'share-sm',
                   icon: 'share',
                   tooltip: 'card.compartir' | translate,
                   variant: 'outline-secondary',
-                  ariaLabel: 'card.compartir' | translate
-                }
+                  ariaLabel: 'card.compartir' | translate,
+                },
               ]"
               actionButtonSize="sm"
               (actionButtonClick)="onCardActionButtonClick($event)"
@@ -250,22 +250,22 @@ import { OpeniisToastComponent } from '../components';
                   icon: 'bookmark',
                   tooltip: 'card.agregar_favoritos' | translate,
                   variant: 'outline-warning',
-                  ariaLabel: 'card.agregar_favoritos' | translate
+                  ariaLabel: 'card.agregar_favoritos' | translate,
                 },
                 {
                   id: 'print-lg',
                   icon: 'print',
                   tooltip: 'card.imprimir' | translate,
                   variant: 'outline-info',
-                  ariaLabel: 'card.imprimir' | translate
+                  ariaLabel: 'card.imprimir' | translate,
                 },
                 {
                   id: 'more-lg',
                   icon: 'more_horiz',
                   tooltip: 'card.más_opciones' | translate,
                   variant: 'outline-secondary',
-                  ariaLabel: 'card.más_opciones' | translate
-                }
+                  ariaLabel: 'card.más_opciones' | translate,
+                },
               ]"
               actionButtonSize="md"
               (actionButtonClick)="onCardActionButtonClick($event)"
@@ -290,22 +290,22 @@ import { OpeniisToastComponent } from '../components';
                   icon: 'arrow_forward',
                   tooltip: 'card.leer_más' | translate,
                   variant: 'outline-primary',
-                  ariaLabel: 'card.leer_más' | translate
+                  ariaLabel: 'card.leer_más' | translate,
                 },
                 {
                   id: 'bookmark-article',
                   icon: 'bookmark_border',
                   tooltip: 'card.guardar_artículo' | translate,
                   variant: 'outline-warning',
-                  ariaLabel: 'card.guardar_artículo' | translate
+                  ariaLabel: 'card.guardar_artículo' | translate,
                 },
                 {
                   id: 'share-article',
                   icon: 'share',
                   tooltip: 'card.compartir_artículo' | translate,
                   variant: 'outline-secondary',
-                  ariaLabel: 'card.compartir_artículo' | translate
-                }
+                  ariaLabel: 'card.compartir_artículo' | translate,
+                },
               ]"
               (actionButtonClick)="onCardActionButtonClick($event)"
             >
@@ -340,22 +340,22 @@ import { OpeniisToastComponent } from '../components';
                   icon: 'event',
                   tooltip: 'card.añadir_calendario' | translate,
                   variant: 'outline-success',
-                  ariaLabel: 'card.añadir_calendario' | translate
+                  ariaLabel: 'card.añadir_calendario' | translate,
                 },
                 {
                   id: 'location',
                   icon: 'location_on',
                   tooltip: 'card.ver_ubicación' | translate,
                   variant: 'outline-info',
-                  ariaLabel: 'card.ver_ubicación' | translate
+                  ariaLabel: 'card.ver_ubicación' | translate,
                 },
                 {
                   id: 'remind',
                   icon: 'notifications',
                   tooltip: 'card.activar_recordatorio' | translate,
                   variant: 'outline-warning',
-                  ariaLabel: 'card.activar_recordatorio' | translate
-                }
+                  ariaLabel: 'card.activar_recordatorio' | translate,
+                },
               ]"
               (actionButtonClick)="onCardActionButtonClick($event)"
             >

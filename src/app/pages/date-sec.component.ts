@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OpeniisDateInputComponent } from '../components/input-date/date-input.component';
+import { OpeniisDateInputComponent } from 'openiis-ui';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

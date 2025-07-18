@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OpeniisButtonComponent } from '../components/buttons/button.component';
 import {
+  OpeniisButtonComponent,
   OpeniisConfirmModalComponent,
   OpeniisModalComponent,
   OpeniisAlertModalComponent,
-} from '../components';
+} from 'openiis-ui';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -306,7 +306,7 @@ export class ModalSecComponent {
       label: this.translate.instant('modal.modificar_descripción'),
       placeholder: this.translate.instant('modal.actualiza_la_descripción'),
       currentValue: this.translate.instant(
-        'modal.descripción_actual_del_elemento'
+        'modal.descripción_actual_del_elemento',
       ),
       confirmButtonText: this.translate.instant('modal.editar_elemento'),
       cancelButtonText: this.translate.instant('modal.cancelar'),

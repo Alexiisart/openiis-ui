@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OpeniisDropdownComponent } from '../components';
-import { OpeniisSearchableDropdownComponent } from '../components/dropdowns/searchable-dropdown.component';
+import { OpeniisDropdownComponent } from 'openiis-ui';
+import { OpeniisSearchableDropdownComponent } from 'openiis-ui';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

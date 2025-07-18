@@ -1,20 +1,16 @@
 import { Component, HostListener, Input } from '@angular/core';
-import { OpeniisDropdownComponent } from '../../components/dropdowns/dropdown.component';
 import {
+  OpeniisDropdownComponent,
   OpeniisTheme,
   OpeniisThemeService,
-} from '../../components/services/theme/theme.service';
-
-import { Subscription } from 'rxjs';
-import { OpeniisSwitchComponent } from '../../components';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LanguageService } from '../service/language.service';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
-import {
+  OpeniisSwitchComponent,
+  SidebarComponent,
   OpeniisModeService,
   ThemeMode,
-} from '../../components/services/mode/mode.service';
-import { EasyIconDirective } from '../../components/services/svg/svg-icon.directive';
+} from 'openiis-ui';
+import { Subscription } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../service/language.service';
 
 @Component({
   selector: 'app-header-sec',
@@ -24,39 +20,38 @@ import { EasyIconDirective } from '../../components/services/svg/svg-icon.direct
     OpeniisSwitchComponent,
     TranslateModule,
     SidebarComponent,
-    EasyIconDirective,
   ],
   template: `
     <div class="header-container">
       @if (isMobile) {
-      <openiis-sidebar
-        searchPlaceholder="{{ 'menu.buscar' | translate }}"
-        searchSize="sm"
-        [menuItems]="SidebarData"
-        class="sidebar"
-      >
-        <!-- Dropdown de tema -->
-        <div class="language-container">
-          <openiis-dropdown
-            [options]="themeOptions"
-            [selectedValue]="selectedTheme"
-            size="sm"
-            tooltipPosition="left"
-            (selectionChanged)="onThemeChange($event)"
-          >
-          </openiis-dropdown>
+        <openiis-sidebar
+          searchPlaceholder="{{ 'menu.buscar' | translate }}"
+          searchSize="sm"
+          [menuItems]="SidebarData"
+          class="sidebar"
+        >
+          <!-- Dropdown de tema -->
+          <div class="language-container">
+            <openiis-dropdown
+              [options]="themeOptions"
+              [selectedValue]="selectedTheme"
+              size="sm"
+              tooltipPosition="left"
+              (selectionChanged)="onThemeChange($event)"
+            >
+            </openiis-dropdown>
 
-          <!-- Dropdown de idioma -->
-          <openiis-dropdown
-            [options]="languageOptions"
-            [selectedValue]="selectedLanguage"
-            size="sm"
-            tooltipPosition="left"
-            (selectionChanged)="onLanguageChange($event)"
-          >
-          </openiis-dropdown>
-        </div>
-      </openiis-sidebar>
+            <!-- Dropdown de idioma -->
+            <openiis-dropdown
+              [options]="languageOptions"
+              [selectedValue]="selectedLanguage"
+              size="sm"
+              tooltipPosition="left"
+              (selectionChanged)="onLanguageChange($event)"
+            >
+            </openiis-dropdown>
+          </div>
+        </openiis-sidebar>
       }
       <div class="logo-container">
         <span
@@ -67,15 +62,15 @@ import { EasyIconDirective } from '../../components/services/svg/svg-icon.direct
       <!-- Botón de modo oscuro y temas -->
       <div class="theme-container">
         @if (!isMobile) {
-        <openiis-dropdown
-          [options]="themeOptions"
-          [selectedValue]="selectedTheme"
-          size="sm"
-          [tooltip]="'header.cambiar_tema' | translate"
-          tooltipPosition="left"
-          (selectionChanged)="onThemeChange($event)"
-        >
-        </openiis-dropdown>
+          <openiis-dropdown
+            [options]="themeOptions"
+            [selectedValue]="selectedTheme"
+            size="sm"
+            [tooltip]="'header.cambiar_tema' | translate"
+            tooltipPosition="left"
+            (selectionChanged)="onThemeChange($event)"
+          >
+          </openiis-dropdown>
         }
 
         <openiis-switch
@@ -88,75 +83,74 @@ import { EasyIconDirective } from '../../components/services/svg/svg-icon.direct
         </openiis-switch>
 
         @if (!isMobile) {
-        <div class="language-container">
-          <openiis-dropdown
-            [options]="languageOptions"
-            [selectedValue]="selectedLanguage"
-            size="sm"
-            [tooltip]="'header.cambiar_idioma' | translate"
-            tooltipPosition="left"
-            (selectionChanged)="onLanguageChange($event)"
-          >
-          </openiis-dropdown>
-        </div>
+          <div class="language-container">
+            <openiis-dropdown
+              [options]="languageOptions"
+              [selectedValue]="selectedLanguage"
+              size="sm"
+              [tooltip]="'header.cambiar_idioma' | translate"
+              tooltipPosition="left"
+              (selectionChanged)="onLanguageChange($event)"
+            >
+            </openiis-dropdown>
+          </div>
         }
       </div>
     </div>
   `,
   styles: `
-.header-container {
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
-  border-left: 1px solid var(--color-border);
-  padding: var(--space-6);
-  border-bottom-left-radius:var(--radius-xl);
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
- 
-}
-    
-.logo-container {
-  display: flex;
-  flex-direction: row;
-  gap: var(--space-4);
-}
+    .header-container {
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      border-left: 1px solid var(--color-border);
+      padding: var(--space-6);
+      border-bottom-left-radius: var(--radius-xl);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.sub-logo {
-  width: 100px;
-  height: auto;
-  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-}
+    .logo-container {
+      display: flex;
+      flex-direction: row;
+      gap: var(--space-4);
+    }
 
-.theme-container {
-  display: flex;
-  gap: var(--space-4);
-  align-items: center;
-}
+    .sub-logo {
+      width: 100px;
+      height: auto;
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-.language-container {
-  padding-left: var(--space-4);
-  border-left: 1px solid var(--color-border);
-}
+    .theme-container {
+      display: flex;
+      gap: var(--space-4);
+      align-items: center;
+    }
 
-@media (max-width: 820px) {
-  .sub-logo {
-    width: 80px;
-  }
+    .language-container {
+      padding-left: var(--space-4);
+      border-left: 1px solid var(--color-border);
+    }
 
-  .header-container {
-    padding: 0 var(--space-4);
-  }
+    @media (max-width: 820px) {
+      .sub-logo {
+        width: 80px;
+      }
 
-  .language-container {
-    padding-left: var(--space-2);
-    padding-bottom: var(--space-2);
-    border-left: none;
-    display: flex;
-    gap: var(--space-2);
-  }
-}
+      .header-container {
+        padding: 0 var(--space-4);
+      }
+
+      .language-container {
+        padding-left: var(--space-2);
+        padding-bottom: var(--space-2);
+        border-left: none;
+        display: flex;
+        gap: var(--space-2);
+      }
+    }
   `,
 })
 export class HeaderSecComponent {
@@ -249,7 +243,7 @@ export class HeaderSecComponent {
     private themeService: OpeniisThemeService,
     private languageService: LanguageService,
     private translate: TranslateService,
-    private modeService: OpeniisModeService
+    private modeService: OpeniisModeService,
   ) {
     this.themeService.currentTheme$.subscribe((theme) => {
       this.currentTheme = theme;

@@ -284,7 +284,11 @@
     "personalizable": "可自定义",
     "robusto": "强壮的",
     "shield": "盾",
-    "sistema_de_temas_flexible_que_se_adapta_": "适应您品牌的灵活主题系统"
+    "sistema_de_temas_flexible_que_se_adapta_": "适应您品牌的灵活主题系统",
+    "instalar": "安装",
+    "importante": "重要",
+    "para_aprovechar_al_máximo_los_componentes_de_esta": "为了充分利用此库中的组件，强烈建议阅读提供的文档。本指南将提供对功能和最佳实践的深入了解，以实现有效实施。",
+    "documentación": "文档"
   },
   "input": {
     "actualizar_perfil": "更新配置文件",

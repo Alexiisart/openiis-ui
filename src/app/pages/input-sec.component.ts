@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  OpeniisInputComponent,
-  OpeniisSearchInputComponent,
-} from '../components';
-import { OpeniisButtonComponent } from '../components/buttons/button.component';
-import { InputVariant } from '../components/input/input.component';
+import { OpeniisInputComponent, OpeniisSearchInputComponent } from 'openiis-ui';
+import { OpeniisButtonComponent } from 'openiis-ui';
+import { InputVariant } from 'openiis-ui';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

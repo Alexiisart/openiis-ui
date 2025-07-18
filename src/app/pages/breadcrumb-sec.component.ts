@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OpeniisBreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
+import { OpeniisBreadcrumbComponent } from 'openiis-ui';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -25,23 +25,23 @@ import { TranslateModule } from '@ngx-translate/core';
                     label: 'breadcrumb.inicio' | translate,
                     url: '/',
                     icon: 'home',
-                    active: isActive('/')
+                    active: isActive('/'),
                   },
                   {
                     label: 'breadcrumb.productos' | translate,
                     url: '/products',
-                    active: isActive('/products')
+                    active: isActive('/products'),
                   },
                   {
                     label: 'breadcrumb.categorias' | translate,
                     url: '/products/category',
-                    active: isActive('/products/category')
+                    active: isActive('/products/category'),
                   },
                   {
                     label: 'breadcrumb.producto_actual' | translate,
                     url: '/products/product',
-                    active: isActive('/products/product')
-                  }
+                    active: isActive('/products/product'),
+                  },
                 ]"
               ></openiis-breadcrumb>
             </div>
@@ -58,22 +58,22 @@ import { TranslateModule } from '@ngx-translate/core';
                     label: 'breadcrumb.inicio' | translate,
                     url: '/',
                     icon: 'home',
-                    active: isActive('/')
+                    active: isActive('/'),
                   },
                   {
                     label: 'breadcrumb.usuarios' | translate,
                     url: '/users',
-                    active: isActive('/users')
+                    active: isActive('/users'),
                   },
                   {
                     label: 'breadcrumb.perfil' | translate,
                     url: '/users/profile',
-                    active: isActive('/users/profile')
+                    active: isActive('/users/profile'),
                   },
                   {
                     label: 'breadcrumb.configuracion' | translate,
-                    active: isActive('/users/profile')
-                  }
+                    active: isActive('/users/profile'),
+                  },
                 ]"
               ></openiis-breadcrumb>
             </div>
@@ -90,22 +90,22 @@ import { TranslateModule } from '@ngx-translate/core';
                     label: 'breadcrumb.dashboard' | translate,
                     url: '/admin',
                     icon: 'dashboard',
-                    active: isActive('/admin')
+                    active: isActive('/admin'),
                   },
                   {
                     label: 'breadcrumb.usuarios' | translate,
                     url: '/admin/users',
-                    active: isActive('/admin/users')
+                    active: isActive('/admin/users'),
                   },
                   {
                     label: 'breadcrumb.gestion' | translate,
                     url: '/admin/users/management',
-                    active: isActive('/admin/users/management')
+                    active: isActive('/admin/users/management'),
                   },
                   {
                     label: 'breadcrumb.editar_usuario' | translate,
-                    active: isActive('/admin/users/management')
-                  }
+                    active: isActive('/admin/users/management'),
+                  },
                 ]"
               ></openiis-breadcrumb>
             </div>
@@ -124,18 +124,18 @@ import { TranslateModule } from '@ngx-translate/core';
                   {
                     label: 'breadcrumb.inicio' | translate,
                     url: '/',
-                    active: isActive('/')
+                    active: isActive('/'),
                   },
                   {
                     label: 'breadcrumb.categorias' | translate,
                     url: '/categories',
-                    active: isActive('/categories')
+                    active: isActive('/categories'),
                   },
                   {
                     label: 'breadcrumb.actual' | translate,
                     url: '/actual',
-                    active: isActive('/actual')
-                  }
+                    active: isActive('/actual'),
+                  },
                 ]"
               ></openiis-breadcrumb>
             </div>
@@ -151,18 +151,18 @@ import { TranslateModule } from '@ngx-translate/core';
                   {
                     label: 'breadcrumb.inicio' | translate,
                     url: '/',
-                    active: isActive('/')
+                    active: isActive('/'),
                   },
                   {
                     label: 'breadcrumb.categorias' | translate,
                     url: '/categories',
-                    active: isActive('/categories')
+                    active: isActive('/categories'),
                   },
                   {
                     label: 'breadcrumb.actual' | translate,
                     url: '/actual',
-                    active: isActive('/actual')
-                  }
+                    active: isActive('/actual'),
+                  },
                 ]"
               ></openiis-breadcrumb>
             </div>
@@ -178,18 +178,18 @@ import { TranslateModule } from '@ngx-translate/core';
                   {
                     label: 'breadcrumb.inicio' | translate,
                     url: '/',
-                    active: isActive('/')
+                    active: isActive('/'),
                   },
                   {
                     label: 'breadcrumb.categorias' | translate,
                     url: '/categories',
-                    active: isActive('/categories')
+                    active: isActive('/categories'),
                   },
                   {
                     label: 'breadcrumb.actual' | translate,
                     url: '/actual',
-                    active: isActive('/actual')
-                  }
+                    active: isActive('/actual'),
+                  },
                 ]"
               ></openiis-breadcrumb>
             </div>
@@ -208,18 +208,18 @@ import { TranslateModule } from '@ngx-translate/core';
                   {
                     label: 'breadcrumb.inicio' | translate,
                     url: '/',
-                    active: isActive('/')
+                    active: isActive('/'),
                   },
                   {
                     label: 'breadcrumb.seccion' | translate,
                     url: '/section',
-                    active: isActive('/section')
+                    active: isActive('/section'),
                   },
                   {
                     label: 'breadcrumb.actual' | translate,
                     url: '/actual',
-                    active: isActive('/actual')
-                  }
+                    active: isActive('/actual'),
+                  },
                 ]"
               ></openiis-breadcrumb>
             </div>
@@ -235,18 +235,18 @@ import { TranslateModule } from '@ngx-translate/core';
                   {
                     label: 'breadcrumb.inicio' | translate,
                     url: '/',
-                    active: isActive('/')
+                    active: isActive('/'),
                   },
                   {
                     label: 'breadcrumb.seccion' | translate,
                     url: '/section',
-                    active: isActive('/section')
+                    active: isActive('/section'),
                   },
                   {
                     label: 'breadcrumb.actual' | translate,
                     url: '/actual',
-                    active: isActive('/actual')
-                  }
+                    active: isActive('/actual'),
+                  },
                 ]"
               ></openiis-breadcrumb>
             </div>
@@ -262,18 +262,18 @@ import { TranslateModule } from '@ngx-translate/core';
                   {
                     label: 'breadcrumb.inicio' | translate,
                     url: '/',
-                    active: isActive('/')
+                    active: isActive('/'),
                   },
                   {
                     label: 'breadcrumb.seccion' | translate,
                     url: '/section',
-                    active: isActive('/section')
+                    active: isActive('/section'),
                   },
                   {
                     label: 'breadcrumb.actual' | translate,
                     url: '/actual',
-                    active: isActive('/actual')
-                  }
+                    active: isActive('/actual'),
+                  },
                 ]"
               ></openiis-breadcrumb>
             </div>
@@ -290,18 +290,18 @@ import { TranslateModule } from '@ngx-translate/core';
                   {
                     label: 'breadcrumb.inicio' | translate,
                     url: '/',
-                    active: isActive('/')
+                    active: isActive('/'),
                   },
                   {
                     label: 'breadcrumb.seccion' | translate,
                     url: '/section',
-                    active: isActive('/section')
+                    active: isActive('/section'),
                   },
                   {
                     label: 'breadcrumb.actual' | translate,
                     url: '/actual',
-                    active: isActive('/actual')
-                  }
+                    active: isActive('/actual'),
+                  },
                 ]"
               ></openiis-breadcrumb>
             </div>

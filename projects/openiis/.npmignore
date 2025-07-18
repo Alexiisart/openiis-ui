@@ -1,0 +1,37 @@
+# Archivos fuente TypeScript
+src/
+*.ts
+!*.d.ts
+
+# Configuración de desarrollo
+tsconfig*.json
+ng-package.json
+angular.json
+.angular/
+
+# Node modules
+node_modules/
+
+# Documentación de desarrollo
+*.md
+!README.md
+
+# Archivos de editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de testing
+*.spec.ts
+coverage/
+
+# Archivos temporales
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS específicos
+.DS_Store
+Thumbs.db 

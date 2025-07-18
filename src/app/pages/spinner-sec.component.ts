@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OpeniisSpinnerComponent } from '../components/spinner/spinner.component';
+import { OpeniisSpinnerComponent } from 'openiis-ui';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

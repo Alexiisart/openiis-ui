@@ -369,7 +369,7 @@ export class AdvancedFileManagerComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.uploadService.getQueue().subscribe((files) => {
         this.uploadedFiles = files;
-      })
+      }),
     );
   }
 
@@ -618,7 +618,10 @@ export class CustomUploadValidationService {
 ```typescript
 @Injectable()
 export class FileUploadIntegrationService {
-  constructor(private uploadService: OpeniisUploadService, private http: HttpClient) {}
+  constructor(
+    private uploadService: OpeniisUploadService,
+    private http: HttpClient,
+  ) {}
 
   uploadToServer(files: FileUploadItem[]): Observable<any> {
     const formData = new FormData();
@@ -643,7 +646,7 @@ export class FileUploadIntegrationService {
           return { progress: 100, result: event.body };
         }
         return { progress: 0 };
-      })
+      }),
     );
   }
 
@@ -659,7 +662,7 @@ export class FileUploadIntegrationService {
     // Subir lotes secuencialmente
     return from(batches).pipe(
       concatMap((batch) => this.uploadToServer(batch)),
-      reduce((acc, result) => [...acc, result], [] as any[])
+      reduce((acc, result) => [...acc, result], [] as any[]),
     );
   }
 }
