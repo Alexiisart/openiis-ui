@@ -1,72 +1,101 @@
-# Openiis Badge Component
+# Badge
 
-El `OpeniisBadgeComponent` es un elemento versátil para mostrar información secundaria como notificaciones, estados, contadores, etiquetas y más.
+Componente de insignia elegante y reutilizable con múltiples variantes, tamaños, estilos, formas y posiciones para mostrar información, estados y contadores.
 
-## Características
-
-- ✅ **7 variantes de color**: default, primary, secondary, success, warning, danger, info
-- ✅ **5 tamaños**: xs, sm, md, lg, xl
-- ✅ **4 estilos**: filled, outline, soft, dot
-- ✅ **3 formas**: rounded, pill, square
-- ✅ **Posicionamiento**: top-right, top-left, bottom-right, bottom-left
-- ✅ **Iconos**: Soporte para Material Icons
-- ✅ **Interactividad**: Clickable, closable, disabled
-- ✅ **Animaciones**: Entrada animada, pulsante
-- ✅ **Accesibilidad**: ARIA labels, navegación por teclado
-- ✅ **Responsive**: Adaptable a diferentes tamaños de pantalla
-- ✅ **Content Projection**: Soporte para contenido personalizado
-
-## Importación
+## 📦 Instalación
 
 ```typescript
-import { OpeniisBadgeComponent } from "./components/badge/badge.component";
+import { OpeniisBadgeComponent } from 'openiis-ui';
+
+@Component({
+  imports: [OpeniisBadgeComponent],
+})
 ```
 
-## Uso Básico
+## ⚙️ Properties
 
-```html
-<!-- Badge simple -->
-<openiis-badge>Nuevo</openiis-badge>
+| Property         | Tipo            | Default     | Descripción                 |
+| ---------------- | --------------- | ----------- | --------------------------- |
+| `variant`        | `BadgeVariant`  | `'default'` | Variante de color del badge |
+| `size`           | `BadgeSize`     | `'md'`      | Tamaño del badge            |
+| `style`          | `BadgeStyle`    | `'filled'`  | Estilo del badge            |
+| `shape`          | `BadgeShape`    | `'rounded'` | Forma del badge             |
+| `position`       | `BadgePosition` | `undefined` | Posición del badge          |
+| `text`           | `string`        | `undefined` | Texto del badge             |
+| `icon`           | `string`        | `undefined` | Icono principal             |
+| `count`          | `number`        | `undefined` | Contador numérico           |
+| `maxCount`       | `number`        | `99`        | Máximo valor para mostrar   |
+| `leftIcon`       | `string`        | `undefined` | Icono izquierdo             |
+| `rightIcon`      | `string`        | `undefined` | Icono derecho               |
+| `closable`       | `boolean`       | `false`     | Permitir cerrar badge       |
+| `animated`       | `boolean`       | `false`     | Animaciones                 |
+| `pulsing`        | `boolean`       | `false`     | Efecto pulsante             |
+| `hidden`         | `boolean`       | `false`     | Ocultar badge               |
+| `clickable`      | `boolean`       | `false`     | Hacer badge clickeable      |
+| `disabled`       | `boolean`       | `false`     | Deshabilitar badge          |
+| `ariaLabel`      | `string`        | `undefined` | ARIA label                  |
+| `title`          | `string`        | `undefined` | Tooltip                     |
+| `role`           | `string`        | `'status'`  | Rol ARIA                    |
+| `maxWidth`       | `string`        | `undefined` | Ancho máximo                |
+| `zIndex`         | `number`        | `undefined` | Z-index                     |
+| `closeAriaLabel` | `string`        | `'Cerrar'`  | ARIA label para cerrar      |
 
-<!-- Badge con variante -->
-<openiis-badge variant="primary">Importante</openiis-badge>
+## 📡 Events
 
-<!-- Badge con contador -->
-<openiis-badge variant="danger" [count]="5"></openiis-badge>
+| Event   | Tipo  | Descripción                    |
+| ------- | ----- | ------------------------------ |
+| `click` | `any` | Emitido al hacer clic en badge |
+| `close` | `any` | Emitido al cerrar badge        |
 
-<!-- Badge dot -->
-<openiis-badge variant="success" style="dot"></openiis-badge>
-```
+## 📏 Tamaños
 
-## Propiedades
+| Tamaño | Font-size | Padding | Gap | Uso               |
+| ------ | --------- | ------- | --- | ----------------- |
+| `xs`   | 10px      | 4px     | 4px | Muy compacto      |
+| `sm`   | 11px      | 4px     | 4px | Compacto          |
+| `md`   | 12px      | 4px     | 4px | Mediano (default) |
+| `lg`   | 14px      | 8px     | 8px | Grande            |
+| `xl`   | 16px      | 8px     | 8px | Extra grande      |
 
-| Propiedad        | Tipo            | Valor por defecto | Descripción                          |
-| ---------------- | --------------- | ----------------- | ------------------------------------ |
-| `variant`        | `BadgeVariant`  | `'default'`       | Variante de color del badge          |
-| `size`           | `BadgeSize`     | `'md'`            | Tamaño del badge                     |
-| `style`          | `BadgeStyle`    | `'filled'`        | Estilo visual del badge              |
-| `shape`          | `BadgeShape`    | `'rounded'`       | Forma del badge                      |
-| `position`       | `BadgePosition` | `undefined`       | Posición absoluta del badge          |
-| `text`           | `string`        | `undefined`       | Texto a mostrar en el badge          |
-| `count`          | `number`        | `undefined`       | Número a mostrar en el badge         |
-| `maxCount`       | `number`        | `99`              | Número máximo antes de mostrar '+'   |
-| `leftIcon`       | `string`        | `undefined`       | Icono Material Icons a la izquierda  |
-| `icon`           | `string`        | `undefined`       | Icono Material Icons principal       |
-| `rightIcon`      | `string`        | `undefined`       | Icono Material Icons a la derecha    |
-| `closable`       | `boolean`       | `false`           | Si el badge puede cerrarse           |
-| `animated`       | `boolean`       | `false`           | Si el badge aparece animado          |
-| `pulsing`        | `boolean`       | `false`           | Si el badge tiene animación pulsante |
-| `hidden`         | `boolean`       | `false`           | Si el badge está oculto              |
-| `clickable`      | `boolean`       | `false`           | Si el badge es clickeable            |
-| `disabled`       | `boolean`       | `false`           | Si el badge está deshabilitado       |
-| `ariaLabel`      | `string`        | `undefined`       | Etiqueta ARIA para accesibilidad     |
-| `title`          | `string`        | `undefined`       | Título del badge (tooltip)           |
-| `role`           | `string`        | `'status'`        | Rol ARIA del badge                   |
-| `maxWidth`       | `string`        | `undefined`       | Ancho máximo del badge               |
-| `zIndex`         | `number`        | `undefined`       | Índice Z para posicionamiento        |
-| `closeAriaLabel` | `string`        | `'Cerrar'`        | Etiqueta ARIA del botón cerrar       |
+## 🎨 Variantes
 
-## Tipos
+| Variante    | Descripción            | Uso                    |
+| ----------- | ---------------------- | ---------------------- |
+| `default`   | Color neutro (default) | Estados generales      |
+| `primary`   | Color primario         | Acciones principales   |
+| `secondary` | Color secundario       | Información secundaria |
+| `success`   | Color de éxito         | Confirmaciones         |
+| `warning`   | Color de advertencia   | Alertas                |
+| `danger`    | Color de peligro       | Errores                |
+| `info`      | Color informativo      | Información            |
+
+## 🎭 Estilos
+
+| Estilo    | Descripción            | Uso                  |
+| --------- | ---------------------- | -------------------- |
+| `filled`  | Fondo sólido (default) | Estados prominentes  |
+| `outline` | Solo contorno          | Estados sutiles      |
+| `soft`    | Fondo suave            | Estados informativos |
+| `dot`     | Solo punto             | Indicadores mínimos  |
+
+## 🔷 Formas
+
+| Forma     | Descripción                  | Uso                  |
+| --------- | ---------------------------- | -------------------- |
+| `rounded` | Bordes redondeados (default) | Uso general          |
+| `pill`    | Forma de píldora             | Etiquetas largas     |
+| `square`  | Bordes cuadrados             | Indicadores técnicos |
+
+## 📍 Posiciones
+
+| Posición       | Descripción                | Uso                  |
+| -------------- | -------------------------- | -------------------- |
+| `top-right`    | Esquina superior derecha   | Notificaciones       |
+| `top-left`     | Esquina superior izquierda | Estados de elementos |
+| `bottom-right` | Esquina inferior derecha   | Contadores           |
+| `bottom-left`  | Esquina inferior izquierda | Indicadores          |
+
+## 🏗️ Interfaces
 
 ```typescript
 type BadgeVariant = "default" | "primary" | "secondary" | "success" | "warning" | "danger" | "info";
@@ -76,221 +105,266 @@ type BadgeShape = "rounded" | "pill" | "square";
 type BadgePosition = "top-right" | "top-left" | "bottom-right" | "bottom-left";
 ```
 
-## Eventos
+## 💡 Ejemplos Prácticos
 
-| Evento  | Tipo                  | Descripción                              |
-| ------- | --------------------- | ---------------------------------------- |
-| `click` | `EventEmitter<Event>` | Se emite cuando se hace clic en el badge |
-| `close` | `EventEmitter<Event>` | Se emite cuando se cierra el badge       |
-
-## Ejemplos de Uso
-
-### Variantes de Color
+### 1. Badge Básico
 
 ```html
-<openiis-badge variant="default">Default</openiis-badge>
-<openiis-badge variant="primary">Primary</openiis-badge>
-<openiis-badge variant="secondary">Secondary</openiis-badge>
-<openiis-badge variant="success">Success</openiis-badge>
-<openiis-badge variant="warning">Warning</openiis-badge>
-<openiis-badge variant="danger">Danger</openiis-badge>
-<openiis-badge variant="info">Info</openiis-badge>
+<openiis-badge text="Nuevo" variant="primary" size="md" style="filled"> </openiis-badge>
 ```
 
-### Tamaños
-
-```html
-<openiis-badge size="xs">XS</openiis-badge>
-<openiis-badge size="sm">SM</openiis-badge>
-<openiis-badge size="md">MD</openiis-badge>
-<openiis-badge size="lg">LG</openiis-badge>
-<openiis-badge size="xl">XL</openiis-badge>
+```typescript
+export class MyComponent {
+  // Badge básico sin configuración adicional
+}
 ```
 
-### Estilos
+### 2. Badge con Contador
 
 ```html
-<openiis-badge style="filled">Filled</openiis-badge>
-<openiis-badge style="outline">Outline</openiis-badge>
-<openiis-badge style="soft">Soft</openiis-badge>
-<openiis-badge style="dot"></openiis-badge>
+<openiis-badge [count]="notifications" variant="danger" size="sm" style="filled" shape="pill"> </openiis-badge>
 ```
 
-### Formas
-
-```html
-<openiis-badge shape="rounded">Rounded</openiis-badge>
-<openiis-badge shape="pill">Pill</openiis-badge>
-<openiis-badge shape="square">Square</openiis-badge>
+```typescript
+export class MyComponent {
+  notifications = 5;
+}
 ```
 
-### Con Iconos
+### 3. Badge con Iconos
 
 ```html
-<openiis-badge leftIcon="star">Favorito</openiis-badge>
-<openiis-badge rightIcon="arrow_forward">Siguiente</openiis-badge>
-<openiis-badge icon="notifications" variant="primary">Notificación</openiis-badge>
-<openiis-badge leftIcon="warning" rightIcon="close" closable variant="warning">Advertencia</openiis-badge>
+<openiis-badge text="En línea" leftIcon="wifi" variant="success" size="md" style="soft"> </openiis-badge>
+
+<openiis-badge text="Editar" rightIcon="edit" variant="info" size="sm" style="outline" [clickable]="true"> </openiis-badge>
 ```
 
-### Contadores
-
-```html
-<openiis-badge variant="danger" [count]="3">Mensajes</openiis-badge>
-<openiis-badge variant="primary" [count]="150" [maxCount]="99">Notificaciones</openiis-badge>
-<openiis-badge variant="info" [count]="0">Sin elementos</openiis-badge>
+```typescript
+export class MyComponent {
+  // Badges con iconos
+}
 ```
 
-### Posicionamiento
+### 4. Badge Clickeable y Cerrable
 
 ```html
-<div style="position: relative; display: inline-block;">
-  <button>Notificaciones</button>
-  <openiis-badge variant="danger" [count]="5" position="top-right" size="sm"> </openiis-badge>
+<openiis-badge text="Filtro activo" variant="primary" size="md" style="filled" [clickable]="true" [closable]="true" (click)="onBadgeClick()" (close)="onBadgeClose()"> </openiis-badge>
+```
+
+```typescript
+export class MyComponent {
+  onBadgeClick() {
+    console.log("Badge clicked");
+  }
+
+  onBadgeClose() {
+    console.log("Badge closed");
+  }
+}
+```
+
+### 5. Badge con Posición
+
+```html
+<div class="relative">
+  <button class="notification-button">
+    Notificaciones
+    <openiis-badge [count]="unreadCount" variant="danger" size="sm" position="top-right" [animated]="true"> </openiis-badge>
+  </button>
 </div>
 ```
 
-### Interactivo
-
-```html
-<openiis-badge variant="primary" clickable animated (click)="onBadgeClick()"> Clickeable </openiis-badge>
-
-<openiis-badge variant="warning" closable (close)="onBadgeClose()"> Cerrable </openiis-badge>
+```typescript
+export class MyComponent {
+  unreadCount = 12;
+}
 ```
 
-### Animado
+### 6. Badge con Diferentes Estilos
 
 ```html
-<openiis-badge variant="success" animated pulsing>Animado</openiis-badge>
+<!-- Filled -->
+<openiis-badge text="Completado" variant="success" style="filled"> </openiis-badge>
+
+<!-- Outline -->
+<openiis-badge text="Pendiente" variant="warning" style="outline"> </openiis-badge>
+
+<!-- Soft -->
+<openiis-badge text="Información" variant="info" style="soft"> </openiis-badge>
+
+<!-- Dot -->
+<openiis-badge variant="danger" style="dot" size="lg"> </openiis-badge>
 ```
+
+```typescript
+export class MyComponent {
+  // Badges con diferentes estilos
+}
+```
+
+### 7. Badge con Diferentes Formas
+
+```html
+<!-- Rounded (default) -->
+<openiis-badge text="Etiqueta" variant="primary" shape="rounded"> </openiis-badge>
+
+<!-- Pill -->
+<openiis-badge text="Etiqueta muy larga" variant="secondary" shape="pill"> </openiis-badge>
+
+<!-- Square -->
+<openiis-badge text="Técnico" variant="info" shape="square"> </openiis-badge>
+```
+
+```typescript
+export class MyComponent {
+  // Badges con diferentes formas
+}
+```
+
+### 8. Badge con Estados Especiales
+
+```html
+<!-- Animado -->
+<openiis-badge text="Nuevo" variant="primary" [animated]="true"> </openiis-badge>
+
+<!-- Pulsante -->
+<openiis-badge text="Urgente" variant="danger" [pulsing]="true"> </openiis-badge>
+
+<!-- Deshabilitado -->
+<openiis-badge text="No disponible" variant="secondary" [disabled]="true"> </openiis-badge>
+
+<!-- Oculto -->
+<openiis-badge text="Oculto" variant="info" [hidden]="true"> </openiis-badge>
+```
+
+```typescript
+export class MyComponent {
+  // Badges con estados especiales
+}
+```
+
+### 9. Badge con Contenido Personalizado
+
+```html
+<openiis-badge variant="success" size="lg" style="filled" shape="pill">
+  <span class="custom-content">
+    <i class="fas fa-check"></i>
+    Aprobado
+  </span>
+</openiis-badge>
+```
+
+```typescript
+export class MyComponent {
+  // Badge con contenido personalizado
+}
+```
+
+### 10. Badge con Máximo Contador
+
+```html
+<openiis-badge [count]="150" [maxCount]="99" variant="danger" size="sm"> </openiis-badge>
+```
+
+```typescript
+export class MyComponent {
+  // Mostrará "99+" en lugar de "150"
+}
+```
+
+## ⚡ Comportamiento
 
 ### Estados
 
-```html
-<openiis-badge disabled>Deshabilitado</openiis-badge>
-<openiis-badge hidden>Oculto</openiis-badge>
-<openiis-badge clickable>Clickeable</openiis-badge>
+- **Normal**: Estado por defecto
+- **Clickeable**: Con efectos hover y focus
+- **Deshabilitado**: Sin interacciones
+- **Oculto**: No visible
+- **Animado**: Con transiciones
+- **Pulsante**: Con efecto pulsante
+
+### Interacciones
+
+- **Clic**: Ejecuta acción si es clickeable
+- **Teclado**: Enter/Space para activar
+- **Cerrar**: Botón X si es closable
+- **Contador**: Muestra número o "99+"
+
+### Responsive
+
+- **Móvil**: Tamaños reducidos automáticamente
+- **Desktop**: Tamaños completos
+- **Accesibilidad**: Soporte completo para lectores
+
+## ✅ Características
+
+- ✅ 7 variantes de color (default, primary, secondary, success, warning, danger, info)
+- ✅ 5 tamaños configurables (xs, sm, md, lg, xl)
+- ✅ 4 estilos visuales (filled, outline, soft, dot)
+- ✅ 3 formas (rounded, pill, square)
+- ✅ 4 posiciones (top-right, top-left, bottom-right, bottom-left)
+- ✅ Iconos izquierdo y derecho
+- ✅ Contador con máximo configurable
+- ✅ Estados clickeable y closable
+- ✅ Animaciones y efectos pulsantes
+- ✅ Estados disabled y hidden
+- ✅ Responsive design
+- ✅ Accesibilidad completa
+- ✅ Navegación por teclado
+- ✅ Tooltips personalizables
+
+## 🎨 Estilos Automáticos
+
+- **Variantes**: Cada variante tiene colores únicos
+- **Estados**: Hover, active, disabled, focus
+- **Responsive**: Se adapta automáticamente en móviles
+- **Animaciones**: Transiciones suaves
+- **Accesibilidad**: Indicadores de foco y ARIA
+
+## 🔧 Funcionalidades Especiales
+
+### Contador Inteligente
+
+```typescript
+// Muestra "99+" si el contador excede maxCount
+[count] = "150"[maxCount] = "99";
 ```
 
-### Con Texto Personalizado
+### Posicionamiento Absoluto
 
-```html
-<openiis-badge variant="info" text="Beta" shape="pill"></openiis-badge> <openiis-badge variant="success" text="Completado" size="lg"></openiis-badge>
+```typescript
+// Posiciona el badge sobre un elemento
+position = "top-right";
 ```
 
-## Casos de Uso Comunes
+### Iconos Material Icons
 
-### Indicador de Notificaciones
-
-```html
-<div class="notification-item">
-  <span class="material-icons-outlined">notifications</span>
-  <openiis-badge variant="danger" [count]="unreadCount" position="top-right" size="sm"> </openiis-badge>
-</div>
+```typescript
+// Iconos izquierdo y derecho
+leftIcon = "wifi";
+rightIcon = "close";
 ```
 
-### Estados de Usuario
+### Estados Programáticos
 
-```html
-<div class="user-status">
-  <img src="avatar.jpg" alt="Avatar" />
-  <openiis-badge variant="success" style="dot" position="bottom-right" title="En línea"> </openiis-badge>
-</div>
+```typescript
+// Controlar visibilidad
+[hidden] = "true"[disabled] = "true"[animated] = "true"[pulsing] = "true";
 ```
 
-### Etiquetas de Producto
+## 🚨 Solución de Problemas
 
-```html
-<div class="product-card">
-  <openiis-badge variant="primary" shape="pill" size="sm" leftIcon="new_releases"> Nuevo </openiis-badge>
-  <openiis-badge variant="warning" shape="pill" size="sm" leftIcon="trending_up"> Popular </openiis-badge>
-</div>
-```
+| Problema                  | Solución                                              |
+| ------------------------- | ----------------------------------------------------- |
+| Badge no responde         | Verifica que `clickable` esté en `true`               |
+| Contador no aparece       | Verifica que `count` esté definido                    |
+| Iconos no aparecen        | Verifica que Material Icons esté importado            |
+| Posición no funciona      | Verifica que el contenedor tenga `position: relative` |
+| Animaciones no funcionan  | Verifica que `animated` esté en `true`                |
+| Responsive no funciona    | Verifica que el CSS responsive esté cargado           |
+| Accesibilidad no funciona | Verifica que `ariaLabel` esté configurado             |
 
-### Información Contextual
+## 🐞 Reportar Problemas
 
-```html
-<openiis-badge leftIcon="info" variant="primary" text="Aún en beta. Síguenos en LinkedIn y GitHub mientras preparamos el lanzamiento en npm." size="lg" style="outline" shape="pill"> </openiis-badge>
-```
-
-### Contador de Carrito
-
-```html
-<div class="cart-icon">
-  <span class="material-icons-outlined">shopping_cart</span>
-  <openiis-badge variant="danger" [count]="cartItems" position="top-right" [maxCount]="99" animated> </openiis-badge>
-</div>
-```
-
-## Content Projection
-
-El componente soporta contenido personalizado mediante `ng-content`:
-
-```html
-<openiis-badge variant="primary" shape="pill">
-  <span class="material-icons-outlined">star</span>
-  Favorito
-</openiis-badge>
-
-<openiis-badge variant="success">
-  <strong>¡Nuevo!</strong>
-  <small>Funcionalidad disponible</small>
-</openiis-badge>
-```
-
-## Accesibilidad
-
-- ✅ **Roles ARIA**: Usa `role="status"` por defecto, configurable
-- ✅ **Labels**: Soporte para `ariaLabel` y `title`
-- ✅ **Navegación por teclado**: Para badges clickeables
-- ✅ **Lectores de pantalla**: Anuncios apropiados para contadores y estados
-- ✅ **Contraste**: Cumple con WCAG 2.1 AA en todas las variantes
-- ✅ **Focus management**: Gestión correcta del foco para elementos interactivos
-
-## Personalización CSS
-
-```css
-.badge {
-  /* Variables CSS personalizables */
-  --badge-font-family: var(--font-primary);
-  --badge-font-weight: 500;
-  --badge-letter-spacing: 0.025em;
-  --badge-border-radius: 6px;
-  --badge-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Animaciones */
-  --badge-animation-duration: 0.3s;
-  --badge-pulse-duration: 2s;
-}
-
-/* Personalización por variante */
-.badge[data-variant="primary"] {
-  --badge-bg: var(--primary-500);
-  --badge-color: white;
-  --badge-border: var(--primary-500);
-}
-
-.badge[data-style="soft"] {
-  --badge-bg: var(--primary-50);
-  --badge-color: var(--primary-700);
-  --badge-border: transparent;
-}
-```
-
-## Mejores Prácticas
-
-1. **Uso de contadores**: Para números > 99, usar la propiedad `maxCount`
-2. **Posicionamiento**: Usar `position` para badges overlay, evitar para badges inline
-3. **Accesibilidad**: Siempre proporcionar `ariaLabel` para badges informativos
-4. **Animaciones**: Usar `pulsing` solo para llamar la atención, no para badges permanentes
-5. **Colores**: Usar variantes semánticas (success para éxito, danger para errores)
-6. **Tamaño**: Ajustar el `size` según el contexto (xs/sm para overlay, md/lg para standalone)
-
-## Notas de Implementación
-
-- ✅ **Standalone Component**: No requiere módulos adicionales
-- ✅ **OnPush Change Detection**: Optimizado para rendimiento
-- ✅ **Content Projection**: Soporte completo para contenido personalizado
-- ✅ **Event Handling**: Manejo seguro de eventos click y close
-- ✅ **Responsive**: Variables CSS que se adaptan a diferentes tamaños
-- ✅ **SSR Compatible**: Funciona correctamente en Server-Side Rendering
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)

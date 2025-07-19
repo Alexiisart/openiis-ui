@@ -1,441 +1,443 @@
-# Card Component
+# Card
 
-Un componente Card versátil y flexible para Angular que permite mostrar contenido organizado de manera atractiva y funcional, con soporte para múltiples variantes, tamaños y estados.
+Componente de tarjeta elegante y reutilizable con múltiples variantes, tamaños, tipos de color, botones de acción y soporte completo para contenido multimedia.
 
-## Características
-
-- ✅ **5 variantes visuales**: default, bordered, elevated, outlined, filled
-- ✅ **6 tipos de color**: default, primary, success, warning, danger, info
-- ✅ **5 tamaños**: xs, sm, md, lg, xl
-- ✅ **Estructura flexible**: header, media, body, footer con slots
-- ✅ **Estados avanzados**: clickable, selectable, loading, disabled
-- ✅ **Accesibilidad**: ARIA roles, navegación por teclado
-- ✅ **Responsive**: Adaptado para dispositivos móviles
-- ✅ **Efectos especiales**: background images, shimmer, hover effects
-
-## Uso Básico
+## 📦 Instalación
 
 ```typescript
-import { OpeniisCardComponent } from "./components/card";
+import { OpeniisCardComponent } from 'openiis-ui';
 
 @Component({
-  selector: "app-example",
-  standalone: true,
   imports: [OpeniisCardComponent],
-  template: `
-    <openiis-card title="Mi Card" subtitle="Subtítulo descriptivo" description="Esta es una descripción del contenido de la card." (cardClick)="onCardClick($event)">
-      <div slot="header-actions">
-        <button class="btn btn-sm">Acción</button>
-      </div>
-
-      <img slot="media" src="imagen.jpg" alt="Imagen" />
-
-      <p>Contenido principal de la card</p>
-
-      <div slot="footer">
-        <button class="btn btn-primary">Acción Principal</button>
-        <button class="btn btn-secondary">Cancelar</button>
-      </div>
-    </openiis-card>
-  `,
 })
-export class ExampleComponent {
-  onCardClick(event: MouseEvent) {
-    console.log("Card clicked!", event);
+```
+
+## ⚙️ Properties
+
+| Property           | Tipo                                   | Default     | Descripción                 |
+| ------------------ | -------------------------------------- | ----------- | --------------------------- |
+| `title`            | `string`                               | `''`        | Título principal de la card |
+| `subtitle`         | `string`                               | `''`        | Subtítulo de la card        |
+| `description`      | `string`                               | `''`        | Descripción del contenido   |
+| `size`             | `CardSize`                             | `'md'`      | Tamaño de la card           |
+| `variant`          | `CardVariant`                          | `'default'` | Variante visual de la card  |
+| `type`             | `CardType`                             | `'default'` | Tipo de color de la card    |
+| `clickable`        | `boolean`                              | `false`     | Hacer la card clickeable    |
+| `loading`          | `boolean`                              | `false`     | Estado de carga             |
+| `disabled`         | `boolean`                              | `false`     | Deshabilitar la card        |
+| `selectable`       | `boolean`                              | `false`     | Hacer la card seleccionable |
+| `selected`         | `boolean`                              | `false`     | Estado seleccionado         |
+| `hideOverflow`     | `boolean`                              | `true`      | Ocultar el overflow         |
+| `responsive`       | `boolean`                              | `true`      | Hacer la card responsive    |
+| `backgroundImage`  | `string`                               | `''`        | Imagen de fondo             |
+| `role`             | `string`                               | `'article'` | Rol ARIA                    |
+| `ariaLabel`        | `string`                               | `''`        | ARIA label                  |
+| `ariaDescribedBy`  | `string`                               | `''`        | ARIA describedby            |
+| `extraClasses`     | `string`                               | `''`        | Clases CSS adicionales      |
+| `actionButtons`    | `CardButton[]`                         | `[]`        | Botones de acción           |
+| `actionButtonSize` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'sm'`      | Tamaño de botones de acción |
+
+## 📡 Events
+
+| Event               | Tipo  | Descripción                              |
+| ------------------- | ----- | ---------------------------------------- |
+| `cardClick`         | `any` | Emitido al hacer clic en la card         |
+| `selectedChange`    | `any` | Emitido al cambiar selección             |
+| `keyDown`           | `any` | Emitido al presionar tecla               |
+| `actionButtonClick` | `any` | Emitido al hacer clic en botón de acción |
+
+## 📏 Tamaños
+
+| Tamaño | Border-radius | Padding | Font-size | Uso               |
+| ------ | ------------- | ------- | --------- | ----------------- |
+| `xs`   | 4px           | 12px    | 12px      | Compacto          |
+| `sm`   | 6px           | 16px    | 14px      | Pequeño           |
+| `md`   | 8px           | 16px    | 16px      | Mediano (default) |
+| `lg`   | 12px          | 20px    | 18px      | Grande            |
+| `xl`   | 16px          | 24px    | 20px      | Extra grande      |
+
+## 🎨 Variantes
+
+| Variante   | Descripción               | Uso                   |
+| ---------- | ------------------------- | --------------------- |
+| `default`  | Estilo estándar (default) | Contenido general     |
+| `bordered` | Borde más grueso          | Énfasis visual        |
+| `elevated` | Sombra elevada            | Destacar contenido    |
+| `outlined` | Solo contorno             | Contenido minimalista |
+| `filled`   | Fondo coloreado           | Categorías            |
+
+## 🎯 Tipos de Color
+
+| Tipo      | Descripción            | Uso                  |
+| --------- | ---------------------- | -------------------- |
+| `default` | Color neutro (default) | Contenido general    |
+| `primary` | Color primario         | Acciones principales |
+| `success` | Color de éxito         | Confirmaciones       |
+| `warning` | Color de advertencia   | Alertas              |
+| `danger`  | Color de peligro       | Errores              |
+| `info`    | Color informativo      | Información          |
+
+## 💡 Ejemplos Prácticos
+
+### 1. Card Básica
+
+```html
+<openiis-card title="Título de la Card" subtitle="Subtítulo descriptivo" description="Esta es una descripción del contenido de la card que puede ser bastante larga." size="md" variant="default" type="default">
+  <p>Contenido adicional de la card que puede incluir cualquier elemento HTML.</p>
+</openiis-card>
+```
+
+```typescript
+export class MyComponent {
+  // No se requiere configuración adicional para card básica
+}
+```
+
+### 2. Card con Media
+
+```html
+<openiis-card title="Producto Destacado" subtitle="Categoría: Electrónicos" description="Descripción del producto con características principales." size="lg" variant="elevated" type="primary">
+  <div slot="media">
+    <img src="/assets/product-image.jpg" alt="Producto" />
+  </div>
+
+  <div slot="header-actions">
+    <button class="btn-favorite">❤️</button>
+  </div>
+
+  <p>Precio: $299.99</p>
+  <p>Disponible en stock</p>
+
+  <div slot="footer">
+    <button class="btn-primary">Comprar Ahora</button>
+    <button class="btn-secondary">Ver Detalles</button>
+  </div>
+</openiis-card>
+```
+
+```typescript
+export class MyComponent {
+  // Configuración para card con media
+}
+```
+
+### 3. Card Clickeable
+
+```html
+<openiis-card title="Artículo del Blog" subtitle="Publicado hace 2 horas" description="Resumen del artículo que aparece en la página principal del blog." [clickable]="true" [loading]="false" variant="bordered" type="info" (cardClick)="onCardClick($event)">
+  <div slot="media">
+    <img src="/assets/blog-thumbnail.jpg" alt="Blog thumbnail" />
+  </div>
+
+  <p>Leer más sobre este interesante tema...</p>
+
+  <div slot="footer">
+    <span class="author">Por: Juan Pérez</span>
+    <span class="read-time">5 min de lectura</span>
+  </div>
+</openiis-card>
+```
+
+```typescript
+export class MyComponent {
+  onCardClick(event: any) {
+    console.log("Card clicked:", event);
+    // Navegar al artículo completo
+    this.router.navigate(["/blog/article-1"]);
   }
 }
 ```
 
-## Propiedades
-
-### Contenido
-
-| Propiedad         | Tipo     | Valor por defecto | Descripción                 |
-| ----------------- | -------- | ----------------- | --------------------------- |
-| `title`           | `string` | `''`              | Título principal de la card |
-| `subtitle`        | `string` | `''`              | Subtítulo descriptivo       |
-| `description`     | `string` | `''`              | Descripción del contenido   |
-| `backgroundImage` | `string` | `''`              | URL de imagen de fondo      |
-
-### Configuración Visual
-
-| Propiedad | Tipo          | Valor por defecto | Descripción                                                     |
-| --------- | ------------- | ----------------- | --------------------------------------------------------------- |
-| `size`    | `CardSize`    | `'md'`            | Tamaño: xs, sm, md, lg, xl                                      |
-| `variant` | `CardVariant` | `'default'`       | Variante: default, bordered, elevated, outlined, filled         |
-| `type`    | `CardType`    | `'default'`       | Tipo de color: default, primary, success, warning, danger, info |
-
-### Comportamiento
-
-| Propiedad    | Tipo      | Valor por defecto | Descripción              |
-| ------------ | --------- | ----------------- | ------------------------ |
-| `clickable`  | `boolean` | `false`           | Hacer la card clickeable |
-| `selectable` | `boolean` | `false`           | Permitir selección       |
-| `selected`   | `boolean` | `false`           | Estado seleccionado      |
-| `loading`    | `boolean` | `false`           | Mostrar spinner de carga |
-| `disabled`   | `boolean` | `false`           | Deshabilitar la card     |
-
-### Diseño
-
-| Propiedad      | Tipo      | Valor por defecto | Descripción                    |
-| -------------- | --------- | ----------------- | ------------------------------ |
-| `hideOverflow` | `boolean` | `true`            | Ocultar overflow del contenido |
-| `responsive`   | `boolean` | `true`            | Hacer la card responsive       |
-
-### Accesibilidad
-
-| Propiedad         | Tipo     | Valor por defecto | Descripción      |
-| ----------------- | -------- | ----------------- | ---------------- |
-| `role`            | `string` | `'article'`       | Rol ARIA         |
-| `ariaLabel`       | `string` | `''`              | ARIA label       |
-| `ariaDescribedBy` | `string` | `''`              | ARIA describedby |
-
-### Personalización
-
-| Propiedad      | Tipo     | Valor por defecto | Descripción            |
-| -------------- | -------- | ----------------- | ---------------------- |
-| `extraClasses` | `string` | `''`              | Clases CSS adicionales |
-
-## Eventos
-
-| Evento           | Tipo                          | Descripción                            |
-| ---------------- | ----------------------------- | -------------------------------------- |
-| `cardClick`      | `EventEmitter<MouseEvent>`    | Emitido cuando se hace clic en la card |
-| `selectedChange` | `EventEmitter<boolean>`       | Emitido cuando cambia la selección     |
-| `keyDown`        | `EventEmitter<KeyboardEvent>` | Emitido cuando se presiona una tecla   |
-
-## Slots de Contenido
-
-| Slot             | Descripción                             |
-| ---------------- | --------------------------------------- |
-| `header`         | Contenido adicional en el header        |
-| `header-actions` | Acciones en el header (botones, iconos) |
-| `media`          | Contenido multimedia (imágenes, videos) |
-| `footer`         | Contenido del footer (botones, enlaces) |
-| _default_        | Contenido principal del body            |
-
-## Ejemplos de Uso
-
-### Tamaños Disponibles
+### 4. Card Seleccionable
 
 ```html
-<openiis-card size="xs" title="Extra Pequeña">
-  <p>Contenido XS</p>
-</openiis-card>
-
-<openiis-card size="sm" title="Pequeña">
-  <p>Contenido SM</p>
-</openiis-card>
-
-<openiis-card size="md" title="Mediana">
-  <p>Contenido MD</p>
-</openiis-card>
-
-<openiis-card size="lg" title="Grande">
-  <p>Contenido LG</p>
-</openiis-card>
-
-<openiis-card size="xl" title="Extra Grande">
-  <p>Contenido XL</p>
-</openiis-card>
-```
-
-### Variantes Visuales
-
-```html
-<openiis-card variant="default" title="Default">
-  <p>Estilo por defecto con sombra sutil</p>
-</openiis-card>
-
-<openiis-card variant="bordered" title="Bordered">
-  <p>Con borde prominente</p>
-</openiis-card>
-
-<openiis-card variant="elevated" title="Elevated">
-  <p>Con sombra elevada</p>
-</openiis-card>
-
-<openiis-card variant="outlined" title="Outlined">
-  <p>Solo contorno, fondo transparente</p>
-</openiis-card>
-
-<openiis-card variant="filled" title="Filled">
-  <p>Con fondo coloreado</p>
-</openiis-card>
-```
-
-### Tipos de Color
-
-```html
-<openiis-card type="primary" variant="filled" title="Primary">
-  <p>Card con tema primary</p>
-</openiis-card>
-
-<openiis-card type="success" variant="bordered" title="Success">
-  <p>Card con tema success</p>
-</openiis-card>
-
-<openiis-card type="warning" variant="outlined" title="Warning">
-  <p>Card con tema warning</p>
-</openiis-card>
-
-<openiis-card type="danger" variant="elevated" title="Danger">
-  <p>Card con tema danger</p>
-</openiis-card>
-
-<openiis-card type="info" variant="filled" title="Info">
-  <p>Card con tema info</p>
-</openiis-card>
-```
-
-### Card Completa con Todos los Slots
-
-```html
-<openiis-card title="Producto Premium" subtitle="Categoría: Electrónicos" description="Un producto increíble con características excepcionales." variant="elevated" size="lg" [clickable]="true" (cardClick)="onProductClick($event)">
-  <!-- Header Actions -->
+<openiis-card title="Plan Básico" subtitle="Ideal para pequeños proyectos" description="Incluye todas las funcionalidades básicas necesarias para comenzar." [selectable]="true" [selected]="selectedPlan === 'basic'" variant="outlined" type="primary" (selectedChange)="onPlanSelect($event)">
   <div slot="header-actions">
-    <button class="btn btn-sm">❤️</button>
-    <button class="btn btn-sm">📤</button>
+    <span class="price">$9.99/mes</span>
   </div>
 
-  <!-- Media -->
-  <img slot="media" src="product.jpg" alt="Producto" style="height: 200px;" />
+  <ul>
+    <li>✅ 5 proyectos</li>
+    <li>✅ 10GB de almacenamiento</li>
+    <li>✅ Soporte por email</li>
+    <li>❌ Soporte prioritario</li>
+  </ul>
+</openiis-card>
+```
 
-  <!-- Body Content -->
-  <div class="product-details">
-    <div class="price">$299.99</div>
-    <div class="rating">⭐⭐⭐⭐⭐</div>
-    <ul>
-      <li>Característica 1</li>
-      <li>Característica 2</li>
-      <li>Característica 3</li>
-    </ul>
+```typescript
+export class MyComponent {
+  selectedPlan = "basic";
+
+  onPlanSelect(selected: any) {
+    this.selectedPlan = selected ? "basic" : null;
+    console.log("Plan seleccionado:", this.selectedPlan);
+  }
+}
+```
+
+### 5. Card con Botones de Acción
+
+```html
+<openiis-card title="Documento de Proyecto" subtitle="Última modificación: hace 1 hora" description="Documento técnico del proyecto actual con especificaciones detalladas." [actionButtons]="actionButtons" actionButtonSize="md" variant="filled" type="success" (actionButtonClick)="onActionClick($event)">
+  <div slot="header-actions">
+    <span class="status">En revisión</span>
   </div>
 
-  <!-- Footer -->
+  <p>Este documento contiene toda la información técnica necesaria para el desarrollo del proyecto.</p>
+
   <div slot="footer">
-    <button class="btn btn-primary">Comprar Ahora</button>
-    <button class="btn btn-secondary">Agregar al Carrito</button>
+    <span class="version">v2.1.0</span>
+    <span class="size">1.2 MB</span>
   </div>
 </openiis-card>
 ```
 
-### Card Clickeable y Seleccionable
+```typescript
+export class MyComponent {
+  actionButtons: any[] = [
+    {
+      id: "download",
+      icon: "download",
+      tooltip: "Descargar documento",
+      variant: "primary",
+    },
+    {
+      id: "edit",
+      icon: "edit",
+      tooltip: "Editar documento",
+      variant: "secondary",
+    },
+    {
+      id: "share",
+      icon: "share",
+      tooltip: "Compartir documento",
+      variant: "info",
+    },
+    {
+      id: "delete",
+      icon: "delete",
+      tooltip: "Eliminar documento",
+      variant: "danger",
+    },
+  ];
+
+  onActionClick(event: any) {
+    console.log("Action clicked:", event.buttonId);
+
+    switch (event.buttonId) {
+      case "download":
+        this.downloadDocument();
+        break;
+      case "edit":
+        this.editDocument();
+        break;
+      case "share":
+        this.shareDocument();
+        break;
+      case "delete":
+        this.deleteDocument();
+        break;
+    }
+  }
+}
+```
+
+### 6. Card con Estados Especiales
 
 ```html
-<openiis-card title="Opción Seleccionable" [clickable]="true" [selectable]="true" [selected]="selectedCard === 'option1'" (selectedChange)="onCardSelection('option1', $event)">
-  <p>Haz clic para seleccionar esta opción</p>
+<openiis-card title="Procesando Datos" subtitle="Tarea en progreso" description="El sistema está procesando los datos del último reporte." [loading]="true" [disabled]="false" variant="elevated" type="warning">
+  <div slot="media">
+    <div class="progress-indicator">
+      <div class="progress-bar" style="width: 65%"></div>
+    </div>
+  </div>
+
+  <p>Progreso: 65% completado</p>
+  <p>Tiempo estimado: 2 minutos</p>
 </openiis-card>
 ```
 
-### Card con Estado de Carga
+```typescript
+export class MyComponent {
+  // Card con estado de carga
+}
+```
+
+### 7. Card con Imagen de Fondo
 
 ```html
-<openiis-card title="Cargando Datos" [loading]="isLoading" [disabled]="isLoading">
-  <p>El contenido se está cargando...</p>
+<openiis-card title="Destino Turístico" subtitle="París, Francia" description="Explora la ciudad de la luz con nuestras guías turísticas especializadas." backgroundImage="/assets/paris-background.jpg" variant="elevated" type="info" [clickable]="true" (cardClick)="onDestinationClick($event)">
+  <div slot="header-actions">
+    <span class="rating">⭐ 4.8/5</span>
+  </div>
+
+  <p>Descubre los mejores lugares para visitar en París.</p>
+
+  <div slot="footer">
+    <span class="price">Desde $999</span>
+    <span class="duration">7 días</span>
+  </div>
 </openiis-card>
 ```
 
-### Card con Imagen de Fondo
-
-```html
-<openiis-card title="Card con Fondo" subtitle="Texto sobre imagen" backgroundImage="background.jpg" size="lg">
-  <p>Contenido con imagen de fondo</p>
-</openiis-card>
+```typescript
+export class MyComponent {
+  onDestinationClick(event: any) {
+    console.log("Destino seleccionado: París");
+    this.router.navigate(["/destinations/paris"]);
+  }
+}
 ```
 
-### Grid de Cards
+### 8. Card Grid Responsive
 
 ```html
 <div class="card-grid">
-  <openiis-card *ngFor="let item of items" [title]="item.title" [description]="item.description" variant="elevated" [clickable]="true" (cardClick)="onItemClick(item)">
-    <img slot="media" [src]="item.image" [alt]="item.title" />
+  <openiis-card title="Card 1" description="Descripción de la primera card." size="md" variant="default">
+    <p>Contenido de la card 1</p>
+  </openiis-card>
 
-    <div slot="footer">
-      <button class="btn btn-primary">Ver Más</button>
-    </div>
+  <openiis-card title="Card 2" description="Descripción de la segunda card." size="md" variant="bordered">
+    <p>Contenido de la card 2</p>
+  </openiis-card>
+
+  <openiis-card title="Card 3" description="Descripción de la tercera card." size="md" variant="elevated">
+    <p>Contenido de la card 3</p>
   </openiis-card>
 </div>
 ```
 
-## Métodos Públicos
-
-### setSelected(selected: boolean)
-
-Selecciona o deselecciona la card programáticamente.
-
 ```typescript
-// Seleccionar
-card.setSelected(true);
-
-// Deseleccionar
-card.setSelected(false);
-```
-
-## Personalización CSS
-
-El componente utiliza variables CSS del sistema de diseño:
-
-```css
-.card {
-  --card-bg: var(--color-bg-primary);
-  --card-border: var(--neutral-200);
-  --card-shadow: var(--shadow-sm);
-  --card-radius: var(--radius-lg);
-  --card-padding: var(--space-4);
+export class MyComponent {
+  // Grid de cards responsive
 }
 ```
 
-## Clases CSS Adicionales
+## 🏗️ Interfaces
 
-### Efectos Especiales
+```typescript
+interface CardButton {
+  id: string;
+  icon: string;
+  tooltip?: string;
+  disabled?: boolean;
+  loading?: boolean;
+  variant?: "primary" | "secondary" | "success" | "warning" | "danger" | "info" | "outline-primary" | "outline-secondary" | "outline-success" | "outline-warning" | "outline-danger" | "outline-info" | "ghost" | "text" | "link" | "subtle" | "icon";
+  ariaLabel?: string;
+}
 
-```html
-<!-- Card con efecto shimmer -->
-<openiis-card extraClasses="card-shimmer">
-  <p>Efecto de carga shimmer</p>
-</openiis-card>
-
-<!-- Card destacada -->
-<openiis-card extraClasses="card-featured">
-  <p>Card con banda superior</p>
-</openiis-card>
+type CardSize = "xs" | "sm" | "md" | "lg" | "xl";
+type CardVariant = "default" | "bordered" | "elevated" | "outlined" | "filled";
+type CardType = "default" | "primary" | "success" | "warning" | "danger" | "info";
 ```
 
-## Casos de Uso Comunes
+## ⚡ Comportamiento
 
-### 1. Card de Producto
+### Estados
 
-```html
-<openiis-card title="iPhone 15 Pro" subtitle="Apple" variant="elevated" [clickable]="true">
-  <img slot="media" src="iphone.jpg" alt="iPhone 15 Pro" />
+- **Normal**: Estado por defecto
+- **Clickeable**: Con efectos hover y focus
+- **Seleccionable**: Con estado selected/not selected
+- **Loading**: Con overlay de carga
+- **Disabled**: Sin interacciones
 
-  <div class="product-info">
-    <div class="price">$999</div>
-    <div class="rating">⭐⭐⭐⭐⭐ (4.8)</div>
-  </div>
+### Interacciones
 
-  <div slot="footer">
-    <button class="btn btn-primary">Comprar</button>
-    <button class="btn btn-secondary">Carrito</button>
-  </div>
-</openiis-card>
-```
+- **Clic**: Navega o ejecuta acción
+- **Teclado**: Enter/Space para activar
+- **Botones de acción**: Acciones específicas
+- **Selección**: Toggle de estado selected
 
-### 2. Card de Artículo/Blog
+### Responsive
 
-```html
-<openiis-card title="Cómo Mejorar tu Productividad" subtitle="Por Juan Pérez • 5 min de lectura" description="Descubre técnicas efectivas para optimizar tu tiempo y ser más productivo en el trabajo." [clickable]="true" (cardClick)="readArticle()">
-  <img slot="media" src="article.jpg" alt="Productividad" />
+- **Desktop**: Tamaño completo
+- **Móvil**: Padding y tamaños reducidos
+- **Grid**: Layout adaptativo automático
 
-  <div class="article-tags">
-    <span class="tag">Productividad</span>
-    <span class="tag">Trabajo</span>
-    <span class="tag">Tips</span>
-  </div>
+## ✅ Características
 
-  <div slot="footer">
-    <button class="btn btn-primary">Leer Más</button>
-    <button class="btn btn-sm">💾</button>
-    <button class="btn btn-sm">📤</button>
-  </div>
-</openiis-card>
-```
+- ✅ 5 tamaños configurables (xs, sm, md, lg, xl)
+- ✅ 5 variantes visuales (default, bordered, elevated, outlined, filled)
+- ✅ 6 tipos de color (default, primary, success, warning, danger, info)
+- ✅ Estados clickeable y seleccionable
+- ✅ Botones de acción configurables
+- ✅ Soporte para contenido multimedia
+- ✅ Slots para header, media, footer
+- ✅ Imagen de fondo
+- ✅ Estados loading y disabled
+- ✅ Responsive design
+- ✅ Accesibilidad completa
+- ✅ Navegación por teclado
+- ✅ Animaciones suaves
 
-### 3. Card de Perfil de Usuario
+## 🎨 Estilos Automáticos
 
-```html
-<openiis-card title="Ana García" subtitle="Desarrolladora Frontend" variant="bordered" size="lg">
-  <div slot="header-actions">
-    <button class="btn btn-sm">✉️</button>
-    <button class="btn btn-sm">🔗</button>
-  </div>
+- **Variantes**: Cada variante tiene estilos únicos
+- **Estados**: Hover, active, disabled, focus
+- **Responsive**: Se adapta automáticamente en móviles
+- **Animaciones**: Transiciones suaves
+- **Accesibilidad**: Indicadores de foco y ARIA
 
-  <img slot="media" src="avatar.jpg" alt="Ana García" class="avatar" />
+## 🔧 Funcionalidades Especiales
 
-  <div class="profile-info">
-    <p>Especialista en React y Angular con 5 años de experiencia.</p>
-    <div class="skills">
-      <span class="skill">React</span>
-      <span class="skill">Angular</span>
-      <span class="skill">TypeScript</span>
-    </div>
-  </div>
-
-  <div slot="footer">
-    <button class="btn btn-primary">Contactar</button>
-    <button class="btn btn-secondary">Ver Perfil</button>
-  </div>
-</openiis-card>
-```
-
-### 4. Card de Dashboard/Estadísticas
+### Slots de Contenido
 
 ```html
-<openiis-card title="Ventas Mensuales" subtitle="Marzo 2024" type="success" variant="filled" size="md">
-  <div slot="header-actions">
-    <button class="btn btn-sm">📊</button>
-  </div>
+<!-- Header con acciones -->
+<div slot="header-actions">
+  <button>Acción</button>
+</div>
 
-  <div class="stats">
-    <div class="stat-value">$45,680</div>
-    <div class="stat-change positive">+12.5%</div>
-  </div>
+<!-- Contenido multimedia -->
+<div slot="media">
+  <img src="image.jpg" alt="Descripción" />
+</div>
 
-  <div slot="footer">
-    <button class="btn btn-sm">Ver Detalles</button>
-  </div>
-</openiis-card>
+<!-- Footer personalizado -->
+<div slot="footer">
+  <span>Información adicional</span>
+</div>
 ```
 
-### 5. Card de Configuración
+### Botones de Acción
 
-```html
-<openiis-card title="Configuración de Notificaciones" subtitle="Personaliza tus preferencias" variant="outlined">
-  <div class="settings">
-    <div class="setting-item">
-      <label>Email</label>
-      <input type="checkbox" checked />
-    </div>
-    <div class="setting-item">
-      <label>Push</label>
-      <input type="checkbox" />
-    </div>
-    <div class="setting-item">
-      <label>SMS</label>
-      <input type="checkbox" />
-    </div>
-  </div>
-
-  <div slot="footer">
-    <button class="btn btn-primary">Guardar</button>
-    <button class="btn btn-secondary">Cancelar</button>
-  </div>
-</openiis-card>
+```typescript
+actionButtons: any[] = [
+  {
+    id: 'action1',
+    icon: 'edit',
+    tooltip: 'Editar',
+    variant: 'primary'
+  }
+];
 ```
 
-## Accesibilidad
+### Estados Programáticos
 
-- **Roles semánticos**: `article` por defecto, personalizable
-- **Navegación por teclado**: Enter/Space para cards clickeables
-- **ARIA labels**: Soporte completo para lectores de pantalla
-- **Focus management**: Indicadores visuales claros
+```typescript
+// Seleccionar card
+card.setSelected(true);
 
-## Responsive
+// Verificar estado
+if (card.selected) {
+  // Lógica
+}
+```
 
-El componente se adapta automáticamente:
+## 🚨 Solución de Problemas
 
-- **Móvil**: Padding reducido, footer en columna
-- **Tablet**: Tamaños optimizados
-- **Desktop**: Diseño completo
+| Problema                   | Solución                                        |
+| -------------------------- | ----------------------------------------------- |
+| Card no responde           | Verifica que `clickable` esté en `true`         |
+| Botones no aparecen        | Verifica que `actionButtons` esté definido      |
+| Loading no funciona        | Verifica que `loading` esté en `true`           |
+| Selección no funciona      | Verifica que `selectable` esté en `true`        |
+| Imagen de fondo no aparece | Verifica que `backgroundImage` tenga URL válida |
+| Responsive no funciona     | Verifica que `responsive` esté en `true`        |
+| Accesibilidad no funciona  | Verifica que `ariaLabel` esté configurado       |
 
-## Buenas Prácticas
+## 🐞 Reportar Problemas
 
-- ✅ Usar títulos descriptivos y concisos
-- ✅ Incluir alt text en imágenes
-- ✅ Agrupar acciones relacionadas en el footer
-- ✅ Mantener consistencia en el grid de cards
-- ✅ Usar loading states para operaciones async
-- ❌ No sobrecargar con demasiado contenido
-- ❌ No usar cards para contenido muy simple
-- ❌ No mezclar diferentes variantes en el mismo contexto
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)
