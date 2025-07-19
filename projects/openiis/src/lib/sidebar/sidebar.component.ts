@@ -48,18 +48,18 @@ export interface SubmenuItem {
   template: `
     <!-- Botón hamburguesa para móviles -->
     @if (isMobile) {
-    <openiis-button
-      [type]="'icon'"
-      [iconLeft]="'menu'"
-      [size]="'xl'"
-      [extraClasses]="'hamburger-button'"
-      (clickEvent)="toggleSidebar()"
-    ></openiis-button>
+      <openiis-button
+        [type]="'icon'"
+        [iconLeft]="'menu'"
+        [size]="'xl'"
+        [extraClasses]="'hamburger-button'"
+        (clickEvent)="toggleSidebar()"
+      ></openiis-button>
     }
 
     <!-- Overlay para móviles -->
     @if (isMobile && isOpen) {
-    <div class="sidebar-overlay" (click)="closeSidebar()"></div>
+      <div class="sidebar-overlay" (click)="closeSidebar()"></div>
     }
 
     <aside [class]="sidebarClasses">
@@ -67,98 +67,99 @@ export interface SubmenuItem {
       <ng-content></ng-content>
 
       @if (searchVisible) {
-      <div class="search-container">
-        <openiis-search-input
-          [variant]="variant"
-          [size]="searchSize"
-          [placeholder]="searchPlaceholder"
-          [searchTerm]="searchTerm"
-          (searchChange)="onSearchChange($event)"
-          (clearSearch)="onClearSearch()"
-        />
-      </div>
+        <div class="search-container">
+          <openiis-search-input
+            [variant]="variant"
+            [size]="searchSize"
+            [placeholder]="searchPlaceholder"
+            [searchTerm]="searchTerm"
+            (searchChange)="onSearchChange($event)"
+            (clearSearch)="onClearSearch()"
+          />
+        </div>
       }
       <!-- Main menu -->
       <nav class="nav-menu">
         @for (item of filteredMenuItems; track item.route; let i = $index) {
-        <div class="menu-item-container">
-          <!-- Elemento principal del menú -->
-          <a
-            [routerLink]="!hasSubmenu(item) ? item.route : null"
-            [class.nav-item]="true"
-            [class.main-item]="true"
-            [class.active]="isMenuItemActive(item)"
-            [class.has-submenu]="hasSubmenu(item)"
-            (click)="handleItemClick(item, i)"
-          >
-            @if (item.icon) {
-            <span
-              class="material-icons-outlined nav-icon"
+          <div class="menu-item-container">
+            <!-- Elemento principal del menú -->
+            <a
+              [routerLink]="!hasSubmenu(item) ? item.route : null"
+              [class.nav-item]="true"
+              [class.main-item]="true"
               [class.active]="isMenuItemActive(item)"
-              >{{ item.icon }}</span
+              [class.has-submenu]="hasSubmenu(item)"
+              (click)="handleItemClick(item, i)"
             >
-            }
-
-            <div class="nav-text-container">
-              <span class="nav-text">{{ item.name }}</span>
-              @if (hasSubmenu(item)) {
-              <span
-                class="material-icons-outlined arrow-icon"
-                [class.expanded]="isExpanded(i)"
-              >
-                keyboard_arrow_down
-              </span>
+              @if (item.icon) {
+                <span
+                  class="material-icons-outlined nav-icon"
+                  [class.active]="isMenuItemActive(item)"
+                  >{{ item.icon }}</span
+                >
               }
-            </div>
-          </a>
 
-          <!-- Submenús -->
-          @if (hasSubmenu(item)) {
-          <div class="submenu-container" [class.expanded]="isExpanded(i)">
-            @for (submenu of item.submenu; track $index) {
-            <div class="submenu-section">
-              @if (submenu.title) {
-              <div class="submenu-title">{{ submenu.title }}</div>
-              } @for (subItem of submenu.items; track subItem.name) {
-              <a
-                [routerLink]="subItem.route ?? item.route"
-                [fragment]="subItem.reference"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{
-                  exact: false,
-                  matrixParams: 'ignored',
-                  queryParams: 'ignored',
-                  paths: 'exact',
-                  fragment: 'exact'
-                }"
-                class="nav-item submenu-item"
-                (click)="
-                  navigateToRoute(
-                    subItem.route ?? item.route,
-                    subItem.reference
-                  )
-                "
-              >
-                @if (subItem.icon) {
-                <span class="material-icons-outlined nav-icon">{{
-                  subItem.icon
-                }}</span>
+              <div class="nav-text-container">
+                <span class="nav-text">{{ item.name }}</span>
+                @if (hasSubmenu(item)) {
+                  <span
+                    class="material-icons-outlined arrow-icon"
+                    [class.expanded]="isExpanded(i)"
+                  >
+                    keyboard_arrow_down
+                  </span>
                 }
-                <span class="nav-text">{{ subItem.name }}</span>
-              </a>
-              }
-            </div>
+              </div>
+            </a>
+
+            <!-- Submenús -->
+            @if (hasSubmenu(item)) {
+              <div class="submenu-container" [class.expanded]="isExpanded(i)">
+                @for (submenu of item.submenu; track $index) {
+                  <div class="submenu-section">
+                    @if (submenu.title) {
+                      <div class="submenu-title">{{ submenu.title }}</div>
+                    }
+                    @for (subItem of submenu.items; track subItem.name) {
+                      <a
+                        [routerLink]="subItem.route ?? item.route"
+                        [fragment]="subItem.reference"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{
+                          exact: false,
+                          matrixParams: 'ignored',
+                          queryParams: 'ignored',
+                          paths: 'exact',
+                          fragment: 'exact',
+                        }"
+                        class="nav-item submenu-item"
+                        (click)="
+                          navigateToRoute(
+                            subItem.route ?? item.route,
+                            subItem.reference
+                          )
+                        "
+                      >
+                        @if (subItem.icon) {
+                          <span class="material-icons-outlined nav-icon">{{
+                            subItem.icon
+                          }}</span>
+                        }
+                        <span class="nav-text">{{ subItem.name }}</span>
+                      </a>
+                    }
+                  </div>
+                }
+              </div>
             }
           </div>
-          }
-        </div>
         }
       </nav>
     </aside>
   `,
   styleUrls: ['./sidebar.component.css'],
 })
-export class SidebarComponent implements OnInit, OnDestroy {
+export class OpeniisSidebarComponent implements OnInit, OnDestroy {
   searchTerm: string = '';
   filteredMenuItems: MenuItem[] = [];
 
@@ -174,7 +175,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isOpen: boolean = false;
   isMobile: boolean = false;
 
-  constructor(private router: Router, private scrollService: ScrollService) {
+  constructor(
+    private router: Router,
+    private scrollService: ScrollService,
+  ) {
     this.checkScreenSize();
   }
 
@@ -282,8 +286,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
           item.name.toLowerCase().includes(this.searchTerm) ||
           item.submenu!.some((submenu) =>
             submenu.items.some((subItem) =>
-              subItem.name.toLowerCase().includes(this.searchTerm)
-            )
+              subItem.name.toLowerCase().includes(this.searchTerm),
+            ),
           );
 
         if (hasMatch) {
@@ -309,8 +313,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
       // Buscar también en submenús si existen
       const matchInSubmenu = item.submenu?.some((submenu) =>
         submenu.items.some((subItem) =>
-          subItem.name.toLowerCase().includes(this.searchTerm)
-        )
+          subItem.name.toLowerCase().includes(this.searchTerm),
+        ),
       );
 
       return matchInName || matchInSubmenu;
@@ -367,8 +371,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
           currentFragment &&
           item.submenu!.some((submenu) =>
             submenu.items.some(
-              (subItem) => subItem.reference === currentFragment
-            )
+              (subItem) => subItem.reference === currentFragment,
+            ),
           );
 
         if (isRouteActive || hasActiveReference) {
@@ -506,8 +510,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     return item.submenu!.some((submenu) =>
       submenu.items.some((subItem) =>
-        this.isActiveRoute(subItem.route ?? item.route, subItem.reference)
-      )
+        this.isActiveRoute(subItem.route ?? item.route, subItem.reference),
+      ),
     );
   }
 }

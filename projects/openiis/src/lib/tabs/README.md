@@ -1,449 +1,359 @@
-# Openiis Tabs Component
+# Tabs
 
-El `OpeniisTabsComponent` permite organizar y mostrar contenido en pestañas interactivas, proporcionando una interfaz de usuario clara y fácil de navegar para alternar entre diferentes secciones de contenido.
+Componente de pestañas elegante y reutilizable con múltiples variantes, tamaños y soporte para iconos, badges y tooltips.
 
-## Características
-
-- ✅ **4 variantes visuales**: line, pills, cards, buttons
-- ✅ **3 tamaños**: sm, md, lg
-- ✅ **Navegación scrolleable**: Para cuando hay muchas pestañas
-- ✅ **Badges**: Para mostrar notificaciones en pestañas
-- ✅ **Iconos**: Soporte para Material Icons
-- ✅ **Estados**: Active, disabled
-- ✅ **Accesibilidad**: ARIA completo, navegación por teclado
-- ✅ **Content Projection**: Contenido flexible con ng-content
-- ✅ **Responsive**: Adaptable a diferentes dispositivos
-
-## Importación
+## 📦 Instalación
 
 ```typescript
-import { OpeniisTabsComponent } from "./components/tabs/tabs.component";
+import { OpeniisTabsComponent } from 'openiis-ui';
+
+@Component({
+  imports: [OpeniisTabsComponent],
+})
 ```
 
-## Uso Básico
+## ⚙️ Properties
+
+| Property    | Tipo          | Default  | Descripción                 |
+| ----------- | ------------- | -------- | --------------------------- |
+| `variant`   | `TabsVariant` | `'line'` | Variante visual de las tabs |
+| `size`      | `TabsSize`    | `'md'`   | Tamaño de las tabs          |
+| `tabs`      | `TabItem[]`   | `[]`     | Array de tabs a mostrar     |
+| `activeTab` | `string`      | `''`     | ID de la tab activa         |
+
+## 📡 Events
+
+| Event       | Tipo     | Descripción                  |
+| ----------- | -------- | ---------------------------- |
+| `tabChange` | `string` | Emitido cuando cambia la tab |
+
+## 📏 Tamaños
+
+| Tamaño | Padding | Font-size | Uso               |
+| ------ | ------- | --------- | ----------------- |
+| `sm`   | 8px     | 12px      | Compacto          |
+| `md`   | 12px    | 14px      | Mediano (default) |
+| `lg`   | 16px    | 16px      | Grande            |
+
+## 🎨 Variantes
+
+| Variante  | Descripción              | Uso                   |
+| --------- | ------------------------ | --------------------- |
+| `line`    | Línea inferior (default) | Navegación general    |
+| `pills`   | Píldoras redondeadas     | Categorías            |
+| `cards`   | Tarjetas con bordes      | Secciones principales |
+| `buttons` | Botones conectados       | Acciones relacionadas |
+
+## 💡 Ejemplos Prácticos
+
+### 1. Tabs Básicas
 
 ```html
-<openiis-tabs [tabs]="tabItems" (tabChange)="onTabChange($event)">
-  <div slot="tab1">
-    <h3>Contenido de la Pestaña 1</h3>
-    <p>Este es el contenido de la primera pestaña.</p>
+<openiis-tabs variant="line" size="md" [tabs]="basicTabs">
+  <div slot="tab-content-general">
+    <h3>Configuración General</h3>
+    <p>Aquí puedes configurar las opciones generales del sistema.</p>
+    <ul>
+      <li>Idioma predeterminado</li>
+      <li>Zona horaria</li>
+      <li>Configuración de red</li>
+    </ul>
   </div>
-
-  <div slot="tab2">
-    <h3>Contenido de la Pestaña 2</h3>
-    <p>Este es el contenido de la segunda pestaña.</p>
+  <div slot="tab-content-perfil">
+    <h3>Información del Perfil</h3>
+    <p>Gestiona tu información personal y preferencias.</p>
+    <ul>
+      <li>Datos personales</li>
+      <li>Foto de perfil</li>
+      <li>Información de contacto</li>
+    </ul>
   </div>
-
-  <div slot="tab3">
-    <h3>Contenido de la Pestaña 3</h3>
-    <p>Este es el contenido de la tercera pestaña.</p>
+  <div slot="tab-content-notificaciones">
+    <h3>Configuración de Notificaciones</h3>
+    <p>Controla cómo y cuándo recibes notificaciones.</p>
+    <ul>
+      <li>Notificaciones por email</li>
+      <li>Notificaciones push</li>
+      <li>Frecuencia de notificaciones</li>
+    </ul>
+  </div>
+  <div slot="tab-content-seguridad">
+    <h3>Configuración de Seguridad</h3>
+    <p>Mantén tu cuenta segura con estas opciones.</p>
+    <ul>
+      <li>Cambiar contraseña</li>
+      <li>Autenticación de dos factores</li>
+      <li>Historial de sesiones</li>
+    </ul>
   </div>
 </openiis-tabs>
 ```
 
 ```typescript
 export class MyComponent {
-  tabItems: TabItem[] = [
-    { id: "tab1", label: "Pestaña 1", active: true },
-    { id: "tab2", label: "Pestaña 2" },
-    { id: "tab3", label: "Pestaña 3" },
+  basicTabs: any[] = [
+    {
+      id: "general",
+      label: "General",
+      active: true,
+      icon: "settings",
+    },
+    {
+      id: "perfil",
+      label: "Perfil",
+      icon: "person",
+    },
+    {
+      id: "notificaciones",
+      label: "Notificaciones",
+      icon: "notifications",
+      badge: "3",
+    },
+    {
+      id: "seguridad",
+      label: "Seguridad",
+      icon: "security",
+    },
   ];
-
-  onTabChange(tabId: string) {
-    console.log("Tab changed:", tabId);
-  }
 }
 ```
 
-## Propiedades
+### 2. Tabs Pills
 
-| Propiedad | Tipo          | Valor por defecto | Descripción                     |
-| --------- | ------------- | ----------------- | ------------------------------- |
-| `variant` | `TabsVariant` | `'line'`          | Variante visual de las pestañas |
-| `size`    | `TabsSize`    | `'md'`            | Tamaño de las pestañas          |
-| `tabs`    | `TabItem[]`   | `[]`              | Lista de pestañas               |
+```html
+<openiis-tabs variant="pills" size="md" [tabs]="pillsTabs">
+  <div slot="tab-content-dashboard">
+    <h3>Panel de Control</h3>
+    <p>Vista general de todas las métricas importantes del sistema.</p>
+  </div>
+  <div slot="tab-content-analytics">
+    <h3>Análisis de Datos</h3>
+    <p>Análisis detallado del rendimiento y tendencias.</p>
+  </div>
+  <div slot="tab-content-reports">
+    <h3>Reportes Generados</h3>
+    <p>Lista de todos los reportes disponibles en el sistema.</p>
+  </div>
+  <div slot="tab-content-settings2">
+    <h3>Configuración del Sistema</h3>
+    <p>Opciones avanzadas de configuración del sistema.</p>
+  </div>
+</openiis-tabs>
+```
 
-## Eventos
+```typescript
+export class MyComponent {
+  pillsTabs: any[] = [
+    {
+      id: "dashboard",
+      label: "Panel de Control",
+      active: true,
+      icon: "dashboard",
+    },
+    {
+      id: "analytics",
+      label: "Análisis de Datos",
+      icon: "analytics",
+    },
+    {
+      id: "reports",
+      label: "Reportes Generados",
+      icon: "assessment",
+      badge: "5",
+    },
+    {
+      id: "settings2",
+      label: "Configuración del Sistema",
+      icon: "settings",
+    },
+  ];
+}
+```
 
-| Evento      | Tipo                   | Descripción                              |
-| ----------- | ---------------------- | ---------------------------------------- |
-| `tabChange` | `EventEmitter<string>` | Se emite cuando cambia la pestaña activa |
+### 3. Tabs Cards
 
-## Interfaces
+```html
+<openiis-tabs variant="cards" size="md" [tabs]="cardsTabs">
+  <div slot="tab-content-overview">
+    <h3>Resumen del Proyecto</h3>
+    <p>Información general y estadísticas del proyecto actual.</p>
+  </div>
+  <div slot="tab-content-details">
+    <h3>Detalles Técnicos</h3>
+    <p>Especificaciones técnicas y documentación del proyecto.</p>
+  </div>
+  <div slot="tab-content-history">
+    <h3>Historial de Cambios</h3>
+    <p>Log completo de todas las modificaciones realizadas.</p>
+  </div>
+</openiis-tabs>
+```
 
-### TabItem
+```typescript
+export class MyComponent {
+  cardsTabs: any[] = [
+    {
+      id: "overview",
+      label: "Resumen del Proyecto",
+      active: true,
+      icon: "fast_forward",
+    },
+    {
+      id: "details",
+      label: "Detalles Técnicos",
+      icon: "info",
+    },
+    {
+      id: "history",
+      label: "Historial de Cambios",
+      icon: "history",
+    },
+  ];
+}
+```
+
+### 4. Tabs Buttons
+
+```html
+<openiis-tabs variant="buttons" size="md" [tabs]="buttonsTabs">
+  <div slot="tab-content-edit">
+    <h3>Modo de Edición</h3>
+    <p>Editor de contenido con todas las herramientas de edición disponibles.</p>
+  </div>
+  <div slot="tab-content-preview">
+    <h3>Vista Previa</h3>
+    <p>Previsualiza cómo se verá el contenido antes de publicarlo.</p>
+  </div>
+  <div slot="tab-content-publish">
+    <h3>Opciones de Publicación</h3>
+    <p>Configura las opciones de publicación y distribución del contenido.</p>
+  </div>
+</openiis-tabs>
+```
+
+```typescript
+export class MyComponent {
+  buttonsTabs: any[] = [
+    {
+      id: "edit",
+      label: "Modo de Edición",
+      active: true,
+      icon: "edit",
+    },
+    {
+      id: "preview",
+      label: "Vista Previa",
+      icon: "preview",
+    },
+    {
+      id: "publish",
+      label: "Opciones de Publicación",
+      icon: "publish",
+    },
+  ];
+}
+```
+
+## 🏗️ Interfaces
 
 ```typescript
 interface TabItem {
-  id: string; // Identificador único
-  label: string; // Texto a mostrar
-  active?: boolean; // Si está activa
-  disabled?: boolean; // Si está deshabilitada
-  icon?: string; // Material Icon name
-  badge?: string | number; // Badge de notificación
-  tooltip?: string; // Tooltip de la pestaña
+  id: string;
+  label: string;
+  active?: boolean;
+  disabled?: boolean;
+  icon?: string;
+  badge?: string | number;
+  tooltip?: string;
 }
-```
 
-## Tipos
-
-```typescript
 type TabsVariant = "line" | "pills" | "cards" | "buttons";
 type TabsSize = "sm" | "md" | "lg";
 ```
 
-## Ejemplos de Uso
+## ⚡ Comportamiento
 
-### Variantes Visuales
+### Navegación
 
-```html
-<!-- Line (por defecto) -->
-<openiis-tabs [tabs]="tabs" variant="line"></openiis-tabs>
+- **Clic**: Cambia a la tab seleccionada
+- **Teclado**: Soporte para navegación por teclado
+- **Accesibilidad**: ARIA roles y atributos completos
 
-<!-- Pills -->
-<openiis-tabs [tabs]="tabs" variant="pills"></openiis-tabs>
+### Estados
 
-<!-- Cards -->
-<openiis-tabs [tabs]="tabs" variant="cards"></openiis-tabs>
+- **Activo**: Tab seleccionada actualmente
+- **Deshabilitado**: Tab no disponible
+- **Hover**: Efectos visuales al pasar el mouse
+- **Focus**: Indicador de foco para accesibilidad
 
-<!-- Buttons -->
-<openiis-tabs [tabs]="tabs" variant="buttons"></openiis-tabs>
-```
+### Contenido
 
-### Tamaños
+- **Slots dinámicos**: Contenido se muestra/oculta automáticamente
+- **Transiciones**: Animaciones suaves entre tabs
+- **Responsive**: Se adapta a diferentes tamaños de pantalla
 
-```html
-<!-- Pequeño -->
-<openiis-tabs [tabs]="tabs" size="sm"></openiis-tabs>
+## ✅ Características
 
-<!-- Mediano (por defecto) -->
-<openiis-tabs [tabs]="tabs" size="md"></openiis-tabs>
+- ✅ 4 variantes visuales (line, pills, cards, buttons)
+- ✅ 3 tamaños configurables (sm, md, lg)
+- ✅ Iconos Material Icons
+- ✅ Badges numéricos
+- ✅ Tooltips informativos
+- ✅ Estados disabled
+- ✅ Navegación por teclado
+- ✅ Accesibilidad completa
+- ✅ Responsive design
+- ✅ Scroll horizontal automático
+- ✅ Contenido dinámico con slots
 
-<!-- Grande -->
-<openiis-tabs [tabs]="tabs" size="lg"></openiis-tabs>
-```
+## 🎨 Estilos Automáticos
 
-### Con Iconos
+- **Variantes**: Cada variante tiene estilos únicos
+- **Estados**: Hover, active, disabled, focus
+- **Responsive**: Scroll horizontal en móviles
+- **Animaciones**: Transiciones suaves
+- **Accesibilidad**: Indicadores de foco y ARIA
 
-```typescript
-tabsWithIcons: TabItem[] = [
-  {
-    id: 'dashboard',
-    label: 'Dashboard',
-    icon: 'dashboard',
-    active: true
-  },
-  {
-    id: 'users',
-    label: 'Usuarios',
-    icon: 'people'
-  },
-  {
-    id: 'settings',
-    label: 'Configuración',
-    icon: 'settings'
-  }
-];
-```
+## 🔧 Funcionalidades Especiales
+
+### Slots de Contenido
 
 ```html
-<openiis-tabs [tabs]="tabsWithIcons" (tabChange)="onTabChange($event)">
-  <!-- Contenido de las pestañas -->
-</openiis-tabs>
+<!-- El contenido debe usar slots con el patrón: -->
+<div slot="tab-content-{tabId}">
+  <!-- Contenido de la tab -->
+</div>
 ```
 
-### Con Badges
+### Navegación por Teclado
 
 ```typescript
-tabsWithBadges: TabItem[] = [
-  {
-    id: 'inbox',
-    label: 'Bandeja',
-    badge: 5,
-    active: true
-  },
-  {
-    id: 'sent',
-    label: 'Enviados',
-    badge: 'New'
-  },
-  {
-    id: 'draft',
-    label: 'Borradores',
-    badge: 3
-  }
-];
+// Teclas soportadas:
+// - Tab: Navegar entre tabs
+// - Enter/Space: Seleccionar tab
+// - Arrow keys: Navegar entre tabs
 ```
 
-### Pestañas con Estados
+### Scroll Automático
 
 ```typescript
-tabsWithStates: TabItem[] = [
-  {
-    id: 'active',
-    label: 'Activa',
-    active: true
-  },
-  {
-    id: 'normal',
-    label: 'Normal'
-  },
-  {
-    id: 'disabled',
-    label: 'Deshabilitada',
-    disabled: true
-  }
-];
+// En pantallas pequeñas, las tabs se pueden hacer scroll horizontal
+// Implementado automáticamente
 ```
 
-### Con Tooltips
+## 🚨 Solución de Problemas
 
-```typescript
-tabsWithTooltips: TabItem[] = [
-  {
-    id: 'tab1',
-    label: 'Inicio',
-    tooltip: 'Página principal',
-    active: true
-  },
-  {
-    id: 'tab2',
-    label: 'Config',
-    tooltip: 'Configuración del sistema'
-  }
-];
-```
+| Problema                  | Solución                                          |
+| ------------------------- | ------------------------------------------------- |
+| Tabs no responden         | Verifica que no estén `disabled`                  |
+| Contenido no se muestra   | Verifica que el slot tenga el formato correcto    |
+| Estilos no se aplican     | Verifica que el tema Openiis UI esté configurado  |
+| Scroll no funciona        | Verifica que el contenedor tenga ancho suficiente |
+| Accesibilidad no funciona | Verifica que los roles ARIA estén presentes       |
+| Iconos no aparecen        | Verifica que Material Icons esté importado        |
+| Badges no se muestran     | Verifica que el valor de `badge` sea válido       |
 
-## Casos de Uso Comunes
+## 🐞 Reportar Problemas
 
-### Panel de Administración
-
-```typescript
-@Component({
-  template: `
-    <openiis-tabs [tabs]="adminTabs" variant="line" size="md" (tabChange)="onAdminTabChange($event)">
-      <div slot="dashboard">
-        <app-dashboard></app-dashboard>
-      </div>
-
-      <div slot="users">
-        <app-user-management></app-user-management>
-      </div>
-
-      <div slot="settings">
-        <app-settings></app-settings>
-      </div>
-    </openiis-tabs>
-  `,
-})
-export class AdminPanelComponent {
-  adminTabs: TabItem[] = [
-    {
-      id: "dashboard",
-      label: "Dashboard",
-      icon: "dashboard",
-      active: true,
-    },
-    {
-      id: "users",
-      label: "Usuarios",
-      icon: "people",
-      badge: 12,
-    },
-    {
-      id: "settings",
-      label: "Configuración",
-      icon: "settings",
-    },
-  ];
-
-  onAdminTabChange(tabId: string) {
-    switch (tabId) {
-      case "dashboard":
-        this.loadDashboardData();
-        break;
-      case "users":
-        this.loadUserData();
-        break;
-      case "settings":
-        this.loadSettings();
-        break;
-    }
-  }
-}
-```
-
-### Perfil de Usuario
-
-```typescript
-@Component({
-  template: `
-    <openiis-tabs [tabs]="profileTabs" variant="pills" size="lg" (tabChange)="onProfileTabChange($event)">
-      <div slot="profile">
-        <app-profile-info [user]="currentUser"></app-profile-info>
-      </div>
-
-      <div slot="security">
-        <app-security-settings [user]="currentUser"></app-security-settings>
-      </div>
-
-      <div slot="notifications">
-        <app-notification-settings [user]="currentUser"></app-notification-settings>
-      </div>
-    </openiis-tabs>
-  `,
-})
-export class UserProfileComponent {
-  profileTabs: TabItem[] = [
-    {
-      id: "profile",
-      label: "Perfil",
-      icon: "person",
-      active: true,
-    },
-    {
-      id: "security",
-      label: "Seguridad",
-      icon: "security",
-    },
-    {
-      id: "notifications",
-      label: "Notificaciones",
-      icon: "notifications",
-      badge: 3,
-    },
-  ];
-
-  onProfileTabChange(tabId: string) {
-    this.analytics.track("profile_tab_viewed", { tab: tabId });
-  }
-}
-```
-
-### Detalles de Producto
-
-```typescript
-@Component({
-  template: `
-    <openiis-tabs [tabs]="productTabs" variant="cards" (tabChange)="onProductTabChange($event)">
-      <div slot="description">
-        <app-product-description [product]="product"></app-product-description>
-      </div>
-
-      <div slot="specifications">
-        <app-product-specs [product]="product"></app-product-specs>
-      </div>
-
-      <div slot="reviews">
-        <app-product-reviews [product]="product"></app-product-reviews>
-      </div>
-    </openiis-tabs>
-  `,
-})
-export class ProductDetailComponent {
-  productTabs: TabItem[] = [
-    {
-      id: "description",
-      label: "Descripción",
-      active: true,
-    },
-    {
-      id: "specifications",
-      label: "Especificaciones",
-    },
-    {
-      id: "reviews",
-      label: "Reseñas",
-      badge: this.product?.reviewCount || 0,
-    },
-  ];
-
-  onProductTabChange(tabId: string) {
-    if (tabId === "reviews") {
-      this.loadReviews();
-    }
-  }
-}
-```
-
-## Navegación Scrolleable
-
-El componente incluye automáticamente scroll horizontal cuando hay muchas pestañas:
-
-```css
-.tabs-nav-scroll {
-  overflow-x: auto;
-  scrollbar-width: thin;
-  -webkit-overflow-scrolling: touch;
-}
-```
-
-Esto permite manejar cualquier cantidad de pestañas sin romper el diseño.
-
-## Accesibilidad
-
-- ✅ **Roles ARIA**: `tablist`, `tab`, `tabpanel`
-- ✅ **Propiedades ARIA**: `aria-selected`, `aria-controls`, `aria-labelledby`
-- ✅ **Navegación por teclado**: Arrow keys, Home, End
-- ✅ **Estados**: Soporte para estados disabled y active
-- ✅ **Lectores de pantalla**: Anuncios claros de cambios de estado
-- ✅ **Focus management**: Gestión correcta del foco
-- ✅ **Contraste**: Cumple con WCAG 2.1 AA
-
-## Personalización CSS
-
-```css
-.tabs {
-  /* Variables CSS personalizables */
-  --tabs-nav-bg: var(--color-background);
-  --tabs-nav-border: var(--color-border);
-  --tabs-tab-color: var(--color-text-secondary);
-  --tabs-tab-active-color: var(--color-primary-600);
-  --tabs-tab-hover-bg: var(--color-surface-hover);
-  --tabs-tab-active-bg: var(--color-primary-50);
-  --tabs-tab-padding: 12px 16px;
-  --tabs-border-radius: var(--radius-lg);
-  --tabs-content-padding: var(--space-4);
-  --tabs-transition: all 0.2s ease;
-}
-
-/* Personalización por variante */
-.tabs-line {
-  --tabs-active-border-color: var(--color-primary-500);
-  --tabs-active-border-width: 2px;
-}
-
-.tabs-pills {
-  --tabs-pill-border-radius: var(--radius-full);
-  --tabs-pill-active-bg: var(--color-primary-500);
-  --tabs-pill-active-color: white;
-}
-
-.tabs-cards {
-  --tabs-card-bg: var(--color-surface);
-  --tabs-card-border: var(--color-border);
-  --tabs-card-active-bg: var(--color-background);
-  --tabs-card-shadow: var(--shadow-sm);
-}
-```
-
-## Mejores Prácticas
-
-1. **Límite de pestañas**: No exceder 7 pestañas visibles para UX óptima
-2. **Etiquetas claras**: Usar nombres descriptivos y concisos
-3. **Contenido relevante**: Agrupar contenido relacionado lógicamente
-4. **Estados apropiados**: Usar `disabled` para pestañas no disponibles
-5. **Badges informativos**: Usar badges para indicar cantidad de elementos o estados
-6. **Responsive**: Considerar comportamiento en dispositivos móviles
-7. **Accesibilidad**: Siempre incluir tooltips para pestañas con iconos solamente
-
-## Notas de Implementación
-
-- ✅ **Standalone Component**: No requiere módulos adicionales
-- ✅ **Content Projection**: Uso de ng-content para flexibilidad
-- ✅ **Scroll automático**: Manejo inteligente de pestañas que exceden el ancho
-- ✅ **Gestión de estados**: Control automático de pestañas activas
-- ✅ **Optimizado**: Detección de cambios eficiente
-- ✅ **Responsive**: Adaptación automática a diferentes tamaños
-- ✅ **Marcado semántico**: HTML semánticamente correcto para SEO
-- ✅ **Event handling**: Gestión segura de eventos y cambios de estado
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)

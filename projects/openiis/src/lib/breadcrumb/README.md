@@ -1,449 +1,384 @@
-# Breadcrumb Component
+# Breadcrumb
 
-El componente Breadcrumb proporciona navegación jerárquica que muestra la ubicación actual del usuario dentro de la estructura del sitio web, permitiendo una navegación fácil hacia niveles superiores.
+Componente de navegación breadcrumb elegante y reutilizable con múltiples variantes, separadores, iconos y soporte para overflow.
 
-## Características
+## 📦 Instalación
 
-- **5 variantes**: default, pills, arrows, slash, dots
-- **3 tamaños**: sm, md, lg
-- **6 tipos de separadores**: chevron, slash, arrow, dot, pipe, custom
-- **Elementos interactivos**: Enlaces clickeables y elementos estáticos
-- **Iconos**: Soporte para iconos personalizados y icono de inicio
-- **Overflow**: Menú de desbordamiento para breadcrumbs largos
-- **Responsive**: Comportamiento adaptativo en dispositivos móviles
-- **Truncación**: Acortamiento automático de etiquetas largas
-- **Accesibilidad**: ARIA completo, navegación por teclado
-- **Métodos públicos**: Control programático de elementos
-- **Tooltips**: Información adicional en elementos
+```typescript
+import { OpeniisBreadcrumbComponent } from 'openiis-ui';
 
-## Uso Básico
+@Component({
+  imports: [OpeniisBreadcrumbComponent],
+})
+```
+
+## ⚙️ Properties
+
+| Property          | Tipo                  | Default        | Descripción                    |
+| ----------------- | --------------------- | -------------- | ------------------------------ |
+| `variant`         | `BreadcrumbVariant`   | `'default'`    | Variante visual del breadcrumb |
+| `size`            | `BreadcrumbSize`      | `'md'`         | Tamaño del breadcrumb          |
+| `separator`       | `BreadcrumbSeparator` | `'chevron'`    | Tipo de separador              |
+| `customSeparator` | `string`              | `'>'`          | Separador personalizado        |
+| `items`           | `BreadcrumbItem[]`    | `[]`           | Array de items del breadcrumb  |
+| `showHome`        | `boolean`             | `true`         | Mostrar icono de home          |
+| `maxItems`        | `number`              | `0`            | Máximo de items visibles       |
+| `showOverflow`    | `boolean`             | `true`         | Mostrar menú overflow          |
+| `ariaLabel`       | `string`              | `'Breadcrumb'` | Label de accesibilidad         |
+| `responsive`      | `boolean`             | `true`         | Comportamiento responsive      |
+| `truncateLength`  | `number`              | `0`            | Longitud máxima de texto       |
+| `customClass`     | `string`              | `''`           | Clase CSS personalizada        |
+
+## 📡 Events
+
+| Event               | Tipo  | Descripción                       |
+| ------------------- | ----- | --------------------------------- |
+| `itemClick`         | `any` | Emitido al hacer clic en item     |
+| `overflowItemClick` | `any` | Emitido al hacer clic en overflow |
+
+## 📏 Tamaños
+
+| Tamaño | Font-size | Padding | Gap | Uso               |
+| ------ | --------- | ------- | --- | ----------------- |
+| `sm`   | 12px      | 4px     | 4px | Compacto          |
+| `md`   | 14px      | 4px     | 8px | Mediano (default) |
+| `lg`   | 16px      | 8px     | 8px | Grande            |
+
+## 🎨 Variantes
+
+| Variante  | Descripción               | Uso                |
+| --------- | ------------------------- | ------------------ |
+| `default` | Estilo estándar (default) | Navegación general |
+| `pills`   | Píldoras redondeadas      | Categorías         |
+| `arrows`  | Flechas conectadas        | Procesos           |
+| `slash`   | Separadores con slash     | Rutas de archivos  |
+| `dots`    | Separadores con puntos    | Jerarquías         |
+
+## 🔗 Separadores
+
+| Separador | Símbolo       | Descripción               |
+| --------- | ------------- | ------------------------- | -------------- |
+| `chevron` | `>`           | Chevron derecho (default) |
+| `slash`   | `/`           | Barra diagonal            |
+| `arrow`   | `→`           | Flecha hacia la derecha   |
+| `dot`     | `•`           | Punto centrado            |
+| `pipe`    | `             | `                         | Barra vertical |
+| `custom`  | Personalizado | Cualquier símbolo         |
+
+## 💡 Ejemplos Prácticos
+
+### 1. Breadcrumb Básico
 
 ```html
-<app-breadcrumb [items]="breadcrumbItems" variant="default" size="md" separator="chevron" (itemClick)="onBreadcrumbClick($event)"> </app-breadcrumb>
+<openiis-breadcrumb variant="default" size="md" separator="chevron" [items]="basicItems" (itemClick)="onItemClick($event)"> </openiis-breadcrumb>
 ```
 
 ```typescript
 export class MyComponent {
-  breadcrumbItems: BreadcrumbItem[] = [
+  basicItems: any[] = [
     { label: "Inicio", url: "/", icon: "home" },
-    { label: "Productos", url: "/products" },
-    { label: "Electrónicos", url: "/products/electronics" },
-    { label: "Smartphones", active: true },
+    { label: "Productos", url: "/productos" },
+    { label: "Electrónicos", url: "/productos/electronicos" },
+    { label: "Smartphones", url: "/productos/electronicos/smartphones", active: true },
   ];
 
-  onBreadcrumbClick(event: any) {
-    console.log("Breadcrumb clicked:", event.item);
+  onItemClick(event: any) {
+    console.log("Item clicked:", event.item);
   }
 }
 ```
 
-## Propiedades
+### 2. Breadcrumb con Pills
 
-| Propiedad         | Tipo                  | Valor por defecto | Descripción                                   |
-| ----------------- | --------------------- | ----------------- | --------------------------------------------- |
-| `variant`         | `BreadcrumbVariant`   | `'default'`       | Variante visual del breadcrumb                |
-| `size`            | `BreadcrumbSize`      | `'md'`            | Tamaño del breadcrumb                         |
-| `separator`       | `BreadcrumbSeparator` | `'chevron'`       | Tipo de separador                             |
-| `customSeparator` | `string`              | `'>'`             | Separador personalizado                       |
-| `items`           | `BreadcrumbItem[]`    | `[]`              | Lista de elementos del breadcrumb             |
-| `showHome`        | `boolean`             | `true`            | Mostrar icono de inicio en el primer elemento |
-| `maxItems`        | `number`              | `0`               | Número máximo de elementos (0 = sin límite)   |
-| `showOverflow`    | `boolean`             | `true`            | Mostrar menú de desbordamiento                |
-| `ariaLabel`       | `string`              | `'Breadcrumb'`    | Etiqueta ARIA para navegación                 |
-| `responsive`      | `boolean`             | `true`            | Comportamiento responsive                     |
-| `truncateLength`  | `number`              | `0`               | Longitud máxima de etiquetas (0 = sin límite) |
-| `customClass`     | `string`              | `undefined`       | Clases CSS adicionales                        |
+```html
+<openiis-breadcrumb variant="pills" size="md" separator="chevron" [items]="pillsItems" (itemClick)="onPillsItemClick($event)"> </openiis-breadcrumb>
+```
 
-## Eventos
+```typescript
+export class MyComponent {
+  pillsItems: any[] = [
+    { label: "Dashboard", url: "/dashboard", icon: "dashboard" },
+    { label: "Usuarios", url: "/dashboard/usuarios" },
+    { label: "Perfil", url: "/dashboard/usuarios/perfil" },
+    { label: "Configuración", url: "/dashboard/usuarios/perfil/config", active: true },
+  ];
 
-| Evento              | Tipo                                 | Descripción                                          |
-| ------------------- | ------------------------------------ | ---------------------------------------------------- |
-| `itemClick`         | `EventEmitter<BreadcrumbClickEvent>` | Se emite cuando se hace clic en un elemento          |
-| `overflowItemClick` | `EventEmitter<BreadcrumbClickEvent>` | Se emite cuando se hace clic en elemento de overflow |
+  onPillsItemClick(event: any) {
+    console.log("Pills item clicked:", event.item);
+  }
+}
+```
 
-## Interfaces
+### 3. Breadcrumb con Arrows
 
-### BreadcrumbItem
+```html
+<openiis-breadcrumb variant="arrows" size="md" [items]="arrowsItems" (itemClick)="onArrowsItemClick($event)"> </openiis-breadcrumb>
+```
+
+```typescript
+export class MyComponent {
+  arrowsItems: any[] = [
+    { label: "Paso 1", url: "/wizard/step1", icon: "looks_one" },
+    { label: "Paso 2", url: "/wizard/step2", icon: "looks_two" },
+    { label: "Paso 3", url: "/wizard/step3", icon: "looks_3" },
+    { label: "Completado", url: "/wizard/complete", active: true, icon: "check_circle" },
+  ];
+
+  onArrowsItemClick(event: any) {
+    console.log("Arrows item clicked:", event.item);
+  }
+}
+```
+
+### 4. Breadcrumb con Overflow
+
+```html
+<openiis-breadcrumb variant="default" size="md" separator="chevron" [items]="overflowItems" [maxItems]="3" [showOverflow]="true" (itemClick)="onOverflowItemClick($event)" (overflowItemClick)="onOverflowMenuClick($event)"> </openiis-breadcrumb>
+```
+
+```typescript
+export class MyComponent {
+  overflowItems: any[] = [
+    { label: "Inicio", url: "/", icon: "home" },
+    { label: "Documentos", url: "/documentos" },
+    { label: "Proyectos", url: "/documentos/proyectos" },
+    { label: "2024", url: "/documentos/proyectos/2024" },
+    { label: "Q1", url: "/documentos/proyectos/2024/q1" },
+    { label: "Enero", url: "/documentos/proyectos/2024/q1/enero" },
+    { label: "Reporte Final", url: "/documentos/proyectos/2024/q1/enero/reporte", active: true },
+  ];
+
+  onOverflowItemClick(event: any) {
+    console.log("Overflow item clicked:", event.item);
+  }
+
+  onOverflowMenuClick(event: any) {
+    console.log("Overflow menu item clicked:", event.item);
+  }
+}
+```
+
+### 5. Breadcrumb con Diferentes Separadores
+
+```html
+<!-- Separador Chevron -->
+<openiis-breadcrumb separator="chevron" [items]="chevronItems"> </openiis-breadcrumb>
+
+<!-- Separador Slash -->
+<openiis-breadcrumb separator="slash" [items]="slashItems"> </openiis-breadcrumb>
+
+<!-- Separador Arrow -->
+<openiis-breadcrumb separator="arrow" [items]="arrowItems"> </openiis-breadcrumb>
+
+<!-- Separador Dot -->
+<openiis-breadcrumb separator="dot" [items]="dotItems"> </openiis-breadcrumb>
+
+<!-- Separador Pipe -->
+<openiis-breadcrumb separator="pipe" [items]="pipeItems"> </openiis-breadcrumb>
+
+<!-- Separador Custom -->
+<openiis-breadcrumb separator="custom" customSeparator="→" [items]="customItems"> </openiis-breadcrumb>
+```
+
+```typescript
+export class MyComponent {
+  chevronItems: any[] = [
+    { label: "Inicio", url: "/" },
+    { label: "Productos", url: "/productos" },
+    { label: "Categoría", url: "/productos/categoria", active: true },
+  ];
+
+  slashItems: any[] = [
+    { label: "Sistema", url: "/sistema" },
+    { label: "Archivos", url: "/sistema/archivos" },
+    { label: "Documentos", url: "/sistema/archivos/documentos", active: true },
+  ];
+
+  arrowItems: any[] = [
+    { label: "Proceso", url: "/proceso" },
+    { label: "Paso 1", url: "/proceso/paso1" },
+    { label: "Paso 2", url: "/proceso/paso1/paso2", active: true },
+  ];
+
+  dotItems: any[] = [
+    { label: "Categoría", url: "/categoria" },
+    { label: "Subcategoría", url: "/categoria/subcategoria" },
+    { label: "Item", url: "/categoria/subcategoria/item", active: true },
+  ];
+
+  pipeItems: any[] = [
+    { label: "Sección", url: "/seccion" },
+    { label: "Subsección", url: "/seccion/subseccion" },
+    { label: "Elemento", url: "/seccion/subseccion/elemento", active: true },
+  ];
+
+  customItems: any[] = [
+    { label: "Inicio", url: "/" },
+    { label: "Navegación", url: "/navegacion" },
+    { label: "Final", url: "/navegacion/final", active: true },
+  ];
+}
+```
+
+### 6. Breadcrumb con Estados Avanzados
+
+```html
+<openiis-breadcrumb variant="pills" size="lg" separator="chevron" [items]="advancedItems" [truncateLength]="15" [showHome]="true" [responsive]="true" (itemClick)="onAdvancedItemClick($event)"> </openiis-breadcrumb>
+```
+
+```typescript
+export class MyComponent {
+  advancedItems: any[] = [
+    {
+      label: "Inicio",
+      url: "/",
+      icon: "home",
+      tooltip: "Página principal",
+    },
+    {
+      label: "Administración",
+      url: "/admin",
+      icon: "admin_panel_settings",
+      tooltip: "Panel de administración",
+    },
+    {
+      label: "Usuarios del Sistema",
+      url: "/admin/usuarios",
+      icon: "people",
+      tooltip: "Gestión de usuarios",
+    },
+    {
+      label: "Configuración Avanzada",
+      url: "/admin/usuarios/config",
+      active: true,
+      icon: "settings",
+      tooltip: "Configuración detallada",
+      disabled: false,
+    },
+  ];
+
+  onAdvancedItemClick(event: any) {
+    console.log("Advanced item clicked:", event.item);
+  }
+}
+```
+
+## 🏗️ Interfaces
 
 ```typescript
 interface BreadcrumbItem {
-  label: string; // Texto a mostrar
-  url?: string; // URL del enlace
-  icon?: string; // Clase CSS del icono
-  active?: boolean; // Si es el elemento activo
-  disabled?: boolean; // Si está deshabilitado
-  clickable?: boolean; // Si es clickeable (por defecto true si tiene url)
-  tooltip?: string; // Tooltip del elemento
-  data?: any; // Datos adicionales
+  label: string;
+  url?: string;
+  icon?: string;
+  active?: boolean;
+  disabled?: boolean;
+  clickable?: boolean;
+  tooltip?: string;
+  data?: any;
 }
-```
 
-### BreadcrumbClickEvent
-
-```typescript
-interface BreadcrumbClickEvent {
-  item: BreadcrumbItem; // Elemento clickeado
-  index: number; // Índice del elemento
-  event: MouseEvent; // Evento del mouse
-}
-```
-
-## Tipos
-
-```typescript
 type BreadcrumbVariant = "default" | "pills" | "arrows" | "slash" | "dots";
 type BreadcrumbSize = "sm" | "md" | "lg";
 type BreadcrumbSeparator = "chevron" | "slash" | "arrow" | "dot" | "pipe" | "custom";
 ```
 
-## Métodos Públicos
+## ⚡ Comportamiento
 
-| Método                                                           | Descripción                        |
-| ---------------------------------------------------------------- | ---------------------------------- |
-| `addItem(item: BreadcrumbItem): void`                            | Agregar un elemento al final       |
-| `removeItem(index: number): void`                                | Eliminar un elemento por índice    |
-| `updateItem(index: number, item: Partial<BreadcrumbItem>): void` | Actualizar un elemento             |
-| `clearItems(): void`                                             | Limpiar todos los elementos        |
-| `getActiveItem(): BreadcrumbItem \| null`                        | Obtener el elemento activo         |
-| `setActiveItem(index: number): void`                             | Establecer un elemento como activo |
+### Navegación
 
-## Ejemplos de Uso
+- **Clic**: Navega al item seleccionado
+- **Teclado**: Soporte para navegación por teclado
+- **Router**: Integración automática con Angular Router
+- **Accesibilidad**: ARIA roles y atributos completos
 
-### Variantes
+### Estados
 
-```html
-<!-- Default -->
-<app-breadcrumb [items]="items" variant="default"></app-breadcrumb>
+- **Activo**: Item actual (último item)
+- **Deshabilitado**: Item no disponible
+- **Clickable**: Items navegables
+- **Hover**: Efectos visuales al pasar el mouse
+- **Focus**: Indicador de foco para accesibilidad
 
-<!-- Pills -->
-<app-breadcrumb [items]="items" variant="pills"></app-breadcrumb>
-```
+### Overflow
 
-### Tamaños
+- **Máximo items**: Controla cuántos items mostrar
+- **Menú overflow**: Items ocultos en menú desplegable
+- **Responsive**: Se adapta automáticamente en móviles
+- **Truncado**: Texto largo se corta automáticamente
 
-```html
-<!-- Pequeño -->
-<app-breadcrumb [items]="items" size="sm"></app-breadcrumb>
+## ✅ Características
 
-<!-- Mediano -->
-<app-breadcrumb [items]="items" size="md"></app-breadcrumb>
+- ✅ 5 variantes visuales (default, pills, arrows, slash, dots)
+- ✅ 6 tipos de separadores (chevron, slash, arrow, dot, pipe, custom)
+- ✅ 3 tamaños configurables (sm, md, lg)
+- ✅ Iconos Material Icons
+- ✅ Tooltips informativos
+- ✅ Estados disabled y active
+- ✅ Navegación por teclado
+- ✅ Accesibilidad completa
+- ✅ Responsive design
+- ✅ Overflow automático
+- ✅ Truncado de texto
+- ✅ Integración con Angular Router
 
-<!-- Grande -->
-<app-breadcrumb [items]="items" size="lg"></app-breadcrumb>
-```
+## 🎨 Estilos Automáticos
 
-### Separadores
+- **Variantes**: Cada variante tiene estilos únicos
+- **Estados**: Hover, active, disabled, focus
+- **Responsive**: Se adapta automáticamente en móviles
+- **Animaciones**: Transiciones suaves
+- **Accesibilidad**: Indicadores de foco y ARIA
 
-```html
-<!-- Slash -->
-<app-breadcrumb [items]="items" separator="slash"></app-breadcrumb>
+## 🔧 Funcionalidades Especiales
 
-<!-- Arrow -->
-<app-breadcrumb [items]="items" separator="arrow"></app-breadcrumb>
-
-<!-- Dot -->
-<app-breadcrumb [items]="items" separator="dot"></app-breadcrumb>
-
-<!-- Pipe -->
-<app-breadcrumb [items]="items" separator="pipe"></app-breadcrumb>
-
-<!-- Custom -->
-<app-breadcrumb [items]="items" separator="custom" customSeparator="→"></app-breadcrumb>
-```
-
-### Con Iconos
+### Overflow Automático
 
 ```typescript
-breadcrumbItems: BreadcrumbItem[] = [
-  { label: 'Inicio', url: '/', icon: 'home' },
-  { label: 'Usuarios', url: '/users', icon: 'users' },
-  { label: 'Perfil', url: '/users/profile', icon: 'user' },
-  { label: 'Configuración', active: true, icon: 'cog' }
-];
+// Cuando hay más items que maxItems, se ocultan en menú
+[maxItems] = "3"[showOverflow] = "true";
 ```
 
-### Con Límite de Elementos
-
-```html
-<app-breadcrumb [items]="longBreadcrumbItems" [maxItems]="4" showOverflow="true" (itemClick)="onItemClick($event)" (overflowItemClick)="onOverflowItemClick($event)"> </app-breadcrumb>
-```
-
-### Con Truncación
-
-```html
-<app-breadcrumb [items]="itemsWithLongLabels" [truncateLength]="20"> </app-breadcrumb>
-```
-
-### Elementos Deshabilitados
+### Truncado de Texto
 
 ```typescript
-breadcrumbItems: BreadcrumbItem[] = [
-  { label: 'Inicio', url: '/' },
-  { label: 'Sección Privada', disabled: true, tooltip: 'No tienes permisos' },
-  { label: 'Página Actual', active: true }
-];
+// Corta texto largo automáticamente
+[truncateLength] = "15";
 ```
 
-### Sin Icono de Inicio
-
-```html
-<app-breadcrumb [items]="items" [showHome]="false"> </app-breadcrumb>
-```
-
-### Con Navegación Programática
+### Separadores Personalizados
 
 ```typescript
-@Component({
-  template: `
-    <app-breadcrumb #breadcrumb [items]="breadcrumbItems" (itemClick)="onBreadcrumbClick($event)"> </app-breadcrumb>
-
-    <div class="breadcrumb-controls">
-      <button (click)="addBreadcrumbItem()">Agregar Elemento</button>
-      <button (click)="removeBreadcrumbItem()">Eliminar Último</button>
-      <button (click)="clearBreadcrumb()">Limpiar</button>
-    </div>
-  `,
-})
-export class BreadcrumbExample {
-  @ViewChild("breadcrumb") breadcrumb!: BreadcrumbComponent;
-
-  breadcrumbItems: BreadcrumbItem[] = [
-    { label: "Inicio", url: "/" },
-    { label: "Productos", url: "/products" },
-  ];
-
-  addBreadcrumbItem() {
-    this.breadcrumb.addItem({
-      label: "Nuevo Elemento",
-      url: "/new-item",
-      active: true,
-    });
-  }
-
-  removeBreadcrumbItem() {
-    if (this.breadcrumbItems.length > 0) {
-      this.breadcrumb.removeItem(this.breadcrumbItems.length - 1);
-    }
-  }
-
-  clearBreadcrumb() {
-    this.breadcrumb.clearItems();
-  }
-
-  onBreadcrumbClick(event: any) {
-    console.log("Navegando a:", event.item.url);
-    // Implementar navegación
-  }
-}
+// Usar separador personalizado
+separator = "custom";
+customSeparator = "→";
 ```
 
-## Casos de Uso Comunes
-
-### E-commerce
+### Estados de Items
 
 ```typescript
-@Component({
-  template: ` <app-breadcrumb [items]="productBreadcrumb" variant="default" size="md" (itemClick)="navigateToCategory($event)"> </app-breadcrumb> `,
-})
-export class ProductPageComponent {
-  productBreadcrumb: BreadcrumbItem[] = [
-    { label: "Inicio", url: "/", icon: "home" },
-    { label: "Tienda", url: "/shop", icon: "store" },
-    { label: "Electrónicos", url: "/shop/electronics" },
-    { label: "Smartphones", url: "/shop/electronics/smartphones" },
-    { label: "iPhone 15", active: true },
-  ];
+// Item deshabilitado
+{ label: 'Deshabilitado', url: '/disabled', disabled: true }
 
-  navigateToCategory(event: any) {
-    if (event.item.url) {
-      this.router.navigate([event.item.url]);
-    }
-  }
-}
+// Item activo (último)
+{ label: 'Actual', url: '/current', active: true }
+
+// Item no clickeable
+{ label: 'No clickeable', url: '/noclick', clickable: false }
 ```
 
-### Panel de Administración
+## 🚨 Solución de Problemas
 
-```typescript
-@Component({
-  template: ` <app-breadcrumb [items]="adminBreadcrumb" variant="pills" size="sm" separator="arrow" (itemClick)="onAdminNavigation($event)"> </app-breadcrumb> `,
-})
-export class AdminPanelComponent {
-  adminBreadcrumb: BreadcrumbItem[] = [
-    { label: "Dashboard", url: "/admin", icon: "tachometer-alt" },
-    { label: "Usuarios", url: "/admin/users", icon: "users" },
-    { label: "Gestión", url: "/admin/users/management" },
-    { label: "Editar Usuario", active: true },
-  ];
+| Problema                  | Solución                                      |
+| ------------------------- | --------------------------------------------- |
+| Breadcrumb no responde    | Verifica que los items tengan `url` válida    |
+| Overflow no funciona      | Verifica que `maxItems` sea mayor que 0       |
+| Iconos no aparecen        | Verifica que Material Icons esté importado    |
+| Separador no se muestra   | Verifica que `separator` sea válido           |
+| Responsive no funciona    | Verifica que `responsive` esté en `true`      |
+| Truncado no funciona      | Verifica que `truncateLength` sea mayor que 0 |
+| Accesibilidad no funciona | Verifica que `ariaLabel` esté configurado     |
 
-  onAdminNavigation(event: any) {
-    // Implementar navegación con verificación de permisos
-    this.permissionService.checkAccess(event.item.url).then((hasAccess) => {
-      if (hasAccess) {
-        this.router.navigate([event.item.url]);
-      } else {
-        this.showAccessDeniedMessage();
-      }
-    });
-  }
-}
-```
+## 🐞 Reportar Problemas
 
-### Documentación
-
-```typescript
-@Component({
-  template: ` <app-breadcrumb [items]="docsBreadcrumb" variant="slash" separator="slash" [maxItems]="5" showOverflow="true"> </app-breadcrumb> `,
-})
-export class DocumentationComponent {
-  docsBreadcrumb: BreadcrumbItem[] = [
-    { label: "Documentación", url: "/docs", icon: "book" },
-    { label: "Guías", url: "/docs/guides" },
-    { label: "Desarrollo", url: "/docs/guides/development" },
-    { label: "Componentes", url: "/docs/guides/development/components" },
-    { label: "Breadcrumb", active: true },
-  ];
-}
-```
-
-### Gestión de Archivos
-
-```typescript
-@Component({
-  template: ` <app-breadcrumb [items]="folderBreadcrumb" variant="arrows" size="md" (itemClick)="navigateToFolder($event)"> </app-breadcrumb> `,
-})
-export class FileManagerComponent {
-  folderBreadcrumb: BreadcrumbItem[] = [
-    { label: "Archivos", url: "/files", icon: "folder" },
-    { label: "Documentos", url: "/files/documents" },
-    { label: "Proyectos", url: "/files/documents/projects" },
-    { label: "Mi Proyecto", active: true },
-  ];
-
-  navigateToFolder(event: any) {
-    if (event.item.url) {
-      this.fileService.navigateToFolder(event.item.url);
-      this.loadFolderContents(event.item.url);
-    }
-  }
-}
-```
-
-## Integración con Angular Router
-
-```typescript
-@Component({
-  template: ` <app-breadcrumb [items]="routeBreadcrumb" (itemClick)="onRouteNavigation($event)"> </app-breadcrumb> `,
-})
-export class RouteAwareBreadcrumbComponent implements OnInit {
-  routeBreadcrumb: BreadcrumbItem[] = [];
-
-  constructor(private router: Router, private route: ActivatedRoute) {}
-
-  ngOnInit() {
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-      this.generateBreadcrumbFromRoute();
-    });
-  }
-
-  generateBreadcrumbFromRoute() {
-    const breadcrumbs: BreadcrumbItem[] = [];
-    let currentRoute = this.route.root;
-
-    while (currentRoute.firstChild) {
-      currentRoute = currentRoute.firstChild;
-
-      if (currentRoute.snapshot.data["breadcrumb"]) {
-        breadcrumbs.push({
-          label: currentRoute.snapshot.data["breadcrumb"],
-          url: this.getRouteUrl(currentRoute),
-          active: !currentRoute.firstChild,
-        });
-      }
-    }
-
-    this.routeBreadcrumb = breadcrumbs;
-  }
-
-  getRouteUrl(route: ActivatedRoute): string {
-    return route.pathFromRoot
-      .map((r) => r.url.map((segment) => segment.path).join("/"))
-      .join("/")
-      .replace(/\/+/g, "/");
-  }
-
-  onRouteNavigation(event: any) {
-    if (event.item.url) {
-      this.router.navigate([event.item.url]);
-    }
-  }
-}
-```
-
-## Estilos CSS Personalizables
-
-```css
-.breadcrumb {
-  --breadcrumb-font-size: 0.875rem;
-  --breadcrumb-color: var(--color-text-secondary);
-  --breadcrumb-active-color: var(--color-text-primary);
-  --breadcrumb-link-color: var(--color-primary-600);
-  --breadcrumb-link-hover-bg: var(--color-primary-50);
-  --breadcrumb-separator-color: var(--color-text-muted);
-  --breadcrumb-padding: 4px 8px;
-  --breadcrumb-border-radius: 4px;
-  --breadcrumb-gap: 4px;
-}
-
-/* Personalización para variante pills */
-.breadcrumb-pills {
-  --breadcrumb-pill-bg: var(--color-neutral-100);
-  --breadcrumb-pill-active-bg: var(--color-primary-500);
-  --breadcrumb-pill-radius: 16px;
-  --breadcrumb-pill-padding: 6px 12px;
-}
-
-/* Personalización para variante arrows */
-.breadcrumb-arrows {
-  --breadcrumb-arrow-bg: var(--color-neutral-100);
-  --breadcrumb-arrow-active-bg: var(--color-primary-500);
-  --breadcrumb-arrow-padding: 8px 16px;
-}
-```
-
-## Accesibilidad
-
-- **Navegación semántica**: Usa elementos `<nav>` y `<ol>` apropiados
-- **Roles ARIA**: `navigation`, `list`, `listitem`
-- **Propiedades ARIA**: `aria-label`, `aria-current`, `aria-expanded`
-- **Navegación por teclado**: Tab, Enter, Space, Escape
-- **Lectores de pantalla**: Anuncios claros de la ubicación actual
-- **Contraste**: Cumple con WCAG 2.1 AA
-- **Focus management**: Indicadores de foco visibles
-
-## Mejores Prácticas
-
-1. **Jerarquía clara**: Mantener una estructura lógica y consistente
-2. **Etiquetas descriptivas**: Usar nombres claros y concisos
-3. **Límite de elementos**: No exceder 7 elementos para mejor UX
-4. **Responsive**: Considerar comportamiento en dispositivos móviles
-5. **Performance**: Evitar re-renderizados innecesarios
-6. **Accesibilidad**: Siempre incluir etiquetas ARIA apropiadas
-7. **Navegación**: Proporcionar enlaces funcionales cuando sea apropiado
-
-## Notas de Implementación
-
-- Compatible con Angular Router
-- Soporte para rutas dinámicas
-- Manejo automático de estados activos
-- Gestión de overflow inteligente
-- Optimizado para SEO con marcado semántico
-- Incluye animaciones suaves opcionales
-- Soporta tanto navegación interna como externa
-
-## Dependencias
-
-- `@angular/common` - Para directivas comunes
-- `@angular/core` - Para funcionalidad del componente
-- `@angular/router` - Para navegación (opcional)
-- FontAwesome - Para iconos (recomendado)
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)
