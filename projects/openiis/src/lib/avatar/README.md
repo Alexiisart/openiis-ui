@@ -1,289 +1,387 @@
-# Avatar Component
+# Avatar
 
-El componente Avatar es un elemento visual que representa a usuarios, entidades o conceptos de manera compacta y reconocible. Admite imágenes, iniciales, iconos y múltiples estados de personalización.
+Componente de avatar elegante y reutilizable con múltiples variantes, tamaños, colores, estados y soporte para imágenes, iniciales, iconos y badges.
 
-## Características
-
-- **3 variantes**: circular, rounded, square
-- **7 tamaños**: xs, sm, md, lg, xl, 2xl, 3xl
-- **7 colores**: primary, secondary, success, warning, danger, info, neutral
-- **Estados de presencia**: online, offline, away, busy, none
-- **Soporte para imágenes**: Con fallback automático a iniciales o iconos
-- **Generación automática de iniciales**: Desde el nombre del usuario
-- **Badges de notificación**: Números, texto o indicadores de punto
-- **Estados interactivos**: clickable, hover, focus
-- **Bordes opcionales**: Para mayor contraste visual
-- **Estado de carga**: Loading spinner integrado
-- **Accesibilidad**: ARIA completo, navegación por teclado
-- **Métodos públicos**: Control programático completo
-- **Responsive**: Adaptable a diferentes dispositivos
-- **Soporte para grupos**: Avatares superpuestos
-
-## Uso Básico
-
-```html
-<!-- Avatar con imagen -->
-<app-avatar src="assets/user.jpg" name="Juan Pérez" alt="Avatar de Juan Pérez"> </app-avatar>
-
-<!-- Avatar con iniciales -->
-<app-avatar name="María García" color="primary"> </app-avatar>
-
-<!-- Avatar con icono -->
-<app-avatar icon="fas fa-user" variant="square" size="lg"> </app-avatar>
-
-<!-- Avatar con estado -->
-<app-avatar src="assets/user.jpg" name="Ana López" status="online" showStatus="true"> </app-avatar>
-```
-
-## Propiedades
-
-| Propiedad        | Tipo            | Valor por defecto | Descripción                                 |
-| ---------------- | --------------- | ----------------- | ------------------------------------------- |
-| `variant`        | `AvatarVariant` | `'circular'`      | Forma del avatar                            |
-| `size`           | `AvatarSize`    | `'md'`            | Tamaño del avatar                           |
-| `color`          | `AvatarColor`   | `'primary'`       | Color de fondo (para iniciales/iconos)      |
-| `status`         | `AvatarStatus`  | `'none'`          | Estado de presencia del usuario             |
-| `src`            | `string`        | `undefined`       | URL de la imagen del avatar                 |
-| `alt`            | `string`        | `undefined`       | Texto alternativo para la imagen            |
-| `name`           | `string`        | `undefined`       | Nombre del usuario (para generar iniciales) |
-| `initials`       | `string`        | `undefined`       | Iniciales personalizadas                    |
-| `icon`           | `string`        | `undefined`       | Clase CSS del icono (fallback)              |
-| `badge`          | `string/number` | `undefined`       | Badge de notificación                       |
-| `badgeAriaLabel` | `string`        | `'Notification'`  | Etiqueta ARIA para el badge                 |
-| `showStatus`     | `boolean`       | `false`           | Mostrar indicador de estado                 |
-| `bordered`       | `boolean`       | `false`           | Agregar borde al avatar                     |
-| `loading`        | `boolean`       | `false`           | Mostrar estado de carga                     |
-| `clickable`      | `boolean`       | `false`           | Hacer el avatar clickeable                  |
-| `interactive`    | `boolean`       | `false`           | Agregar efectos interactivos                |
-| `customSize`     | `string`        | `undefined`       | Tamaño personalizado (CSS)                  |
-| `ariaLabel`      | `string`        | `undefined`       | Etiqueta ARIA personalizada                 |
-| `title`          | `string`        | `undefined`       | Título del avatar (tooltip)                 |
-| `role`           | `string`        | `undefined`       | Rol ARIA personalizado                      |
-| `customClass`    | `string`        | `undefined`       | Clases CSS adicionales                      |
-
-## Eventos
-
-| Evento             | Tipo                       | Descripción                               |
-| ------------------ | -------------------------- | ----------------------------------------- |
-| `avatarClick`      | `EventEmitter<MouseEvent>` | Se emite cuando se hace clic en el avatar |
-| `avatarMouseEnter` | `EventEmitter<void>`       | Se emite cuando el mouse entra            |
-| `avatarMouseLeave` | `EventEmitter<void>`       | Se emite cuando el mouse sale             |
-| `avatarFocus`      | `EventEmitter<void>`       | Se emite cuando el avatar recibe focus    |
-| `avatarBlur`       | `EventEmitter<void>`       | Se emite cuando el avatar pierde focus    |
-| `imageLoad`        | `EventEmitter<void>`       | Se emite cuando la imagen se carga        |
-| `imageError`       | `EventEmitter<void>`       | Se emite cuando la imagen falla           |
-
-## Tipos
+## 📦 Instalación
 
 ```typescript
+import { OpeniisAvatarComponent } from 'openiis-ui';
+
+@Component({
+  imports: [OpeniisAvatarComponent],
+})
+```
+
+## ⚙️ Properties
+
+| Property         | Tipo                        | Default          | Descripción                 |
+| ---------------- | --------------------------- | ---------------- | --------------------------- |
+| `variant`        | `AvatarVariant`             | `'circular'`     | Forma del avatar            |
+| `size`           | `AvatarSize`                | `'md'`           | Tamaño del avatar           |
+| `color`          | `AvatarColor`               | `'primary'`      | Color del avatar            |
+| `status`         | `AvatarStatus`              | `'none'`         | Estado del usuario          |
+| `src`            | `string`                    | `undefined`      | URL de la imagen            |
+| `alt`            | `string`                    | `undefined`      | Texto alternativo           |
+| `name`           | `string`                    | `undefined`      | Nombre del usuario          |
+| `initials`       | `string`                    | `undefined`      | Iniciales personalizadas    |
+| `icon`           | `string`                    | `undefined`      | Icono Material Icons        |
+| `badge`          | `string \| number \| 'dot'` | `undefined`      | Badge del avatar            |
+| `badgeAriaLabel` | `string`                    | `'Notification'` | ARIA label del badge        |
+| `showStatus`     | `boolean`                   | `false`          | Mostrar indicador de estado |
+| `bordered`       | `boolean`                   | `false`          | Mostrar borde               |
+| `loading`        | `boolean`                   | `false`          | Estado de carga             |
+| `clickable`      | `boolean`                   | `false`          | Hacer avatar clickeable     |
+| `interactive`    | `boolean`                   | `false`          | Hacer avatar interactivo    |
+| `customSize`     | `string`                    | `undefined`      | Tamaño personalizado        |
+| `ariaLabel`      | `string`                    | `undefined`      | ARIA label                  |
+| `title`          | `string`                    | `undefined`      | Tooltip                     |
+| `role`           | `string`                    | `undefined`      | Rol ARIA                    |
+| `customClass`    | `string`                    | `undefined`      | Clases CSS adicionales      |
+
+## 📡 Events
+
+| Event              | Tipo  | Descripción                     |
+| ------------------ | ----- | ------------------------------- |
+| `avatarClick`      | `any` | Emitido al hacer clic en avatar |
+| `avatarMouseEnter` | `any` | Emitido al entrar con el mouse  |
+| `avatarMouseLeave` | `any` | Emitido al salir con el mouse   |
+| `avatarFocus`      | `any` | Emitido al recibir foco         |
+| `avatarBlur`       | `any` | Emitido al perder foco          |
+| `imageLoad`        | `any` | Emitido al cargar imagen        |
+| `imageError`       | `any` | Emitido al fallar imagen        |
+
+## 📏 Tamaños
+
+| Tamaño | Width | Height | Font-size | Uso               |
+| ------ | ----- | ------ | --------- | ----------------- |
+| `xs`   | 20px  | 20px   | 8px       | Muy compacto      |
+| `sm`   | 24px  | 24px   | 12px      | Compacto          |
+| `md`   | 32px  | 32px   | 16px      | Mediano (default) |
+| `lg`   | 40px  | 40px   | 16px      | Grande            |
+| `xl`   | 48px  | 48px   | 20px      | Extra grande      |
+| `2xl`  | 56px  | 56px   | 20px      | Muy grande        |
+| `3xl`  | 64px  | 64px   | 24px      | Extra grande      |
+
+## 🎨 Variantes
+
+| Variante   | Descripción              | Uso                 |
+| ---------- | ------------------------ | ------------------- |
+| `circular` | Forma circular (default) | Avatares de usuario |
+| `rounded`  | Bordes redondeados       | Avatares modernos   |
+| `square`   | Forma cuadrada           | Avatares técnicos   |
+
+## 🎯 Colores
+
+| Color       | Descripción              | Uso                   |
+| ----------- | ------------------------ | --------------------- |
+| `primary`   | Color primario (default) | Usuarios principales  |
+| `secondary` | Color secundario         | Usuarios secundarios  |
+| `success`   | Color de éxito           | Usuarios activos      |
+| `warning`   | Color de advertencia     | Usuarios con alertas  |
+| `danger`    | Color de peligro         | Usuarios bloqueados   |
+| `info`      | Color informativo        | Usuarios informativos |
+| `neutral`   | Color neutro             | Usuarios genéricos    |
+
+## 📊 Estados
+
+| Estado    | Descripción          | Uso                    |
+| --------- | -------------------- | ---------------------- |
+| `online`  | Usuario en línea     | Usuarios conectados    |
+| `offline` | Usuario desconectado | Usuarios desconectados |
+| `away`    | Usuario ausente      | Usuarios ausentes      |
+| `busy`    | Usuario ocupado      | Usuarios ocupados      |
+| `none`    | Sin estado (default) | Sin indicador          |
+
+## 🏗️ Interfaces
+
+```typescript
+interface AvatarGroup {
+  src?: string;
+  alt?: string;
+  name?: string;
+  initials?: string;
+  color?: AvatarColor;
+  status?: AvatarStatus;
+}
+
 type AvatarVariant = "circular" | "rounded" | "square";
 type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
 type AvatarColor = "primary" | "secondary" | "success" | "warning" | "danger" | "info" | "neutral";
 type AvatarStatus = "online" | "offline" | "away" | "busy" | "none";
 ```
 
-## Métodos Públicos
+## 💡 Ejemplos Prácticos
 
-| Método      | Descripción                          |
-| ----------- | ------------------------------------ |
-| `focus()`   | Enfoca el avatar (si es interactivo) |
-| `blur()`    | Desenfoca el avatar                  |
-| `refresh()` | Recarga la imagen del avatar         |
-
-## Ejemplos de Uso
-
-### Variantes
+### 1. Avatar Básico con Imagen
 
 ```html
-<!-- Circular (por defecto) -->
-<app-avatar name="Juan Pérez" variant="circular"> </app-avatar>
-
-<!-- Redondeado -->
-<app-avatar name="María García" variant="rounded"> </app-avatar>
-
-<!-- Cuadrado -->
-<app-avatar name="Carlos López" variant="square"> </app-avatar>
+<openiis-avatar src="/assets/avatar.jpg" alt="Foto de Juan Pérez" name="Juan Pérez" size="md" variant="circular" color="primary"> </openiis-avatar>
 ```
 
-### Tamaños
-
-```html
-<app-avatar name="A" size="xs"> </app-avatar>
-<app-avatar name="B" size="sm"> </app-avatar>
-<app-avatar name="C" size="md"> </app-avatar>
-<app-avatar name="D" size="lg"> </app-avatar>
-<app-avatar name="E" size="xl"> </app-avatar>
-<app-avatar name="F" size="2xl"> </app-avatar>
-<app-avatar name="G" size="3xl"> </app-avatar>
-```
-
-### Colores
-
-```html
-<app-avatar name="P" color="primary"> </app-avatar>
-<app-avatar name="S" color="secondary"> </app-avatar>
-<app-avatar name="O" color="success"> </app-avatar>
-<app-avatar name="W" color="warning"> </app-avatar>
-<app-avatar name="D" color="danger"> </app-avatar>
-<app-avatar name="I" color="info"> </app-avatar>
-<app-avatar name="N" color="neutral"> </app-avatar>
-```
-
-### Con Imagen
-
-```html
-<app-avatar src="assets/avatars/user1.jpg" name="Juan Pérez" alt="Juan Pérez"> </app-avatar>
-
-<app-avatar src="assets/avatars/user2.jpg" name="María García" size="lg" bordered="true"> </app-avatar>
-```
-
-### Con Estados de Presencia
-
-```html
-<app-avatar name="Juan" status="online" showStatus="true"> </app-avatar>
-<app-avatar name="María" status="away" showStatus="true"> </app-avatar>
-<app-avatar name="Carlos" status="busy" showStatus="true"> </app-avatar>
-<app-avatar name="Ana" status="offline" showStatus="true"> </app-avatar>
-```
-
-### Con Badges
-
-```html
-<!-- Badge con número -->
-<app-avatar name="Juan" badge="5"> </app-avatar>
-
-<!-- Badge con texto -->
-<app-avatar name="María" badge="VIP"> </app-avatar>
-
-<!-- Badge de punto -->
-<app-avatar name="Carlos" badge="dot"> </app-avatar>
-```
-
-### Interactivos
-
-```html
-<!-- Clickeable -->
-<app-avatar name="Juan" clickable="true" (avatarClick)="onAvatarClick($event)"> </app-avatar>
-
-<!-- Interactivo con efectos -->
-<app-avatar name="María" interactive="true" (avatarMouseEnter)="onMouseEnter()"> </app-avatar>
-```
-
-### Con Iconos
-
-```html
-<app-avatar icon="fas fa-user"> </app-avatar>
-<app-avatar icon="fas fa-crown" color="warning"> </app-avatar>
-<app-avatar icon="fas fa-robot" color="info" variant="square"> </app-avatar>
-```
-
-### Estado de Carga
-
-```html
-<app-avatar name="Juan" loading="true"> </app-avatar> <app-avatar src="assets/loading-image.jpg" loading="true"> </app-avatar>
-```
-
-### Tamaño Personalizado
-
-```html
-<app-avatar name="Juan" customSize="80px"> </app-avatar> <app-avatar name="María" customSize="120px"> </app-avatar>
-```
-
-## Casos de Uso Comunes
-
-### Lista de Usuarios
-
-```html
-<div class="users-list">
-  <div *ngFor="let user of users" class="user-item">
-    <app-avatar [src]="user.avatar" [name]="user.name" [status]="user.status" showStatus="true" size="md"> </app-avatar>
-    <div class="user-info">
-      <h3>{{ user.name }}</h3>
-      <p>{{ user.email }}</p>
-    </div>
-  </div>
-</div>
-```
-
-### Grupo de Avatares
-
-```html
-<div class="avatar-group">
-  <app-avatar *ngFor="let member of teamMembers" [src]="member.avatar" [name]="member.name" size="sm"> </app-avatar>
-</div>
-```
-
-### Avatar con Notificaciones
-
-```html
-<app-avatar [src]="currentUser.avatar" [name]="currentUser.name" [badge]="unreadCount" clickable="true" (avatarClick)="openProfile()"> </app-avatar>
-```
-
-### Comentarios
-
-```html
-<div class="comment">
-  <app-avatar [src]="comment.author.avatar" [name]="comment.author.name" size="sm"> </app-avatar>
-  <div class="comment-content">
-    <h4>{{ comment.author.name }}</h4>
-    <p>{{ comment.text }}</p>
-  </div>
-</div>
-```
-
-### Perfil de Usuario
-
-```html
-<div class="user-profile">
-  <app-avatar [src]="user.avatar" [name]="user.name" [status]="user.status" showStatus="true" size="3xl" bordered="true"> </app-avatar>
-  <h1>{{ user.name }}</h1>
-  <p>{{ user.title }}</p>
-</div>
-```
-
-## Estilos CSS Personalizables
-
-```css
-.avatar {
-  --avatar-border-radius: 50%;
-  --avatar-border-width: 2px;
-  --avatar-border-color: transparent;
-  --avatar-background: var(--color-primary-100);
-  --avatar-color: var(--color-primary-700);
-  --avatar-font-weight: 600;
-  --avatar-transition: all 0.2s ease;
+```typescript
+export class MyComponent {
+  // Avatar básico con imagen
 }
 ```
 
-## Accesibilidad
+### 2. Avatar con Iniciales
 
-- **Roles ARIA**: `img` por defecto, `button` si es interactivo
-- **Etiquetas descriptivas**: Auto-generadas desde el nombre
-- **Navegación por teclado**: Enter y Space para activar
-- **Soporte para lectores de pantalla**: Descripciones contextuales
-- **Alto contraste**: Estilos específicos para modo alto contraste
-- **Movimiento reducido**: Respeta `prefers-reduced-motion`
+```html
+<openiis-avatar name="María García López" size="lg" variant="rounded" color="success" [showStatus]="true" status="online"> </openiis-avatar>
+```
 
-## Mejores Prácticas
+```typescript
+export class MyComponent {
+  // Avatar con iniciales generadas automáticamente
+}
+```
 
-1. **Usar imágenes optimizadas**: Cargar imágenes en tamaños apropiados
-2. **Proporcionar texto alternativo**: Siempre incluir `alt` o `name`
-3. **Manejar errores de imagen**: El componente fallback automáticamente
-4. **Usar colores semánticos**: Elegir colores apropiados para el contexto
-5. **Considerar la accesibilidad**: Incluir etiquetas ARIA apropiadas
-6. **Optimizar para performance**: Usar lazy loading cuando sea posible
+### 3. Avatar con Icono
 
-## Notas de Implementación
+```html
+<openiis-avatar icon="person" size="xl" variant="circular" color="info" [clickable]="true" (avatarClick)="onAvatarClick($event)"> </openiis-avatar>
+```
 
-- El componente genera automáticamente iniciales desde el nombre
-- Maneja errores de imagen con fallback automático
-- Incluye soporte para grupos de avatares con CSS
-- Utiliza variables CSS para personalización fácil
-- Es completamente responsive y adaptable
-- Soporta tanto temas claros como oscuros
+```typescript
+export class MyComponent {
+  onAvatarClick(event: any) {
+    console.log("Avatar clicked:", event);
+  }
+}
+```
 
-## Dependencias
+### 4. Avatar con Badge
 
-- `@angular/common` - Para directivas estructurales
-- `@angular/core` - Para componente base
-- FontAwesome - Para iconos de fallback y estados
+```html
+<openiis-avatar src="/assets/user-avatar.jpg" name="Ana Martínez" size="md" variant="circular" color="primary" badge="3" [showStatus]="true" status="online"> </openiis-avatar>
+```
+
+```typescript
+export class MyComponent {
+  // Avatar con badge de notificaciones
+}
+```
+
+### 5. Avatar con Estados
+
+```html
+<!-- Usuario en línea -->
+<openiis-avatar name="Carlos Ruiz" size="md" status="online" [showStatus]="true"> </openiis-avatar>
+
+<!-- Usuario ausente -->
+<openiis-avatar name="Laura Silva" size="md" status="away" [showStatus]="true"> </openiis-avatar>
+
+<!-- Usuario ocupado -->
+<openiis-avatar name="Pedro Torres" size="md" status="busy" [showStatus]="true"> </openiis-avatar>
+
+<!-- Usuario desconectado -->
+<openiis-avatar name="Sofia Vega" size="md" status="offline" [showStatus]="true"> </openiis-avatar>
+```
+
+```typescript
+export class MyComponent {
+  // Avatares con diferentes estados
+}
+```
+
+### 6. Avatar con Diferentes Tamaños
+
+```html
+<openiis-avatar name="Usuario" size="xs" variant="circular"> </openiis-avatar>
+
+<openiis-avatar name="Usuario" size="sm" variant="circular"> </openiis-avatar>
+
+<openiis-avatar name="Usuario" size="md" variant="circular"> </openiis-avatar>
+
+<openiis-avatar name="Usuario" size="lg" variant="circular"> </openiis-avatar>
+
+<openiis-avatar name="Usuario" size="xl" variant="circular"> </openiis-avatar>
+
+<openiis-avatar name="Usuario" size="2xl" variant="circular"> </openiis-avatar>
+
+<openiis-avatar name="Usuario" size="3xl" variant="circular"> </openiis-avatar>
+```
+
+```typescript
+export class MyComponent {
+  // Avatares con diferentes tamaños
+}
+```
+
+### 7. Avatar con Diferentes Variantes
+
+```html
+<!-- Circular -->
+<openiis-avatar name="Usuario" variant="circular" color="primary"> </openiis-avatar>
+
+<!-- Rounded -->
+<openiis-avatar name="Usuario" variant="rounded" color="secondary"> </openiis-avatar>
+
+<!-- Square -->
+<openiis-avatar name="Usuario" variant="square" color="info"> </openiis-avatar>
+```
+
+```typescript
+export class MyComponent {
+  // Avatares con diferentes variantes
+}
+```
+
+### 8. Avatar Interactivo
+
+```html
+<openiis-avatar src="/assets/profile.jpg" name="Roberto Díaz" size="lg" variant="circular" color="primary" [interactive]="true" [bordered]="true" (avatarClick)="onProfileClick($event)" (avatarMouseEnter)="onMouseEnter()" (avatarMouseLeave)="onMouseLeave()"> </openiis-avatar>
+```
+
+```typescript
+export class MyComponent {
+  onProfileClick(event: any) {
+    console.log("Perfil clickeado");
+    this.router.navigate(["/profile"]);
+  }
+
+  onMouseEnter() {
+    console.log("Mouse sobre avatar");
+  }
+
+  onMouseLeave() {
+    console.log("Mouse salió del avatar");
+  }
+}
+```
+
+### 9. Avatar con Carga
+
+```html
+<openiis-avatar src="/assets/large-avatar.jpg" name="Usuario" size="xl" [loading]="isLoading" (imageLoad)="onImageLoad()" (imageError)="onImageError()"> </openiis-avatar>
+```
+
+```typescript
+export class MyComponent {
+  isLoading = true;
+
+  onImageLoad() {
+    this.isLoading = false;
+    console.log("Imagen cargada correctamente");
+  }
+
+  onImageError() {
+    this.isLoading = false;
+    console.log("Error al cargar imagen");
+  }
+}
+```
+
+### 10. Avatar con Tamaño Personalizado
+
+```html
+<openiis-avatar name="Usuario Especial" customSize="80px" variant="circular" color="warning" [bordered]="true"> </openiis-avatar>
+```
+
+```typescript
+export class MyComponent {
+  // Avatar con tamaño personalizado
+}
+```
+
+## ⚡ Comportamiento
+
+### Estados
+
+- **Normal**: Estado por defecto
+- **Clickeable**: Con efectos hover y focus
+- **Interactivo**: Con eventos de mouse y teclado
+- **Loading**: Con spinner de carga
+- **Con borde**: Con borde destacado
+
+### Interacciones
+
+- **Clic**: Ejecuta acción si es clickeable/interactivo
+- **Teclado**: Enter/Space para activar
+- **Mouse**: Hover effects y eventos
+- **Imagen**: Manejo de carga y errores
+
+### Responsive
+
+- **Móvil**: Tamaños reducidos automáticamente
+- **Desktop**: Tamaños completos
+- **Accesibilidad**: Soporte completo para lectores
+
+## ✅ Características
+
+- ✅ 3 variantes de forma (circular, rounded, square)
+- ✅ 7 tamaños configurables (xs, sm, md, lg, xl, 2xl, 3xl)
+- ✅ 7 colores (primary, secondary, success, warning, danger, info, neutral)
+- ✅ 5 estados de usuario (online, offline, away, busy, none)
+- ✅ Soporte para imágenes con fallback
+- ✅ Generación automática de iniciales
+- ✅ Iconos Material Icons
+- ✅ Badges configurables
+- ✅ Estados clickeable e interactivo
+- ✅ Bordes personalizables
+- ✅ Estados loading y error
+- ✅ Responsive design
+- ✅ Accesibilidad completa
+- ✅ Navegación por teclado
+- ✅ Tooltips personalizables
+
+## 🎨 Estilos Automáticos
+
+- **Variantes**: Cada variante tiene forma única
+- **Estados**: Hover, active, focus, loading
+- **Responsive**: Se adapta automáticamente en móviles
+- **Animaciones**: Transiciones suaves
+- **Accesibilidad**: Indicadores de foco y ARIA
+
+## 🔧 Funcionalidades Especiales
+
+### Generación de Iniciales
+
+```typescript
+// Genera automáticamente iniciales del nombre
+name = "Juan Carlos Pérez"; // Genera "JC"
+initials = "ABC"; // Usa iniciales personalizadas
+```
+
+### Estados de Usuario
+
+```typescript
+// Estados con iconos y colores automáticos
+status = "online"; // Verde con check
+status = "away"; // Amarillo con reloj
+status = "busy"; // Rojo con exclamación
+```
+
+### Manejo de Imágenes
+
+```typescript
+// Fallback automático si la imagen falla
+src = "/avatar.jpg"; // Intenta cargar imagen
+// Si falla, muestra iniciales o icono
+```
+
+### Badges Inteligentes
+
+```typescript
+// Diferentes tipos de badges
+badge = "3"; // Número
+badge = "Nuevo"; // Texto
+badge = "dot"; // Solo punto
+```
+
+## 🚨 Solución de Problemas
+
+| Problema                  | Solución                                                     |
+| ------------------------- | ------------------------------------------------------------ |
+| Avatar no responde        | Verifica que `clickable` o `interactive` esté en `true`      |
+| Imagen no aparece         | Verifica que `src` tenga URL válida y `alt` esté configurado |
+| Iniciales no aparecen     | Verifica que `name` esté definido o usa `initials`           |
+| Estado no se muestra      | Verifica que `showStatus` esté en `true`                     |
+| Badge no aparece          | Verifica que `badge` esté definido                           |
+| Responsive no funciona    | Verifica que el CSS responsive esté cargado                  |
+| Accesibilidad no funciona | Verifica que `ariaLabel` esté configurado                    |
+
+## 🐞 Reportar Problemas
+
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)
