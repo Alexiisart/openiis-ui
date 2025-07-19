@@ -1,396 +1,446 @@
-# InputComponent
+# Input
 
-Componente Input elegante y reutilizable que proporciona una experiencia de entrada de datos unificada y accesible.
+Componente de input elegante y reutilizable con soporte completo para formularios reactivos, validación automática, formateo inteligente y múltiples variantes visuales.
 
-## Características
-
-- ✅ **Múltiples tipos**: text, email, password, search, url, tel, number
-- ✅ **Soporte para textarea** con redimensionamiento vertical
-- ✅ **4 variantes de estilo**: default, filled, outlined, minimal
-- ✅ **5 tamaños**: xs, sm, md, lg, xl
-- ✅ **Iconos integrados** a izquierda y derecha
-- ✅ **Botón de limpiar** opcional
-- ✅ **Contador de caracteres** con límite máximo
-- ✅ **Estados de validación** con mensajes de error y ayuda
-- ✅ **Autocomplete desactivado** por seguridad (siempre "off")
-- ✅ **Reactive Forms** compatible con ControlValueAccessor
-- ✅ **Accesibilidad completa** con ARIA labels
-- ✅ **Responsive** optimizado para móviles
-- ✅ **Animaciones fluidas** con transiciones suaves
-- ✅ **Formato personalizado** para teléfonos y números
-
-## Uso Básico
-
-```html
-<!-- Input simple -->
-<openiis-input label="Nombre completo" placeholder="Ingresa tu nombre" [(value)]="userName"></openiis-input>
-
-<!-- Input con icono -->
-<openiis-input type="email" label="Correo electrónico" placeholder="usuario@ejemplo.com" iconLeft="mail" [(value)]="userEmail"></openiis-input>
-
-<!-- Textarea -->
-<openiis-input [isTextarea]="true" label="Descripción" placeholder="Describe tu experiencia..." [rows]="4" [(value)]="description"></openiis-input>
-```
-
-## Variantes
-
-### Default (Borde estándar)
-
-```html
-<openiis-input variant="default" label="Input estándar"></openiis-input>
-```
-
-### Filled (Fondo relleno)
-
-```html
-<openiis-input variant="filled" label="Input relleno"></openiis-input>
-```
-
-### Outlined (Borde doble)
-
-```html
-<openiis-input variant="outlined" label="Input con contorno"></openiis-input>
-```
-
-### Minimal (Solo línea inferior)
-
-```html
-<openiis-input variant="minimal" label="Input minimalista"></openiis-input>
-```
-
-## Tamaños
-
-```html
-<!-- Extra pequeño -->
-<openiis-input size="xs" label="Muy pequeño"></openiis-input>
-
-<!-- Pequeño -->
-<openiis-input size="sm" label="Pequeño"></openiis-input>
-
-<!-- Mediano (por defecto) -->
-<openiis-input size="md" label="Mediano"></openiis-input>
-
-<!-- Grande -->
-<openiis-input size="lg" label="Grande"></openiis-input>
-
-<!-- Extra grande -->
-<openiis-input size="xl" label="Muy grande"></openiis-input>
-```
-
-## Tipos de Input
-
-### Text Input
-
-```html
-<openiis-input type="text" label="Nombre" placeholder="Ingresa tu nombre" [(value)]="name"></openiis-input>
-```
-
-### Email Input
-
-```html
-<openiis-input type="email" label="Correo electrónico" placeholder="ejemplo@correo.com" iconLeft="mail" [enableValidation]="true" [(value)]="email"> </openiis-input>
-```
-
-### Password Input
-
-```html
-<openiis-input type="password" label="Contraseña" placeholder="Ingresa tu contraseña" iconLeft="lock" [minLength]="8" [enableValidation]="true" [(value)]="password"> </openiis-input>
-```
-
-### Teléfono con Formato Personalizado
-
-```html
-<!-- Teléfono México -->
-<openiis-input type="tel" label="Teléfono México" customFormat="(XXX) XXX-XXXX" iconLeft="phone" [(value)]="phoneNumber"> </openiis-input>
-
-<!-- Teléfono España -->
-<openiis-input type="tel" label="Teléfono España" customFormat="XXX XXX XXX" iconLeft="phone" [(value)]="phoneSpain"> </openiis-input>
-
-<!-- Teléfono Internacional -->
-<openiis-input type="tel" label="Teléfono Internacional" customFormat="+XX (XXX) XXX-XXXX" iconLeft="phone" [(value)]="phoneInternational"> </openiis-input>
-```
-
-### Number Input
-
-```html
-<openiis-input type="number" label="Cantidad" placeholder="0" [maxLength]="10" [(value)]="quantity"> </openiis-input>
-```
-
-### URL Input
-
-```html
-<openiis-input type="url" label="Sitio web" placeholder="ejemplo.com" iconLeft="link" [(value)]="website"> </openiis-input>
-```
-
-### Search Input
-
-```html
-<openiis-input type="search" label="Buscar" placeholder="Buscar productos..." iconLeft="search" [clearable]="true" [(value)]="searchTerm"> </openiis-input>
-```
-
-## Formato Personalizado
-
-El componente soporta formatos personalizados para teléfonos usando la propiedad `customFormat`:
-
-### Símbolos de Formato
-
-- **X o x**: Representa un dígito
-- **Otros caracteres**: Se mantienen como separadores (espacios, guiones, paréntesis, etc.)
-
-### Ejemplos de Formatos
-
-```html
-<!-- Formato México -->
-<openiis-input type="tel" customFormat="(XXX) XXX-XXXX" label="Teléfono MX"></openiis-input>
-<!-- Resultado: (555) 123-4567 -->
-
-<!-- Formato España -->
-<openiis-input type="tel" customFormat="XXX XXX XXX" label="Teléfono ES"></openiis-input>
-<!-- Resultado: 612 345 678 -->
-
-<!-- Formato Internacional -->
-<openiis-input type="tel" customFormat="+XX XXX XXX XXXX" label="Internacional"></openiis-input>
-<!-- Resultado: +52 555 123 4567 -->
-
-<!-- Formato USA -->
-<openiis-input type="tel" customFormat="XXX-XXX-XXXX" label="Teléfono USA"></openiis-input>
-<!-- Resultado: 555-123-4567 -->
-
-<!-- Formato con extensión -->
-<openiis-input type="tel" customFormat="(XXX) XXX-XXXX ext. XXXX" label="Con extensión"></openiis-input>
-<!-- Resultado: (555) 123-4567 ext. 1234 -->
-```
-
-## Autocomplete
-
-### Comportamiento de seguridad
-
-Por razones de seguridad, el componente **siempre** tiene el autocompletado desactivado:
-
-```html
-<!-- Todos los inputs tienen autocomplete="off" automáticamente -->
-<openiis-input type="text" label="Nombre"></openiis-input>
-<openiis-input type="email" label="Email"></openiis-input>
-<openiis-input type="password" label="Contraseña"></openiis-input>
-<openiis-input type="tel" label="Teléfono"></openiis-input>
-```
-
-### Características de seguridad
-
-- **Siempre "off"**: El autocompletado está desactivado por defecto y no se puede cambiar
-- **Protección de datos**: Previene el almacenamiento automático de información sensible
-- **Compatibilidad**: Funciona en todos los navegadores modernos
-- **Consistencia**: Comportamiento uniforme en todos los tipos de input
-- **Privacidad**: Ideal para formularios que manejan información sensible
-
-## Estados y Validación
-
-### Con texto de ayuda
-
-```html
-<openiis-input label="Contraseña" type="password" helpText="Mínimo 8 caracteres con letras y números"></openiis-input>
-```
-
-### Con texto de error
-
-```html
-<openiis-input label="Email" type="email" errorText="Por favor ingresa un email válido"></openiis-input>
-```
-
-### Disabled
-
-```html
-<openiis-input label="Campo deshabilitado" [disabled]="true"></openiis-input>
-```
-
-### Readonly
-
-```html
-<openiis-input label="Solo lectura" [readonly]="true" value="Valor fijo"></openiis-input>
-```
-
-## Características Avanzadas
-
-### Con iconos y botón de limpiar
-
-```html
-<openiis-input type="search" label="Búsqueda avanzada" placeholder="Buscar productos..." iconLeft="search" iconRight="tune" [clearable]="true" [(value)]="searchQuery"> </openiis-input>
-```
-
-### Contador de caracteres
-
-```html
-<openiis-input [isTextarea]="true" label="Comentario" [maxLength]="280" [showCharacterCount]="true" [(value)]="comment"> </openiis-input>
-```
-
-### Textarea con múltiples filas
-
-```html
-<openiis-input [isTextarea]="true" label="Mensaje" [rows]="6" placeholder="Escribe tu mensaje aquí..." [(value)]="message"> </openiis-input>
-```
-
-### Formulario completo con validaciones
-
-```html
-<!-- Información personal -->
-<openiis-input type="text" label="Nombre" iconLeft="person" [enableValidation]="true" [minLength]="2" [(value)]="profile.firstName"> </openiis-input>
-
-<openiis-input type="email" label="Email" iconLeft="mail" [enableValidation]="true" [(value)]="profile.email"> </openiis-input>
-
-<openiis-input type="tel" label="Teléfono" customFormat="(XXX) XXX-XXXX" iconLeft="phone" [enableValidation]="true" [(value)]="profile.phone"> </openiis-input>
-
-<!-- Campos de contraseña - autocompletado siempre desactivado -->
-<openiis-input type="password" label="Contraseña" iconLeft="lock" [enableValidation]="true" [minLength]="8" [(value)]="userData.password"> </openiis-input>
-```
-
-## Reactive Forms
+## 📦 Instalación
 
 ```typescript
-// En el componente
-form = this.fb.group({
-  name: ['', [Validators.required, Validators.minLength(2)]],
-  email: ['', [Validators.required, Validators.email]],
-  phone: ['', [Validators.required]],
-  description: ['', Validators.maxLength(500)]
-});
+import { OpeniisInputComponent } from 'openiis-ui';
 
-get nameError() {
-  const control = this.form.get('name');
-  if (control?.errors?.['required']) return 'El nombre es requerido';
-  if (control?.errors?.['minlength']) return 'Mínimo 2 caracteres';
-  return '';
-}
+@Component({
+  imports: [OpeniisInputComponent],
+})
 ```
 
+## ⚙️ Properties
+
+| Property              | Tipo             | Default     | Descripción                       |
+| --------------------- | ---------------- | ----------- | --------------------------------- |
+| `type`                | `InputType`      | `'text'`    | Tipo de input                     |
+| `variant`             | `InputVariant`   | `'default'` | Variante visual del input         |
+| `size`                | `InputSize`      | `'md'`      | Tamaño del input                  |
+| `label`               | `string`         | `''`        | Texto de la etiqueta              |
+| `placeholder`         | `string`         | `''`        | Texto del placeholder             |
+| `helpText`            | `string`         | `''`        | Texto de ayuda                    |
+| `errorText`           | `string`         | `''`        | Texto de error                    |
+| `value`               | `string`         | `''`        | Valor del input                   |
+| `disabled`            | `boolean`        | `false`     | Deshabilitar input                |
+| `readonly`            | `boolean`        | `false`     | Modo solo lectura                 |
+| `inputId`             | `string`         | `auto`      | ID único del input                |
+| `iconLeft`            | `string`         | `''`        | Icono izquierdo (Material)        |
+| `iconRight`           | `string`         | `''`        | Icono derecho (Material)          |
+| `clearable`           | `boolean`        | `false`     | Botón para limpiar                |
+| `maxLength`           | `number \| null` | `null`      | Longitud máxima                   |
+| `minLength`           | `number \| null` | `null`      | Longitud mínima                   |
+| `autocomplete`        | `string`         | `'off'`     | Valor de autocomplete             |
+| `showCharacterCount`  | `boolean`        | `false`     | Mostrar contador de caracteres    |
+| `isTextarea`          | `boolean`        | `false`     | Usar textarea en lugar de input   |
+| `rows`                | `number`         | `3`         | Filas del textarea                |
+| `ariaLabel`           | `string`         | `''`        | Etiqueta ARIA                     |
+| `ariaDescribedBy`     | `string`         | `''`        | Referencia ARIA describedby       |
+| `title`               | `string`         | `''`        | Título del tooltip                |
+| `extraClasses`        | `string`         | `''`        | Clases CSS adicionales            |
+| `customFormat`        | `string`         | `''`        | Formato personalizado (teléfonos) |
+| `enableValidation`    | `boolean`        | `true`      | Habilitar validación              |
+| `showValidationIcons` | `boolean`        | `true`      | Mostrar iconos de validación      |
+
+## 📡 Events
+
+| Event              | Tipo               | Descripción                         |
+| ------------------ | ------------------ | ----------------------------------- |
+| `valueChange`      | `string`           | Emitido cuando cambia el valor      |
+| `validationChange` | `ValidationResult` | Emitido cuando cambia la validación |
+| `focusEvent`       | `FocusEvent`       | Emitido al obtener focus            |
+| `blurEvent`        | `FocusEvent`       | Emitido al perder focus             |
+| `keydownEvent`     | `KeyboardEvent`    | Emitido en keydown                  |
+| `keyupEvent`       | `KeyboardEvent`    | Emitido en keyup                    |
+
+## 🎨 Tipos de Input
+
+| Tipo       | Uso                  | Validación          | Formateo                  |
+| ---------- | -------------------- | ------------------- | ------------------------- |
+| `text`     | Texto general        | Longitud mín/máx    | Capitalización de nombres |
+| `email`    | Direcciones de email | Formato de email    | Conversión a minúsculas   |
+| `password` | Contraseñas          | Longitud mínima (8) | Toggle de visibilidad     |
+| `search`   | Búsquedas            | Longitud mín/máx    | Sin formateo              |
+| `url`      | URLs                 | Formato básico      | Auto-agregar https://     |
+| `tel`      | Teléfonos            | Solo números        | Formato personalizado     |
+| `number`   | Números              | Solo números        | Sin formateo              |
+
+## 🎨 Variantes Visuales
+
+| Variante   | Descripción                 |
+| ---------- | --------------------------- |
+| `default`  | Input estándar con borde    |
+| `filled`   | Input con fondo sólido      |
+| `outlined` | Input solo con borde        |
+| `minimal`  | Input minimalista sin borde |
+| `error`    | Input con estado de error   |
+
+## 📏 Tamaños
+
+| Tamaño | Padding | Font-size | Uso               |
+| ------ | ------- | --------- | ----------------- |
+| `xs`   | 4px     | 12px      | Muy compacto      |
+| `sm`   | 8px     | 13px      | Compacto          |
+| `md`   | 12px    | 14px      | Mediano (default) |
+| `lg`   | 16px    | 16px      | Grande            |
+| `xl`   | 20px    | 18px      | Muy grande        |
+
+## 💡 Ejemplos Prácticos
+
+### 1. Input Básico
+
 ```html
-<form [formGroup]="form">
-  <openiis-input formControlName="name" label="Nombre" [errorText]="nameError"> </openiis-input>
-
-  <openiis-input formControlName="email" type="email" label="Email" iconLeft="mail"> </openiis-input>
-
-  <openiis-input formControlName="phone" type="tel" customFormat="(XXX) XXX-XXXX" label="Teléfono" iconLeft="phone"> </openiis-input>
-
-  <openiis-input formControlName="description" [isTextarea]="true" label="Descripción" [maxLength]="500" [showCharacterCount]="true"> </openiis-input>
-</form>
-```
-
-## Eventos
-
-```html
-<openiis-input label="Input con eventos" (valueChange)="onValueChange($event)" (focusEvent)="onFocus($event)" (blurEvent)="onBlur($event)" (keydownEvent)="onKeyDown($event)"> </openiis-input>
+<openiis-input label="Nombre completo" placeholder="Ingresa tu nombre" [value]="fullName" (valueChange)="onNameChange($event)"> </openiis-input>
 ```
 
 ```typescript
-onValueChange(value: string) {
-  console.log('Nuevo valor:', value);
-}
+export class MyComponent {
+  fullName = "";
 
-onFocus(event: FocusEvent) {
-  console.log('Input enfocado');
-}
-
-onKeyDown(event: KeyboardEvent) {
-  if (event.key === 'Enter') {
-    console.log('Enter presionado');
+  onNameChange(value: string) {
+    this.fullName = value;
+    console.log("Name changed:", value);
   }
 }
 ```
 
-## Propiedades
+### 2. Input con Formulario Reactivo
 
-| Propiedad             | Tipo             | Default     | Descripción                  |
-| --------------------- | ---------------- | ----------- | ---------------------------- |
-| `type`                | `InputType`      | `'text'`    | Tipo de input                |
-| `variant`             | `InputVariant`   | `'default'` | Variante visual              |
-| `size`                | `InputSize`      | `'md'`      | Tamaño del input             |
-| `label`               | `string`         | `''`        | Etiqueta del input           |
-| `placeholder`         | `string`         | `''`        | Texto placeholder            |
-| `helpText`            | `string`         | `''`        | Texto de ayuda               |
-| `errorText`           | `string`         | `''`        | Texto de error               |
-| `value`               | `string`         | `''`        | Valor del input              |
-| `disabled`            | `boolean`        | `false`     | Estado disabled              |
-| `readonly`            | `boolean`        | `false`     | Estado readonly              |
-| `iconLeft`            | `string`         | `''`        | Icono izquierdo              |
-| `iconRight`           | `string`         | `''`        | Icono derecho                |
-| `clearable`           | `boolean`        | `false`     | Mostrar botón limpiar        |
-| `maxLength`           | `number \| null` | `null`      | Máximo de caracteres         |
-| `minLength`           | `number \| null` | `null`      | Mínimo de caracteres         |
-| `autocomplete`        | `string`         | `'off'`     | Siempre "off" (solo lectura) |
-| `showCharacterCount`  | `boolean`        | `false`     | Mostrar contador             |
-| `isTextarea`          | `boolean`        | `false`     | Usar textarea                |
-| `rows`                | `number`         | `3`         | Filas del textarea           |
-| `customFormat`        | `string`         | `''`        | Formato personalizado (tel)  |
-| `enableValidation`    | `boolean`        | `true`      | Habilitar validación         |
-| `showValidationIcons` | `boolean`        | `true`      | Mostrar iconos de validación |
-| `inputId`             | `string`         | `auto`      | ID del input                 |
-| `ariaLabel`           | `string`         | `''`        | ARIA label                   |
-| `extraClasses`        | `string`         | `''`        | Clases CSS adicionales       |
+```html
+<form [formGroup]="userForm">
+  <openiis-input label="Email" type="email" placeholder="tu@email.com" formControlName="email" helpText="Usaremos este email para contactarte" [showValidationIcons]="true" (validationChange)="onEmailValidation($event)"> </openiis-input>
 
-## Eventos
+  <openiis-input label="Contraseña" type="password" placeholder="Mínimo 8 caracteres" formControlName="password" [minLength]="8" [clearable]="true" (validationChange)="onPasswordValidation($event)"> </openiis-input>
 
-| Evento             | Tipo               | Descripción          |
-| ------------------ | ------------------ | -------------------- |
-| `valueChange`      | `string`           | Cambio de valor      |
-| `validationChange` | `ValidationResult` | Cambio de validación |
-| `focusEvent`       | `FocusEvent`       | Input enfocado       |
-| `blurEvent`        | `FocusEvent`       | Input desenfocar     |
-| `keydownEvent`     | `KeyboardEvent`    | Tecla presionada     |
-| `keyupEvent`       | `KeyboardEvent`    | Tecla liberada       |
-
-## Métodos Públicos
+  <openiis-input label="Teléfono" type="tel" placeholder="(123) 456-7890" formControlName="phone" customFormat="(XXX) XXX-XXXX" iconLeft="phone"> </openiis-input>
+</form>
+```
 
 ```typescript
-// Obtener referencia del componente
-@ViewChild(OpeniisInputComponent) inputComponent!: OpeniisInputComponent;
+import { FormBuilder, FormGroup } from "@angular/forms";
 
-// Enfocar el input
-this.inputComponent.focus();
+export class MyComponent {
+  userForm: FormGroup;
 
-// Seleccionar todo el texto
-this.inputComponent.selectAll();
+  constructor(private fb: FormBuilder) {
+    this.userForm = this.fb.group({
+      email: [""],
+      password: [""],
+      phone: [""],
+    });
+  }
 
-// Limpiar el valor
-this.inputComponent.clearValue();
+  onEmailValidation(result: ValidationResult) {
+    if (!result.isValid) {
+      console.log("Email error:", result.message);
+    }
+  }
+
+  onPasswordValidation(result: ValidationResult) {
+    if (!result.isValid) {
+      console.log("Password error:", result.message);
+    }
+  }
+}
 ```
 
-## Personalización
-
-El componente usa las variables CSS del sistema de diseño para mantener consistencia visual:
-
-```css
-/* Variables disponibles para personalización */
---color-primary: #14b8a6;
---color-surface: #f8fafc;
---color-border: #e2e8f0;
---radius-md: 0.375rem;
---space-2: 0.5rem;
---shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-```
-
-## Ejemplos de Uso Completos
-
-### Formulario de Registro
+### 3. Input con Diferentes Tipos
 
 ```html
-<form class="registration-form">
-  <openiis-input type="text" label="Nombre" iconLeft="person" [enableValidation]="true" [minLength]="2" [(value)]="user.firstName"> </openiis-input>
+<openiis-input label="URL del sitio web" type="url" placeholder="https://ejemplo.com" [value]="websiteUrl" (valueChange)="onWebsiteChange($event)" iconLeft="link"> </openiis-input>
 
-  <openiis-input type="email" label="Correo electrónico" iconLeft="mail" [enableValidation]="true" [(value)]="user.email"> </openiis-input>
+<openiis-input label="Buscar productos" type="search" placeholder="Buscar..." [value]="searchTerm" (valueChange)="onSearchChange($event)" iconLeft="search" [clearable]="true"> </openiis-input>
 
-  <openiis-input type="tel" label="Teléfono" customFormat="(XXX) XXX-XXXX" iconLeft="phone" [enableValidation]="true" [(value)]="user.phone"> </openiis-input>
-
-  <openiis-input type="password" label="Contraseña" iconLeft="lock" [enableValidation]="true" [minLength]="8" helpText="Mínimo 8 caracteres" [(value)]="user.password"> </openiis-input>
-</form>
+<openiis-input label="Edad" type="number" placeholder="Ingresa tu edad" [value]="age" (valueChange)="onAgeChange($event)" [maxLength]="3"> </openiis-input>
 ```
 
-### Formulario de Contacto
+```typescript
+export class MyComponent {
+  websiteUrl = "";
+  searchTerm = "";
+  age = "";
+
+  onWebsiteChange(value: string) {
+    this.websiteUrl = value;
+    console.log("Website:", value);
+  }
+
+  onSearchChange(value: string) {
+    this.searchTerm = value;
+    console.log("Search:", value);
+  }
+
+  onAgeChange(value: string) {
+    this.age = value;
+    console.log("Age:", value);
+  }
+}
+```
+
+### 4. Input con Diferentes Variantes
 
 ```html
-<form class="contact-form">
-  <openiis-input type="text" label="Asunto" iconLeft="subject" [enableValidation]="true" [minLength]="5" [(value)]="contact.subject"> </openiis-input>
+<openiis-input label="Input estándar" variant="default" placeholder="Variante default" [value]="defaultValue" (valueChange)="onDefaultChange($event)"> </openiis-input>
 
-  <openiis-input [isTextarea]="true" label="Mensaje" placeholder="Describe tu consulta..." [rows]="5" [maxLength]="1000" [showCharacterCount]="true" [enableValidation]="true" [minLength]="20" [(value)]="contact.message"> </openiis-input>
+<openiis-input label="Input con fondo" variant="filled" placeholder="Variante filled" [value]="filledValue" (valueChange)="onFilledChange($event)"> </openiis-input>
 
-  <openiis-input type="url" label="Sitio web (opcional)" placeholder="https://ejemplo.com" iconLeft="link" [(value)]="contact.website"> </openiis-input>
-</form>
+<openiis-input label="Input con borde" variant="outlined" placeholder="Variante outlined" [value]="outlinedValue" (valueChange)="onOutlinedChange($event)"> </openiis-input>
+
+<openiis-input label="Input minimalista" variant="minimal" placeholder="Variante minimal" [value]="minimalValue" (valueChange)="onMinimalChange($event)"> </openiis-input>
 ```
+
+```typescript
+export class MyComponent {
+  defaultValue = "";
+  filledValue = "";
+  outlinedValue = "";
+  minimalValue = "";
+
+  onDefaultChange(value: string) {
+    this.defaultValue = value;
+  }
+
+  onFilledChange(value: string) {
+    this.filledValue = value;
+  }
+
+  onOutlinedChange(value: string) {
+    this.outlinedValue = value;
+  }
+
+  onMinimalChange(value: string) {
+    this.minimalValue = value;
+  }
+}
+```
+
+### 5. Input con Diferentes Tamaños
+
+```html
+<openiis-input label="Muy pequeño" size="xs" placeholder="Tamaño xs" [value]="xsValue" (valueChange)="onXsChange($event)"> </openiis-input>
+
+<openiis-input label="Pequeño" size="sm" placeholder="Tamaño sm" [value]="smValue" (valueChange)="onSmChange($event)"> </openiis-input>
+
+<openiis-input label="Mediano" size="md" placeholder="Tamaño md (default)" [value]="mdValue" (valueChange)="onMdChange($event)"> </openiis-input>
+
+<openiis-input label="Grande" size="lg" placeholder="Tamaño lg" [value]="lgValue" (valueChange)="onLgChange($event)"> </openiis-input>
+
+<openiis-input label="Muy grande" size="xl" placeholder="Tamaño xl" [value]="xlValue" (valueChange)="onXlChange($event)"> </openiis-input>
+```
+
+```typescript
+export class MyComponent {
+  xsValue = "";
+  smValue = "";
+  mdValue = "";
+  lgValue = "";
+  xlValue = "";
+
+  onXsChange(value: string) {
+    this.xsValue = value;
+  }
+
+  onSmChange(value: string) {
+    this.smValue = value;
+  }
+
+  onMdChange(value: string) {
+    this.mdValue = value;
+  }
+
+  onLgChange(value: string) {
+    this.lgValue = value;
+  }
+
+  onXlChange(value: string) {
+    this.xlValue = value;
+  }
+}
+```
+
+### 6. Input con Iconos y Estados
+
+```html
+<openiis-input label="Email" type="email" placeholder="tu@email.com" iconLeft="email" iconRight="verified" [value]="email" (valueChange)="onEmailChange($event)" (validationChange)="onEmailValidation($event)" [showValidationIcons]="true"> </openiis-input>
+
+<openiis-input label="Contraseña" type="password" placeholder="Ingresa tu contraseña" iconLeft="lock" [value]="password" (valueChange)="onPasswordChange($event)" [clearable]="true" [minLength]="8"> </openiis-input>
+
+<openiis-input label="Comentario" [isTextarea]="true" [rows]="4" placeholder="Escribe tu comentario..." [value]="comment" (valueChange)="onCommentChange($event)" [showCharacterCount]="true" [maxLength]="500"> </openiis-input>
+```
+
+```typescript
+export class MyComponent {
+  email = "";
+  password = "";
+  comment = "";
+
+  onEmailChange(value: string) {
+    this.email = value;
+  }
+
+  onEmailValidation(result: ValidationResult) {
+    console.log("Email validation:", result);
+  }
+
+  onPasswordChange(value: string) {
+    this.password = value;
+  }
+
+  onCommentChange(value: string) {
+    this.comment = value;
+  }
+}
+```
+
+### 7. Input con Estados Avanzados
+
+```html
+<openiis-input label="Campo requerido" placeholder="Este campo es obligatorio" [value]="requiredField" (valueChange)="onRequiredChange($event)" errorText="Este campo es obligatorio" variant="error" [enableValidation]="true"> </openiis-input>
+
+<openiis-input label="Campo deshabilitado" placeholder="No puedes editar esto" [value]="disabledField" [disabled]="true" helpText="Este campo está deshabilitado"> </openiis-input>
+
+<openiis-input label="Campo solo lectura" placeholder="Solo para mostrar" [value]="readonlyField" [readonly]="true" helpText="Este campo es solo de lectura"> </openiis-input>
+```
+
+```typescript
+export class MyComponent {
+  requiredField = "";
+  disabledField = "Valor fijo";
+  readonlyField = "Información importante";
+
+  onRequiredChange(value: string) {
+    this.requiredField = value;
+  }
+}
+```
+
+### 8. Input con Formateo Personalizado
+
+```html
+<openiis-input label="Teléfono con formato" type="tel" placeholder="(123) 456-7890" customFormat="(XXX) XXX-XXXX" [value]="phoneNumber" (valueChange)="onPhoneChange($event)" iconLeft="phone"> </openiis-input>
+
+<openiis-input label="Tarjeta de crédito" type="text" placeholder="1234 5678 9012 3456" customFormat="XXXX XXXX XXXX XXXX" [value]="creditCard" (valueChange)="onCardChange($event)" iconLeft="credit_card" [maxLength]="19"> </openiis-input>
+
+<openiis-input label="Código postal" type="text" placeholder="12345" customFormat="XXXXX" [value]="zipCode" (valueChange)="onZipChange($event)" [maxLength]="5"> </openiis-input>
+```
+
+```typescript
+export class MyComponent {
+  phoneNumber = "";
+  creditCard = "";
+  zipCode = "";
+
+  onPhoneChange(value: string) {
+    this.phoneNumber = value;
+    console.log("Phone:", value);
+  }
+
+  onCardChange(value: string) {
+    this.creditCard = value;
+    console.log("Card:", value);
+  }
+
+  onZipChange(value: string) {
+    this.zipCode = value;
+    console.log("ZIP:", value);
+  }
+}
+```
+
+### 9. Input con Accesibilidad
+
+```html
+<openiis-input label="Campo accesible" placeholder="Ingresa información" [value]="accessibleField" (valueChange)="onAccessibleChange($event)" ariaLabel="Campo de información accesible" ariaDescribedBy="field-help" title="Campo con soporte completo de accesibilidad" (focusEvent)="onFocus($event)" (blurEvent)="onBlur($event)"> </openiis-input>
+
+<div id="field-help" class="sr-only">Este campo tiene soporte completo para lectores de pantalla</div>
+```
+
+```typescript
+export class MyComponent {
+  accessibleField = "";
+
+  onAccessibleChange(value: string) {
+    this.accessibleField = value;
+  }
+
+  onFocus(event: FocusEvent) {
+    console.log("Input focused");
+  }
+
+  onBlur(event: FocusEvent) {
+    console.log("Input blurred");
+  }
+}
+```
+
+## 🏗️ Interfaces
+
+```typescript
+type InputType = "text" | "email" | "password" | "search" | "url" | "tel" | "number";
+type InputVariant = "default" | "filled" | "outlined" | "minimal" | "error";
+type InputSize = "xs" | "sm" | "md" | "lg" | "xl";
+
+interface ValidationResult {
+  isValid: boolean;
+  message?: string;
+}
+```
+
+## ⚡ Comportamiento
+
+- **ControlValueAccessor**: Integración completa con formularios reactivos
+- **Validación automática**: Por tipo de input y longitud
+- **Formateo inteligente**: URLs, teléfonos, nombres, emails
+- **Estados visuales**: Hover, focus, disabled, readonly, error
+- **Accesibilidad**: Soporte completo para ARIA y navegación por teclado
+- **Responsive**: Se adapta automáticamente en móviles
+- **Anti-autocomplete**: Técnicas para deshabilitar autocompletado
+
+## ✅ Características
+
+- ✅ 7 tipos de input diferentes
+- ✅ 5 variantes visuales
+- ✅ 5 tamaños configurables
+- ✅ Integración con formularios reactivos
+- ✅ Validación automática por tipo
+- ✅ Formateo inteligente
+- ✅ Estados disabled y readonly
+- ✅ Textos de ayuda y error
+- ✅ Iconos izquierdos y derechos
+- ✅ Botón de limpiar
+- ✅ Toggle de contraseña
+- ✅ Contador de caracteres
+- ✅ Soporte para textarea
+- ✅ Accesibilidad completa
+- ✅ Navegación por teclado
+- ✅ Anti-autocomplete
+- ✅ Completamente responsive
+- ✅ Tooltips configurables
+- ✅ IDs únicos automáticos
+
+## 🎨 Estilos Automáticos
+
+- **Estados dinámicos**: Hover, focus, error, success
+- **Iconos de validación**: Check/error según estado
+- **Formateo visual**: Bordes, sombras, colores
+- **Responsive**: Tamaños adaptativos en móviles
+- **Animaciones**: Transiciones suaves
+
+## 🚨 Solución de Problemas
+
+| Problema                  | Solución                                          |
+| ------------------------- | ------------------------------------------------- |
+| Input no responde         | Verifica que no esté `disabled` o `readonly`      |
+| Formulario no funciona    | Asegúrate de usar `formControlName` correctamente |
+| Validación no funciona    | Verifica que `enableValidation` esté en `true`    |
+| Autocomplete aparece      | El componente tiene técnicas anti-autocomplete    |
+| Formateo no funciona      | Verifica `customFormat` para teléfonos            |
+| Estilos no se aplican     | Verifica que el tema Openiis UI esté configurado  |
+| Accesibilidad no funciona | Verifica `ariaLabel` y navegación por teclado     |
+
+## 🐞 Reportar Problemas
+
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)
