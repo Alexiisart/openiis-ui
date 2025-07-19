@@ -1,232 +1,412 @@
-# CheckboxComponent
+# Checkbox
 
-Componente de checkbox elegante y reutilizable para la aplicación de checklist.
+Componente de checkbox elegante y reutilizable con soporte completo para formularios reactivos, accesibilidad y múltiples variantes visuales.
 
-## Características
-
-- ✅ **7 tipos de estilo diferentes** (default, primary, success, warning, danger, subtle, outline)
-- ✅ **5 tamaños predefinidos** (xs, sm, md, lg, xl)
-- ✅ **Animaciones fluidas** con efectos de hover y focus
-- ✅ **Accesibilidad completa** con ARIA labels y navegación por teclado
-- ✅ **Estados avanzados** (disabled, indeterminate, error)
-- ✅ **Compatible con reactive forms** (ControlValueAccessor)
-- ✅ **Completamente responsivo** con adaptación móvil
-- ✅ **Textos de ayuda y error** integrados
-
-## Uso Básico
+## 📦 Instalación
 
 ```typescript
-import { CheckboxComponent } from '../shared/atomic/checkboxes';
+import { OpeniisCheckboxComponent } from 'openiis-ui';
 
 @Component({
-  imports: [CheckboxComponent]
+  imports: [OpeniisCheckboxComponent],
 })
 ```
 
-```html
-<!-- Checkbox simple -->
-<app-checkbox label="Acepto los términos" [checked]="accepted" (checkedChange)="onAcceptedChange($event)"> </app-checkbox>
-```
+## ⚙️ Properties
 
-## Tipos Disponibles
+| Property          | Tipo           | Default     | Descripción                 |
+| ----------------- | -------------- | ----------- | --------------------------- |
+| `type`            | `CheckboxType` | `'default'` | Tipo visual del checkbox    |
+| `size`            | `CheckboxSize` | `'md'`      | Tamaño del checkbox         |
+| `label`           | `string`       | `''`        | Texto de la etiqueta        |
+| `helpText`        | `string`       | `''`        | Texto de ayuda              |
+| `errorText`       | `string`       | `''`        | Texto de error              |
+| `checked`         | `boolean`      | `false`     | Estado del checkbox         |
+| `disabled`        | `boolean`      | `false`     | Deshabilitar checkbox       |
+| `indeterminate`   | `boolean`      | `false`     | Estado indeterminado        |
+| `inputId`         | `string`       | `auto`      | ID único del checkbox       |
+| `ariaLabel`       | `string`       | `''`        | Etiqueta ARIA               |
+| `ariaDescribedBy` | `string`       | `''`        | Referencia ARIA describedby |
+| `title`           | `string`       | `''`        | Título del tooltip          |
+| `extraClasses`    | `string`       | `''`        | Clases CSS adicionales      |
 
-### Default
+## 📡 Events
 
-```html
-<app-checkbox type="default" label="Checkbox estándar"></app-checkbox>
-```
-
-### Primary
-
-```html
-<app-checkbox type="primary" label="Acción principal"></app-checkbox>
-```
-
-### Success
-
-```html
-<app-checkbox type="success" label="Tarea completada"></app-checkbox>
-```
-
-### Warning
-
-```html
-<app-checkbox type="warning" label="Requiere atención"></app-checkbox>
-```
-
-### Danger
-
-```html
-<app-checkbox type="danger" label="Acción crítica"></app-checkbox>
-```
-
-### Subtle
-
-```html
-<app-checkbox type="subtle" label="Opción sutil"></app-checkbox>
-```
-
-### Outline
-
-```html
-<app-checkbox type="outline" label="Solo borde"></app-checkbox>
-```
-
-## Tamaños
-
-```html
-<!-- Extra pequeño -->
-<app-checkbox size="xs" label="Muy pequeño"></app-checkbox>
-
-<!-- Pequeño -->
-<app-checkbox size="sm" label="Pequeño"></app-checkbox>
-
-<!-- Mediano (default) -->
-<app-checkbox size="md" label="Mediano"></app-checkbox>
-
-<!-- Grande -->
-<app-checkbox size="lg" label="Grande"></app-checkbox>
-
-<!-- Extra grande -->
-<app-checkbox size="xl" label="Muy grande"></app-checkbox>
-```
-
-## Estados Especiales
-
-### Disabled
-
-```html
-<app-checkbox label="Opción deshabilitada" [disabled]="true"> </app-checkbox>
-```
-
-### Indeterminate
-
-```html
-<app-checkbox label="Estado indeterminado" [indeterminate]="true"> </app-checkbox>
-```
-
-### Con texto de ayuda
-
-```html
-<app-checkbox label="Recibir notificaciones" helpText="Recibirás emails sobre actualizaciones importantes"> </app-checkbox>
-```
-
-### Con texto de error
-
-```html
-<app-checkbox label="Campo requerido" errorText="Debes aceptar para continuar"> </app-checkbox>
-```
-
-## Reactive Forms
-
-```typescript
-// En el componente
-form = this.fb.group({
-  acceptTerms: [false, Validators.requiredTrue],
-});
-```
-
-```html
-<form [formGroup]="form">
-  <app-checkbox formControlName="acceptTerms" label="Acepto los términos y condiciones" [errorText]="form.get('acceptTerms')?.errors?.['required'] ? 'Debes aceptar para continuar' : ''"> </app-checkbox>
-</form>
-```
-
-## Propiedades de Entrada
-
-| Propiedad         | Tipo           | Default     | Descripción                |
-| ----------------- | -------------- | ----------- | -------------------------- |
-| `type`            | `CheckboxType` | `'default'` | Tipo visual del checkbox   |
-| `size`            | `CheckboxSize` | `'md'`      | Tamaño del checkbox        |
-| `label`           | `string`       | `''`        | Texto de la etiqueta       |
-| `helpText`        | `string`       | `''`        | Texto de ayuda             |
-| `errorText`       | `string`       | `''`        | Texto de error             |
-| `checked`         | `boolean`      | `false`     | Estado checked             |
-| `disabled`        | `boolean`      | `false`     | Estado disabled            |
-| `indeterminate`   | `boolean`      | `false`     | Estado indeterminate       |
-| `inputId`         | `string`       | auto        | ID único del input         |
-| `ariaLabel`       | `string`       | `''`        | Etiqueta ARIA              |
-| `ariaDescribedBy` | `string`       | `''`        | ID del elemento descriptor |
-| `title`           | `string`       | `''`        | Tooltip del checkbox       |
-| `extraClasses`    | `string`       | `''`        | Clases CSS adicionales     |
-
-## Eventos de Salida
-
-| Evento          | Tipo      | Descripción                     |
+| Event           | Tipo      | Descripción                     |
 | --------------- | --------- | ------------------------------- |
 | `checkedChange` | `boolean` | Emitido cuando cambia el estado |
-| `focusEvent`    | `void`    | Emitido en focus                |
-| `blurEvent`     | `void`    | Emitido en blur                 |
+| `focusEvent`    | `void`    | Emitido al obtener focus        |
+| `blurEvent`     | `void`    | Emitido al perder focus         |
 
-## Casos de Uso Específicos
+## 🎨 Tipos de Checkbox
 
-### Para Tareas
+| Tipo      | Color   | Uso                     |
+| --------- | ------- | ----------------------- |
+| `default` | Azul    | Checkbox estándar       |
+| `primary` | Azul    | Checkbox principal      |
+| `success` | Verde   | Checkbox de éxito       |
+| `warning` | Naranja | Checkbox de advertencia |
+| `danger`  | Rojo    | Checkbox de peligro     |
+| `subtle`  | Gris    | Checkbox sutil          |
+| `outline` | Borde   | Checkbox solo borde     |
 
-```html
-<app-checkbox type="success" size="lg" [checked]="task.completed" [label]="task.name" (checkedChange)="toggleTask($event)"> </app-checkbox>
-```
+## 📏 Tamaños
 
-### Para Subtareas
+| Tamaño | Dimensiones | Uso               |
+| ------ | ----------- | ----------------- |
+| `xs`   | 14px × 14px | Muy pequeño       |
+| `sm`   | 16px × 16px | Pequeño           |
+| `md`   | 18px × 18px | Mediano (default) |
+| `lg`   | 20px × 20px | Grande            |
+| `xl`   | 24px × 24px | Muy grande        |
 
-```html
-<app-checkbox type="default" size="sm" [checked]="subtask.completed" [label]="subtask.name" (checkedChange)="toggleSubtask($event)"> </app-checkbox>
-```
+## 💡 Ejemplos Prácticos
 
-### Para Selección de Listas
-
-```html
-<app-checkbox type="primary" size="md" [checked]="list.selected" [label]="list.name" (checkedChange)="toggleListSelection($event)"> </app-checkbox>
-```
-
-### Para Formularios
-
-```html
-<app-checkbox type="outline" size="md" label="Suscribirse al newsletter" helpText="Recibirás máximo 1 email por semana" [checked]="subscribed" (checkedChange)="onSubscriptionChange($event)"> </app-checkbox>
-```
-
-## Accesibilidad
-
-El componente incluye:
-
-- **Navegación por teclado** (Space para toggle)
-- **Etiquetas ARIA** apropiadas
-- **Estados focus** visibles
-- **Soporte para lectores de pantalla**
-- **Área de toque ampliada** en móviles
-
-## Personalización
-
-### Clases CSS adicionales
+### 1. Checkbox Básico
 
 ```html
-<app-checkbox extraClasses="my-custom-checkbox special-spacing" label="Checkbox personalizado"> </app-checkbox>
+<openiis-checkbox label="Acepto los términos y condiciones" [checked]="acceptedTerms" (checkedChange)="onTermsChange($event)"> </openiis-checkbox>
 ```
 
-### Variables CSS personalizadas
+```typescript
+export class MyComponent {
+  acceptedTerms = false;
 
-```css
-:root {
-  --checkbox-border-radius: 6px;
-  --checkbox-transition-duration: 0.2s;
+  onTermsChange(checked: boolean) {
+    this.acceptedTerms = checked;
+    console.log("Terms accepted:", checked);
+  }
 }
 ```
 
-## Responsive
-
-- **Móviles**: Checkboxes más grandes automáticamente (mejor táctil)
-- **Área de toque**: Mínimo 44px en móviles
-- **Texto**: Se adapta según el tamaño de pantalla
-
-## Migración desde checkboxes nativos
-
-### Antes
+### 2. Checkbox con Formulario Reactivo
 
 ```html
-<input type="checkbox" [(ngModel)]="checked" /> <label>Mi checkbox</label>
+<form [formGroup]="userForm">
+  <openiis-checkbox label="Recibir notificaciones por email" formControlName="emailNotifications" type="success"> </openiis-checkbox>
+
+  <openiis-checkbox label="Recibir notificaciones por SMS" formControlName="smsNotifications" type="warning"> </openiis-checkbox>
+
+  <openiis-checkbox label="Compartir datos con terceros" formControlName="shareData" type="danger"> </openiis-checkbox>
+</form>
 ```
 
-### Después
+```typescript
+import { FormBuilder, FormGroup } from "@angular/forms";
+
+export class MyComponent {
+  userForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.userForm = this.fb.group({
+      emailNotifications: [true],
+      smsNotifications: [false],
+      shareData: [false],
+    });
+  }
+}
+```
+
+### 3. Checkbox con Diferentes Tipos
 
 ```html
-<app-checkbox label="Mi checkbox" [checked]="checked" (checkedChange)="checked = $event"> </app-checkbox>
+<openiis-checkbox label="Tarea completada" type="success" [checked]="taskCompleted" (checkedChange)="onTaskComplete($event)"> </openiis-checkbox>
+
+<openiis-checkbox label="Revisar antes de enviar" type="warning" [checked]="needsReview" (checkedChange)="onReviewChange($event)"> </openiis-checkbox>
+
+<openiis-checkbox label="Eliminar permanentemente" type="danger" [checked]="deletePermanently" (checkedChange)="onDeleteChange($event)"> </openiis-checkbox>
+
+<openiis-checkbox label="Configuración sutil" type="subtle" [checked]="subtleSetting" (checkedChange)="onSubtleChange($event)"> </openiis-checkbox>
+
+<openiis-checkbox label="Solo borde" type="outline" [checked]="outlineSetting" (checkedChange)="onOutlineChange($event)"> </openiis-checkbox>
 ```
+
+```typescript
+export class MyComponent {
+  taskCompleted = false;
+  needsReview = true;
+  deletePermanently = false;
+  subtleSetting = true;
+  outlineSetting = false;
+
+  onTaskComplete(checked: boolean) {
+    this.taskCompleted = checked;
+    console.log("Task completed:", checked);
+  }
+
+  onReviewChange(checked: boolean) {
+    this.needsReview = checked;
+    console.log("Needs review:", checked);
+  }
+
+  onDeleteChange(checked: boolean) {
+    this.deletePermanently = checked;
+    console.log("Delete permanently:", checked);
+  }
+
+  onSubtleChange(checked: boolean) {
+    this.subtleSetting = checked;
+    console.log("Subtle setting:", checked);
+  }
+
+  onOutlineChange(checked: boolean) {
+    this.outlineSetting = checked;
+    console.log("Outline setting:", checked);
+  }
+}
+```
+
+### 4. Checkbox con Estados Avanzados
+
+```html
+<openiis-checkbox label="Configuración avanzada" [checked]="advancedConfig" [disabled]="isLoading" [indeterminate]="isIndeterminate" helpText="Esta configuración requiere permisos especiales" errorText="No tienes permisos para cambiar esta configuración" type="primary" size="lg" (checkedChange)="onAdvancedConfigChange($event)"> </openiis-checkbox>
+```
+
+```typescript
+export class MyComponent {
+  advancedConfig = false;
+  isLoading = false;
+  isIndeterminate = false;
+
+  onAdvancedConfigChange(checked: boolean) {
+    this.isLoading = true;
+
+    // Simular operación asíncrona
+    setTimeout(() => {
+      this.advancedConfig = checked;
+      this.isIndeterminate = false;
+      this.isLoading = false;
+      console.log("Advanced config:", checked);
+    }, 1000);
+  }
+}
+```
+
+### 5. Checkbox con Diferentes Tamaños
+
+```html
+<openiis-checkbox label="Pequeño" size="sm" [checked]="smallCheckbox" (checkedChange)="onSmallChange($event)"> </openiis-checkbox>
+
+<openiis-checkbox label="Mediano" size="md" [checked]="mediumCheckbox" (checkedChange)="onMediumChange($event)"> </openiis-checkbox>
+
+<openiis-checkbox label="Grande" size="lg" [checked]="largeCheckbox" (checkedChange)="onLargeChange($event)"> </openiis-checkbox>
+
+<openiis-checkbox label="Extra grande" size="xl" [checked]="xlCheckbox" (checkedChange)="onXlChange($event)"> </openiis-checkbox>
+```
+
+```typescript
+export class MyComponent {
+  smallCheckbox = false;
+  mediumCheckbox = true;
+  largeCheckbox = false;
+  xlCheckbox = true;
+
+  onSmallChange(checked: boolean) {
+    this.smallCheckbox = checked;
+  }
+
+  onMediumChange(checked: boolean) {
+    this.mediumCheckbox = checked;
+  }
+
+  onLargeChange(checked: boolean) {
+    this.largeCheckbox = checked;
+  }
+
+  onXlChange(checked: boolean) {
+    this.xlCheckbox = checked;
+  }
+}
+```
+
+### 6. Checkbox con Accesibilidad
+
+```html
+<openiis-checkbox label="Modo accesible" [checked]="accessibilityMode" ariaLabel="Activar modo de accesibilidad" ariaDescribedBy="accessibility-help" title="Haz clic para activar el modo de accesibilidad" (checkedChange)="onAccessibilityChange($event)" (focusEvent)="onFocus()" (blurEvent)="onBlur()"> </openiis-checkbox>
+
+<div id="accessibility-help" class="sr-only">El modo de accesibilidad mejora la experiencia para usuarios con discapacidades</div>
+```
+
+```typescript
+export class MyComponent {
+  accessibilityMode = false;
+
+  onAccessibilityChange(checked: boolean) {
+    this.accessibilityMode = checked;
+    console.log("Accessibility mode:", checked);
+  }
+
+  onFocus() {
+    console.log("Checkbox focused");
+  }
+
+  onBlur() {
+    console.log("Checkbox blurred");
+  }
+}
+```
+
+### 7. Checkbox con Estados de Error
+
+```html
+<openiis-checkbox label="Configuración crítica" [checked]="criticalSetting" errorText="Esta configuración no se puede cambiar en este momento" type="danger" [disabled]="true" (checkedChange)="onCriticalChange($event)"> </openiis-checkbox>
+```
+
+```typescript
+export class MyComponent {
+  criticalSetting = true;
+
+  onCriticalChange(checked: boolean) {
+    // Esta función no se ejecutará porque está disabled
+    console.log("Critical setting:", checked);
+  }
+}
+```
+
+### 8. Checkbox con Textos de Ayuda
+
+```html
+<openiis-checkbox label="Modo automático" [checked]="autoMode" helpText="El sistema ajustará automáticamente la configuración según tus preferencias" type="success" (checkedChange)="onAutoModeChange($event)"> </openiis-checkbox>
+
+<openiis-checkbox label="Modo manual" [checked]="manualMode" helpText="Tendrás control total sobre todas las configuraciones" type="warning" (checkedChange)="onManualModeChange($event)"> </openiis-checkbox>
+```
+
+```typescript
+export class MyComponent {
+  autoMode = true;
+  manualMode = false;
+
+  onAutoModeChange(checked: boolean) {
+    this.autoMode = checked;
+    if (checked) {
+      this.manualMode = false;
+    }
+    console.log("Auto mode:", checked);
+  }
+
+  onManualModeChange(checked: boolean) {
+    this.manualMode = checked;
+    if (checked) {
+      this.autoMode = false;
+    }
+    console.log("Manual mode:", checked);
+  }
+}
+```
+
+### 9. Checkbox con Estado Indeterminado
+
+```html
+<openiis-checkbox label="Seleccionar todos" [indeterminate]="isIndeterminate" [checked]="allSelected" (checkedChange)="onSelectAllChange($event)"> </openiis-checkbox>
+
+<openiis-checkbox label="Item 1" [checked]="item1" (checkedChange)="onItem1Change($event)"> </openiis-checkbox>
+
+<openiis-checkbox label="Item 2" [checked]="item2" (checkedChange)="onItem2Change($event)"> </openiis-checkbox>
+
+<openiis-checkbox label="Item 3" [checked]="item3" (checkedChange)="onItem3Change($event)"> </openiis-checkbox>
+```
+
+```typescript
+export class MyComponent {
+  item1 = false;
+  item2 = false;
+  item3 = false;
+  allSelected = false;
+  isIndeterminate = false;
+
+  onSelectAllChange(checked: boolean) {
+    this.allSelected = checked;
+    this.isIndeterminate = false;
+    this.item1 = checked;
+    this.item2 = checked;
+    this.item3 = checked;
+  }
+
+  onItem1Change(checked: boolean) {
+    this.item1 = checked;
+    this.updateSelectAllState();
+  }
+
+  onItem2Change(checked: boolean) {
+    this.item2 = checked;
+    this.updateSelectAllState();
+  }
+
+  onItem3Change(checked: boolean) {
+    this.item3 = checked;
+    this.updateSelectAllState();
+  }
+
+  private updateSelectAllState() {
+    const totalItems = 3;
+    const selectedItems = [this.item1, this.item2, this.item3].filter(Boolean).length;
+
+    if (selectedItems === 0) {
+      this.allSelected = false;
+      this.isIndeterminate = false;
+    } else if (selectedItems === totalItems) {
+      this.allSelected = true;
+      this.isIndeterminate = false;
+    } else {
+      this.allSelected = false;
+      this.isIndeterminate = true;
+    }
+  }
+}
+```
+
+## 🏗️ Interfaces
+
+```typescript
+type CheckboxType = "default" | "primary" | "success" | "warning" | "danger" | "subtle" | "outline";
+type CheckboxSize = "xs" | "sm" | "md" | "lg" | "xl";
+```
+
+## ⚡ Comportamiento
+
+- **ControlValueAccessor**: Integración completa con formularios reactivos
+- **Estados visuales**: Hover, focus, disabled, checked, indeterminate
+- **Animaciones suaves**: Transiciones en el checkmark
+- **Accesibilidad**: Soporte completo para ARIA y navegación por teclado
+- **Responsive**: Se adapta automáticamente en móviles
+- **Estado indeterminado**: Para selección parcial de grupos
+
+## ✅ Características
+
+- ✅ 7 tipos de color diferentes
+- ✅ 5 tamaños configurables
+- ✅ Integración con formularios reactivos
+- ✅ Estados disabled e indeterminate
+- ✅ Textos de ayuda y error
+- ✅ Accesibilidad completa
+- ✅ Navegación por teclado
+- ✅ Animaciones suaves
+- ✅ Completamente responsive
+- ✅ Tooltips configurables
+- ✅ IDs únicos automáticos
+- ✅ Estado indeterminado para grupos
+
+## 🎨 Estilos Automáticos
+
+- **Checkmark dinámico**: Aparece/desaparece con animación
+- **Estados hover**: Efectos de elevación
+- **Estados focus**: Outline visible
+- **Estados error**: Bordes rojos
+- **Responsive**: Tamaños adaptativos en móviles
+- **Animaciones**: Transiciones suaves
+
+## 🚨 Solución de Problemas
+
+| Problema                         | Solución                                                    |
+| -------------------------------- | ----------------------------------------------------------- |
+| Checkbox no responde             | Verifica que no esté `disabled`                             |
+| Formulario no funciona           | Asegúrate de usar `formControlName` correctamente           |
+| Estilos no se aplican            | Verifica que el tema Openiis UI esté configurado            |
+| Accesibilidad no funciona        | Verifica `ariaLabel` y navegación por teclado               |
+| Estado indeterminado no funciona | Verifica que `indeterminate` esté configurado correctamente |
+| Animaciones no funcionan         | Verifica que no haya `prefers-reduced-motion`               |
+
+## 🐞 Reportar Problemas
+
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)
