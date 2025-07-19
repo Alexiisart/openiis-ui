@@ -1,260 +1,323 @@
-# Tooltip
+# Spinner
 
-Componente de tooltip elegante y reutilizable con múltiples posiciones, variantes de color y soporte completo para accesibilidad.
+Componente de indicador de carga elegante y reutilizable con múltiples variantes, tamaños, colores y velocidades de animación.
 
 ## 📦 Instalación
 
 ```typescript
-import { OpeniisTooltipComponent } from 'openiis-ui';
+import { OpeniisSpinnerComponent } from 'openiis-ui';
 
 @Component({
-  imports: [OpeniisTooltipComponent],
+  imports: [OpeniisSpinnerComponent],
 })
 ```
 
 ## ⚙️ Properties
 
-| Property   | Tipo              | Default     | Descripción                   |
-| ---------- | ----------------- | ----------- | ----------------------------- |
-| `text`     | `string`          | `''`        | Texto a mostrar en el tooltip |
-| `position` | `TooltipPosition` | `'top'`     | Posición del tooltip          |
-| `variant`  | `TooltipVariant`  | `'default'` | Variante de color del tooltip |
-| `visible`  | `boolean`         | `false`     | Si el tooltip está visible    |
+| Property       | Tipo                               | Default                      | Descripción                           |
+| -------------- | ---------------------------------- | ---------------------------- | ------------------------------------- |
+| `variant`      | `SpinnerVariant`                   | `'circle'`                   | Tipo de animación del spinner         |
+| `size`         | `SpinnerSize`                      | `'md'`                       | Tamaño del spinner                    |
+| `color`        | `SpinnerColor`                     | `'primary'`                  | Color del spinner                     |
+| `speed`        | `SpinnerSpeed`                     | `'normal'`                   | Velocidad de la animación             |
+| `text`         | `string`                           | `undefined`                  | Texto de carga opcional               |
+| `overlay`      | `boolean`                          | `false`                      | Si mostrar overlay de fondo           |
+| `overlayColor` | `string`                           | `'rgba(255, 255, 255, 0.8)'` | Color del overlay                     |
+| `customSize`   | `string`                           | `undefined`                  | Tamaño personalizado (CSS)            |
+| `customColor`  | `string`                           | `undefined`                  | Color personalizado (CSS)             |
+| `customSpeed`  | `string`                           | `undefined`                  | Velocidad personalizada (CSS)         |
+| `ariaLabel`    | `string`                           | `'Cargando...'`              | Etiqueta para accesibilidad           |
+| `ariaLive`     | `'polite' \| 'assertive' \| 'off'` | `'polite'`                   | Nivel de anuncio para lectores        |
+| `role`         | `string`                           | `'status'`                   | Rol ARIA del componente               |
+| `centered`     | `boolean`                          | `false`                      | Si centrar el spinner                 |
+| `inline`       | `boolean`                          | `false`                      | Si mostrar inline con otros elementos |
+| `visible`      | `boolean`                          | `true`                       | Si el spinner está visible            |
 
 ## 📡 Events
 
-Este componente no emite eventos directamente, pero se integra con otros componentes para mostrar tooltips.
-
-## 📍 Posiciones
-
-| Posición | Descripción                   | Uso                   |
-| -------- | ----------------------------- | --------------------- |
-| `top`    | Arriba del elemento (default) | Información general   |
-| `bottom` | Debajo del elemento           | Explicaciones largas  |
-| `left`   | A la izquierda del elemento   | Menús laterales       |
-| `right`  | A la derecha del elemento     | Información adicional |
+Este componente no emite eventos directamente, pero se integra con otros componentes para mostrar estados de carga.
 
 ## 🎨 Variantes
 
-| Variante  | Descripción            | Uso                    |
-| --------- | ---------------------- | ---------------------- |
-| `default` | Color oscuro (default) | Información general    |
-| `danger`  | Color rojo             | Advertencias y errores |
+| Variante | Descripción                        | Uso                  |
+| -------- | ---------------------------------- | -------------------- |
+| `circle` | Círculo giratorio (default)        | Carga general        |
+| `dots`   | Puntos animados                    | Carga de datos       |
+| `bars`   | Barras animadas                    | Procesamiento        |
+| `pulse`  | Pulso expandible                   | Carga de archivos    |
+| `wave`   | Ondas animadas                     | Carga de contenido   |
+| `ring`   | Anillo giratorio                   | Carga de formularios |
+| `bounce` | Pelotas rebotando                  | Carga divertida      |
+| `fade`   | Elementos que aparecen/desaparecen | Carga elegante       |
+
+## 📏 Tamaños
+
+| Tamaño | Descripción              | Uso               |
+| ------ | ------------------------ | ----------------- |
+| `xs`   | Extra pequeño (16px)     | Iconos pequeños   |
+| `sm`   | Pequeño (20px)           | Botones pequeños  |
+| `md`   | Mediano (24px) - default | Uso general       |
+| `lg`   | Grande (32px)            | Carga principal   |
+| `xl`   | Extra grande (40px)      | Carga de pantalla |
+
+## 🎨 Colores
+
+| Color       | Descripción               | Uso                   |
+| ----------- | ------------------------- | --------------------- |
+| `primary`   | Color principal (default) | Uso general           |
+| `secondary` | Color secundario          | Elementos secundarios |
+| `success`   | Color de éxito            | Operaciones exitosas  |
+| `warning`   | Color de advertencia      | Advertencias          |
+| `danger`    | Color de error            | Errores y problemas   |
+| `info`      | Color informativo         | Información           |
+| `light`     | Color claro               | Fondos claros         |
+| `dark`      | Color oscuro              | Fondos oscuros        |
+
+## ⚡ Velocidades
+
+| Velocidad | Descripción           | Uso          |
+| --------- | --------------------- | ------------ |
+| `slow`    | Lenta (2s)            | Carga lenta  |
+| `normal`  | Normal (1s) - default | Uso general  |
+| `fast`    | Rápida (0.5s)         | Carga rápida |
+
+## 💡 Ejemplos Prácticos
+
+### 1. Spinner Básico
+
+```html
+<openiis-spinner variant="circle" size="md" color="primary"> </openiis-spinner>
+```
+
+### 2. Diferentes Variantes
+
+```html
+<div class="spinner-examples">
+  <!-- Circle spinner -->
+  <openiis-spinner variant="circle" size="md" color="primary"></openiis-spinner>
+
+  <!-- Dots spinner -->
+  <openiis-spinner variant="dots" size="md" color="success"></openiis-spinner>
+
+  <!-- Bars spinner -->
+  <openiis-spinner variant="bars" size="md" color="warning"></openiis-spinner>
+
+  <!-- Pulse spinner -->
+  <openiis-spinner variant="pulse" size="md" color="danger"></openiis-spinner>
+</div>
+```
+
+### 3. Diferentes Tamaños
+
+```html
+<div class="spinner-sizes">
+  <openiis-spinner variant="circle" size="xs" color="primary"></openiis-spinner>
+  <openiis-spinner variant="circle" size="sm" color="primary"></openiis-spinner>
+  <openiis-spinner variant="circle" size="md" color="primary"></openiis-spinner>
+  <openiis-spinner variant="circle" size="lg" color="primary"></openiis-spinner>
+  <openiis-spinner variant="circle" size="xl" color="primary"></openiis-spinner>
+</div>
+```
+
+### 4. Spinner con Texto
+
+```html
+<openiis-spinner variant="circle" size="md" color="primary" text="Cargando..."> </openiis-spinner>
+```
+
+### 5. Spinner con Overlay
+
+```html
+<openiis-spinner variant="circle" size="lg" color="primary" [overlay]="true" overlayColor="rgba(0, 0, 0, 0.5)" text="Procesando datos..."> </openiis-spinner>
+```
+
+### 6. Spinner Centrado
+
+```html
+<openiis-spinner variant="pulse" size="xl" color="success" [centered]="true" text="Guardando cambios..."> </openiis-spinner>
+```
+
+### 7. Spinner Inline
+
+```html
+<div class="inline-content">
+  <span>Procesando:</span>
+  <openiis-spinner variant="dots" size="sm" color="info" [inline]="true"></openiis-spinner>
+  <span>archivos...</span>
+</div>
+```
+
+### 8. Spinner con Tamaño Personalizado
+
+```html
+<openiis-spinner variant="ring" color="primary" customSize="60px" text="Carga personalizada"> </openiis-spinner>
+```
+
+### 9. Spinner con Color Personalizado
+
+```html
+<openiis-spinner variant="wave" size="lg" customColor="#ff6b6b" text="Carga con color personalizado"> </openiis-spinner>
+```
+
+### 10. Spinner con Velocidad Personalizada
+
+```html
+<openiis-spinner variant="bounce" size="md" color="warning" customSpeed="0.3s" text="Carga rápida"> </openiis-spinner>
+```
+
+### 11. Spinner Condicional
+
+```html
+<openiis-spinner variant="circle" size="md" color="primary" [visible]="isLoading" text="Cargando datos..."> </openiis-spinner>
+```
+
+```typescript
+export class MyComponent {
+  isLoading = false;
+
+  loadData() {
+    this.isLoading = true;
+    // Simular carga
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
+  }
+}
+```
+
+### 12. Spinner con Estados Dinámicos
+
+```html
+<openiis-spinner [variant]="spinnerVariant" [size]="spinnerSize" [color]="spinnerColor" [text]="spinnerText" [visible]="isLoading"> </openiis-spinner>
+```
+
+```typescript
+export class MyComponent {
+  isLoading = false;
+  loadingType = "data";
+
+  get spinnerVariant(): "circle" | "dots" | "bars" | "pulse" | "wave" | "ring" | "bounce" | "fade" {
+    switch (this.loadingType) {
+      case "file":
+        return "pulse";
+      case "data":
+        return "dots";
+      case "form":
+        return "ring";
+      default:
+        return "circle";
+    }
+  }
+
+  get spinnerSize(): "xs" | "sm" | "md" | "lg" | "xl" {
+    return this.loadingType === "file" ? "lg" : "md";
+  }
+
+  get spinnerColor(): "primary" | "secondary" | "success" | "warning" | "danger" | "info" | "light" | "dark" {
+    switch (this.loadingType) {
+      case "file":
+        return "success";
+      case "data":
+        return "primary";
+      case "form":
+        return "info";
+      default:
+        return "primary";
+    }
+  }
+
+  get spinnerText(): string {
+    switch (this.loadingType) {
+      case "file":
+        return "Subiendo archivo...";
+      case "data":
+        return "Cargando datos...";
+      case "form":
+        return "Procesando formulario...";
+      default:
+        return "Cargando...";
+    }
+  }
+}
+```
+
+### 13. Spinner en Botones
+
+```html
+<button [disabled]="isLoading" (click)="handleSubmit()">
+  <openiis-spinner variant="dots" size="sm" color="light" [visible]="isLoading" [inline]="true"></openiis-spinner>
+  {{ isLoading ? 'Guardando...' : 'Guardar' }}
+</button>
+```
+
+### 14. Spinner en Formularios
+
+```html
+<form (ngSubmit)="submitForm()">
+  <div class="form-content" [class.loading]="isSubmitting">
+    <!-- Campos del formulario -->
+    <input type="text" placeholder="Nombre" />
+    <input type="email" placeholder="Email" />
+
+    <!-- Spinner de carga -->
+    <openiis-spinner variant="ring" size="md" color="primary" [visible]="isSubmitting" [overlay]="true" text="Enviando formulario..."></openiis-spinner>
+  </div>
+
+  <button type="submit" [disabled]="isSubmitting">Enviar</button>
+</form>
+```
+
+### 15. Spinner en Tablas
+
+```html
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <openiis-spinner variant="dots" size="xs" color="primary" [visible]="user.loading" [inline]="true"></openiis-spinner>
+        <button (click)="editUser(user)">Editar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+```
 
 ## 🏗️ Interfaces
 
 ```typescript
-type TooltipPosition = "top" | "bottom" | "left" | "right";
-type TooltipVariant = "default" | "danger";
-```
-
-## 💡 Ejemplos Prácticos
-
-### 1. Tooltip Superior
-
-```html
-<div class="tooltip-demo-container">
-  <div class="tooltip-trigger" (mouseenter)="showTooltipTop = true" (mouseleave)="showTooltipTop = false">
-    <span>Hover aquí arriba</span>
-    <openiis-tooltip text="Este es un tooltip en la parte superior" position="top" variant="default" [visible]="showTooltipTop"> </openiis-tooltip>
-  </div>
-</div>
-```
-
-```typescript
-export class MyComponent {
-  showTooltipTop = false;
-}
-```
-
-### 2. Tooltip Inferior
-
-```html
-<div class="tooltip-demo-container">
-  <div class="tooltip-trigger" (mouseenter)="showTooltipBottom = true" (mouseleave)="showTooltipBottom = false">
-    <span>Hover aquí abajo</span>
-    <openiis-tooltip text="Tooltip en la parte inferior" position="bottom" variant="default" [visible]="showTooltipBottom"> </openiis-tooltip>
-  </div>
-</div>
-```
-
-```typescript
-export class MyComponent {
-  showTooltipBottom = false;
-}
-```
-
-### 3. Tooltip Izquierda
-
-```html
-<div class="tooltip-demo-container">
-  <div class="tooltip-trigger" (mouseenter)="showTooltipLeft = true" (mouseleave)="showTooltipLeft = false">
-    <span>Hover aquí izquierda</span>
-    <openiis-tooltip text="Tooltip a la izquierda" position="left" variant="default" [visible]="showTooltipLeft"> </openiis-tooltip>
-  </div>
-</div>
-```
-
-```typescript
-export class MyComponent {
-  showTooltipLeft = false;
-}
-```
-
-### 4. Tooltip Derecha
-
-```html
-<div class="tooltip-demo-container">
-  <div class="tooltip-trigger" (mouseenter)="showTooltipRight = true" (mouseleave)="showTooltipRight = false">
-    <span>Hover aquí derecha</span>
-    <openiis-tooltip text="Tooltip a la derecha" position="right" variant="default" [visible]="showTooltipRight"> </openiis-tooltip>
-  </div>
-</div>
-```
-
-```typescript
-export class MyComponent {
-  showTooltipRight = false;
-}
-```
-
-### 5. Tooltip Default
-
-```html
-<div class="tooltip-demo-container">
-  <div class="tooltip-trigger" (mouseenter)="showTooltipDefault = true" (mouseleave)="showTooltipDefault = false">
-    <span>Tooltip normal</span>
-    <openiis-tooltip text="Tooltip con variante por defecto" position="top" variant="default" [visible]="showTooltipDefault"> </openiis-tooltip>
-  </div>
-</div>
-```
-
-```typescript
-export class MyComponent {
-  showTooltipDefault = false;
-}
-```
-
-### 6. Tooltip Danger
-
-```html
-<div class="tooltip-demo-container">
-  <div class="tooltip-trigger danger" (mouseenter)="showTooltipDanger = true" (mouseleave)="showTooltipDanger = false">
-    <span>Tooltip peligro</span>
-    <openiis-tooltip text="Tooltip con variante de peligro" position="top" variant="danger" [visible]="showTooltipDanger"> </openiis-tooltip>
-  </div>
-</div>
-```
-
-```typescript
-export class MyComponent {
-  showTooltipDanger = false;
-}
-```
-
-### 7. Tooltip con Contenido Dinámico
-
-```html
-<div class="tooltip-demo-container">
-  <div class="tooltip-trigger" (mouseenter)="showDynamicTooltip = true" (mouseleave)="showDynamicTooltip = false">
-    <span>Información dinámica</span>
-    <openiis-tooltip [text]="getDynamicTooltipText()" position="top" variant="default" [visible]="showDynamicTooltip"> </openiis-tooltip>
-  </div>
-</div>
-```
-
-```typescript
-export class MyComponent {
-  showDynamicTooltip = false;
-
-  getDynamicTooltipText(): string {
-    return `Información actualizada: ${new Date().toLocaleTimeString()}`;
-  }
-}
-```
-
-### 8. Tooltip con Estados Condicionales
-
-```html
-<div class="tooltip-demo-container">
-  <div class="tooltip-trigger" (mouseenter)="showConditionalTooltip = true" (mouseleave)="showConditionalTooltip = false">
-    <span>{{ buttonText }}</span>
-    <openiis-tooltip [text]="getConditionalTooltipText()" [position]="tooltipPosition" [variant]="tooltipVariant" [visible]="showConditionalTooltip"> </openiis-tooltip>
-  </div>
-</div>
-```
-
-```typescript
-export class MyComponent {
-  showConditionalTooltip = false;
-  isEnabled = true;
-
-  get buttonText(): string {
-    return this.isEnabled ? "Activar" : "Desactivar";
-  }
-
-  getConditionalTooltipText(): string {
-    return this.isEnabled ? "Haz clic para activar la función" : "Haz clic para desactivar la función";
-  }
-
-  get tooltipPosition(): "top" | "bottom" | "left" | "right" {
-    return "top";
-  }
-
-  get tooltipVariant(): "default" | "danger" {
-    return this.isEnabled ? "default" : "danger";
-  }
-}
-```
-
-### 9. Tooltip Integrado en Botones
-
-```html
-<openiis-button text="Botón con Tooltip" type="primary" tooltipText="Información adicional del botón" tooltipPosition="top" (clickEvent)="onButtonClick()"> </openiis-button>
-```
-
-```typescript
-export class MyComponent {
-  onButtonClick() {
-    console.log("Botón clickeado");
-  }
-}
-```
-
-### 10. Tooltip en Dropdowns
-
-```html
-<openiis-dropdown [options]="dropdownOptions" [selectedValue]="selectedOption" tooltip="Selecciona una opción del dropdown" tooltipPosition="bottom" (selectionChanged)="onSelectionChange($event)"> </openiis-dropdown>
-```
-
-```typescript
-export class MyComponent {
-  dropdownOptions = [
-    { value: "option1", label: "Opción 1" },
-    { value: "option2", label: "Opción 2" },
-    { value: "option3", label: "Opción 3" },
-  ];
-  selectedOption = "option1";
-
-  onSelectionChange(value: string) {
-    console.log("Opción seleccionada:", value);
-  }
-}
+type SpinnerVariant = "circle" | "dots" | "bars" | "pulse" | "wave" | "ring" | "bounce" | "fade";
+type SpinnerSize = "xs" | "sm" | "md" | "lg" | "xl";
+type SpinnerColor = "primary" | "secondary" | "success" | "warning" | "danger" | "info" | "light" | "dark";
+type SpinnerSpeed = "slow" | "normal" | "fast";
 ```
 
 ## ⚡ Comportamiento
 
 ### Estados
 
-- **Oculto**: Estado por defecto (invisible)
-- **Visible**: Cuando se activa el hover/focus
-- **Transición**: Animación suave de entrada/salida
+- **Visible**: Estado por defecto (mostrando animación)
+- **Oculto**: Cuando `visible` es `false`
+- **Overlay**: Cuando `overlay` es `true` (cubre toda la pantalla)
 
-### Interacciones
+### Animaciones
 
-- **Hover**: Se muestra al pasar el mouse
-- **Focus**: Se muestra al recibir foco (accesibilidad)
-- **Auto-posicionamiento**: Se ajusta según el espacio disponible
+- **Circle**: Rotación continua
+- **Dots**: Puntos que aparecen/desaparecen
+- **Bars**: Barras que cambian de altura
+- **Pulse**: Expansión y contracción
+- **Wave**: Ondas que se propagan
+- **Ring**: Anillo que gira
+- **Bounce**: Pelotas que rebotan
+- **Fade**: Elementos que aparecen/desaparecen
 
 ### Responsive
 
@@ -264,69 +327,81 @@ export class MyComponent {
 
 ## ✅ Características
 
-- ✅ 4 posiciones configurables (top, bottom, left, right)
-- ✅ 2 variantes de color (default, danger)
-- ✅ Posicionamiento automático
-- ✅ Animaciones suaves
-- ✅ Responsive design
+- ✅ 8 variantes de animación diferentes
+- ✅ 5 tamaños predefinidos
+- ✅ 8 colores temáticos
+- ✅ 3 velocidades de animación
+- ✅ Soporte para overlay completo
+- ✅ Texto de carga opcional
+- ✅ Tamaños y colores personalizados
+- ✅ Modo inline y centrado
 - ✅ Accesibilidad completa
-- ✅ Soporte para lectores de pantalla
 - ✅ ARIA roles y labels
-- ✅ Transiciones CSS optimizadas
-- ✅ Z-index automático
-- ✅ Pointer events deshabilitados
-- ✅ Contenido dinámico
-- ✅ Integración con otros componentes
+- ✅ Animaciones CSS optimizadas
+- ✅ Responsive design
+- ✅ Soporte para lectores de pantalla
+- ✅ Reducción de movimiento
+- ✅ Alto contraste
+- ✅ Modo impresión
 
 ## 🎨 Estilos Automáticos
 
-- **Posiciones**: Cada posición tiene estilos únicos
-- **Variantes**: Colores y sombras específicas
-- **Responsive**: Se adapta automáticamente en móviles
-- **Animaciones**: Transiciones suaves
-- **Accesibilidad**: Indicadores de foco y ARIA
+- **Variantes**: Cada variante tiene animación única
+- **Tamaños**: Escalado proporcional automático
+- **Colores**: Integración con el sistema de colores
+- **Responsive**: Adaptación automática en móviles
+- **Accesibilidad**: Indicadores de estado y ARIA
 
 ## 🔧 Funcionalidades Especiales
 
-### Integración con Componentes
+### Overlay Completo
 
 ```typescript
-// Tooltips automáticos en botones
-<openiis-button tooltipText="Información" tooltipPosition="top">
+// Spinner que cubre toda la pantalla
+<openiis-spinner [overlay]="true" overlayColor="rgba(0, 0, 0, 0.7)">
 ```
 
-### Posicionamiento Inteligente
+### Tamaños Personalizados
 
 ```typescript
-// Se ajusta automáticamente según el espacio disponible
-position = "top"; // Intenta arriba, si no hay espacio va abajo
+// Tamaño específico en CSS
+customSize = "80px";
 ```
 
-### Variantes de Color
+### Colores Personalizados
 
 ```typescript
-// Diferentes colores según el contexto
-variant = "default"; // Negro para información general
-variant = "danger"; // Rojo para advertencias
+// Color específico
+customColor = "#ff6b6b";
 ```
 
-### Contenido Dinámico
+### Velocidades Personalizadas
 
 ```typescript
-// Tooltip con contenido que cambia
-[text] = "getDynamicContent()";
+// Velocidad específica
+customSpeed = "0.3s";
+```
+
+### Modo Inline
+
+```typescript
+// Spinner que se integra con texto
+[inline] = "true";
 ```
 
 ## 🚨 Solución de Problemas
 
-| Problema                  | Solución                                                                         |
-| ------------------------- | -------------------------------------------------------------------------------- |
-| Tooltip no aparece        | Verifica que `visible` esté en `true` y el contenedor tenga `position: relative` |
-| Posición incorrecta       | Verifica que `position` esté configurado correctamente                           |
-| Color no cambia           | Verifica que `variant` esté configurado                                          |
-| Responsive no funciona    | Verifica que el CSS responsive esté cargado                                      |
-| Accesibilidad no funciona | Verifica que el elemento tenga focus/hover                                       |
-| Z-index conflictos        | Verifica que no haya elementos con z-index mayor                                 |
+| Problema                  | Solución                                              |
+| ------------------------- | ----------------------------------------------------- |
+| Spinner no aparece        | Verifica que `visible` esté en `true`                 |
+| Animación no funciona     | Verifica que `variant` esté configurado correctamente |
+| Color no cambia           | Verifica que `color` esté configurado                 |
+| Tamaño incorrecto         | Verifica que `size` esté configurado                  |
+| Overlay no funciona       | Verifica que `overlay` esté en `true`                 |
+| Se ven distorcionados     | Verifica que `box-sizing: border-box` este            |
+| Texto no aparece          | Verifica que `text` esté configurado                  |
+| Responsive no funciona    | Verifica que el CSS responsive esté cargado           |
+| Accesibilidad no funciona | Verifica que `ariaLabel` esté configurado             |
 
 ## 🐞 Reportar Problemas
 

@@ -1,239 +1,482 @@
-# EmptyState Component
+# Empty State
 
-## Descripción
+Componente de estado vacío elegante y reutilizable para mostrar mensajes informativos cuando no hay contenido disponible.
 
-El componente `EmptyStateComponent` es un componente reutilizable que muestra un estado vacío personalizable. Ideal para mostrar cuando no hay datos disponibles, listas vacías, o resultados de búsqueda sin coincidencias.
-
-## Características
-
-- ✅ Icono personalizable de Material Icons
-- ✅ Título y mensaje configurables
-- ✅ Botón de acción opcional
-- ✅ Múltiples tipos de botón
-- ✅ Botón responsivo y full-width
-- ✅ Completamente responsive
-- ✅ Estilos predefinidos elegantes
-
-## Uso Básico
-
-```html
-<app-empty-state icon="inbox" title="No hay elementos" message="No se encontraron elementos para mostrar."> </app-empty-state>
-```
-
-## Props
-
-| Prop               | Tipo                                   | Defecto                                       | Descripción                       |
-| ------------------ | -------------------------------------- | --------------------------------------------- | --------------------------------- |
-| `icon`             | `string`                               | `'inbox'`                                     | Icono de Material Icons a mostrar |
-| `title`            | `string`                               | `'No hay elementos'`                          | Título del estado vacío           |
-| `message`          | `string`                               | `'No se encontraron elementos para mostrar.'` | Mensaje descriptivo               |
-| `buttonText`       | `string`                               | `undefined`                                   | Texto del botón (opcional)        |
-| `buttonType`       | `ButtonType`                           | `'primary'`                                   | Tipo del botón                    |
-| `buttonSize`       | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'`                                        | Tamaño del botón                  |
-| `buttonIcon`       | `string`                               | `undefined`                                   | Icono del botón (opcional)        |
-| `buttonFullWidth`  | `boolean`                              | `false`                                       | Si el botón ocupa todo el ancho   |
-| `buttonResponsive` | `boolean`                              | `true`                                        | Si el botón es responsivo         |
-
-## Eventos
-
-| Evento        | Tipo   | Descripción                             |
-| ------------- | ------ | --------------------------------------- |
-| `buttonClick` | `void` | Emitido cuando se hace clic en el botón |
-
-## Ejemplos
-
-### Estado vacío básico
-
-```html
-<app-empty-state icon="folder_open" title="Carpeta vacía" message="Esta carpeta no contiene archivos."> </app-empty-state>
-```
-
-### Con botón de acción
-
-```html
-<app-empty-state icon="add_circle_outline" title="No hay tareas" message="Aún no has creado ninguna tarea. ¡Comienza agregando tu primera tarea!" buttonText="Crear primera tarea" buttonType="primary" buttonIcon="add" (buttonClick)="createFirstTask()"> </app-empty-state>
-```
-
-### Lista de contactos vacía
-
-```html
-<app-empty-state icon="contacts" title="No hay contactos" message="Tu lista de contactos está vacía. Agrega tu primer contacto para comenzar." buttonText="Agregar contacto" buttonType="primary" buttonIcon="person_add" (buttonClick)="addContact()"> </app-empty-state>
-```
-
-### Resultados de búsqueda vacíos
-
-```html
-<app-empty-state icon="search_off" title="Sin resultados" message="No se encontraron resultados para tu búsqueda. Intenta con otros términos." buttonText="Limpiar búsqueda" buttonType="secondary" buttonIcon="clear" (buttonClick)="clearSearch()"> </app-empty-state>
-```
-
-### Carrito de compras vacío
-
-```html
-<app-empty-state icon="shopping_cart" title="Carrito vacío" message="Tu carrito de compras está vacío. Explora nuestros productos y encuentra algo que te guste." buttonText="Continuar comprando" buttonType="primary" buttonIcon="store" (buttonClick)="goToStore()"> </app-empty-state>
-```
-
-### Favoritos vacíos
-
-```html
-<app-empty-state icon="favorite_border" title="Sin favoritos" message="No has marcado ningún elemento como favorito aún." buttonText="Explorar contenido" buttonType="secondary" buttonIcon="explore" (buttonClick)="exploreContent()"> </app-empty-state>
-```
-
-## Ejemplos de Uso Común
-
-### Lista de elementos vacía
+## 📦 Instalación
 
 ```typescript
-// En el componente
-showEmptyState = true;
-items: any[] = [];
+import { OpeniisEmptyStateComponent } from 'openiis-ui';
 
-ngOnInit() {
-  this.loadItems();
-}
-
-loadItems() {
-  this.itemService.getItems().subscribe(items => {
-    this.items = items;
-    this.showEmptyState = items.length === 0;
-  });
-}
-
-createFirstItem() {
-  this.router.navigate(['/create-item']);
-}
+@Component({
+  imports: [OpeniisEmptyStateComponent],
+})
 ```
 
-```html
-<!-- En el template -->
-<div *ngIf="items.length > 0">
-  <div *ngFor="let item of items">{{ item.name }}</div>
-</div>
+## ⚙️ Properties
 
-<app-empty-state *ngIf="showEmptyState" icon="inventory_2" title="No hay elementos" message="Aún no has creado ningún elemento. ¡Comienza agregando tu primer elemento!" buttonText="Crear elemento" buttonType="primary" buttonIcon="add" (buttonClick)="createFirstItem()"> </app-empty-state>
-```
+| Property           | Tipo            | Default                                       | Descripción                           |
+| ------------------ | --------------- | --------------------------------------------- | ------------------------------------- |
+| `icon`             | `string`        | `'inbox'`                                     | Icono de Material Icons a mostrar     |
+| `title`            | `string`        | `'No hay elementos'`                          | Título del estado vacío               |
+| `message`          | `string`        | `'No se encontraron elementos para mostrar.'` | Mensaje descriptivo                   |
+| `buttonText`       | `string`        | `undefined`                                   | Texto del botón (opcional)            |
+| `buttonType`       | `ButtonVariant` | `'primary'`                                   | Tipo de botón                         |
+| `buttonIcon`       | `string`        | `undefined`                                   | Icono del botón (opcional)            |
+| `buttonFullWidth`  | `boolean`       | `false`                                       | Si el botón debe ocupar todo el ancho |
+| `buttonResponsive` | `boolean`       | `true`                                        | Si el botón debe ser responsivo       |
 
-### Filtros sin resultados
+## 📡 Events
+
+| Event         | Tipo                 | Descripción                              |
+| ------------- | -------------------- | ---------------------------------------- |
+| `buttonClick` | `EventEmitter<void>` | Se emite cuando se hace clic en el botón |
+
+## 🎨 Tipos de Botón
+
+| Tipo                | Descripción                  | Uso                          |
+| ------------------- | ---------------------------- | ---------------------------- |
+| `primary`           | Botón principal (default)    | Acciones principales         |
+| `secondary`         | Botón secundario             | Acciones secundarias         |
+| `success`           | Botón de éxito               | Confirmaciones               |
+| `warning`           | Botón de advertencia         | Advertencias                 |
+| `danger`            | Botón de peligro             | Acciones destructivas        |
+| `outline-primary`   | Botón outline principal      | Acciones alternativas        |
+| `outline-secondary` | Botón outline secundario     | Acciones secundarias         |
+| `outline-success`   | Botón outline de éxito       | Confirmaciones suaves        |
+| `outline-warning`   | Botón outline de advertencia | Advertencias suaves          |
+| `outline-danger`    | Botón outline de peligro     | Acciones destructivas suaves |
+
+## 🏗️ Interfaces
 
 ```typescript
-// En el componente
-filteredItems: any[] = [];
-searchTerm = '';
-
-onSearch(term: string) {
-  this.searchTerm = term;
-  this.filteredItems = this.items.filter(item =>
-    item.name.toLowerCase().includes(term.toLowerCase())
-  );
-}
-
-clearSearch() {
-  this.searchTerm = '';
-  this.filteredItems = this.items;
-}
+type ButtonVariant = "primary" | "secondary" | "success" | "warning" | "danger" | "outline-primary" | "outline-secondary" | "outline-success" | "outline-warning" | "outline-danger";
 ```
+
+## 💡 Ejemplos Prácticos
+
+### 1. Estado Vacío Básico
 
 ```html
-<app-empty-state *ngIf="filteredItems.length === 0 && searchTerm" icon="search_off" title="Sin resultados" message="No se encontraron elementos que coincidan con '{{ searchTerm }}'" buttonText="Limpiar búsqueda" buttonType="secondary" buttonIcon="clear" (buttonClick)="clearSearch()"> </app-empty-state>
+<openiis-empty-state icon="inbox" title="No hay elementos" message="No se encontraron elementos para mostrar."> </openiis-empty-state>
 ```
 
-### Error de conexión
+### 2. Estado Vacío con Botón
+
+```html
+<openiis-empty-state icon="inbox" title="No hay elementos" message="No se encontraron elementos para mostrar." buttonText="Agregar elemento" buttonType="primary" buttonIcon="add" (buttonClick)="onAddElement()"> </openiis-empty-state>
+```
 
 ```typescript
-// En el componente
-hasError = false;
-isLoading = false;
+export class MyComponent {
+  onAddElement() {
+    console.log("Agregar elemento");
+  }
+}
+```
 
-loadData() {
-  this.isLoading = true;
-  this.hasError = false;
+### 3. Estado de Búsqueda Vacía
 
-  this.dataService.getData().subscribe({
-    next: (data) => {
-      this.items = data;
-      this.isLoading = false;
-    },
-    error: (error) => {
-      this.hasError = true;
-      this.isLoading = false;
+```html
+<openiis-empty-state icon="search" title="Sin resultados" message="No se encontraron resultados para tu búsqueda. Intenta con otros términos." buttonText="Limpiar búsqueda" buttonType="secondary" buttonIcon="refresh" (buttonClick)="onClearSearch()"> </openiis-empty-state>
+```
+
+```typescript
+export class MyComponent {
+  onClearSearch() {
+    console.log("Limpiar búsqueda");
+  }
+}
+```
+
+### 4. Estado de Error
+
+```html
+<openiis-empty-state icon="error" title="Error de conexión" message="No se pudo conectar con el servidor. Verifica tu conexión a internet." buttonText="Reintentar" buttonType="danger" buttonIcon="refresh" (buttonClick)="onRetry()"> </openiis-empty-state>
+```
+
+```typescript
+export class MyComponent {
+  onRetry() {
+    console.log("Reintentar conexión");
+  }
+}
+```
+
+### 5. Estado de Carga
+
+```html
+<openiis-empty-state icon="hourglass_empty" title="Cargando" message="Estamos procesando tu solicitud. Por favor espera un momento." buttonText="Cancelar" buttonType="outline-secondary" buttonIcon="close" (buttonClick)="onCancel()"> </openiis-empty-state>
+```
+
+```typescript
+export class MyComponent {
+  onCancel() {
+    console.log("Cancelar operación");
+  }
+}
+```
+
+### 6. Carrito de Compras Vacío
+
+```html
+<openiis-empty-state icon="shopping_cart" title="Carrito vacío" message="Tu carrito de compras está vacío. Explora nuestros productos." buttonText="Ir a la tienda" buttonType="primary" buttonIcon="storefront" [buttonFullWidth]="true" (buttonClick)="onGoToStore()"> </openiis-empty-state>
+```
+
+```typescript
+export class MyComponent {
+  onGoToStore() {
+    console.log("Ir a la tienda");
+  }
+}
+```
+
+### 7. Mensajes Vacíos
+
+```html
+<openiis-empty-state icon="mail" title="Sin mensajes" message="No tienes mensajes nuevos. Los mensajes aparecerán aquí." buttonText="Nuevo mensaje" buttonType="success" buttonIcon="edit" [buttonResponsive]="true" (buttonClick)="onNewMessage()"> </openiis-empty-state>
+```
+
+```typescript
+export class MyComponent {
+  onNewMessage() {
+    console.log("Crear nuevo mensaje");
+  }
+}
+```
+
+### 8. Configuración Pendiente
+
+```html
+<openiis-empty-state icon="settings" title="Configuración requerida" message="Necesitas completar la configuración inicial para continuar." buttonText="Configurar" buttonType="warning" buttonIcon="tune" buttonSize="lg" (buttonClick)="onConfigure()"> </openiis-empty-state>
+```
+
+```typescript
+export class MyComponent {
+  onConfigure() {
+    console.log("Abrir configuración");
+  }
+}
+```
+
+### 9. Estado Vacío sin Botón
+
+```html
+<openiis-empty-state icon="folder" title="Carpeta vacía" message="Esta carpeta no contiene archivos. Sube archivos para comenzar."> </openiis-empty-state>
+```
+
+### 10. Estado con Botón Outline
+
+```html
+<openiis-empty-state icon="person" title="Sin usuarios" message="No hay usuarios registrados en el sistema." buttonText="Invitar usuario" buttonType="outline-primary" buttonIcon="person_add" (buttonClick)="onInviteUser()"> </openiis-empty-state>
+```
+
+```typescript
+export class MyComponent {
+  onInviteUser() {
+    console.log("Invitar usuario");
+  }
+}
+```
+
+### 11. Estado con Botón de Ancho Completo
+
+```html
+<openiis-empty-state icon="cloud_upload" title="Sin archivos" message="No hay archivos subidos. Comienza subiendo tu primer archivo." buttonText="Subir archivo" buttonType="primary" buttonIcon="upload" [buttonFullWidth]="true" (buttonClick)="onUploadFile()"> </openiis-empty-state>
+```
+
+```typescript
+export class MyComponent {
+  onUploadFile() {
+    console.log("Subir archivo");
+  }
+}
+```
+
+### 12. Estado Condicional
+
+```html
+<openiis-empty-state [icon]="getEmptyStateIcon()" [title]="getEmptyStateTitle()" [message]="getEmptyStateMessage()" [buttonText]="getEmptyStateButtonText()" [buttonType]="getEmptyStateButtonType()" [buttonIcon]="getEmptyStateButtonIcon()" (buttonClick)="onEmptyStateAction()"> </openiis-empty-state>
+```
+
+```typescript
+export class MyComponent {
+  emptyStateType = "general";
+
+  getEmptyStateIcon(): string {
+    switch (this.emptyStateType) {
+      case "search":
+        return "search";
+      case "error":
+        return "error";
+      case "loading":
+        return "hourglass_empty";
+      default:
+        return "inbox";
     }
-  });
-}
+  }
 
-retryLoad() {
-  this.loadData();
+  getEmptyStateTitle(): string {
+    switch (this.emptyStateType) {
+      case "search":
+        return "Sin resultados";
+      case "error":
+        return "Error de conexión";
+      case "loading":
+        return "Cargando";
+      default:
+        return "No hay elementos";
+    }
+  }
+
+  getEmptyStateMessage(): string {
+    switch (this.emptyStateType) {
+      case "search":
+        return "No se encontraron resultados para tu búsqueda.";
+      case "error":
+        return "No se pudo conectar con el servidor.";
+      case "loading":
+        return "Estamos procesando tu solicitud.";
+      default:
+        return "No se encontraron elementos para mostrar.";
+    }
+  }
+
+  getEmptyStateButtonText(): string {
+    switch (this.emptyStateType) {
+      case "search":
+        return "Limpiar búsqueda";
+      case "error":
+        return "Reintentar";
+      case "loading":
+        return "Cancelar";
+      default:
+        return "Agregar elemento";
+    }
+  }
+
+  getEmptyStateButtonType(): any {
+    switch (this.emptyStateType) {
+      case "search":
+        return "secondary";
+      case "error":
+        return "danger";
+      case "loading":
+        return "outline-secondary";
+      default:
+        return "primary";
+    }
+  }
+
+  getEmptyStateButtonIcon(): string {
+    switch (this.emptyStateType) {
+      case "search":
+        return "refresh";
+      case "error":
+        return "refresh";
+      case "loading":
+        return "close";
+      default:
+        return "add";
+    }
+  }
+
+  onEmptyStateAction() {
+    console.log("Acción del estado vacío");
+  }
 }
 ```
+
+### 13. Estado en Listas
 
 ```html
-<app-empty-state *ngIf="hasError" icon="wifi_off" title="Error de conexión" message="No se pudo cargar la información. Verifica tu conexión a internet." buttonText="Reintentar" buttonType="primary" buttonIcon="refresh" (buttonClick)="retryLoad()"> </app-empty-state>
+<div class="list-container">
+  <div *ngIf="items.length === 0; else itemsList">
+    <openiis-empty-state icon="list" title="Lista vacía" message="No hay elementos en esta lista." buttonText="Agregar elemento" buttonType="primary" buttonIcon="add" (buttonClick)="addItem()"> </openiis-empty-state>
+  </div>
+
+  <ng-template #itemsList>
+    <div *ngFor="let item of items">{{ item.name }}</div>
+  </ng-template>
+</div>
 ```
 
-## Iconos Sugeridos
+```typescript
+export class MyComponent {
+  items: any[] = [];
 
-| Contexto                | Icono Sugerido    | Descripción              |
-| ----------------------- | ----------------- | ------------------------ |
-| Lista vacía             | `inbox`           | Bandeja de entrada vacía |
-| Carpeta vacía           | `folder_open`     | Carpeta abierta          |
-| Búsqueda sin resultados | `search_off`      | Búsqueda desactivada     |
-| Carrito vacío           | `shopping_cart`   | Carrito de compras       |
-| Favoritos vacíos        | `favorite_border` | Corazón vacío            |
-| Contactos vacíos        | `contacts`        | Libro de contactos       |
-| Tareas vacías           | `task_alt`        | Lista de tareas          |
-| Archivos vacíos         | `description`     | Documento                |
-| Fotos vacías            | `photo_library`   | Galería de fotos         |
-| Error de conexión       | `wifi_off`        | WiFi desconectado        |
-| Datos no encontrados    | `database`        | Base de datos            |
-| Configuración vacía     | `settings`        | Configuración            |
+  addItem() {
+    this.items.push({ name: "Nuevo elemento" });
+  }
+}
+```
 
-## Tamaños de Botón
+### 14. Estado en Formularios
 
-| Tamaño | Uso Recomendado                  |
-| ------ | -------------------------------- |
-| `xs`   | Espacios muy reducidos           |
-| `sm`   | Botones secundarios              |
-| `md`   | Uso general (defecto)            |
-| `lg`   | Botones principales              |
-| `xl`   | Llamadas a la acción importantes |
+```html
+<form (ngSubmit)="submitForm()">
+  <div class="form-content">
+    <!-- Campos del formulario -->
+    <input type="text" placeholder="Nombre" />
+    <input type="email" placeholder="Email" />
 
-## Tipos de Botón
+    <!-- Estado vacío si no hay campos -->
+    <div *ngIf="!hasFormFields">
+      <openiis-empty-state icon="edit" title="Formulario vacío" message="Agrega campos al formulario para comenzar." buttonText="Agregar campo" buttonType="primary" buttonIcon="add" (buttonClick)="addFormField()"> </openiis-empty-state>
+    </div>
+  </div>
 
-| Tipo        | Uso Recomendado        |
-| ----------- | ---------------------- |
-| `primary`   | Acción principal       |
-| `secondary` | Acción secundaria      |
-| `success`   | Acciones positivas     |
-| `warning`   | Acciones de precaución |
-| `danger`    | Acciones destructivas  |
-| `info`      | Información adicional  |
+  <button type="submit">Enviar</button>
+</form>
+```
 
-## Responsive Design
+```typescript
+export class MyComponent {
+  hasFormFields = false;
 
-El componente es completamente responsive:
+  addFormField() {
+    this.hasFormFields = true;
+  }
 
-- **Desktop**: Espaciado completo, iconos grandes
-- **Tablet**: Espaciado moderado, iconos medianos
-- **Mobile**: Espaciado compacto, iconos pequeños
+  submitForm() {
+    console.log("Enviar formulario");
+  }
+}
+```
 
-## Dependencias
+### 15. Estado en Tablas
 
-- `@angular/common`
-- `ButtonComponent`
-- Material Icons
+```html
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="users.length === 0">
+      <td colspan="3">
+        <openiis-empty-state icon="group" title="Sin usuarios" message="No hay usuarios registrados en el sistema." buttonText="Agregar usuario" buttonType="primary" buttonIcon="person_add" (buttonClick)="addUser()"> </openiis-empty-state>
+      </td>
+    </tr>
+    <tr *ngFor="let user of users">
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <button>Editar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+```
 
-## Estilos CSS
+```typescript
+export class MyComponent {
+  users: any[] = [];
 
-El componente incluye estilos CSS inline que soportan:
+  addUser() {
+    this.users.push({ name: "Nuevo usuario", email: "usuario@ejemplo.com" });
+  }
+}
+```
 
-- Centrado automático del contenido
-- Iconos escalables
-- Tipografía responsive
-- Colores consistentes con el sistema de diseño
-- Espaciado responsivo
+## ⚡ Comportamiento
 
-## Notas
+### Estados
 
-- El botón solo aparece si se proporciona `buttonText`
-- El componente usa Material Icons para los iconos
-- Es completamente responsive y funciona en todos los dispositivos
-- Los colores se adaptan automáticamente al tema activo
-- El componente es accesible y soporta lectores de pantalla
+- **Vacío**: Cuando no hay contenido para mostrar
+- **Búsqueda**: Cuando no hay resultados de búsqueda
+- **Error**: Cuando hay un error de conexión o sistema
+- **Carga**: Cuando se está procesando una operación
+
+### Iconos
+
+- **Material Icons**: Uso de iconos de Material Design
+- **Contextuales**: Iconos que representan el contexto del estado
+- **Consistentes**: Iconos que mantienen coherencia visual
+
+### Responsive
+
+- **Móvil**: Adaptación automática en pantallas pequeñas
+- **Desktop**: Diseño optimizado para pantallas grandes
+- **Accesibilidad**: Soporte completo para lectores
+
+## ✅ Características
+
+- ✅ Iconos de Material Design
+- ✅ Títulos y mensajes personalizables
+- ✅ Botones opcionales con diferentes tipos
+- ✅ Iconos en botones
+- ✅ Botones de ancho completo
+- ✅ Botones responsivos
+- ✅ Eventos de clic
+- ✅ Diseño centrado y limpio
+- ✅ Colores temáticos
+- ✅ Responsive design
+- ✅ Accesibilidad completa
+- ✅ Integración con Button component
+- ✅ Estados condicionales
+- ✅ Mensajes contextuales
+- ✅ Iconos contextuales
+
+## 🎨 Estilos Automáticos
+
+- **Centrado**: Contenido centrado automáticamente
+- **Espaciado**: Espaciado consistente con variables CSS
+- **Tipografía**: Jerarquía tipográfica clara
+- **Colores**: Integración con el sistema de colores
+- **Responsive**: Adaptación automática en móviles
+
+## 🔧 Funcionalidades Especiales
+
+### Botón Opcional
+
+```typescript
+// Estado sin botón
+<openiis-empty-state icon="inbox" title="Vacío" message="Sin contenido">
+```
+
+### Botón de Ancho Completo
+
+```typescript
+// Botón que ocupa todo el ancho
+[buttonFullWidth] = "true";
+```
+
+### Botón Responsivo
+
+```typescript
+// Botón que se adapta al tamaño de pantalla
+[buttonResponsive] = "true";
+```
+
+### Eventos de Clic
+
+```typescript
+// Manejo de eventos del botón
+buttonClick = "onButtonClick()";
+```
+
+### Estados Condicionales
+
+```typescript
+// Estados que cambian según el contexto
+[icon] = "getContextualIcon()"[title] = "getContextualTitle()";
+```
+
+## 🚨 Solución de Problemas
+
+| Problema                   | Solución                                                 |
+| -------------------------- | -------------------------------------------------------- |
+| Icono no aparece           | Verifica que el icono esté en Material Icons             |
+| Botón no funciona          | Verifica que `buttonText` esté configurado               |
+| Evento no se emite         | Verifica que el método esté definido en el componente    |
+| Responsive no funciona     | Verifica que `buttonResponsive` esté en `true`           |
+| Ancho completo no funciona | Verifica que `buttonFullWidth` esté en `true`            |
+| Colores incorrectos        | Verifica que `buttonType` esté configurado correctamente |
+
+## 🐞 Reportar Problemas
+
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)
