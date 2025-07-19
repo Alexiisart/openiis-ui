@@ -138,7 +138,7 @@ import {
     }
 
     .social-buttons {
-      margin-top: var(--space-2);
+      margin: var(--space-2) 0;
     }
 
     .info-badge {
