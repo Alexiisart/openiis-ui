@@ -2,6 +2,7 @@
 src/
 *.ts
 !*.d.ts
+*.md
 
 # Configuración de desarrollo
 tsconfig*.json

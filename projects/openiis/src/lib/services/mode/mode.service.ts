@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
+import { OpeniisThemeService } from '../theme/theme.service';
 
 export type ThemeMode = 'light' | 'dark';
 
@@ -14,7 +15,7 @@ export class OpeniisModeService {
   private readonly MODE_STORAGE_KEY = 'openiis-theme-mode';
   private _currentMode$ = new BehaviorSubject<ThemeMode>('light');
 
-  constructor() {
+  constructor(private themeService: OpeniisThemeService) {
     this.initializeMode();
   }
 
@@ -59,7 +60,7 @@ export class OpeniisModeService {
     } else {
       // Detectar preferencia del sistema
       const prefersDark = window.matchMedia(
-        '(prefers-color-scheme: dark)'
+        '(prefers-color-scheme: dark)',
       ).matches;
       this._currentMode$.next(prefersDark ? 'dark' : 'light');
     }
@@ -72,6 +73,11 @@ export class OpeniisModeService {
    */
   private applyMode(): void {
     const mode = this._currentMode$.value;
+
+    // Aplicar el atributo data-theme para el modo
     document.body.setAttribute('data-theme', mode);
+
+    // Re-aplicar el tema para asegurar que ambos atributos estén presentes
+    this.themeService.applyCurrentTheme();
   }
 }

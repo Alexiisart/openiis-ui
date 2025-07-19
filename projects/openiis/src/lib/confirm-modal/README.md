@@ -1,41 +1,244 @@
-# ConfirmModal Component
+# Confirm Modal
 
-## Descripción
+Modal de confirmación para acciones importantes con botones de confirmar y cancelar.
 
-El componente `ConfirmModalComponent` es un modal de confirmación que permite solicitar confirmación del usuario antes de realizar una acción. Soporta configuración de 2 o 3 botones y es perfecto para operaciones que requieren confirmación explícita.
+## 📦 Instalación
 
-## Características
+```typescript
+import { OpeniisConfirmModalComponent, OpeniisButtonComponent } from 'openiis-ui';
 
-- ✅ Modal de confirmación con 2 o 3 botones
-- ✅ Títulos y mensajes personalizables
-- ✅ Textos de botones configurables
-- ✅ Cierre por overlay y botón X
-- ✅ Eventos separados para cada acción
-- ✅ Completamente responsive
-- ✅ Fácil integración
-
-## Uso Básico
-
-```html
-<app-confirm-modal [isVisible]="showConfirmModal" [data]="confirmData" (confirmed)="onConfirmed()" (cancelled)="onCancelled()" (thirdAction)="onThirdAction()" buttonLeft="secondary" buttonRight="primary"> </app-confirm-modal>
+@Component({
+  imports: [OpeniisConfirmModalComponent, OpeniisButtonComponent],
+})
 ```
 
-## Props
+## ⚙️ Properties
 
-| Prop        | Tipo                  | Defecto | Descripción                       |
-| ----------- | --------------------- | ------- | --------------------------------- |
-| `isVisible` | `boolean`             | `false` | Controla la visibilidad del modal |
-| `data`      | `ConfirmData \| null` | `null`  | Datos de configuración del modal  |
+| Property      | Tipo                  | Default       | Descripción              |
+| ------------- | --------------------- | ------------- | ------------------------ |
+| `isVisible`   | `boolean`             | `false`       | Controla la visibilidad  |
+| `data`        | `ConfirmData \| null` | `null`        | Configuración del modal  |
+| `buttonLeft`  | `ButtonVariant`       | `'secondary'` | Tipo del botón izquierdo |
+| `buttonRight` | `ButtonVariant`       | `'primary'`   | Tipo del botón derecho   |
 
-## Eventos
+## 📡 Events
 
-| Evento        | Tipo   | Descripción                                |
-| ------------- | ------ | ------------------------------------------ |
-| `confirmed`   | `void` | Emitido cuando se confirma la acción       |
-| `cancelled`   | `void` | Emitido cuando se cancela la acción        |
-| `thirdAction` | `void` | Emitido cuando se presiona el tercer botón |
+| Event         | Tipo   | Descripción                       |
+| ------------- | ------ | --------------------------------- |
+| `confirmed`   | `void` | Emitido al confirmar              |
+| `cancelled`   | `void` | Emitido al cancelar               |
+| `thirdAction` | `void` | Emitido al presionar tercer botón |
 
-## Interfaz ConfirmData
+## 🎨 Tipos de Botones
+
+| Tipo        | Color   | Uso               |
+| ----------- | ------- | ----------------- |
+| `primary`   | Azul    | Acción principal  |
+| `secondary` | Gris    | Acción secundaria |
+| `success`   | Verde   | Confirmación      |
+| `danger`    | Rojo    | Eliminación       |
+| `warning`   | Naranja | Advertencia       |
+
+## 💡 Ejemplos Prácticos
+
+### 1. Confirmación Básica
+
+```html
+<openiis-confirm-modal [isVisible]="showConfirm" [data]="confirmData" (confirmed)="onConfirmed()" (cancelled)="onCancelled()"> </openiis-confirm-modal>
+
+<openiis-button text="Delete Item" type="danger" (clickEvent)="action()"> </openiis-button>
+```
+
+```typescript
+export class MyComponent {
+  showConfirm = false;
+
+  confirmData: any = {
+    title: "Eliminar elemento",
+    message: "¿Estás seguro de que quieres eliminar este elemento?",
+    confirmText: "Eliminar",
+    cancelText: "Cancelar",
+  };
+
+  action() {
+    this.showConfirm = true;
+    console.log(this.confirmData);
+  }
+
+  onConfirmed() {
+    console.log("Confirmed!");
+    this.deleteItem();
+    this.showConfirm = false;
+  }
+
+  onCancelled() {
+    console.log("Cancelled!");
+    this.showConfirm = false;
+  }
+
+  deleteItem() {
+    // Lógica para eliminar
+  }
+}
+```
+
+### 2. Confirmación con Botones Personalizados
+
+```html
+<openiis-confirm-modal [isVisible]="showCustomConfirm" [data]="customConfirmData" [buttonLeft]="'danger'" [buttonRight]="'success'" (confirmed)="onCustomConfirmed()" (cancelled)="onCustomCancelled()"> </openiis-confirm-modal>
+
+<openiis-button text="Save Changes" type="primary" (clickEvent)="customAction()"> </openiis-button>
+```
+
+```typescript
+export class MyComponent {
+  showCustomConfirm = false;
+
+  customConfirmData: any = {
+    title: "Guardar cambios",
+    message: "¿Quieres guardar los cambios realizados?",
+    confirmText: "Guardar",
+    cancelText: "Descartar",
+  };
+
+  customAction() {
+    this.showCustomConfirm = true;
+  }
+
+  onCustomConfirmed() {
+    this.saveChanges();
+    this.showCustomConfirm = false;
+  }
+
+  onCustomCancelled() {
+    this.discardChanges();
+    this.showCustomConfirm = false;
+  }
+}
+```
+
+### 3. Modal con Tercer Botón
+
+```html
+<openiis-confirm-modal [isVisible]="showThreeOptions" [data]="threeOptionsData" [buttonLeft]="'secondary'" [buttonRight]="'primary'" (confirmed)="onSave()" (cancelled)="onCancel()" (thirdAction)="onPreview()"> </openiis-confirm-modal>
+
+<openiis-button text="Edit Document" type="primary" (clickEvent)="threeOptionsAction()"> </openiis-button>
+```
+
+```typescript
+export class MyComponent {
+  showThreeOptions = false;
+
+  threeOptionsData: any = {
+    title: "Editar documento",
+    message: "¿Qué quieres hacer con el documento?",
+    confirmText: "Guardar",
+    cancelText: "Cancelar",
+    thirdButtonText: "Vista previa",
+  };
+
+  threeOptionsAction() {
+    this.showThreeOptions = true;
+  }
+
+  onSave() {
+    this.saveDocument();
+    this.showThreeOptions = false;
+  }
+
+  onCancel() {
+    this.showThreeOptions = false;
+  }
+
+  onPreview() {
+    this.previewDocument();
+    this.showThreeOptions = false;
+  }
+}
+```
+
+### 4. Servicio de Confirmación
+
+```typescript
+// confirm.service.ts
+@Injectable({ providedIn: "root" })
+export class ConfirmService {
+  private confirmSubject = new BehaviorSubject(null);
+  public confirm$ = this.confirmSubject.asObservable();
+
+  showDelete(message, title = "Eliminar elemento") {
+    this.confirmSubject.next({
+      title,
+      message,
+      confirmText: "Eliminar",
+      cancelText: "Cancelar",
+    });
+  }
+
+  showSave(message, title = "Guardar cambios") {
+    this.confirmSubject.next({
+      title,
+      message,
+      confirmText: "Guardar",
+      cancelText: "Cancelar",
+    });
+  }
+
+  showCustom(data) {
+    this.confirmSubject.next(data);
+  }
+
+  close() {
+    this.confirmSubject.next(null);
+  }
+}
+```
+
+```html
+<openiis-confirm-modal [isVisible]="showConfirm" [data]="confirmData" (confirmed)="onConfirmed()" (cancelled)="onCancelled()"> </openiis-confirm-modal>
+
+<openiis-button text="Delete Item" type="danger" (clickEvent)="deleteItem()"> </openiis-button>
+
+<openiis-button text="Save Changes" type="success" (clickEvent)="saveChanges()"> </openiis-button>
+```
+
+```typescript
+export class MyComponent {
+  confirmData: any = null;
+  showConfirm = false;
+
+  constructor(private confirmService: ConfirmService) {}
+
+  ngOnInit() {
+    this.confirmService.confirm$.subscribe((confirm) => {
+      this.confirmData = confirm;
+      this.showConfirm = !!confirm;
+    });
+  }
+
+  deleteItem() {
+    this.confirmService.showDelete("¿Eliminar este elemento?");
+  }
+
+  saveChanges() {
+    this.confirmService.showSave("¿Guardar los cambios?");
+  }
+
+  onConfirmed() {
+    console.log("Action confirmed!");
+    this.showConfirm = false;
+    this.confirmService.close();
+  }
+
+  onCancelled() {
+    console.log("Action cancelled!");
+    this.showConfirm = false;
+    this.confirmService.close();
+  }
+}
+```
+
+## 🏗️ Interfaces
 
 ```typescript
 interface ConfirmData {
@@ -47,283 +250,34 @@ interface ConfirmData {
 }
 ```
 
-## Ejemplos
+## ⚡ Comportamiento
 
-### Confirmación básica (2 botones)
+- **Cierre manual**: Clic overlay, botón X, botones de acción
+- **Botones configurables**: Tipos y textos personalizables
+- **Tercer botón opcional**: Para modales con 3 opciones
+- **Eventos separados**: confirmed, cancelled, thirdAction
 
-```typescript
-// En el componente
-deleteConfirmData: ConfirmData = {
-  title: 'Eliminar elemento',
-  message: '¿Estás seguro de que quieres eliminar este elemento? Esta acción no se puede deshacer.',
-  confirmText: 'Eliminar',
-  cancelText: 'Cancelar'
-};
+## ✅ Características
 
-showDeleteConfirm = false;
+- ✅ Confirmación y cancelación
+- ✅ Botones personalizables
+- ✅ Tercer botón opcional
+- ✅ Tipos de botón configurables
+- ✅ Cierre por overlay
+- ✅ Completamente responsive
+- ✅ Integración con temas Openiis UI
+- ✅ Accesibilidad incluida
 
-deleteItem(id: string) {
-  this.itemToDelete = id;
-  this.showDeleteConfirm = true;
-}
+## 🚨 Solución de Problemas
 
-onDeleteConfirmed() {
-  // Lógica para eliminar el elemento
-  this.itemService.delete(this.itemToDelete).subscribe({
-    next: () => {
-      console.log('Elemento eliminado');
-      this.showDeleteConfirm = false;
-    },
-    error: (error) => {
-      console.error('Error al eliminar:', error);
-    }
-  });
-}
+| Problema                 | Solución                                                  |
+| ------------------------ | --------------------------------------------------------- |
+| Modal no se muestra      | Verifica `isVisible = true` y `data` no null              |
+| Botones no aparecen      | Verifica que `confirmText` y `cancelText` estén definidos |
+| Estilos no se aplican    | Asegúrate de que el tema Openiis UI esté configurado      |
+| Tercer botón no funciona | Verifica que `thirdButtonText` esté definido en `data`    |
 
-onDeleteCancelled() {
-  this.showDeleteConfirm = false;
-  this.itemToDelete = null;
-}
-```
+## 🐞 Reportar Problemas
 
-```html
-<app-confirm-modal [isVisible]="showDeleteConfirm" [data]="deleteConfirmData" (confirmed)="onDeleteConfirmed()" (cancelled)="onDeleteCancelled()"> </app-confirm-modal>
-```
-
-### Confirmación con 3 opciones
-
-```typescript
-// En el componente
-saveConfirmData: ConfirmData = {
-  title: 'Guardar cambios',
-  message: 'Tienes cambios sin guardar. ¿Qué deseas hacer?',
-  confirmText: 'Guardar',
-  cancelText: 'Descartar cambios',
-  thirdButtonText: 'Cancelar'
-};
-
-showSaveConfirm = false;
-
-beforeLeave() {
-  if (this.hasUnsavedChanges()) {
-    this.showSaveConfirm = true;
-  } else {
-    this.navigateAway();
-  }
-}
-
-onSaveConfirmed() {
-  this.saveChanges().then(() => {
-    this.navigateAway();
-  });
-}
-
-onSaveCancelled() {
-  // Descartar cambios
-  this.discardChanges();
-  this.navigateAway();
-}
-
-onSaveThirdAction() {
-  // Cancelar - no hacer nada
-  this.showSaveConfirm = false;
-}
-```
-
-```html
-<app-confirm-modal [isVisible]="showSaveConfirm" [data]="saveConfirmData" (confirmed)="onSaveConfirmed()" (cancelled)="onSaveCancelled()" (thirdAction)="onSaveThirdAction()"> </app-confirm-modal>
-```
-
-## Ejemplos de Uso Común
-
-### Confirmación de eliminación
-
-```typescript
-deleteTaskConfirm: ConfirmData = {
-  title: 'Eliminar tarea',
-  message: '¿Estás seguro de que quieres eliminar esta tarea?',
-  confirmText: 'Sí, eliminar',
-  cancelText: 'Cancelar'
-};
-
-confirmDeleteTask(taskId: string) {
-  this.taskToDelete = taskId;
-  this.showDeleteTaskConfirm = true;
-}
-
-onTaskDeleteConfirmed() {
-  this.taskService.delete(this.taskToDelete).subscribe({
-    next: () => {
-      this.loadTasks(); // Recargar lista
-      this.showDeleteTaskConfirm = false;
-    }
-  });
-}
-```
-
-### Confirmación de cierre de sesión
-
-```typescript
-logoutConfirm: ConfirmData = {
-  title: 'Cerrar sesión',
-  message: '¿Estás seguro de que quieres cerrar sesión?',
-  confirmText: 'Cerrar sesión',
-  cancelText: 'Cancelar'
-};
-
-confirmLogout() {
-  this.showLogoutConfirm = true;
-}
-
-onLogoutConfirmed() {
-  this.authService.logout().subscribe({
-    next: () => {
-      this.router.navigate(['/login']);
-    }
-  });
-}
-```
-
-### Confirmación de cambios importantes
-
-```typescript
-resetConfirm: ConfirmData = {
-  title: 'Restablecer configuración',
-  message: 'Se restablecerán todas las configuraciones a sus valores por defecto. ¿Continuar?',
-  confirmText: 'Restablecer',
-  cancelText: 'Cancelar'
-};
-
-confirmReset() {
-  this.showResetConfirm = true;
-}
-
-onResetConfirmed() {
-  this.settingsService.resetToDefaults().subscribe({
-    next: () => {
-      this.loadSettings();
-      this.showResetConfirm = false;
-    }
-  });
-}
-```
-
-### Confirmación con múltiples opciones
-
-```typescript
-// Ejemplo: Guardar, no guardar, o cancelar
-unsavedChangesConfirm: ConfirmData = {
-  title: 'Cambios sin guardar',
-  message: 'Tienes cambios sin guardar. ¿Qué deseas hacer?',
-  confirmText: 'Guardar y continuar',
-  cancelText: 'No guardar',
-  thirdButtonText: 'Cancelar'
-};
-
-checkUnsavedChanges() {
-  if (this.form.dirty) {
-    this.showUnsavedChangesConfirm = true;
-  } else {
-    this.continue();
-  }
-}
-
-onUnsavedChangesConfirmed() {
-  // Guardar y continuar
-  this.save().then(() => {
-    this.continue();
-  });
-}
-
-onUnsavedChangesCancelled() {
-  // No guardar y continuar
-  this.continue();
-}
-
-onUnsavedChangesThirdAction() {
-  // Cancelar - no hacer nada
-  this.showUnsavedChangesConfirm = false;
-}
-```
-
-## Comportamiento de Cierre
-
-### Cierre automático
-
-- El modal se cierra automáticamente después de cualquier acción (confirmed, cancelled, thirdAction)
-
-### Cierre manual
-
-- **Clic en overlay**: Ejecuta la acción de cancelar
-- **Botón X**: Ejecuta la acción de cancelar
-- **Botón de confirmación**: Ejecuta la acción de confirmar
-- **Botón de cancelación**: Ejecuta la acción de cancelar
-- **Tercer botón**: Ejecuta la tercera acción
-
-## Mejores Prácticas
-
-### Textos claros
-
-```typescript
-// ✅ Bueno - Textos específicos
-confirmData: ConfirmData = {
-  title: "Eliminar proyecto",
-  message: '¿Estás seguro de que quieres eliminar el proyecto "Mi Proyecto"? Esta acción no se puede deshacer.',
-  confirmText: "Sí, eliminar proyecto",
-  cancelText: "Cancelar",
-};
-
-// ❌ Malo - Textos genéricos
-confirmData: ConfirmData = {
-  title: "Confirmar",
-  message: "¿Estás seguro?",
-  confirmText: "Sí",
-  cancelText: "No",
-};
-```
-
-### Uso de colores para acciones peligrosas
-
-```typescript
-// Para acciones destructivas, usar texto que indique peligro
-deleteConfirm: ConfirmData = {
-  title: "Eliminación permanente",
-  message: "Esta acción eliminará permanentemente todos los datos. ¿Continuar?",
-  confirmText: "Sí, eliminar permanentemente",
-  cancelText: "Cancelar",
-};
-```
-
-### Confirmación con información adicional
-
-```typescript
-// Incluir información relevante en el mensaje
-bulkDeleteConfirm: ConfirmData = {
-  title: "Eliminar elementos seleccionados",
-  message: `¿Estás seguro de que quieres eliminar ${this.selectedItems.length} elementos? Esta acción no se puede deshacer.`,
-  confirmText: `Eliminar ${this.selectedItems.length} elementos`,
-  cancelText: "Cancelar",
-};
-```
-
-## Dependencias
-
-- `@angular/common`
-- `ButtonComponent`
-
-## Estilos CSS
-
-El componente utiliza los estilos del componente Modal base que incluyen:
-
-- Overlay semitransparente
-- Centrado responsivo
-- Bordes y espaciado consistentes
-- Diseño responsivo para móviles
-
-## Notas
-
-- El componente cierra automáticamente después de cualquier acción
-- Los tres eventos son opcionales - solo maneja los que necesites
-- El tercer botón solo aparece si se proporciona `thirdButtonText`
-- Es recomendable usar textos específicos para mejor UX
-- El componente es completamente independiente y reutilizable
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)

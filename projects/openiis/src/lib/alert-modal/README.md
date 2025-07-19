@@ -1,237 +1,192 @@
-# AlertModal Component
+# Alert Modal
 
-## Descripción
+Modal de alerta para mostrar mensajes importantes con diferentes tipos de alerta.
 
-El componente `AlertModalComponent` es un modal de alerta que muestra mensajes informativos al usuario. Soporta diferentes tipos de alerta (success, warning, danger, info) y puede cerrarse automáticamente después de un tiempo determinado.
+## 📦 Instalación
 
-## Características
+```typescript
+import { OpeniisAlertModalComponent, OpeniisButtonComponent } from 'openiis-ui';
 
-- ✅ 4 tipos de alerta: success, warning, danger, info
-- ✅ Cierre automático con duración configurable
-- ✅ Cierre manual con botón y overlay
-- ✅ Títulos automáticos según el tipo
-- ✅ Estilos diferenciados por tipo
-- ✅ Completamente responsive
-- ✅ Fácil de usar con una sola línea
+@Component({
+  imports: [OpeniisAlertModalComponent, OpeniisButtonComponent],
+})
+```
 
-## Uso Básico
+## ⚙️ Properties
+
+| Property    | Tipo                | Default | Descripción             |
+| ----------- | ------------------- | ------- | ----------------------- |
+| `isVisible` | `boolean`           | `false` | Controla la visibilidad |
+| `data`      | `AlertData \| null` | `null`  | Configuración del modal |
+
+## 📡 Events
+
+| Event    | Tipo   | Descripción                |
+| -------- | ------ | -------------------------- |
+| `closed` | `void` | Emitido al cerrar el modal |
+
+## 🎨 Tipos de Alerta
+
+| Tipo      | Color   | Icono | Uso               |
+| --------- | ------- | ----- | ----------------- |
+| `success` | Verde   | ✓     | Operación exitosa |
+| `error`   | Rojo    | ✗     | Error o problema  |
+| `warning` | Naranja | ⚠    | Advertencia       |
+| `info`    | Azul    | ℹ    | Información       |
+
+## 💡 Ejemplos Prácticos
+
+### 1. Alerta de Éxito
 
 ```html
-<app-alert-modal [isVisible]="showAlert" [data]="alertData" (closed)="onAlertClosed()"> </app-alert-modal>
+<openiis-alert-modal [isVisible]="showSuccess" [data]="successData" (closed)="onAlertClosed()"> </openiis-alert-modal>
+
+<openiis-button text="Show Success" type="success" (clickEvent)="showSuccessAlert()"> </openiis-button>
 ```
-
-## Props
-
-| Prop        | Tipo                | Defecto | Descripción                         |
-| ----------- | ------------------- | ------- | ----------------------------------- |
-| `isVisible` | `boolean`           | `false` | Controla la visibilidad del modal   |
-| `data`      | `AlertData \| null` | `null`  | Datos de configuración de la alerta |
-
-## Eventos
-
-| Evento   | Tipo   | Descripción                       |
-| -------- | ------ | --------------------------------- |
-| `closed` | `void` | Emitido cuando se cierra el modal |
-
-## Interfaz AlertData
 
 ```typescript
-interface AlertData {
-  message: string; // Mensaje de la alerta
-  type: "success" | "warning" | "danger" | "info"; // Tipo de alerta
-  duration?: number; // Duración en milisegundos (opcional)
-}
-```
+export class MyComponent {
+  showSuccess = false;
 
-## Tipos de Alerta
+  successData: any = {
+    type: "success",
+    title: "Operación exitosa",
+    message: "Los datos se han guardado correctamente.",
+  };
 
-| Tipo      | Título      | Color   | Uso                  |
-| --------- | ----------- | ------- | -------------------- |
-| `success` | Éxito       | Verde   | Operaciones exitosas |
-| `warning` | Advertencia | Naranja | Avisos importantes   |
-| `danger`  | Error       | Rojo    | Errores y fallos     |
-| `info`    | Información | Azul    | Información general  |
+  showSuccessAlert() {
+    this.showSuccess = true;
+  }
 
-## Ejemplos
-
-### Alerta de éxito
-
-```typescript
-// En el componente
-successAlert: AlertData = {
-  message: 'La tarea se ha guardado correctamente',
-  type: 'success',
-  duration: 3000 // Se cierra automáticamente en 3 segundos
-};
-
-showSuccessAlert = false;
-
-saveTask() {
-  // Lógica para guardar tarea
-  this.showSuccessAlert = true;
-}
-
-onAlertClosed() {
-  this.showSuccessAlert = false;
-}
-```
-
-```html
-<app-alert-modal [isVisible]="showSuccessAlert" [data]="successAlert" (closed)="onAlertClosed()"> </app-alert-modal>
-```
-
-### Alerta de advertencia
-
-```typescript
-warningAlert: AlertData = {
-  message: 'Tienes tareas pendientes que vencen hoy',
-  type: 'warning'
-  // Sin duration - se cierra manualmente
-};
-
-showWarningAlert = false;
-
-checkPendingTasks() {
-  if (this.hasPendingTasks()) {
-    this.showWarningAlert = true;
+  onAlertClosed() {
+    this.showSuccess = false;
   }
 }
 ```
 
-### Alerta de error
+### 2. Alerta de Error
 
-```typescript
-errorAlert: AlertData = {
-  message: 'Error al conectar con el servidor. Inténtalo de nuevo.',
-  type: 'danger',
-  duration: 5000 // 5 segundos para errores
-};
+```html
+<openiis-alert-modal [isVisible]="showError" [data]="errorData" (closed)="onErrorClosed()"> </openiis-alert-modal>
 
-showErrorAlert = false;
-
-handleError(error: any) {
-  console.error('Error:', error);
-  this.showErrorAlert = true;
-}
+<openiis-button text="Show Error" type="danger" (clickEvent)="showErrorAlert()"> </openiis-button>
 ```
 
-### Alerta de información
-
 ```typescript
-infoAlert: AlertData = {
-  message: 'Recuerda que puedes usar atajos de teclado para navegar más rápido',
-  type: 'info',
-  duration: 4000
-};
+export class MyComponent {
+  showError = false;
 
-showInfoAlert = false;
+  errorData: any = {
+    type: "error",
+    title: "Error de conexión",
+    message: "No se pudo conectar con el servidor.",
+  };
 
-showTips() {
-  this.showInfoAlert = true;
-}
-```
-
-## Ejemplos de Uso Común
-
-### Confirmación de operaciones
-
-```typescript
-// Después de eliminar un elemento
-deleteConfirmation: AlertData = {
-  message: 'El elemento se ha eliminado correctamente',
-  type: 'success',
-  duration: 2000
-};
-
-deleteItem(id: string) {
-  this.itemService.delete(id).subscribe({
-    next: () => {
-      this.showDeleteConfirmation = true;
-    },
-    error: (error) => {
-      this.handleError(error);
-    }
-  });
-}
-```
-
-### Validación de formularios
-
-```typescript
-// Validación de campos requeridos
-validationAlert: AlertData = {
-  message: 'Por favor, completa todos los campos requeridos',
-  type: 'warning'
-};
-
-validateForm() {
-  if (!this.form.valid) {
-    this.showValidationAlert = true;
-    return false;
+  showErrorAlert() {
+    this.showError = true;
   }
-  return true;
+
+  onErrorClosed() {
+    this.showError = false;
+  }
 }
 ```
 
-### Notificaciones del sistema
+### 3. Alerta de Advertencia
+
+```html
+<openiis-alert-modal [isVisible]="showWarning" [data]="warningData" (closed)="onWarningClosed()"> </openiis-alert-modal>
+
+<openiis-button text="Show Warning" type="warning" (clickEvent)="showWarningAlert()"> </openiis-button>
+```
 
 ```typescript
-// Notificación de auto-guardado
-autoSaveAlert: AlertData = {
-  message: 'Cambios guardados automáticamente',
-  type: 'info',
-  duration: 1500
-};
+export class MyComponent {
+  showWarning = false;
 
-autoSave() {
-  this.saveChanges().then(() => {
-    this.showAutoSaveAlert = true;
-  });
+  warningData: any = {
+    type: "warning",
+    title: "Atención",
+    message: "Esta acción no se puede deshacer.",
+  };
+
+  showWarningAlert() {
+    this.showWarning = true;
+  }
+
+  onWarningClosed() {
+    this.showWarning = false;
+  }
 }
 ```
 
-## Comportamiento de Cierre
+### 4. Alerta de Información
 
-### Cierre automático
+```html
+<openiis-alert-modal [isVisible]="showInfo" [data]="infoData" (closed)="onInfoClosed()"> </openiis-alert-modal>
 
-- Si se especifica `duration`, el modal se cierra automáticamente después de ese tiempo
-- La duración se especifica en milisegundos
-- Si no se especifica `duration`, el modal permanece abierto hasta cerrarse manualmente
+<openiis-button text="Show Info" type="primary" (clickEvent)="showInfoAlert()"> </openiis-button>
+```
 
-### Cierre manual
+```typescript
+export class MyComponent {
+  showInfo = false;
 
-- **Clic en overlay**: Cierra el modal
-- **Botón X**: Cierra el modal
-- **Botón Aceptar**: Cierra el modal
-- **Tecla Escape**: Cierra el modal
+  infoData: any = {
+    type: "info",
+    title: "Información",
+    message: "Nueva actualización disponible.",
+  };
 
-## Servicio de Alertas (Recomendado)
+  showInfoAlert() {
+    this.showInfo = true;
+  }
 
-Para un uso más eficiente, recomendamos crear un servicio:
+  onInfoClosed() {
+    this.showInfo = false;
+  }
+}
+```
+
+### 5. Servicio de Alertas
 
 ```typescript
 // alert.service.ts
-@Injectable({
-  providedIn: "root",
-})
+@Injectable({ providedIn: "root" })
 export class AlertService {
-  private alertSubject = new BehaviorSubject<AlertData | null>(null);
+  private alertSubject = new BehaviorSubject(null);
   public alert$ = this.alertSubject.asObservable();
 
-  showSuccess(message: string, duration = 3000) {
-    this.alertSubject.next({ message, type: "success", duration });
+  showSuccess(message, title = "Éxito") {
+    this.alertSubject.next({
+      type: "success",
+      title,
+      message,
+    });
   }
 
-  showWarning(message: string, duration?: number) {
-    this.alertSubject.next({ message, type: "warning", duration });
+  showError(message, title = "Error") {
+    this.alertSubject.next({
+      type: "error",
+      title,
+      message,
+    });
   }
 
-  showError(message: string, duration = 5000) {
-    this.alertSubject.next({ message, type: "danger", duration });
+  showWarning(message, title = "Advertencia") {
+    this.alertSubject.next({
+      type: "warning",
+      title,
+      message,
+    });
   }
 
-  showInfo(message: string, duration = 4000) {
-    this.alertSubject.next({ message, type: "info", duration });
+  showInfo(message, title = "Información") {
+    this.alertSubject.next({
+      type: "info",
+      title,
+      message,
+    });
   }
 
   close() {
@@ -240,49 +195,92 @@ export class AlertService {
 }
 ```
 
-```typescript
-// En el componente
-constructor(private alertService: AlertService) {}
+```html
+<openiis-alert-modal [isVisible]="showAlert" [data]="alertData" (closed)="onAlertClosed()"> </openiis-alert-modal>
 
-ngOnInit() {
-  this.alertService.alert$.subscribe(alert => {
-    this.alertData = alert;
-    this.showAlert = !!alert;
-  });
-}
+<openiis-button text="Success Alert" type="success" (clickEvent)="showSuccess()"> </openiis-button>
 
-// Uso
-this.alertService.showSuccess('Operación completada');
-this.alertService.showError('Error al procesar');
+<openiis-button text="Error Alert" type="danger" (clickEvent)="showError()"> </openiis-button>
+
+<openiis-button text="Warning Alert" type="warning" (clickEvent)="showWarning()"> </openiis-button>
+
+<openiis-button text="Info Alert" type="primary" (clickEvent)="showInfo()"> </openiis-button>
 ```
 
-## Duraciones Recomendadas
+```typescript
+export class MyComponent {
+  alertData: any = null;
+  showAlert = false;
 
-| Tipo      | Duración     | Razón                |
-| --------- | ------------ | -------------------- |
-| `success` | 2000-3000ms  | Confirmación rápida  |
-| `info`    | 3000-4000ms  | Información moderada |
-| `warning` | Sin duración | Requiere atención    |
-| `danger`  | 5000ms+      | Errores importantes  |
+  constructor(private alertService: AlertService) {}
 
-## Dependencias
+  ngOnInit() {
+    this.alertService.alert$.subscribe((alert) => {
+      this.alertData = alert;
+      this.showAlert = !!alert;
+    });
+  }
 
-- `@angular/common`
+  showSuccess() {
+    this.alertService.showSuccess("Operación completada con éxito");
+  }
 
-## Estilos CSS
+  showError() {
+    this.alertService.showError("Ha ocurrido un error");
+  }
 
-El componente incluye estilos CSS que soportan:
+  showWarning() {
+    this.alertService.showWarning("Esta acción es irreversible");
+  }
 
-- Colores diferenciados por tipo de alerta
-- Overlay semitransparente
-- Centrado responsivo
-- Animaciones de entrada
-- Diseño responsivo
+  showInfo() {
+    this.alertService.showInfo("Nueva funcionalidad disponible");
+  }
 
-## Notas
+  onAlertClosed() {
+    this.showAlert = false;
+    this.alertService.close();
+  }
+}
+```
 
-- Los títulos se generan automáticamente según el tipo de alerta
-- El componente es completamente independiente y no requiere configuración adicional
-- Es compatible con todos los navegadores modernos
-- Se puede usar múltiples veces en la misma página
-- La duración es opcional y permite control granular del tiempo de visualización
+## 🏗️ Interfaces
+
+```typescript
+interface AlertData {
+  type: "success" | "error" | "warning" | "info"; // Tipo de alerta
+  title: string; // Título del modal
+  message: string; // Mensaje de la alerta
+}
+```
+
+## ⚡ Comportamiento
+
+- **Cierre automático**: Clic en botón X o overlay
+- **Tipos visuales**: Diferentes colores e iconos según tipo
+- **Responsive**: Se adapta a diferentes tamaños de pantalla
+- **Accesible**: Navegación por teclado incluida
+
+## ✅ Características
+
+- ✅ 4 tipos de alerta (success, error, warning, info)
+- ✅ Iconos y colores automáticos
+- ✅ Cierre por overlay y botón X
+- ✅ Completamente responsive
+- ✅ Integración con temas Openiis UI
+- ✅ Accesibilidad incluida
+- ✅ Servicio opcional para gestión centralizada
+
+## 🚨 Solución de Problemas
+
+| Problema              | Solución                                                            |
+| --------------------- | ------------------------------------------------------------------- |
+| Modal no se muestra   | Verifica `isVisible = true` y `data` no null                        |
+| Tipo no se aplica     | Verifica que `type` esté en ['success', 'error', 'warning', 'info'] |
+| Estilos no se aplican | Asegúrate de que el tema Openiis UI esté configurado                |
+| Iconos no aparecen    | Verifica que el tipo esté correctamente definido                    |
+
+## 🐞 Reportar Problemas
+
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)

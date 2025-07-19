@@ -15,6 +15,6 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["**/*.ts"],
+  "include": ["ng-add/**/*.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

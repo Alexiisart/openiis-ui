@@ -22,6 +22,7 @@ export class SvgIconDirective implements OnInit, OnDestroy, OnChanges {
   @Input() svgBackground: string = '';
   @Input() svgWidth: string | number = '';
   @Input() svgHeight: string | number = '';
+  @Input() svgSize: string | number = '';
   @Input() svgStroke: string = '';
   @Input() svgStrokeWidth: string | number = '';
   @Input() svgOpacity: number = 1;
@@ -36,7 +37,7 @@ export class SvgIconDirective implements OnInit, OnDestroy, OnChanges {
   constructor(
     private elementRef: ElementRef<HTMLElement>,
     private svgService: SvgIconService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
   ) {}
 
   ngOnInit(): void {
@@ -59,11 +60,15 @@ export class SvgIconDirective implements OnInit, OnDestroy, OnChanges {
 
     this.cleanup();
 
+    // Determinar width y height, priorizando svgSize si está definido
+    const width = this.svgSize || this.svgWidth;
+    const height = this.svgSize || this.svgHeight;
+
     const options: SvgIconOptions = {
       color: this.svgColor,
       backgroundColor: this.svgBackground,
-      width: this.svgWidth,
-      height: this.svgHeight,
+      width: width,
+      height: height,
       strokeColor: this.svgStroke,
       strokeWidth: this.svgStrokeWidth,
       opacity: this.svgOpacity,
@@ -113,7 +118,7 @@ export class EasyIconDirective implements OnInit, OnDestroy {
   constructor(
     private elementRef: ElementRef,
     private svgService: SvgIconService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
   ) {}
 
   ngOnInit(): void {
@@ -136,7 +141,7 @@ export class EasyIconDirective implements OnInit, OnDestroy {
     this.svgDirective = new SvgIconDirective(
       this.elementRef,
       this.svgService,
-      this.renderer
+      this.renderer,
     );
 
     // Configurar propiedades

@@ -11,6 +11,7 @@ import {
 import { Subscription } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../service/language.service';
+import { EasyIconDirective } from 'openiis-ui';
 
 @Component({
   selector: 'app-header-sec',
@@ -20,6 +21,7 @@ import { LanguageService } from '../service/language.service';
     OpeniisSwitchComponent,
     TranslateModule,
     SidebarComponent,
+    EasyIconDirective,
   ],
   template: `
     <div class="header-container">

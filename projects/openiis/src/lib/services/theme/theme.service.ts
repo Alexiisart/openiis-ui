@@ -80,7 +80,7 @@ export class OpeniisThemeService {
     this._customConfig$.next(fullConfig);
     localStorage.setItem(
       this.CUSTOM_CONFIG_STORAGE_KEY,
-      JSON.stringify(fullConfig)
+      JSON.stringify(fullConfig),
     );
 
     this.setTheme('custom');
@@ -97,12 +97,19 @@ export class OpeniisThemeService {
   }
 
   /**
+   * Método público para aplicar el tema (usado por otros servicios)
+   */
+  applyCurrentTheme(): void {
+    this.applyTheme();
+  }
+
+  /**
    * Inicializa el tema desde localStorage
    */
   private initializeTheme(): void {
     // Cargar tema guardado
     const savedTheme = localStorage.getItem(
-      this.THEME_STORAGE_KEY
+      this.THEME_STORAGE_KEY,
     ) as OpeniisTheme;
     if (
       savedTheme &&
@@ -113,7 +120,7 @@ export class OpeniisThemeService {
 
     // Cargar configuración custom
     const savedCustomConfig = localStorage.getItem(
-      this.CUSTOM_CONFIG_STORAGE_KEY
+      this.CUSTOM_CONFIG_STORAGE_KEY,
     );
     if (savedCustomConfig) {
       try {
@@ -212,7 +219,8 @@ export class OpeniisThemeService {
       else if (shade === 200) lightness = 80;
       else if (shade === 300) lightness = 70;
       else if (shade === 400) lightness = 60;
-      else if (shade === 500) lightness = hsl.l; // Color base
+      else if (shade === 500)
+        lightness = hsl.l; // Color base
       else if (shade === 600) lightness = Math.max(hsl.l - 15, 20);
       else if (shade === 700) lightness = Math.max(hsl.l - 25, 15);
       else if (shade === 800) lightness = Math.max(hsl.l - 35, 10);
@@ -225,7 +233,7 @@ export class OpeniisThemeService {
       neutral[shade.toString()] = this.hslToHex(
         hsl.h,
         neutralSaturation,
-        lightness
+        lightness,
       );
     });
 

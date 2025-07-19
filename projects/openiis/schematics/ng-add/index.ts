@@ -1,5 +1,7 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
+// Generar el archivo index.js: npx tsc -p projects/openiis/schematics/tsconfig.json
+
 // Interfaz para las opciones del schema
 interface NgAddSchema {
   theme?: string;
@@ -8,65 +10,30 @@ interface NgAddSchema {
   textColor?: string;
 }
 
-// Función para prompts condicionales
+// Función para prompts condicionales usando el sistema nativo
 async function getCustomThemeOptions(context: SchematicContext): Promise<{
   primaryColor: string;
   backgroundColor: string;
   textColor: string;
 }> {
-  try {
-    const inquirer = require('inquirer');
+  // Usar valores por defecto y mostrar instrucciones
+  context.logger.info('🎨 Configurando tema personalizado...');
+  context.logger.info(
+    '📝 Usando valores por defecto. Puedes personalizar después editando:',
+  );
+  context.logger.info('   src/styles/openiis-custom-theme.css');
+  context.logger.info('');
+  context.logger.info('💡 Valores por defecto:');
+  context.logger.info('   Color principal: #14b8a6');
+  context.logger.info('   Color de fondo: #ffffff');
+  context.logger.info('   Color de texto: #171717');
+  context.logger.info('');
 
-    const answers = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'primaryColor',
-        message: 'Ingresa el color principal (hex, ej: #14b8a6):',
-        default: '#14b8a6',
-        validate: (input: string) => {
-          const pattern = /^#[0-9a-fA-F]{6}$/;
-          return (
-            pattern.test(input) || 'Debe ser un color hex válido (ej: #14b8a6)'
-          );
-        },
-      },
-      {
-        type: 'input',
-        name: 'backgroundColor',
-        message: 'Ingresa el color de fondo (hex, ej: #ffffff):',
-        default: '#ffffff',
-        validate: (input: string) => {
-          const pattern = /^#[0-9a-fA-F]{6}$/;
-          return (
-            pattern.test(input) || 'Debe ser un color hex válido (ej: #ffffff)'
-          );
-        },
-      },
-      {
-        type: 'input',
-        name: 'textColor',
-        message: 'Ingresa el color de texto principal (hex, ej: #171717):',
-        default: '#171717',
-        validate: (input: string) => {
-          const pattern = /^#[0-9a-fA-F]{6}$/;
-          return (
-            pattern.test(input) || 'Debe ser un color hex válido (ej: #171717)'
-          );
-        },
-      },
-    ]);
-
-    return answers;
-  } catch (error) {
-    context.logger.warn(
-      'No se pudo cargar inquirer, usando valores por defecto',
-    );
-    return {
-      primaryColor: '#14b8a6',
-      backgroundColor: '#ffffff',
-      textColor: '#171717',
-    };
-  }
+  return {
+    primaryColor: '#14b8a6',
+    backgroundColor: '#ffffff',
+    textColor: '#171717',
+  };
 }
 
 // Función para convertir hex a RGB
@@ -237,6 +204,66 @@ function setupThemeInAppComponent(
   context.logger.info(`✅ Tema '${theme}' configurado en app.component.ts`);
 }
 
+// Configurar HttpClient en app.config.ts
+function setupHttpClient(tree: Tree, context: SchematicContext): void {
+  const appConfigPath = 'src/app/app.config.ts';
+
+  if (!tree.exists(appConfigPath)) {
+    context.logger.warn('No se pudo encontrar app.config.ts');
+    return;
+  }
+
+  const content = tree.read(appConfigPath)?.toString('utf-8') || '';
+  let updatedContent = content;
+
+  // Agregar import de provideHttpClient si no existe
+  if (!content.includes('provideHttpClient')) {
+    // Buscar la línea de import de ApplicationConfig
+    const importMatch = content.match(
+      /import\s*{\s*ApplicationConfig[^}]*}\s*from\s*'@angular\/core';/,
+    );
+    if (importMatch) {
+      // Agregar la nueva importación después de la línea existente
+      updatedContent = updatedContent.replace(
+        importMatch[0],
+        `${importMatch[0]}\nimport { provideHttpClient } from '@angular/common/http';`,
+      );
+    } else {
+      // Si no encuentra el import de ApplicationConfig, agregar al inicio
+      updatedContent = `import { provideHttpClient } from '@angular/common/http';\n${updatedContent}`;
+    }
+  }
+
+  // Agregar provideHttpClient a los providers si no existe
+  if (!content.includes('provideHttpClient()')) {
+    // Buscar el array de providers
+    const providersMatch = content.match(/providers:\s*\[([\s\S]*?)\]/);
+    if (providersMatch) {
+      const existingProviders = providersMatch[1];
+      const newProviders = existingProviders.trim()
+        ? `${existingProviders.trim()},\n    provideHttpClient()`
+        : 'provideHttpClient()';
+
+      updatedContent = updatedContent.replace(
+        /providers:\s*\[([\s\S]*?)\]/,
+        `providers: [\n    ${newProviders}\n  ]`,
+      );
+    } else {
+      // Si no hay providers, crear el array
+      updatedContent = updatedContent.replace(
+        /export\s+const\s+appConfig:\s*ApplicationConfig\s*=\s*{/,
+        `export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient()
+  ],`,
+      );
+    }
+  }
+
+  tree.overwrite(appConfigPath, updatedContent);
+  context.logger.info('✅ HttpClient configurado en app.config.ts');
+}
+
 // Configurar estilos en angular.json
 function setupStyles(
   tree: Tree,
@@ -348,7 +375,8 @@ export function ngAdd(options: NgAddSchema): Rule {
       }
     }
 
-    // Configurar tema y estilos
+    // Configurar HttpClient, tema y estilos
+    setupHttpClient(tree, context);
     setupThemeInAppComponent(tree, context, theme);
     setupStyles(tree, context, theme);
 

@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OpeniisButtonComponent } from '../buttons/button.component';
 
@@ -12,7 +6,6 @@ interface AlertData {
   message: string; // Mensaje de la alerta
   buttonText: string; // Texto del botón de aceptar
   type: 'success' | 'warning' | 'danger' | 'info'; // Tipo de alerta
-  duration?: number; // Duración en milisegundos (opcional)
 }
 /**
  * Componente modal de alerta.
@@ -58,7 +51,7 @@ interface AlertData {
   `,
   styleUrls: ['./alert-modal.component.css'],
 })
-export class OpeniisAlertModalComponent implements OnChanges {
+export class OpeniisAlertModalComponent {
   /** Controla la visibilidad del modal */
   @Input() isVisible = false;
 
@@ -103,17 +96,5 @@ export class OpeniisAlertModalComponent implements OnChanges {
   close(): void {
     this.isVisible = false;
     this.closed.emit();
-  }
-
-  /**
-   * Método del ciclo de vida que se ejecuta cuando cambian las propiedades de entrada.
-   * Si se especifica una duración, cierra automáticamente el modal después de ese tiempo.
-   */
-  ngOnChanges(): void {
-    if (this.isVisible && this.data?.duration) {
-      setTimeout(() => {
-        this.close();
-      }, this.data.duration);
-    }
   }
 }

@@ -13,6 +13,7 @@ export interface SvgIconOptions {
   strokeColor?: string;
   strokeWidth?: string | number;
   opacity?: number;
+  fontSize?: string | number;
   rotate?: number;
   flipHorizontal?: boolean;
   flipVertical?: boolean;
@@ -32,7 +33,10 @@ export class SvgIconService {
   private instances = new Map<string, HTMLElement[]>();
   private globalStyles = new BehaviorSubject<string>('');
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
+  constructor(
+    private http: HttpClient,
+    private sanitizer: DomSanitizer,
+  ) {
     this.injectGlobalStyles();
   }
 
@@ -42,7 +46,7 @@ export class SvgIconService {
    */
   icon(
     iconPath: string,
-    options: SvgIconOptions = {}
+    options: SvgIconOptions = {},
   ): Observable<SvgIconResult> {
     return this.loadSvg(iconPath).pipe(
       map((svgContent) => {
@@ -66,7 +70,7 @@ export class SvgIconService {
           element: this.createErrorElement(),
           destroy: () => {},
         });
-      })
+      }),
     );
   }
 
@@ -77,14 +81,14 @@ export class SvgIconService {
   inlineIcon(
     targetElement: HTMLElement,
     iconPath: string,
-    options: SvgIconOptions = {}
+    options: SvgIconOptions = {},
   ): Observable<() => void> {
     return this.icon(iconPath, options).pipe(
       tap((result) => {
         targetElement.innerHTML = '';
         targetElement.appendChild(result.element);
       }),
-      map((result) => result.destroy)
+      map((result) => result.destroy),
     );
   }
 
@@ -104,7 +108,7 @@ export class SvgIconService {
    */
   preloadIcons(iconPaths: string[]): Observable<boolean> {
     const loadPromises = iconPaths.map((path) =>
-      this.loadSvg(path).toPromise()
+      this.loadSvg(path).toPromise(),
     );
 
     return new Observable((observer) => {
@@ -148,7 +152,7 @@ export class SvgIconService {
 
     return this.http.get(iconPath, { responseType: 'text' }).pipe(
       tap((svg) => this.cache.set(iconPath, svg)),
-      catchError(() => of(this.getErrorSvg()))
+      catchError(() => of(this.getErrorSvg())),
     );
   }
 
@@ -164,47 +168,41 @@ export class SvgIconService {
       processedSvg = processedSvg.replace('<svg', '<svg viewBox="0 0 24 24"');
     }
 
-    // Procesar colores
+    // Procesar colores con mayor prioridad
     if (options.color) {
-      // Cambiar fill
+      // Remover todos los fills existentes primero
+      processedSvg = processedSvg.replace(/fill="[^"]*"/g, '');
+      processedSvg = processedSvg.replace(/fill:[^;"]*/g, '');
+
+      // Agregar el nuevo fill con !important
       processedSvg = processedSvg.replace(
-        /fill="[^"]*"/g,
-        `fill="${options.color}"`
-      );
-      processedSvg = processedSvg.replace(
-        /fill:[^;"]*/g,
-        `fill:${options.color}`
+        /<svg([^>]*)>/,
+        `<svg$1 style="color: ${options.color} !important;">`,
       );
 
-      // Si no tiene fill, agregarlo
-      if (!processedSvg.includes('fill=') && !processedSvg.includes('fill:')) {
-        processedSvg = processedSvg.replace(
-          '<path',
-          '<path fill="currentColor"'
-        );
-        processedSvg = processedSvg.replace(
-          '<svg',
-          `<svg style="color: ${options.color}"`
-        );
-      }
+      // Aplicar fill a todos los elementos path, rect, circle, etc.
+      processedSvg = processedSvg.replace(
+        /<(path|rect|circle|ellipse|polygon|polyline|line)([^>]*)>/g,
+        '<$1$2 fill="currentColor" style="fill: currentColor !important;">',
+      );
     }
 
     // Procesar stroke
     if (options.strokeColor) {
       processedSvg = processedSvg.replace(
         /stroke="[^"]*"/g,
-        `stroke="${options.strokeColor}"`
+        `stroke="${options.strokeColor}"`,
       );
       processedSvg = processedSvg.replace(
         /stroke:[^;"]*/g,
-        `stroke:${options.strokeColor}`
+        `stroke:${options.strokeColor}`,
       );
     }
 
     if (options.strokeWidth) {
       processedSvg = processedSvg.replace(
         /stroke-width="[^"]*"/g,
-        `stroke-width="${options.strokeWidth}"`
+        `stroke-width="${options.strokeWidth}"`,
       );
     }
 
@@ -212,7 +210,7 @@ export class SvgIconService {
     if (options.className) {
       processedSvg = processedSvg.replace(
         '<svg',
-        `<svg class="svg-icon ${options.className}"`
+        `<svg class="svg-icon ${options.className}"`,
       );
     } else {
       processedSvg = processedSvg.replace('<svg', '<svg class="svg-icon"');
@@ -223,7 +221,7 @@ export class SvgIconService {
     if (transforms) {
       processedSvg = processedSvg.replace(
         '<svg',
-        `<svg style="transform: ${transforms}"`
+        `<svg style="transform: ${transforms}"`,
       );
     }
 
@@ -232,7 +230,7 @@ export class SvgIconService {
 
   private createSvgElement(
     svgContent: string,
-    options: SvgIconOptions
+    options: SvgIconOptions,
   ): HTMLElement {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = svgContent;
@@ -247,15 +245,15 @@ export class SvgIconService {
 
   private applyStylesToElement(
     element: HTMLElement,
-    options: SvgIconOptions
+    options: SvgIconOptions,
   ): void {
-    // Aplicar dimensiones
+    // Aplicar dimensiones con !important
     if (options.width) {
       const width =
         typeof options.width === 'number'
           ? `${options.width}px`
           : options.width;
-      element.style.width = width;
+      element.style.setProperty('width', width, 'important');
     }
 
     if (options.height) {
@@ -263,26 +261,50 @@ export class SvgIconService {
         typeof options.height === 'number'
           ? `${options.height}px`
           : options.height;
-      element.style.height = height;
+      element.style.setProperty('height', height, 'important');
     } else {
-      element.style.height = 'auto'; // Altura automática si no se especifica
+      element.style.setProperty('height', 'auto', 'important');
+    }
+
+    // Aplicar color con mayor prioridad
+    if (options.color) {
+      element.style.setProperty('color', options.color, 'important');
+      // También aplicar a todos los elementos SVG internos
+      const svgElements = element.querySelectorAll(
+        'svg, path, rect, circle, ellipse, polygon, polyline, line',
+      );
+      svgElements.forEach((svgEl) => {
+        (svgEl as HTMLElement).style.setProperty(
+          'fill',
+          'currentColor',
+          'important',
+        );
+      });
     }
 
     // Aplicar background
     if (options.backgroundColor) {
-      element.style.backgroundColor = options.backgroundColor;
-      element.style.borderRadius = '4px';
-      element.style.padding = '4px';
+      element.style.setProperty(
+        'background-color',
+        options.backgroundColor,
+        'important',
+      );
+      element.style.setProperty('border-radius', '4px', 'important');
+      element.style.setProperty('padding', '4px', 'important');
     }
 
     // Aplicar opacidad
     if (options.opacity !== undefined) {
-      element.style.opacity = options.opacity.toString();
+      element.style.setProperty(
+        'opacity',
+        options.opacity.toString(),
+        'important',
+      );
     }
 
     // Hacer que sea responsive por defecto
-    element.style.display = 'inline-block';
-    element.style.verticalAlign = 'middle';
+    element.style.setProperty('display', 'inline-block', 'important');
+    element.style.setProperty('vertical-align', 'middle', 'important');
   }
 
   private buildTransforms(options: SvgIconOptions): string {
@@ -391,12 +413,12 @@ export class SvgIconService {
 // Función helper para uso aún más fácil
 export function createSvgIcon(
   iconPath: string,
-  options?: SvgIconOptions
+  options?: SvgIconOptions,
 ): Observable<SvgIconResult> {
   const service = new SvgIconService(
     // Estos se inyectarán automáticamente en el contexto de Angular
     {} as any,
-    {} as any
+    {} as any,
   );
   return service.icon(iconPath, options);
 }

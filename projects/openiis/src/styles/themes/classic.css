@@ -45,7 +45,23 @@
 /* Ajuste específico de colores de borde focus para tema oscuro */
 [data-openiis-theme="classic"][data-theme="dark"] {
   --color-border-focus: #2dd4bf;
-}
-[data-openiis-theme="neutral"][data-theme="dark"] {
-  --color-border-focus: #94a3b8;
+  /* Sistema de colores para tema oscuro */
+  --color-background: #0f0f0f;
+  --color-surface: #171717;
+  --color-surface-elevated: #262626;
+  --color-border: #404040;
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #d4d4d4;
+  --color-text-muted: #737373;
+  --color-text-inverse: #171717;
+
+  /* Sombras para tema oscuro */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.15);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.18), 0 1px 2px -1px rgb(0 0 0 / 0.15);
+  --shadow-md:
+    0 2px 4px -1px rgb(0 0 0 / 0.2), 0 1px 3px -1px rgb(0 0 0 / 0.18);
+  --shadow-lg:
+    0 4px 8px -2px rgb(0 0 0 / 0.22), 0 2px 4px -1px rgb(0 0 0 / 0.18);
+  --shadow-xl:
+    0 8px 16px -4px rgb(0 0 0 / 0.25), 0 4px 8px -2px rgb(0 0 0 / 0.2);
 }

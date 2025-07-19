@@ -1,296 +1,311 @@
-# Button Group Component
+# Button Group
 
-Un componente Button Group versátil para Angular que permite agrupar botones relacionados de manera semántica y visualmente atractiva, con soporte para selección única o múltiple.
+Contenedor avanzado para agrupar botones relacionados con estilos CSS automáticos, separadores visuales, estados de selección y navegación por teclado.
 
-## Características
-
-- ✅ **6 variantes visuales**: default, primary, success, warning, danger, subtle
-- ✅ **5 tamaños**: xs, sm, md, lg, xl
-- ✅ **2 orientaciones**: horizontal y vertical
-- ✅ **Selección múltiple**: Soporte para selección única o múltiple
-- ✅ **Estados completos**: normal, hover, focus, disabled, selected
-- ✅ **Accesibilidad**: ARIA labels, navegación por teclado, roles semánticos
-- ✅ **Diseño flexible**: Ancho completo, separado, agrupado
-- ✅ **Responsive**: Adaptado para dispositivos móviles
-
-## Uso Básico
+## 📦 Instalación
 
 ```typescript
-import { OpeniisButtonGroupComponent } from "./components/button-group";
+import { OpeniisButtonGroupComponent, OpeniisButtonComponent } from 'openiis-ui';
 
 @Component({
-  selector: "app-example",
-  standalone: true,
-  imports: [OpeniisButtonGroupComponent],
-  template: `
-    <openiis-button-group [selectedIndex]="selectedIndex" (selectionChange)="onSelectionChange($event)">
-      <button class="btn">Opción 1</button>
-      <button class="btn">Opción 2</button>
-      <button class="btn">Opción 3</button>
-    </openiis-button-group>
-  `,
+  imports: [OpeniisButtonGroupComponent, OpeniisButtonComponent],
 })
-export class ExampleComponent {
-  selectedIndex = 0;
+```
 
-  onSelectionChange(index: number) {
-    this.selectedIndex = index;
+## ⚙️ Properties
+
+| Property          | Tipo                     | Default        | Descripción                      |
+| ----------------- | ------------------------ | -------------- | -------------------------------- |
+| `size`            | `ButtonGroupSize`        | `'md'`         | Tamaño de los botones            |
+| `orientation`     | `ButtonGroupOrientation` | `'horizontal'` | Orientación del grupo            |
+| `type`            | `ButtonGroupType`        | `'default'`    | Tipo visual del grupo            |
+| `multiple`        | `boolean`                | `false`        | Permitir selección múltiple      |
+| `fullWidth`       | `boolean`                | `false`        | Ancho completo                   |
+| `separated`       | `boolean`                | `false`        | Separar botones con espacio      |
+| `disabled`        | `boolean`                | `false`        | Deshabilitar todo el grupo       |
+| `selectedIndex`   | `number`                 | `-1`           | Índice del botón seleccionado    |
+| `selectedIndices` | `number[]`               | `[]`           | Índices de botones seleccionados |
+| `role`            | `string`                 | `'group'`      | Rol ARIA para accesibilidad      |
+| `ariaLabel`       | `string`                 | `''`           | Etiqueta ARIA                    |
+| `ariaDescribedBy` | `string`                 | `''`           | Referencia ARIA describedby      |
+| `extraClasses`    | `string`                 | `''`           | Clases CSS adicionales           |
+
+## 📡 Events
+
+| Event             | Tipo                                                            | Descripción                        |
+| ----------------- | --------------------------------------------------------------- | ---------------------------------- |
+| `buttonClick`     | `{index: number, button: HTMLButtonElement, selected: boolean}` | Emitido al hacer clic en un botón  |
+| `selectionChange` | `number \| number[]`                                            | Emitido cuando cambia la selección |
+
+## 🎨 Tipos de Grupo
+
+| Tipo      | Color   | Uso                  |
+| --------- | ------- | -------------------- |
+| `default` | Gris    | Grupo estándar       |
+| `primary` | Azul    | Grupo principal      |
+| `success` | Verde   | Grupo de éxito       |
+| `warning` | Naranja | Grupo de advertencia |
+| `danger`  | Rojo    | Grupo de peligro     |
+| `subtle`  | Sutil   | Grupo sutil          |
+
+## 📏 Tamaños
+
+| Tamaño | Altura | Uso               |
+| ------ | ------ | ----------------- |
+| `xs`   | 28px   | Muy pequeño       |
+| `sm`   | 32px   | Pequeño           |
+| `md`   | 40px   | Mediano (default) |
+| `lg`   | 48px   | Grande            |
+| `xl`   | 56px   | Muy grande        |
+
+## 💡 Ejemplos Prácticos
+
+### 1. Grupo Básico con Selección
+
+```html
+<openiis-button-group [selectedIndex]="selectedButton" (selectionChange)="onSelectionChange($event)">
+  <openiis-button text="Left" type="primary" (clickEvent)="onButtonClick(0)"> </openiis-button>
+  <openiis-button text="Center" type="primary" (clickEvent)="onButtonClick(1)"> </openiis-button>
+  <openiis-button text="Right" type="primary" (clickEvent)="onButtonClick(2)"> </openiis-button>
+</openiis-button-group>
+```
+
+```typescript
+export class MyComponent {
+  selectedButton = 0;
+
+  onSelectionChange(selection: number | number[]) {
+    if (typeof selection === "number") {
+      console.log("Selected button:", selection);
+      this.selectedButton = selection;
+    }
+  }
+
+  onButtonClick(index: number) {
+    console.log("Button clicked:", index);
   }
 }
 ```
 
-## Propiedades
-
-### Configuración Visual
-
-| Propiedad     | Tipo                     | Valor por defecto | Descripción                                                         |
-| ------------- | ------------------------ | ----------------- | ------------------------------------------------------------------- |
-| `size`        | `ButtonGroupSize`        | `'md'`            | Tamaño de los botones: xs, sm, md, lg, xl                           |
-| `orientation` | `ButtonGroupOrientation` | `'horizontal'`    | Orientación: horizontal, vertical                                   |
-| `type`        | `ButtonGroupType`        | `'default'`       | Variante visual: default, primary, success, warning, danger, subtle |
-| `fullWidth`   | `boolean`                | `false`           | Hacer que el grupo ocupe el ancho completo                          |
-| `separated`   | `boolean`                | `false`           | Separar los botones con espacio                                     |
-
-### Funcionalidad
-
-| Propiedad         | Tipo       | Valor por defecto | Descripción                                           |
-| ----------------- | ---------- | ----------------- | ----------------------------------------------------- |
-| `multiple`        | `boolean`  | `false`           | Permitir selección múltiple                           |
-| `disabled`        | `boolean`  | `false`           | Deshabilitar todos los botones                        |
-| `selectedIndex`   | `number`   | `-1`              | Índice del botón seleccionado (selección única)       |
-| `selectedIndices` | `number[]` | `[]`              | Índices de botones seleccionados (selección múltiple) |
-
-### Accesibilidad
-
-| Propiedad         | Tipo     | Valor por defecto | Descripción                          |
-| ----------------- | -------- | ----------------- | ------------------------------------ |
-| `role`            | `string` | `'group'`         | Rol ARIA para el grupo               |
-| `ariaLabel`       | `string` | `''`              | ARIA label para lectores de pantalla |
-| `ariaDescribedBy` | `string` | `''`              | ARIA describedby para referencias    |
-
-### Personalización
-
-| Propiedad      | Tipo     | Valor por defecto | Descripción            |
-| -------------- | -------- | ----------------- | ---------------------- |
-| `extraClasses` | `string` | `''`              | Clases CSS adicionales |
-
-## Eventos
-
-| Evento            | Tipo                                                                          | Descripción                             |
-| ----------------- | ----------------------------------------------------------------------------- | --------------------------------------- |
-| `buttonClick`     | `EventEmitter<{index: number, button: HTMLButtonElement, selected: boolean}>` | Emitido cuando se hace clic en un botón |
-| `selectionChange` | `EventEmitter<number \| number[]>`                                            | Emitido cuando cambia la selección      |
-
-## Ejemplos de Uso
-
-### Tamaños Disponibles
+### 2. Grupo con Selección Múltiple
 
 ```html
-<openiis-button-group size="xs">
-  <button class="btn">XS</button>
-  <button class="btn">Botón</button>
-</openiis-button-group>
-
-<openiis-button-group size="sm">
-  <button class="btn">SM</button>
-  <button class="btn">Botón</button>
-</openiis-button-group>
-
-<openiis-button-group size="md">
-  <button class="btn">MD</button>
-  <button class="btn">Botón</button>
-</openiis-button-group>
-
-<openiis-button-group size="lg">
-  <button class="btn">LG</button>
-  <button class="btn">Botón</button>
-</openiis-button-group>
-
-<openiis-button-group size="xl">
-  <button class="btn">XL</button>
-  <button class="btn">Botón</button>
+<openiis-button-group [multiple]="true" [selectedIndices]="selectedButtons" (selectionChange)="onMultipleSelectionChange($event)">
+  <openiis-button text="Option 1" type="secondary" (clickEvent)="onOptionClick(0)"> </openiis-button>
+  <openiis-button text="Option 2" type="secondary" (clickEvent)="onOptionClick(1)"> </openiis-button>
+  <openiis-button text="Option 3" type="secondary" (clickEvent)="onOptionClick(2)"> </openiis-button>
 </openiis-button-group>
 ```
-
-### Variantes de Color
-
-```html
-<openiis-button-group type="primary">
-  <button class="btn">Guardar</button>
-  <button class="btn">Cancelar</button>
-</openiis-button-group>
-
-<openiis-button-group type="success">
-  <button class="btn">Aceptar</button>
-  <button class="btn">Completar</button>
-</openiis-button-group>
-
-<openiis-button-group type="warning">
-  <button class="btn">Advertir</button>
-  <button class="btn">Revisar</button>
-</openiis-button-group>
-
-<openiis-button-group type="danger">
-  <button class="btn">Eliminar</button>
-  <button class="btn">Descartar</button>
-</openiis-button-group>
-```
-
-### Orientación Vertical
-
-```html
-<openiis-button-group orientation="vertical">
-  <button class="btn">Arriba</button>
-  <button class="btn">Centro</button>
-  <button class="btn">Abajo</button>
-</openiis-button-group>
-```
-
-### Selección Múltiple
-
-```html
-<openiis-button-group [multiple]="true" [selectedIndices]="[0, 2]" (selectionChange)="onMultipleSelection($event)">
-  <button class="btn">Negrita</button>
-  <button class="btn">Cursiva</button>
-  <button class="btn">Subrayado</button>
-</openiis-button-group>
-```
-
-### Ancho Completo
-
-```html
-<openiis-button-group [fullWidth]="true">
-  <button class="btn">Uno</button>
-  <button class="btn">Dos</button>
-  <button class="btn">Tres</button>
-</openiis-button-group>
-```
-
-### Botones Separados
-
-```html
-<openiis-button-group [separated]="true">
-  <button class="btn">Nuevo</button>
-  <button class="btn">Abrir</button>
-  <button class="btn">Guardar</button>
-</openiis-button-group>
-```
-
-### Estados Especiales
-
-```html
-<!-- Deshabilitado -->
-<openiis-button-group [disabled]="true">
-  <button class="btn">Deshabilitado</button>
-  <button class="btn">Grupo</button>
-</openiis-button-group>
-
-<!-- Con carga -->
-<openiis-button-group>
-  <button class="btn">Normal</button>
-  <button class="btn loading">Cargando</button>
-</openiis-button-group>
-```
-
-### Casos de Uso Reales
-
-#### Toolbar de Formato
-
-```html
-<openiis-button-group [multiple]="true" size="sm" ariaLabel="Opciones de formato">
-  <button class="btn">B</button>
-  <button class="btn">I</button>
-  <button class="btn">U</button>
-  <button class="btn">S</button>
-</openiis-button-group>
-```
-
-#### Filtros de Vista
-
-```html
-<openiis-button-group [selectedIndex]="viewMode" (selectionChange)="changeView($event)">
-  <button class="btn">📋 Lista</button>
-  <button class="btn">🔲 Cuadrícula</button>
-  <button class="btn">📊 Tabla</button>
-</openiis-button-group>
-```
-
-#### Acciones de Formulario
-
-```html
-<openiis-button-group type="primary" orientation="vertical">
-  <button class="btn">Guardar</button>
-  <button class="btn">Guardar y Continuar</button>
-  <button class="btn">Cancelar</button>
-</openiis-button-group>
-```
-
-## Métodos Públicos
-
-### updateSelection(selection: number | number[])
-
-Actualiza la selección programáticamente.
 
 ```typescript
-// Selección única
-buttonGroup.updateSelection(2);
+export class MyComponent {
+  selectedButtons: number[] = [];
 
-// Selección múltiple
-buttonGroup.updateSelection([0, 1, 3]);
-```
+  onMultipleSelectionChange(selection: number | number[]) {
+    if (Array.isArray(selection)) {
+      console.log("Selected buttons:", selection);
+      this.selectedButtons = selection;
+    }
+  }
 
-## Personalización CSS
-
-El componente utiliza variables CSS del sistema de diseño:
-
-```css
-.button-group {
-  --btn-group-border: var(--neutral-200);
-  --btn-group-bg: var(--color-bg-primary);
-  --btn-group-shadow: var(--shadow-sm);
-  --btn-group-radius: var(--radius-md);
-  --btn-group-gap: var(--space-2);
+  onOptionClick(index: number) {
+    console.log("Option clicked:", index);
+  }
 }
 ```
 
-## Accesibilidad
+### 3. Grupo Vertical con Diferentes Tipos
 
-- **Roles ARIA**: Grupo semántico con role="group"
+```html
+<openiis-button-group orientation="vertical" type="success" [selectedIndex]="selectedVertical" (selectionChange)="onVerticalSelectionChange($event)">
+  <openiis-button text="Top" type="success" (clickEvent)="onVerticalClick(0)"> </openiis-button>
+  <openiis-button text="Middle" type="success" (clickEvent)="onVerticalClick(1)"> </openiis-button>
+  <openiis-button text="Bottom" type="success" (clickEvent)="onVerticalClick(2)"> </openiis-button>
+</openiis-button-group>
+```
+
+```typescript
+export class MyComponent {
+  selectedVertical = 0;
+
+  onVerticalSelectionChange(selection: number | number[]) {
+    if (typeof selection === "number") {
+      console.log("Vertical selection:", selection);
+      this.selectedVertical = selection;
+    }
+  }
+
+  onVerticalClick(index: number) {
+    console.log("Vertical button clicked:", index);
+  }
+}
+```
+
+### 4. Grupo Separado con Diferentes Tamaños
+
+```html
+<openiis-button-group [separated]="true" type="warning" [selectedIndex]="selectedSeparated" (selectionChange)="onSeparatedSelectionChange($event)">
+  <openiis-button text="Small" type="warning" size="sm" (clickEvent)="onSeparatedClick(0)"> </openiis-button>
+  <openiis-button text="Medium" type="warning" size="md" (clickEvent)="onSeparatedClick(1)"> </openiis-button>
+  <openiis-button text="Large" type="warning" size="lg" (clickEvent)="onSeparatedClick(2)"> </openiis-button>
+</openiis-button-group>
+```
+
+```typescript
+export class MyComponent {
+  selectedSeparated = 1;
+
+  onSeparatedSelectionChange(selection: number | number[]) {
+    if (typeof selection === "number") {
+      console.log("Separated selection:", selection);
+      this.selectedSeparated = selection;
+    }
+  }
+
+  onSeparatedClick(index: number) {
+    console.log("Separated button clicked:", index);
+  }
+}
+```
+
+### 5. Grupo de Ancho Completo con Iconos
+
+```html
+<openiis-button-group [fullWidth]="true" type="info" [selectedIndex]="selectedFullWidth" (selectionChange)="onFullWidthSelectionChange($event)">
+  <openiis-button text="List" type="info" iconLeft="list" [fullWidth]="true" (clickEvent)="onFullWidthClick(0)"> </openiis-button>
+  <openiis-button text="Grid" type="info" iconLeft="grid_view" [fullWidth]="true" (clickEvent)="onFullWidthClick(1)"> </openiis-button>
+  <openiis-button text="Cards" type="info" iconLeft="view_module" [fullWidth]="true" (clickEvent)="onFullWidthClick(2)"> </openiis-button>
+</openiis-button-group>
+```
+
+```typescript
+export class MyComponent {
+  selectedFullWidth = 0;
+
+  onFullWidthSelectionChange(selection: number | number[]) {
+    if (typeof selection === "number") {
+      console.log("Full width selection:", selection);
+      this.selectedFullWidth = selection;
+    }
+  }
+
+  onFullWidthClick(index: number) {
+    console.log("Full width button clicked:", index);
+  }
+}
+```
+
+### 6. Grupo Deshabilitado
+
+```html
+<openiis-button-group [disabled]="true" type="danger" [selectedIndex]="selectedDisabled" (selectionChange)="onDisabledSelectionChange($event)">
+  <openiis-button text="Disabled 1" type="danger" [disabled]="true" (clickEvent)="onDisabledClick(0)"> </openiis-button>
+  <openiis-button text="Disabled 2" type="danger" [disabled]="true" (clickEvent)="onDisabledClick(1)"> </openiis-button>
+  <openiis-button text="Disabled 3" type="danger" [disabled]="true" (clickEvent)="onDisabledClick(2)"> </openiis-button>
+</openiis-button-group>
+```
+
+```typescript
+export class MyComponent {
+  selectedDisabled = -1;
+
+  onDisabledSelectionChange(selection: number | number[]) {
+    if (typeof selection === "number") {
+      console.log("Disabled selection:", selection);
+      this.selectedDisabled = selection;
+    }
+  }
+
+  onDisabledClick(index: number) {
+    console.log("Disabled button clicked:", index);
+  }
+}
+```
+
+### 7. Grupo con Estados de Loading
+
+```html
+<openiis-button-group type="primary" [selectedIndex]="selectedLoading" (selectionChange)="onLoadingSelectionChange($event)">
+  <openiis-button text="Loading 1" type="primary" [loading]="true" (clickEvent)="onLoadingClick(0)"> </openiis-button>
+  <openiis-button text="Loading 2" type="primary" [loading]="false" (clickEvent)="onLoadingClick(1)"> </openiis-button>
+  <openiis-button text="Loading 3" type="primary" [loading]="true" (clickEvent)="onLoadingClick(2)"> </openiis-button>
+</openiis-button-group>
+```
+
+```typescript
+export class MyComponent {
+  selectedLoading = 1;
+
+  onLoadingSelectionChange(selection: number | number[]) {
+    if (typeof selection === "number") {
+      console.log("Loading selection:", selection);
+      this.selectedLoading = selection;
+    }
+  }
+
+  onLoadingClick(index: number) {
+    console.log("Loading button clicked:", index);
+  }
+}
+```
+
+## 🏗️ Interfaces
+
+```typescript
+type ButtonGroupSize = "xs" | "sm" | "md" | "lg" | "xl";
+type ButtonGroupOrientation = "horizontal" | "vertical";
+type ButtonGroupType = "default" | "primary" | "success" | "warning" | "danger" | "subtle";
+```
+
+## ⚡ Comportamiento
+
+- **Selección automática**: Maneja estados selected automáticamente
+- **Selección única y múltiple**: Soporte para ambos modos
 - **Navegación por teclado**: Flechas para navegar, Enter/Space para seleccionar
-- **Estados**: aria-pressed para botones seleccionados
-- **Lectores de pantalla**: Soporte completo con labels descriptivos
+- **Separadores visuales**: Líneas entre botones (excepto en modo separated)
+- **Estados visuales**: Hover, focus, selected, disabled, loading
+- **Responsive**: Se adapta automáticamente en móviles
+- **Accesibilidad**: Soporte completo para ARIA
 
-### Navegación por Teclado
+## ✅ Características
 
-| Tecla             | Acción                             |
-| ----------------- | ---------------------------------- |
-| `Tab`             | Navegar hacia el grupo             |
-| `→` / `←`         | Navegar entre botones (horizontal) |
-| `↑` / `↓`         | Navegar entre botones (vertical)   |
-| `Enter` / `Space` | Seleccionar/deseleccionar botón    |
+- ✅ Selección única y múltiple automática
+- ✅ Orientación horizontal y vertical
+- ✅ 6 tipos visuales diferentes
+- ✅ 5 tamaños configurables
+- ✅ Navegación por teclado completa
+- ✅ Separadores visuales automáticos
+- ✅ Ancho completo opcional
+- ✅ Separación entre botones
+- ✅ Estados disabled y loading
+- ✅ Completamente responsive
+- ✅ Integración con temas Openiis UI
+- ✅ Accesibilidad completa
+- ✅ Eventos detallados
+- ✅ Estados visuales avanzados
 
-## Responsive
+## 🎨 Estilos Automáticos
 
-El componente se adapta automáticamente:
+- **Bordes redondeados**: Solo en esquinas externas
+- **Separadores**: Líneas entre botones automáticas
+- **Estados hover**: Efectos de elevación
+- **Estados focus**: Outline visible
+- **Estados selected**: Color de fondo destacado
+- **Responsive**: Cambia a vertical en móviles
+- **Animaciones**: Transiciones suaves
 
-- **Móvil**: Los grupos horizontales se vuelven verticales
-- **Touch**: Tamaños optimizados para touch
-- **Espaciado**: Ajustado para pantallas pequeñas
+## 🚨 Solución de Problemas
 
-## Casos de Uso Comunes
+| Problema                           | Solución                                                                      |
+| ---------------------------------- | ----------------------------------------------------------------------------- |
+| Selección no funciona              | Verifica `selectedIndex` o `selectedIndices`                                  |
+| Navegación por teclado no funciona | Verifica que los botones tengan focus                                         |
+| Estilos no se aplican              | Asegúrate de que el tema Openiis UI esté configurado                          |
+| Orientación incorrecta             | Verifica que `orientation` esté en ['horizontal', 'vertical']                 |
+| Error de tipo en selectionChange   | Usa type guards: `typeof selection === 'number'` o `Array.isArray(selection)` |
+| Separadores no aparecen            | Verifica que `separated` esté en `false`                                      |
 
-1. **Toolbar de Edición**: Botones de formato (negrita, cursiva, subrayado)
-2. **Filtros**: Selección de categorías o estados
-3. **Vistas**: Cambio entre lista, cuadrícula, tabla
-4. **Acciones**: Grupos de acciones relacionadas
-5. **Configuración**: Opciones de configuración agrupadas
-6. **Navegación**: Pestañas o secciones relacionadas
+## 🐞 Reportar Problemas
 
-## Buenas Prácticas
-
-- ✅ Usar máximo 5-7 botones por grupo
-- ✅ Agrupar acciones relacionadas semánticamente
-- ✅ Proporcionar labels descriptivos
-- ✅ Considerar el contexto responsive
-- ❌ No mezclar acciones destructivas con normales
-- ❌ No usar demasiados grupos en una vista
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)

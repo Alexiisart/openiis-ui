@@ -1,6 +1,9 @@
 /* ===== OPENIIS UI - SISTEMA DE TEMAS MÚLTIPLES ===== */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons+Outlined");
+
 body {
   font-family: "Inter", sans-serif;
+  background-color: var(--color-background);
 }
 
 /* Variables base comunes para todos los temas */

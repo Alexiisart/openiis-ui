@@ -1,418 +1,287 @@
-# Toast Component
+# Toast
 
-## Descripción
+Notificación temporal que aparece en la esquina superior derecha con diferentes tipos de alerta.
 
-El componente `ToastComponent` es una notificación temporal que aparece en la parte superior derecha de la pantalla. Ideal para mostrar mensajes de éxito, error, advertencia o información que desaparecen automáticamente después de un tiempo determinado.
+## 📦 Instalación
 
-## Características
+```typescript
+import { OpeniisToastComponent, OpeniisButtonComponent } from 'openiis-ui';
 
-- ✅ 4 tipos de toast: success, warning, danger, info
-- ✅ Duración configurable o personalizada
-- ✅ Animaciones suaves de entrada y salida
-- ✅ Posicionamiento fijo en la esquina superior derecha
-- ✅ Cierre automático con temporizador
-- ✅ Múltiples instancias simultáneas
-- ✅ Completamente responsive
+@Component({
+  imports: [OpeniisToastComponent, OpeniisButtonComponent],
+})
+```
 
-## Uso Básico
+## ⚙️ Properties
+
+| Property    | Tipo                | Default | Descripción             |
+| ----------- | ------------------- | ------- | ----------------------- |
+| `isVisible` | `boolean`           | `false` | Controla la visibilidad |
+| `data`      | `ToastData \| null` | `null`  | Configuración del toast |
+
+## 📡 Events
+
+| Event    | Tipo   | Descripción                |
+| -------- | ------ | -------------------------- |
+| `closed` | `void` | Emitido al cerrar el toast |
+
+## 🎨 Tipos de Toast
+
+| Tipo      | Color   | Icono | Uso               |
+| --------- | ------- | ----- | ----------------- |
+| `success` | Verde   | ✓     | Operación exitosa |
+| `danger`  | Rojo    | ✗     | Error o problema  |
+| `warning` | Naranja | ⚠    | Advertencia       |
+| `info`    | Azul    | ℹ    | Información       |
+
+## 💡 Ejemplos Prácticos
+
+### 1. Toast de Éxito
 
 ```html
-<app-toast [isVisible]="showToast" [data]="toastData" (closed)="onToastClosed()"> </app-toast>
+<openiis-toast [isVisible]="showSuccess" [data]="successData" (closed)="onToastClosed()"> </openiis-toast>
+
+<openiis-button text="Show Success Toast" type="success" (clickEvent)="showSuccessToast()"> </openiis-button>
 ```
-
-## Props
-
-| Prop        | Tipo                | Defecto | Descripción                       |
-| ----------- | ------------------- | ------- | --------------------------------- |
-| `isVisible` | `boolean`           | `false` | Controla la visibilidad del toast |
-| `data`      | `ToastData \| null` | `null`  | Datos de configuración del toast  |
-
-## Eventos
-
-| Evento   | Tipo   | Descripción                       |
-| -------- | ------ | --------------------------------- |
-| `closed` | `void` | Emitido cuando se cierra el toast |
-
-## Interfaz ToastData
 
 ```typescript
-export interface ToastData {
-  message: string; // Mensaje del toast
-  type?: "success" | "warning" | "danger" | "info"; // Tipo de toast (opcional, por defecto 'info')
-  duration?: number; // Duración en milisegundos (opcional, por defecto 3000ms)
+export class MyComponent {
+  showSuccess = false;
+
+  successData: any = {
+    type: "success",
+    message: "Datos guardados correctamente",
+    duration: 3000,
+  };
+
+  showSuccessToast() {
+    this.showSuccess = true;
+  }
+
+  onToastClosed() {
+    this.showSuccess = false;
+  }
 }
 ```
 
-## Tipos de Toast
-
-| Tipo      | Color   | Uso                   |
-| --------- | ------- | --------------------- |
-| `success` | Verde   | Operaciones exitosas  |
-| `warning` | Naranja | Advertencias y avisos |
-| `danger`  | Rojo    | Errores y fallos      |
-| `info`    | Azul    | Información general   |
-
-## Ejemplos
-
-### Toast de éxito
-
-```typescript
-// En el componente
-successToast: ToastData = {
-  message: 'Elemento guardado correctamente',
-  type: 'success' as 'success' | 'warning' | 'danger' | 'info',,
-  duration: 3000
-};
-
-showSuccessToast = false;
-
-saveItem() {
-  this.itemService.save(this.item).subscribe({
-    next: () => {
-      this.showSuccessToast = true;
-    },
-    error: (error) => {
-      this.handleError(error);
-    }
-  });
-}
-
-onToastClosed() {
-  this.showSuccessToast = false;
-}
-```
+### 2. Toast de Error
 
 ```html
-<app-toast [isVisible]="showSuccessToast" [data]="successToast" (closed)="onToastClosed()"> </app-toast>
+<openiis-toast [isVisible]="showError" [data]="errorData" (closed)="onErrorClosed()"> </openiis-toast>
+
+<openiis-button text="Show Error Toast" type="danger" (clickEvent)="showErrorToast()"> </openiis-button>
 ```
 
-### Toast de error
-
 ```typescript
-errorToast: ToastData = {
-  message: 'Error al procesar la solicitud. Inténtalo de nuevo.',
-  type: 'danger',
-  duration: 5000 // Más tiempo para errores
-};
+export class MyComponent {
+  showError = false;
 
-showErrorToast = false;
+  errorData: any = {
+    type: "danger",
+    message: "Error de conexión",
+    duration: 5000,
+  };
 
-handleError(error: any) {
-  console.error('Error:', error);
-  this.showErrorToast = true;
-}
-```
+  showErrorToast() {
+    this.showError = true;
+  }
 
-### Toast de advertencia
-
-```typescript
-warningToast: ToastData = {
-  message: 'Algunos cambios no se guardaron automáticamente',
-  type: 'warning',
-  duration: 4000
-};
-
-showWarningToast = false;
-
-checkAutoSave() {
-  if (this.hasUnsavedChanges()) {
-    this.showWarningToast = true;
+  onErrorClosed() {
+    this.showError = false;
   }
 }
 ```
 
-### Toast de información
+### 3. Toast de Advertencia
 
-```typescript
-infoToast: ToastData = {
-  message: 'Nueva versión disponible. Actualiza para obtener las mejoras.',
-  type: 'info',
-  duration: 6000
-};
+```html
+<openiis-toast [isVisible]="showWarning" [data]="warningData" (closed)="onWarningClosed()"> </openiis-toast>
 
-showInfoToast = false;
-
-checkVersion() {
-  this.versionService.checkUpdates().subscribe(hasUpdate => {
-    if (hasUpdate) {
-      this.showInfoToast = true;
-    }
-  });
-}
+<openiis-button text="Show Warning Toast" type="warning" (clickEvent)="showWarningToast()"> </openiis-button>
 ```
 
-## Ejemplos de Uso Común
-
-### Sistema de notificaciones
-
 ```typescript
-// En el componente
-currentToast: ToastData | null = null;
-showToast = false;
+export class MyComponent {
+  showWarning = false;
 
-showNotification(message: string, type: 'success' | 'warning' | 'danger' | 'info' = 'info', duration = 3000) {
-  this.currentToast = { message, type, duration };
-  this.showToast = true;
-}
+  warningData: any = {
+    type: "warning",
+    message: "Sesión expirando pronto",
+    duration: 4000,
+  };
 
-onToastClosed() {
-  this.showToast = false;
-  this.currentToast = null;
-}
-
-// Métodos de conveniencia
-showSuccess(message: string) {
-  this.showNotification(message, 'success');
-}
-
-showError(message: string) {
-  this.showNotification(message, 'danger', 5000);
-}
-
-showWarning(message: string) {
-  this.showNotification(message, 'warning', 4000);
-}
-
-showInfo(message: string) {
-  this.showNotification(message, 'info');
-}
-```
-
-### Operaciones CRUD
-
-```typescript
-// En el componente
-createItem(item: any) {
-  this.itemService.create(item).subscribe({
-    next: () => {
-      this.showSuccess('Elemento creado exitosamente');
-      this.loadItems();
-    },
-    error: () => {
-      this.showError('Error al crear el elemento');
-    }
-  });
-}
-
-updateItem(item: any) {
-  this.itemService.update(item).subscribe({
-    next: () => {
-      this.showSuccess('Elemento actualizado correctamente');
-      this.loadItems();
-    },
-    error: () => {
-      this.showError('Error al actualizar el elemento');
-    }
-  });
-}
-
-deleteItem(id: string) {
-  this.itemService.delete(id).subscribe({
-    next: () => {
-      this.showSuccess('Elemento eliminado correctamente');
-      this.loadItems();
-    },
-    error: () => {
-      this.showError('Error al eliminar el elemento');
-    }
-  });
-}
-```
-
-### Validación de formularios
-
-```typescript
-// En el componente
-validateForm() {
-  if (!this.form.valid) {
-    const errors = this.getFormErrors();
-    this.showError(`Error en el formulario: ${errors.join(', ')}`);
-    return false;
+  showWarningToast() {
+    this.showWarning = true;
   }
-  return true;
-}
 
-saveForm() {
-  if (this.validateForm()) {
-    this.formService.save(this.form.value).subscribe({
-      next: () => {
-        this.showSuccess('Formulario guardado correctamente');
-        this.form.reset();
-      },
-      error: () => {
-        this.showError('Error al guardar el formulario');
-      }
-    });
+  onWarningClosed() {
+    this.showWarning = false;
   }
 }
 ```
 
-## Servicio de Toast (Recomendado)
+### 4. Toast de Información
 
-Para un uso más eficiente, recomendamos crear un servicio centralizado:
+```html
+<openiis-toast [isVisible]="showInfo" [data]="infoData" (closed)="onInfoClosed()"> </openiis-toast>
+
+<openiis-button text="Show Info Toast" type="primary" (clickEvent)="showInfoToast()"> </openiis-button>
+```
+
+```typescript
+export class MyComponent {
+  showInfo = false;
+
+  infoData: any = {
+    type: "info",
+    message: "Nueva actualización disponible",
+    duration: 3000,
+  };
+
+  showInfoToast() {
+    this.showInfo = true;
+  }
+
+  onInfoClosed() {
+    this.showInfo = false;
+  }
+}
+```
+
+### 5. Servicio de Toast
 
 ```typescript
 // toast.service.ts
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-
-@Injectable({
-  providedIn: "root",
-})
+@Injectable({ providedIn: "root" })
 export class ToastService {
-  private toastSubject = new BehaviorSubject<{ data: ToastData; show: boolean } | null>(null);
+  private toastSubject = new BehaviorSubject(null);
   public toast$ = this.toastSubject.asObservable();
 
-  showSuccess(message: string, duration = 3000) {
-    this.show({ message, type: "success", duration });
+  showSuccess(message, duration = 3000) {
+    this.toastSubject.next({
+      type: "success",
+      message,
+      duration,
+    });
   }
 
-  showError(message: string, duration = 5000) {
-    this.show({ message, type: "danger", duration });
+  showError(message, duration = 5000) {
+    this.toastSubject.next({
+      type: "danger",
+      message,
+      duration,
+    });
   }
 
-  showWarning(message: string, duration = 4000) {
-    this.show({ message, type: "warning", duration });
+  showWarning(message, duration = 4000) {
+    this.toastSubject.next({
+      type: "warning",
+      message,
+      duration,
+    });
   }
 
-  showInfo(message: string, duration = 3000) {
-    this.show({ message, type: "info", duration });
+  showInfo(message, duration = 3000) {
+    this.toastSubject.next({
+      type: "info",
+      message,
+      duration,
+    });
   }
 
-  private show(data: ToastData) {
-    this.toastSubject.next({ data, show: true });
-  }
-
-  hide() {
+  close() {
     this.toastSubject.next(null);
   }
 }
 ```
 
+```html
+<openiis-toast [isVisible]="showToast" [data]="toastData" (closed)="onToastClosed()"> </openiis-toast>
+
+<openiis-button text="Success Toast" type="success" (clickEvent)="showSuccess()"> </openiis-button>
+
+<openiis-button text="Error Toast" type="danger" (clickEvent)="showError()"> </openiis-button>
+
+<openiis-button text="Warning Toast" type="warning" (clickEvent)="showWarning()"> </openiis-button>
+
+<openiis-button text="Info Toast" type="primary" (clickEvent)="showInfo()"> </openiis-button>
+```
+
 ```typescript
-// En el componente principal (app.component.ts)
-export class AppComponent {
-  toastData: ToastData | null = null;
+export class MyComponent {
+  toastData: any = null;
   showToast = false;
 
   constructor(private toastService: ToastService) {}
 
   ngOnInit() {
     this.toastService.toast$.subscribe((toast) => {
-      if (toast) {
-        this.toastData = toast.data;
-        this.showToast = toast.show;
-      } else {
-        this.showToast = false;
-      }
+      this.toastData = toast;
+      this.showToast = !!toast;
     });
   }
 
+  showSuccess() {
+    this.toastService.showSuccess("Operación completada con éxito");
+  }
+
+  showError() {
+    this.toastService.showError("Ha ocurrido un error");
+  }
+
+  showWarning() {
+    this.toastService.showWarning("Sesión expirando pronto");
+  }
+
+  showInfo() {
+    this.toastService.showInfo("Nueva funcionalidad disponible");
+  }
+
   onToastClosed() {
-    this.toastService.hide();
+    this.showToast = false;
+    this.toastService.close();
   }
 }
 ```
 
-```html
-<!-- En app.component.html -->
-<app-toast [isVisible]="showToast" [data]="toastData" (closed)="onToastClosed()"> </app-toast>
-```
+## 🏗️ Interfaces
 
 ```typescript
-// Uso en cualquier componente
-constructor(private toastService: ToastService) {}
-
-saveData() {
-  this.dataService.save(this.data).subscribe({
-    next: () => {
-      this.toastService.showSuccess('Datos guardados correctamente');
-    },
-    error: () => {
-      this.toastService.showError('Error al guardar los datos');
-    }
-  });
+interface ToastData {
+  message: string; // Mensaje a mostrar
+  type?: "success" | "warning" | "danger" | "info"; // Tipo de toast (opcional)
+  duration?: number; // Duración en ms (opcional)
 }
 ```
 
-## Duraciones Recomendadas
+## ⚡ Comportamiento
 
-| Tipo      | Duración    | Razón                 |
-| --------- | ----------- | --------------------- |
-| `success` | 2000-3000ms | Confirmación rápida   |
-| `info`    | 3000-4000ms | Información moderada  |
-| `warning` | 4000-5000ms | Requiere más atención |
-| `danger`  | 5000-6000ms | Errores importantes   |
+- **Auto-cierre**: Se cierra automáticamente según duración (default: 3000ms)
+- **Posición fija**: Esquina superior derecha
+- **Animación**: Slide in desde la derecha
+- **Responsive**: Se adapta a móviles
+- **Glass morphism**: Efecto translúcido con blur
 
-## Múltiples Toasts
+## ✅ Características
 
-Para mostrar múltiples toasts simultáneamente:
+- ✅ 4 tipos de toast (success, warning, danger, info)
+- ✅ Duración configurable
+- ✅ Auto-cierre automático
+- ✅ Completamente responsive
+- ✅ Integración con temas Openiis UI
+- ✅ Accesibilidad incluida
+- ✅ Servicio opcional para gestión centralizada
 
-```typescript
-// toast-manager.service.ts
-@Injectable({
-  providedIn: "root",
-})
-export class ToastManagerService {
-  private toasts: Array<{ id: string; data: ToastData; show: boolean }> = [];
-  private toastsSubject = new BehaviorSubject<Array<{ id: string; data: ToastData; show: boolean }>>(this.toasts);
-  public toasts$ = this.toastsSubject.asObservable();
+## 🚨 Solución de Problemas
 
-  show(data: ToastData) {
-    const id = this.generateId();
-    this.toasts.push({ id, data, show: true });
-    this.toastsSubject.next([...this.toasts]);
+| Problema              | Solución                                                             |
+| --------------------- | -------------------------------------------------------------------- |
+| Toast no se muestra   | Verifica `isVisible = true` y `data` no null                         |
+| Tipo no se aplica     | Verifica que `type` esté en ['success', 'warning', 'danger', 'info'] |
+| Estilos no se aplican | Asegúrate de que el tema Openiis UI esté configurado                 |
+| No se auto-cierra     | Verifica que `duration` esté definido y sea mayor a 0                |
 
-    // Auto-remover después de la duración
-    setTimeout(() => {
-      this.remove(id);
-    }, data.duration || 3000);
-  }
+## 🐞 Reportar Problemas
 
-  remove(id: string) {
-    this.toasts = this.toasts.filter((toast) => toast.id !== id);
-    this.toastsSubject.next([...this.toasts]);
-  }
-
-  private generateId(): string {
-    return Math.random().toString(36).substr(2, 9);
-  }
-}
-```
-
-## Posicionamiento
-
-El toast se posiciona automáticamente en:
-
-- **Desktop**: Esquina superior derecha con margen de 20px
-- **Mobile**: Centrado horizontalmente en la parte superior
-
-## Animaciones
-
-El componente incluye animaciones CSS:
-
-- **Entrada**: slideIn desde la derecha
-- **Salida**: slideOut hacia la derecha
-- **Duración**: 300ms con ease
-
-## Dependencias
-
-- `@angular/common`
-
-## Estilos CSS
-
-El componente incluye estilos CSS inline que soportan:
-
-- Posicionamiento fijo
-- Colores diferenciados por tipo
-- Animaciones suaves
-- Sombras y bordes redondeados
-- Responsive design
-
-## Notas
-
-- El toast se cierra automáticamente después de la duración especificada
-- Se puede usar múltiples instancias simultáneamente
-- Es compatible con todos los navegadores modernos
-- Los colores se adaptan al sistema de diseño
-- Es completamente accesible para lectores de pantalla
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)

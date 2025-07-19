@@ -51,10 +51,9 @@ El schematic te preguntará:
 
 ```
 ? Selecciona un tema para OpenIIS UI: Custom - Personaliza tus propios colores
-? Ingresa el color principal (hex, ej: #14b8a6): #6366f1
-? Ingresa el color de fondo (hex, ej: #ffffff): #ffffff
-? Ingresa el color de texto principal (hex, ej: #171717): #1f2937
 ```
+
+**Nota**: El tema custom se configura automáticamente con valores por defecto. Para personalizar los colores, edita el archivo `src/styles/openiis-custom-theme.css` después de la instalación.
 
 ### Resultado
 
@@ -86,6 +85,21 @@ Si prefieres configurar manualmente, puedes usar las opciones directamente:
 ```bash
 ng add openiis-ui --theme=custom --primaryColor=#6366f1 --backgroundColor=#ffffff --textColor=#1f2937
 ```
+
+## Personalizar Tema Custom Después de la Instalación
+
+Si seleccionaste el tema "Custom", puedes personalizar los colores editando el archivo generado:
+
+1. **Abre el archivo**: `src/styles/openiis-custom-theme.css`
+2. **Modifica las variables CSS**:
+   ```css
+   [data-openiis-theme="custom"] {
+     --primary-500: #tu-color-principal;
+     --color-background: #tu-color-fondo;
+     --color-text-primary: #tu-color-texto;
+   }
+   ```
+3. **Recompila**: `ng build` o `ng serve`
 
 ## Cambiar Tema Después de la Instalación
 

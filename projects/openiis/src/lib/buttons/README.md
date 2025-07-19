@@ -1,273 +1,303 @@
-# Openiis Button Component
+# Button
 
-El `OpeniisButtonComponent` es un componente de botón altamente configurable y reutilizable que incluye todos los tipos de botones necesarios para el proyecto.
+Componente de botón versátil con múltiples variantes, tamaños y funcionalidades avanzadas.
 
-## Características
-
-- ✅ **16 variantes de estilo**: primary, secondary, success, warning, danger, info, outline variants, ghost, text, link, subtle, icon
-- ✅ **5 tamaños**: xs, sm, md, lg, xl
-- ✅ **Iconos**: Soporte para Material Icons y SVG assets
-- ✅ **Estados**: loading, disabled, active
-- ✅ **Tooltips**: Integrados con posicionamiento configurable
-- ✅ **Accesibilidad**: ARIA labels completos y navegación por teclado
-- ✅ **Responsive**: Ancho completo configurable
-- ✅ **TypeScript**: Tipado completo y seguro
-- ✅ **Standalone**: No requiere módulos adicionales
-
-## Importación
+## 📦 Instalación
 
 ```typescript
-import { OpeniisButtonComponent } from "./components/buttons/button.component";
+import { OpeniisButtonComponent } from 'openiis-ui';
+
+@Component({
+  imports: [OpeniisButtonComponent],
+})
 ```
 
-## Uso Básico
+## ⚙️ Properties
+
+| Property          | Tipo                                     | Default     | Descripción                 |
+| ----------------- | ---------------------------------------- | ----------- | --------------------------- |
+| `text`            | `string`                                 | `''`        | Texto del botón             |
+| `type`            | `ButtonVariant`                          | `'primary'` | Tipo de botón               |
+| `size`            | `ButtonSize`                             | `'md'`      | Tamaño del botón            |
+| `htmlType`        | `ButtonType`                             | `'button'`  | Tipo HTML del botón         |
+| `disabled`        | `boolean`                                | `false`     | Estado deshabilitado        |
+| `loading`         | `boolean`                                | `false`     | Estado de carga             |
+| `iconLeft`        | `string`                                 | `''`        | Icono izquierdo             |
+| `iconRight`       | `string`                                 | `''`        | Icono derecho               |
+| `iconOnly`        | `boolean`                                | `false`     | Solo mostrar icono          |
+| `fullWidth`       | `boolean`                                | `false`     | Ancho completo              |
+| `tooltipText`     | `string`                                 | `''`        | Texto del tooltip           |
+| `tooltipPosition` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'`     | Posición del tooltip        |
+| `tooltipVariant`  | `'default' \| 'danger'`                  | `'default'` | Variante del tooltip        |
+| `title`           | `string`                                 | `''`        | Título del botón            |
+| `hasDropdown`     | `boolean`                                | `false`     | Botón con dropdown          |
+| `dropdownOpen`    | `boolean`                                | `false`     | Estado del dropdown         |
+| `ariaLabel`       | `string`                                 | `''`        | Etiqueta aria               |
+| `ariaDescribedBy` | `string`                                 | `''`        | Referencia aria describedby |
+| `extraClasses`    | `string`                                 | `''`        | Clases CSS adicionales      |
+| `responsive`      | `boolean`                                | `false`     | Botón responsivo            |
+
+## 📡 Events
+
+| Event            | Tipo         | Descripción                    |
+| ---------------- | ------------ | ------------------------------ |
+| `clickEvent`     | `MouseEvent` | Emitido al hacer clic          |
+| `dropdownToggle` | `boolean`    | Emitido al toggle del dropdown |
+
+## 🎨 Tipos de Botón
+
+| Tipo                | Color        | Uso                   |
+| ------------------- | ------------ | --------------------- |
+| `primary`           | Azul         | Acción principal      |
+| `secondary`         | Gris         | Acción secundaria     |
+| `success`           | Verde        | Confirmación          |
+| `warning`           | Naranja      | Advertencia           |
+| `danger`            | Rojo         | Eliminación           |
+| `info`              | Azul         | Información           |
+| `outline-primary`   | Azul         | Principal con borde   |
+| `outline-secondary` | Gris         | Secundario con borde  |
+| `outline-success`   | Verde        | Éxito con borde       |
+| `outline-warning`   | Naranja      | Advertencia con borde |
+| `outline-danger`    | Rojo         | Peligro con borde     |
+| `outline-info`      | Azul         | Info con borde        |
+| `ghost`             | Transparente | Fantasma              |
+| `text`              | Texto        | Solo texto            |
+| `link`              | Enlace       | Como enlace           |
+| `subtle`            | Sutil        | Sutil                 |
+| `icon`              | Icono        | Solo icono            |
+
+## 📏 Tamaños
+
+| Tamaño | Altura | Uso               |
+| ------ | ------ | ----------------- |
+| `xs`   | 24px   | Muy pequeño       |
+| `sm`   | 32px   | Pequeño           |
+| `md`   | 40px   | Mediano (default) |
+| `lg`   | 48px   | Grande            |
+| `xl`   | 56px   | Muy grande        |
+
+## 💡 Ejemplos Prácticos
+
+### 1. Botones Básicos
 
 ```html
-<openiis-button text="Guardar" (clickEvent)="save()"></openiis-button>
+<openiis-button text="Primary Button" type="primary" (clickEvent)="onPrimaryClick()"> </openiis-button>
+
+<openiis-button text="Secondary Button" type="secondary" (clickEvent)="onSecondaryClick()"> </openiis-button>
+
+<openiis-button text="Success Button" type="success" (clickEvent)="onSuccessClick()"> </openiis-button>
+
+<openiis-button text="Danger Button" type="danger" (clickEvent)="onDangerClick()"> </openiis-button>
 ```
-
-## Tipos de Botones
-
-### Principales
-
-- `primary` - Botón principal (azul)
-- `secondary` - Botón secundario (gris)
-- `success` - Botón de éxito (verde)
-- `warning` - Botón de advertencia (amarillo)
-- `danger` - Botón de peligro (rojo)
-- `info` - Botón informativo (azul claro)
-
-### Outline
-
-- `outline-primary` - Botón outline principal
-- `outline-secondary` - Botón outline secundario
-- `outline-success` - Botón outline de éxito
-- `outline-warning` - Botón outline de advertencia
-- `outline-danger` - Botón outline de peligro
-- `outline-info` - Botón outline informativo
-
-### Especiales
-
-- `ghost` - Botón fantasma (transparente)
-- `icon` - Solo icono
-- `text` - Solo texto
-- `link` - Estilo de enlace
-- `subtle` - Sutil
-
-## Tamaños
-
-- `xs` - Extra pequeño (24px)
-- `sm` - Pequeño (32px)
-- `md` - Mediano (40px) - **Por defecto**
-- `lg` - Grande (48px)
-- `xl` - Extra grande (56px)
-
-## Propiedades
-
-| Propiedad         | Tipo                                     | Por defecto | Descripción                            |
-| ----------------- | ---------------------------------------- | ----------- | -------------------------------------- |
-| `text`            | `string`                                 | `''`        | Texto del botón                        |
-| `type`            | `ButtonVariant`                          | `'primary'` | Tipo/variante del botón                |
-| `size`            | `ButtonSize`                             | `'md'`      | Tamaño del botón                       |
-| `htmlType`        | `'button' \| 'submit' \| 'reset'`        | `'button'`  | Tipo HTML del botón                    |
-| `disabled`        | `boolean`                                | `false`     | Si el botón está deshabilitado         |
-| `loading`         | `boolean`                                | `false`     | Muestra spinner de carga               |
-| `iconLeft`        | `string`                                 | `''`        | Icono Material Icons a la izquierda    |
-| `iconRight`       | `string`                                 | `''`        | Icono Material Icons a la derecha      |
-| `iconOnly`        | `boolean`                                | `false`     | Solo mostrar icono (ocultar texto)     |
-| `iconAsset`       | `string`                                 | `''`        | Ruta al archivo SVG del icono          |
-| `fullWidth`       | `boolean`                                | `false`     | Ocupa todo el ancho disponible         |
-| `tooltipText`     | `string`                                 | `''`        | Texto del tooltip                      |
-| `tooltipPosition` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'`     | Posición del tooltip                   |
-| `tooltipVariant`  | `'default' \| 'danger'`                  | `'default'` | Variante visual del tooltip            |
-| `title`           | `string`                                 | `''`        | Título del botón (tooltip alternativo) |
-| `hasDropdown`     | `boolean`                                | `false`     | Si el botón tiene un dropdown asociado |
-| `color`           | `string`                                 | `undefined` | Color personalizado para el botón      |
-
-## Eventos
-
-| Evento       | Tipo                  | Descripción           |
-| ------------ | --------------------- | --------------------- |
-| `clickEvent` | `EventEmitter<Event>` | Emitido al hacer clic |
-
-## Ejemplos de Uso
-
-### Botón básico
-
-```html
-<openiis-button text="Guardar" type="primary" (clickEvent)="save()"></openiis-button>
-```
-
-### Botón con icono
-
-```html
-<openiis-button text="Crear Lista" iconLeft="add" size="lg" type="primary" (clickEvent)="createList()"> </openiis-button>
-```
-
-### Botón solo icono con tooltip
-
-```html
-<openiis-button type="icon" iconLeft="delete" size="sm" tooltipText="Eliminar elemento" tooltipPosition="top" tooltipVariant="danger" (clickEvent)="delete()"> </openiis-button>
-```
-
-### Botón con icono SVG
-
-```html
-<openiis-button type="icon" iconAsset="assets/linkedin.svg" size="lg" tooltipText="Visitar LinkedIn" (clickEvent)="openLinkedIn()"> </openiis-button>
-```
-
-### Botón de carga
-
-```html
-<openiis-button text="Guardando..." type="primary" [loading]="isLoading" [disabled]="isLoading" (clickEvent)="save()"> </openiis-button>
-```
-
-### Botón ancho completo
-
-```html
-<openiis-button text="Continuar" type="primary" fullWidth="true" (clickEvent)="continue()"> </openiis-button>
-```
-
-### Botón outline con icono
-
-```html
-<openiis-button text="Eliminar Todo" type="outline-danger" iconLeft="delete_sweep" (clickEvent)="deleteAll()"> </openiis-button>
-```
-
-### Botón fantasma
-
-```html
-<openiis-button text="Opciones" type="ghost" iconRight="arrow_drop_down" hasDropdown="true" (clickEvent)="showOptions()"> </openiis-button>
-```
-
-### Botón con color personalizado
-
-```html
-<openiis-button text="Personalizado" type="icon" iconAsset="assets/github.svg" [color]="'var(--color-text-primary)'" (clickEvent)="customAction()"> </openiis-button>
-```
-
-## Variantes de Estilo
-
-### Botones principales
-
-```html
-<openiis-button text="Primary" type="primary"></openiis-button>
-<openiis-button text="Secondary" type="secondary"></openiis-button>
-<openiis-button text="Success" type="success"></openiis-button>
-<openiis-button text="Warning" type="warning"></openiis-button>
-<openiis-button text="Danger" type="danger"></openiis-button>
-<openiis-button text="Info" type="info"></openiis-button>
-```
-
-### Botones outline
-
-```html
-<openiis-button text="Primary" type="outline-primary"></openiis-button>
-<openiis-button text="Secondary" type="outline-secondary"></openiis-button>
-<openiis-button text="Success" type="outline-success"></openiis-button>
-<openiis-button text="Warning" type="outline-warning"></openiis-button>
-<openiis-button text="Danger" type="outline-danger"></openiis-button>
-<openiis-button text="Info" type="outline-info"></openiis-button>
-```
-
-### Botones especiales
-
-```html
-<openiis-button text="Ghost" type="ghost"></openiis-button>
-<openiis-button text="Text" type="text"></openiis-button>
-<openiis-button text="Link" type="link"></openiis-button>
-<openiis-button text="Subtle" type="subtle"></openiis-button>
-<openiis-button iconLeft="settings" type="icon"></openiis-button>
-```
-
-## Migración
-
-Para migrar botones existentes:
-
-### Antes
-
-```html
-<button class="primary-btn" (click)="save()">
-  <span class="material-icons-outlined">save</span>
-  Guardar
-</button>
-```
-
-### Después
-
-```html
-<openiis-button text="Guardar" type="primary" iconLeft="save" (clickEvent)="save()"> </openiis-button>
-```
-
-## Integración con Tooltips
-
-El componente incluye integración completa con tooltips:
-
-- **Automático**: Los botones de tipo `icon` muestran tooltips automáticamente
-- **Posicionamiento**: 4 posiciones disponibles (top, bottom, left, right)
-- **Variantes**: Default y danger para diferentes contextos
-- **Fallback**: Usa `title` si `tooltipText` no está definido
-
-## Accesibilidad
-
-- ✅ **ARIA Labels**: Soporte completo para etiquetas ARIA
-- ✅ **Navegación por teclado**: Tab, Enter, Space
-- ✅ **Estados**: Manejo de estados disabled y loading
-- ✅ **Contraste**: Cumple con WCAG 2.1 AA
-- ✅ **Lectores de pantalla**: Descripción clara de la funcionalidad
-
-## Integración con Servicios
-
-### SvgIconService
-
-El componente utiliza el `SvgIconService` para cargar y renderizar iconos SVG de manera eficiente.
 
 ```typescript
-// El servicio se inyecta automáticamente
-// Los iconos SVG se cargan dinámicamente según la propiedad iconAsset
+export class MyComponent {
+  onPrimaryClick() {
+    console.log("Primary button clicked");
+  }
+
+  onSecondaryClick() {
+    console.log("Secondary button clicked");
+  }
+
+  onSuccessClick() {
+    console.log("Success button clicked");
+  }
+
+  onDangerClick() {
+    console.log("Danger button clicked");
+  }
+}
 ```
 
-## Casos de Uso Comunes
-
-### Navegación Social
+### 2. Botones con Iconos
 
 ```html
-<div class="social-buttons">
-  <a href="https://linkedin.com/company/openiis" target="_blank">
-    <openiis-button size="lg" type="icon" iconAsset="assets/linkedin.svg" tooltipText="Seguir en LinkedIn" [color]="'var(--color-text-primary)'"></openiis-button>
-  </a>
+<openiis-button text="Save" type="success" iconLeft="save" (clickEvent)="saveData()"> </openiis-button>
 
-  <a href="https://github.com/openiis/ui" target="_blank">
-    <openiis-button size="lg" type="icon" iconAsset="assets/github.svg" tooltipText="Ver en GitHub" [color]="'var(--color-text-primary)'"></openiis-button>
-  </a>
-</div>
+<openiis-button text="Delete" type="danger" iconRight="delete" (clickEvent)="deleteItem()"> </openiis-button>
+
+<openiis-button type="icon" iconLeft="settings" tooltipText="Settings" (clickEvent)="openSettings()"> </openiis-button>
 ```
 
-### Formularios
+```typescript
+export class MyComponent {
+  saveData() {
+    console.log("Saving data...");
+  }
+
+  deleteItem() {
+    console.log("Deleting item...");
+  }
+
+  openSettings() {
+    console.log("Opening settings...");
+  }
+}
+```
+
+### 3. Botones con Estados
 
 ```html
-<div class="form-actions">
-  <openiis-button text="Cancelar" type="secondary" (clickEvent)="cancel()"> </openiis-button>
+<openiis-button text="Loading Button" type="primary" [loading]="true" (clickEvent)="loadData()"> </openiis-button>
 
-  <openiis-button text="Guardar" type="primary" htmlType="submit" [loading]="saving" [disabled]="!form.valid" (clickEvent)="save()"> </openiis-button>
-</div>
+<openiis-button text="Disabled Button" type="secondary" [disabled]="true" (clickEvent)="disabledAction()"> </openiis-button>
+
+<openiis-button text="Full Width" type="success" [fullWidth]="true" (clickEvent)="fullWidthAction()"> </openiis-button>
 ```
 
-### Acciones Destructivas
+```typescript
+export class MyComponent {
+  loadData() {
+    console.log("Loading data...");
+  }
+
+  disabledAction() {
+    console.log("This should not execute");
+  }
+
+  fullWidthAction() {
+    console.log("Full width action");
+  }
+}
+```
+
+### 4. Botones Outline
 
 ```html
-<openiis-button text="Eliminar Cuenta" type="outline-danger" iconLeft="delete_forever" tooltipText="Esta acción no se puede deshacer" tooltipVariant="danger" (clickEvent)="deleteAccount()"> </openiis-button>
+<openiis-button text="Outline Primary" type="outline-primary" (clickEvent)="outlinePrimary()"> </openiis-button>
+
+<openiis-button text="Outline Success" type="outline-success" (clickEvent)="outlineSuccess()"> </openiis-button>
+
+<openiis-button text="Outline Danger" type="outline-danger" (clickEvent)="outlineDanger()"> </openiis-button>
 ```
 
-## Beneficios
+```typescript
+export class MyComponent {
+  outlinePrimary() {
+    console.log("Outline primary clicked");
+  }
 
-✅ **Consistencia visual**: Todos los botones siguen el mismo sistema de diseño  
-✅ **Mantenimiento centralizado**: Un solo lugar para cambios de estilo  
-✅ **TypeScript**: Tipos seguros para todas las propiedades  
-✅ **Accesibilidad**: ARIA labels y navegación por teclado integrados  
-✅ **Responsive**: Adaptación automática a diferentes tamaños  
-✅ **Estados**: Loading, disabled, hover, etc. incluidos  
-✅ **Iconos**: Soporte completo para Material Icons y SVG assets  
-✅ **Flexibilidad**: Múltiples variantes, tamaños y configuraciones  
-✅ **Tooltips**: Sistema de tooltips integrado y configurable  
-✅ **Rendimiento**: Detección de cambios optimizada con OnPush
+  outlineSuccess() {
+    console.log("Outline success clicked");
+  }
+
+  outlineDanger() {
+    console.log("Outline danger clicked");
+  }
+}
+```
+
+### 5. Botones con Tooltip
+
+```html
+<openiis-button text="Help" type="info" iconLeft="help" tooltipText="Click for help" tooltipPosition="top" (clickEvent)="showHelp()"> </openiis-button>
+
+<openiis-button type="icon" iconLeft="warning" tooltipText="This action is dangerous" tooltipVariant="danger" tooltipPosition="bottom" (clickEvent)="dangerousAction()"> </openiis-button>
+```
+
+```typescript
+export class MyComponent {
+  showHelp() {
+    console.log("Showing help...");
+  }
+
+  dangerousAction() {
+    console.log("Dangerous action executed");
+  }
+}
+```
+
+### 6. Botones con Dropdown
+
+```html
+<openiis-button text="Actions" type="primary" iconRight="arrow_drop_down" [hasDropdown]="true" [dropdownOpen]="dropdownOpen" (dropdownToggle)="onDropdownToggle($event)" (clickEvent)="toggleDropdown()"> </openiis-button>
+```
+
+```typescript
+export class MyComponent {
+  dropdownOpen = false;
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  onDropdownToggle(isOpen: boolean) {
+    console.log("Dropdown is now:", isOpen ? "open" : "closed");
+  }
+}
+```
+
+### 7. Botones Responsivos
+
+```html
+<openiis-button text="Responsive Button" type="primary" [responsive]="true" (clickEvent)="responsiveAction()"> </openiis-button>
+
+<openiis-button text="Large Button" type="success" size="lg" (clickEvent)="largeAction()"> </openiis-button>
+
+<openiis-button text="Small Button" type="secondary" size="sm" (clickEvent)="smallAction()"> </openiis-button>
+```
+
+```typescript
+export class MyComponent {
+  responsiveAction() {
+    console.log("Responsive action");
+  }
+
+  largeAction() {
+    console.log("Large button action");
+  }
+
+  smallAction() {
+    console.log("Small button action");
+  }
+}
+```
+
+## 🏗️ Interfaces
+
+```typescript
+type ButtonVariant = undefined | "primary" | "secondary" | "success" | "warning" | "danger" | "info" | "outline-primary" | "outline-secondary" | "outline-success" | "outline-warning" | "outline-danger" | "outline-info" | "ghost" | "text" | "link" | "subtle" | "icon";
+
+type ButtonType = "button" | "submit" | "reset";
+type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
+```
+
+## ⚡ Comportamiento
+
+- **Estados**: Normal, hover, focus, disabled, loading
+- **Accesibilidad**: Soporte completo para ARIA
+- **Responsive**: Se adapta a diferentes tamaños de pantalla
+- **Tooltip**: Aparece en hover con posiciones configurables
+- **Dropdown**: Toggle automático con evento
+- **Iconos**: Soporte para iconos izquierdo y derecho
+
+## ✅ Características
+
+- ✅ 17 tipos de botón diferentes
+- ✅ 5 tamaños configurables
+- ✅ Estados de loading y disabled
+- ✅ Iconos izquierdo y derecho
+- ✅ Botones de solo icono
+- ✅ Tooltips configurables
+- ✅ Dropdown integrado
+- ✅ Ancho completo opcional
+- ✅ Completamente responsive
+- ✅ Integración con temas Openiis UI
+- ✅ Accesibilidad completa
+- ✅ Soporte para SVG icons
+
+## 🚨 Solución de Problemas
+
+| Problema              | Solución                                             |
+| --------------------- | ---------------------------------------------------- |
+| Botón no responde     | Verifica que no esté `disabled` o `loading`          |
+| Icono no aparece      | Verifica que `iconLeft` o `iconRight` esté definido  |
+| Tooltip no funciona   | Verifica que `tooltipText` esté definido             |
+| Estilos no se aplican | Asegúrate de que el tema Openiis UI esté configurado |
+| Dropdown no funciona  | Verifica que `hasDropdown` esté en `true`            |
+
+## 🐞 Reportar Problemas
+
+Si encuentras algún problema en la lógica del componente, por favor
+[🐞Reportalo](https://github.com/Alexiisart/openiis-ui/issues/new)

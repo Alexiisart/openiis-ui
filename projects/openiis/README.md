@@ -46,15 +46,15 @@ Tema minimalista con colores neutros y sobrios.
 
 Tema vibrante y colorido para interfaces más llamativas.
 
-### 4. **Custom** ✨ (Nuevo)
+### 4. **Custom**
 
-¡Tema completamente personalizable! Define tus propios colores:
+¡Tema completamente personalizable! Puedes definir tus propios colores en la carpeta `styles` utilizando las siguientes variables:
 
-- Color principal
-- Color de fondo
-- Color de texto
+- `--custom-primary-500`: Color principal
+- `--custom-background`: Color de fondo
+- `--custom-text-primary`: Color de texto principal
 
-El sistema generará automáticamente una paleta completa de variaciones.
+Estas variables permitirán que el sistema genere automáticamente una paleta completa de variaciones.
 
 ## 🛠️ Uso
 
