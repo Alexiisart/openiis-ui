@@ -27,7 +27,7 @@ import { LanguageService } from '../service/language.service';
     <div class="header-container">
       @if (isMobile) {
         <openiis-sidebar
-          searchPlaceholder="{{ 'menu.buscar' | translate }}"
+          searchPlaceholder="{{ 'header.buscar' | translate }}"
           searchSize="sm"
           [menuItems]="SidebarData"
           class="sidebar"
