@@ -45,3 +45,9 @@
 [data-openiis-theme="custom"][data-theme="dark"] {
   --color-border-focus: var(--custom-border-focus-dark, var(--primary-400));
 }
+
+/* Ejemplo de uso de variables */
+.ejemplo {
+  background-color: var(--color-background);
+  color: var(--color-text-secondary);
+}

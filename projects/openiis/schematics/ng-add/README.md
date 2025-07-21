@@ -8,6 +8,8 @@ Este schematic permite agregar **OpenIIS UI** a tu proyecto Angular de manera au
 ng add openiis-ui
 ```
 
+El schematic te preguntará si deseas incluir una página de demostración que muestra todos los componentes y funcionalidades de OpenIIS UI.
+
 ## Temas Disponibles
 
 ### 1. Classic (Por defecto)
@@ -128,6 +130,32 @@ export class AppComponent {
 }
 ```
 
+## Página de Demostración
+
+Si seleccionas incluir la página de demostración, se creará automáticamente:
+
+- **Componente de test**: `src/app/pages/test/test.component.ts`
+- **Template HTML**: `src/app/pages/test/test.component.html`
+- **Configuración automática**: Se agregará a `app.component.ts` y `app.component.html`
+
+La página de demostración incluye:
+
+- ✅ Switch para cambiar entre modo claro y oscuro
+- ✅ Ejemplos de todos los componentes principales
+- ✅ Demostración del sistema de temas
+- ✅ Uso de la directiva EasyIcon para SVGs
+- ✅ Diseño responsive y moderno
+
+### Acceder a la página de demostración
+
+Una vez instalado, ejecuta:
+
+```bash
+ng serve
+```
+
+Y visita: `http://localhost:4200`
+
 ## Soporte
 
 - ✅ Temas predefinidos (classic, neutral, vivid)
@@ -136,3 +164,5 @@ export class AppComponent {
 - ✅ Soporte para modo oscuro
 - ✅ Configuración automática de angular.json
 - ✅ Detección y reemplazo de temas anteriores
+- ✅ Página de demostración opcional
+- ✅ Configuración automática de estilos (root.css + tema)

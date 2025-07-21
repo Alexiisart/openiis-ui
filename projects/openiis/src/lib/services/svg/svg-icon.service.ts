@@ -168,23 +168,29 @@ export class SvgIconService {
       processedSvg = processedSvg.replace('<svg', '<svg viewBox="0 0 24 24"');
     }
 
-    // Procesar colores con mayor prioridad
+    // Procesar colores
     if (options.color) {
-      // Remover todos los fills existentes primero
-      processedSvg = processedSvg.replace(/fill="[^"]*"/g, '');
-      processedSvg = processedSvg.replace(/fill:[^;"]*/g, '');
-
-      // Agregar el nuevo fill con !important
+      // Cambiar fill
       processedSvg = processedSvg.replace(
-        /<svg([^>]*)>/,
-        `<svg$1 style="color: ${options.color} !important;">`,
+        /fill="[^"]*"/g,
+        `fill="${options.color}"`,
+      );
+      processedSvg = processedSvg.replace(
+        /fill:[^;"]*/g,
+        `fill:${options.color}`,
       );
 
-      // Aplicar fill a todos los elementos path, rect, circle, etc.
-      processedSvg = processedSvg.replace(
-        /<(path|rect|circle|ellipse|polygon|polyline|line)([^>]*)>/g,
-        '<$1$2 fill="currentColor" style="fill: currentColor !important;">',
-      );
+      // Si no tiene fill, agregarlo
+      if (!processedSvg.includes('fill=') && !processedSvg.includes('fill:')) {
+        processedSvg = processedSvg.replace(
+          '<path',
+          '<path fill="currentColor"',
+        );
+        processedSvg = processedSvg.replace(
+          '<svg',
+          `<svg style="color: ${options.color}"`,
+        );
+      }
     }
 
     // Procesar stroke
@@ -247,13 +253,13 @@ export class SvgIconService {
     element: HTMLElement,
     options: SvgIconOptions,
   ): void {
-    // Aplicar dimensiones con !important
+    // Aplicar dimensiones
     if (options.width) {
       const width =
         typeof options.width === 'number'
           ? `${options.width}px`
           : options.width;
-      element.style.setProperty('width', width, 'important');
+      element.style.width = width;
     }
 
     if (options.height) {
@@ -261,50 +267,69 @@ export class SvgIconService {
         typeof options.height === 'number'
           ? `${options.height}px`
           : options.height;
-      element.style.setProperty('height', height, 'important');
+      element.style.height = height;
     } else {
-      element.style.setProperty('height', 'auto', 'important');
+      element.style.height = 'auto'; // Altura automática si no se especifica
     }
 
-    // Aplicar color con mayor prioridad
+    // Aplicar color
     if (options.color) {
-      element.style.setProperty('color', options.color, 'important');
-      // También aplicar a todos los elementos SVG internos
-      const svgElements = element.querySelectorAll(
-        'svg, path, rect, circle, ellipse, polygon, polyline, line',
-      );
-      svgElements.forEach((svgEl) => {
-        (svgEl as HTMLElement).style.setProperty(
-          'fill',
-          'currentColor',
-          'important',
-        );
-      });
+      element.style.color = options.color;
     }
 
     // Aplicar background
     if (options.backgroundColor) {
-      element.style.setProperty(
-        'background-color',
-        options.backgroundColor,
-        'important',
-      );
-      element.style.setProperty('border-radius', '4px', 'important');
-      element.style.setProperty('padding', '4px', 'important');
+      element.style.backgroundColor = options.backgroundColor;
+      element.style.borderRadius = '4px';
+      element.style.padding = '4px';
     }
 
     // Aplicar opacidad
     if (options.opacity !== undefined) {
-      element.style.setProperty(
-        'opacity',
-        options.opacity.toString(),
-        'important',
+      element.style.opacity = options.opacity.toString();
+    }
+
+    // Aplicar fontSize
+    if (options.fontSize) {
+      const fontSize =
+        typeof options.fontSize === 'number'
+          ? `${options.fontSize}px`
+          : options.fontSize;
+      element.style.fontSize = fontSize;
+    }
+
+    // Aplicar stroke
+    if (options.strokeColor) {
+      const svgElements = element.querySelectorAll(
+        'svg, path, rect, circle, ellipse, polygon, polyline, line',
       );
+      svgElements.forEach((svgEl) => {
+        (svgEl as HTMLElement).style.stroke = options.strokeColor!;
+      });
+    }
+
+    if (options.strokeWidth) {
+      const strokeWidth =
+        typeof options.strokeWidth === 'number'
+          ? `${options.strokeWidth}px`
+          : options.strokeWidth;
+      const svgElements = element.querySelectorAll(
+        'svg, path, rect, circle, ellipse, polygon, polyline, line',
+      );
+      svgElements.forEach((svgEl) => {
+        (svgEl as HTMLElement).style.strokeWidth = strokeWidth;
+      });
+    }
+
+    // Aplicar transformaciones
+    const transforms = this.buildTransforms(options);
+    if (transforms) {
+      element.style.transform = transforms;
     }
 
     // Hacer que sea responsive por defecto
-    element.style.setProperty('display', 'inline-block', 'important');
-    element.style.setProperty('vertical-align', 'middle', 'important');
+    element.style.display = 'inline-block';
+    element.style.verticalAlign = 'middle';
   }
 
   private buildTransforms(options: SvgIconOptions): string {

@@ -4,14 +4,14 @@ import {
   OpeniisTheme,
   OpeniisThemeService,
   OpeniisSwitchComponent,
-  SidebarComponent,
+  OpeniisSidebarComponent,
   OpeniisModeService,
   ThemeMode,
+  EasyIconDirective,
 } from 'openiis-ui';
 import { Subscription } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../service/language.service';
-import { EasyIconDirective } from 'openiis-ui';
 
 @Component({
   selector: 'app-header-sec',
@@ -20,7 +20,7 @@ import { EasyIconDirective } from 'openiis-ui';
     OpeniisDropdownComponent,
     OpeniisSwitchComponent,
     TranslateModule,
-    SidebarComponent,
+    OpeniisSidebarComponent,
     EasyIconDirective,
   ],
   template: `
