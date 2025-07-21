@@ -37,6 +37,16 @@
       "description": "Color de texto principal en formato hex (ej: #171717)",
       "type": "string",
       "pattern": "^#[0-9a-fA-F]{6}$"
+    },
+    "includeTestPage": {
+      "description": "Incluir página de demostración",
+      "type": "boolean",
+      "default": true,
+      "x-prompt": {
+        "message": "¿Deseas incluir una página de demostración?",
+        "type": "confirmation",
+        "default": true
+      }
     }
   },
   "required": []

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidebarComponent } from 'openiis-ui';
+import { OpeniisSidebarComponent } from 'openiis-ui';
 import { MenuItem } from 'openiis-ui';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar-sec',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, TranslateModule],
+  imports: [CommonModule, OpeniisSidebarComponent, TranslateModule],
   template: `
     <!-- Sección de Sidebar -->
     <section id="basic-sidebar" class="demo-section">

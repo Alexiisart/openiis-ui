@@ -1,8 +1,7 @@
-# OpenIIS UI 🎨
+# OpenIIS UI 1.8.0 - Stable 🎨
 
 Una librería moderna de componentes UI para Angular con temas personalizables y componentes standalone.
 
-[![npm version](https://badge.fury.io/js/openiis-ui.svg)](https://www.npmjs.com/package/openiis-ui)
 [![Angular](https://img.shields.io/badge/Angular-19.2+-red.svg)](https://angular.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 

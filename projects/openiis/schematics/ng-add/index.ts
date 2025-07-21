@@ -8,6 +8,7 @@ interface NgAddSchema {
   primaryColor?: string;
   backgroundColor?: string;
   textColor?: string;
+  includeTestPage?: boolean;
 }
 
 // Función para prompts condicionales usando el sistema nativo
@@ -300,41 +301,61 @@ function setupStyles(
       return;
     }
 
-    // Configurar estilos
+    // Crear carpeta styles si no existe
+    const stylesDir = 'src/styles';
+    if (!tree.exists(stylesDir)) {
+      tree.create(stylesDir + '/.gitkeep', '');
+      context.logger.info('✅ Carpeta src/styles creada');
+    }
+
+    // Copiar archivos CSS desde node_modules a src/styles
+    const sourceRootPath = 'node_modules/openiis-ui/src/styles/root.css';
+    const sourceThemePath = `node_modules/openiis-ui/src/styles/themes/${theme}.css`;
+
+    const destRootPath = 'src/styles/root.css';
+    const destThemePath = `src/styles/${theme}.css`;
+
+    // Copiar root.css
+    if (tree.exists(sourceRootPath)) {
+      const rootContent = tree.read(sourceRootPath)?.toString('utf-8') || '';
+      tree.create(destRootPath, rootContent);
+      context.logger.info('✅ root.css copiado a src/styles/');
+    }
+
+    // Copiar archivo del tema
+    if (tree.exists(sourceThemePath)) {
+      const themeContent = tree.read(sourceThemePath)?.toString('utf-8') || '';
+      tree.create(destThemePath, themeContent);
+      context.logger.info(`✅ ${theme}.css copiado a src/styles/`);
+    }
+
+    // Configurar estilos en angular.json
     const styles = buildTarget.options?.styles || [];
 
-    // Estilos base que siempre se necesitan
-    const baseStyles = [
-      'node_modules/openiis-ui/src/styles/root.css',
-      'node_modules/openiis-ui/src/styles/animations.css',
-    ];
-
-    // Estilo del tema específico
-    const themeStylePath =
+    // Estilos que ahora están en src/styles
+    const localStyles = [
+      'src/styles/root.css',
       theme === 'custom'
         ? 'src/styles/openiis-custom-theme.css'
-        : `node_modules/openiis-ui/src/styles/themes/${theme}.css`;
+        : `src/styles/${theme}.css`,
+    ];
 
     // Remover estilos anteriores de OpenIIS
     const filteredStyles = styles.filter(
       (style: string) =>
         !style.includes('node_modules/openiis-ui/src/styles/') &&
-        !style.includes('src/styles/openiis-custom-theme.css'),
+        !style.includes('src/styles/openiis-custom-theme.css') &&
+        !style.includes('src/styles/root.css') &&
+        !style.includes(`src/styles/${theme}.css`),
     );
 
-    // Agregar estilos base
-    baseStyles.forEach((styleBase) => {
-      if (!filteredStyles.includes(styleBase)) {
-        filteredStyles.push(styleBase);
-        context.logger.info(`✅ Estilo base agregado: ${styleBase}`);
+    // Agregar estilos locales
+    localStyles.forEach((stylePath) => {
+      if (!filteredStyles.includes(stylePath)) {
+        filteredStyles.push(stylePath);
+        context.logger.info(`✅ Estilo agregado: ${stylePath}`);
       }
     });
-
-    // Agregar estilo del tema
-    if (!filteredStyles.includes(themeStylePath)) {
-      filteredStyles.push(themeStylePath);
-      context.logger.info(`✅ Tema agregado: ${themeStylePath}`);
-    }
 
     buildTarget.options = buildTarget.options || {};
     buildTarget.options.styles = filteredStyles;
@@ -346,6 +367,361 @@ function setupStyles(
   }
 }
 
+// Crear la página de test
+function createTestPage(tree: Tree, context: SchematicContext): void {
+  const testComponentPath = 'src/app/pages/test/test.component.ts';
+  const testComponentHtmlPath = 'src/app/pages/test/test.component.html';
+
+  // Crear el directorio si no existe
+  const testDir = 'src/app/pages/test';
+  if (!tree.exists(testDir)) {
+    tree.create(testDir + '/.gitkeep', '');
+  }
+
+  // Crear el componente TypeScript
+  const testComponentContent = `import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  OpeniisButtonComponent,
+  OpeniisCardComponent,
+  OpeniisSwitchComponent,
+  OpeniisModeService,
+  ThemeMode,
+  EasyIconDirective,
+} from 'openiis-ui';
+
+@Component({
+  selector: 'app-test',
+  standalone: true,
+  imports: [
+    CommonModule,
+    OpeniisButtonComponent,
+    OpeniisCardComponent,
+    OpeniisSwitchComponent,
+    EasyIconDirective,
+  ],
+  templateUrl: './test.component.html',
+  styles: [
+    \`
+      .test-page {
+        min-height: 100vh;
+        padding: 2rem;
+        background: var(--color-background);
+        color: var(--color-text-primary);
+        transition: all 0.3s ease;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        color: var(--color-text-primary);
+      }
+
+      .svg-demo {
+        margin-top: 2rem;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .control-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .control-group span {
+        font-weight: 600;
+        color: var(--color-text-secondary);
+      }
+
+      .content {
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .content h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--color-text-primary);
+      }
+
+      .content p {
+        font-size: 1.1rem;
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+        margin-bottom: 2rem;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .svg-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .test-svg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80px;
+        height: 80px;
+        background: var(--color-surface);
+        border-radius: 50%;
+        border: 2px solid var(--primary-200);
+        transition: all 0.3s ease;
+      }
+
+      .test-svg:hover {
+        transform: scale(1.1);
+        border-color: var(--primary-500);
+      }
+
+      .svg-container p {
+        color: var(--color-text-secondary);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        .test-page {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .actions {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    \`,
+  ],
+})
+export class TestComponent implements OnInit {
+  currentMode: ThemeMode = 'light';
+  isDarkMode = false;
+
+  constructor(private modeService: OpeniisModeService) {}
+
+  ngOnInit(): void {
+    this.modeService.currentMode$.subscribe((mode) => {
+      this.currentMode = mode;
+      this.isDarkMode = mode === 'dark';
+    });
+  }
+
+  onModeChange(value: boolean): void {
+    const selectedMode = value ? 'dark' : 'light';
+    this.modeService.setMode(selectedMode as ThemeMode);
+  }
+
+  exploreComponents(): void {
+    window.open('ui.openiis.org', '_blank');
+  }
+
+  openGitHub(): void {
+    window.open('https://github.com/alexiisart/openiis-ui', '_blank');
+  }
+}`;
+
+  // Crear el template HTML
+  const testComponentHtmlContent = `<div class="test-page">
+  <div class="container">
+    <h1>Bienvenido a Openiis UI</h1>
+
+    <div class="controls">
+      <div class="control-group">
+        <openiis-switch
+          [checked]="isDarkMode"
+          size="sm"
+          variant="primary"
+          [label]="isDarkMode ? 'Modo Oscuro' : 'Modo Claro'"
+          (checkedChange)="onModeChange($event)"
+        >
+        </openiis-switch>
+      </div>
+    </div>
+
+    <openiis-card>
+      <div class="content">
+        <h2>¡Importante!</h2>
+        <p>
+          Esta página de demostración muestra cómo funcionan los modos claro y
+          oscuro utilizando los componentes de nuestra librería.
+          <strong
+            >Información importante: en la carpeta styles/ se encuentran los
+            archivos theme.css y root.css, desde los cuales puedes personalizar
+            las variables y otros estilos según tus necesidades.</strong
+          >
+        </p>
+
+        <div class="actions">
+          <openiis-button
+            type="primary"
+            text="Explorar Componentes"
+            size="md"
+            (clickEvent)="exploreComponents()"
+          >
+          </openiis-button>
+
+          <openiis-button
+            type="secondary"
+            text="Ver GitHub"
+            size="md"
+            (clickEvent)="openGitHub()"
+          >
+          </openiis-button>
+        </div>
+      </div>
+    </openiis-card>
+
+    <div class="svg-demo">
+      <openiis-card
+        title="SVG con EasyDirective"
+        size="md"
+        variant="default"
+        type="success"
+      >
+        <div class="svg-container">
+          <div
+            easyIcon="assets/github.svg, var(--color-text-primary), 50"
+          ></div>
+          <p>Este SVG cambia de color según el tema</p>
+        </div>
+      </openiis-card>
+    </div>
+  </div>
+</div>`;
+
+  tree.create(testComponentPath, testComponentContent);
+  tree.create(testComponentHtmlPath, testComponentHtmlContent);
+  context.logger.info('✅ Página de test creada');
+}
+
+// Start of Selection
+// Configurar app.component.ts para incluir la página de test
+function setupAppComponentWithTest(
+  tree: Tree,
+  context: SchematicContext,
+): void {
+  const appComponentPath = 'src/app/app.component.ts';
+
+  if (!tree.exists(appComponentPath)) {
+    context.logger.warn('No se pudo encontrar app.component.ts');
+    return;
+  }
+
+  const content = tree.read(appComponentPath)?.toString('utf-8') || '';
+  let updatedContent = content;
+
+  // Agregar import de TestComponent si no existe
+  if (!content.includes('TestComponent')) {
+    // Buscar la última línea de importación
+    const lastImportMatch = content.match(/import\s+.*?;\s*$/m);
+    if (lastImportMatch) {
+      // Agregar la nueva importación después de la última línea de importación
+      updatedContent = updatedContent.replace(
+        lastImportMatch[0],
+        `${lastImportMatch[0]}\nimport { TestComponent } from './pages/test/test.component';`,
+      );
+    }
+  }
+
+  // Agregar TestComponent a los imports si no existe
+  if (!content.includes('TestComponent')) {
+    const importsMatch = content.match(/imports:\s*\[([\s\S]*?)\]/);
+    if (importsMatch) {
+      const existingImports = importsMatch[1];
+      const newImports = existingImports.trim()
+        ? `${existingImports.trim()}, TestComponent`
+        : 'TestComponent';
+
+      updatedContent = updatedContent.replace(
+        /imports:\s*\[([\s\S]*?)\]/,
+        `imports: [\n    ${newImports}\n  ]`,
+      );
+    }
+  }
+
+  tree.overwrite(appComponentPath, updatedContent);
+  context.logger.info('✅ TestComponent agregado a app.component.ts');
+}
+
+// Copiar assets necesarios
+function copyAssets(tree: Tree, context: SchematicContext): void {
+  // Crear carpeta public si no existe
+  const publicDir = 'public';
+  if (!tree.exists(publicDir)) {
+    tree.create(publicDir + '/.gitkeep', '');
+    context.logger.info('✅ Carpeta public creada');
+  }
+
+  // Crear carpeta assets si no existe
+  const assetsDir = 'public/assets';
+  if (!tree.exists(assetsDir)) {
+    tree.create(assetsDir + '/.gitkeep', '');
+    context.logger.info('✅ Carpeta public/assets creada');
+  }
+
+  // Copiar github.svg desde node_modules
+  const sourceGithubPath = 'node_modules/openiis-ui/public/assets/github.svg';
+  const destGithubPath = 'public/assets/github.svg';
+
+  if (tree.exists(sourceGithubPath)) {
+    const githubContent = tree.read(sourceGithubPath)?.toString('utf-8') || '';
+    tree.create(destGithubPath, githubContent);
+    context.logger.info('✅ github.svg copiado a public/assets/');
+  } else {
+    // Si no existe en node_modules, crear un SVG básico
+    const basicGithubSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.744.083-.729.083-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.775.418-1.305.76-1.605-2.665-.3-5.466-1.335-5.466-5.93 0-1.31.47-2.38 1.235-3.22-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.51 11.51 0 013.003-.404c1.018.005 2.042.137 3.003.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.873.12 3.176.77.84 1.233 1.91 1.233 3.22 0 4.61-2.803 5.625-5.475 5.92.43.37.823 1.102.823 2.222 0 1.606-.014 2.896-.014 3.286 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`;
+    tree.create(destGithubPath, basicGithubSvg);
+    context.logger.info('✅ github.svg creado en public/assets/');
+  }
+}
+
+// Configurar app.component.html para mostrar la página de test
+function setupAppComponentHtml(tree: Tree, context: SchematicContext): void {
+  const appComponentHtmlPath = 'src/app/app.component.html';
+
+  if (!tree.exists(appComponentHtmlPath)) {
+    context.logger.warn('No se pudo encontrar app.component.html');
+    return;
+  }
+
+  const content = tree.read(appComponentHtmlPath)?.toString('utf-8') || '';
+
+  // Si el contenido no incluye la página de test, agregarla
+  if (!content.includes('<app-test>')) {
+    const updatedContent = `<!-- <router-outlet />  -->
+<app-test></app-test>`;
+
+    tree.overwrite(appComponentHtmlPath, updatedContent);
+    context.logger.info('✅ Página de test agregada a app.component.html');
+  }
+}
+
 export function ngAdd(options: NgAddSchema): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     context.logger.info(
@@ -353,6 +729,7 @@ export function ngAdd(options: NgAddSchema): Rule {
     );
 
     const theme = options.theme || 'classic';
+    const includeTestPage = options.includeTestPage !== false; // Por defecto true
     context.logger.info(`🎨 Tema seleccionado: ${theme}`);
 
     // Si es tema custom, pedir colores adicionales
@@ -380,6 +757,17 @@ export function ngAdd(options: NgAddSchema): Rule {
     setupThemeInAppComponent(tree, context, theme);
     setupStyles(tree, context, theme);
 
+    // Copiar assets necesarios
+    copyAssets(tree, context);
+
+    // Crear página de test si se solicita
+    if (includeTestPage) {
+      createTestPage(tree, context);
+      setupAppComponentWithTest(tree, context);
+      setupAppComponentHtml(tree, context);
+      context.logger.info('✅ Página de demostración creada');
+    }
+
     context.logger.info('');
     context.logger.info('🎉 ¡OpenIIS UI configurado exitosamente!');
     context.logger.info('');
@@ -396,6 +784,12 @@ export function ngAdd(options: NgAddSchema): Rule {
     );
     context.logger.info('   })');
     context.logger.info('');
+
+    if (includeTestPage) {
+      context.logger.info('📖 Página de demostración disponible en:');
+      context.logger.info('   http://localhost:4200');
+      context.logger.info('');
+    }
 
     return tree;
   };

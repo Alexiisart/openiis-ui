@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
-import { SidebarComponent } from 'openiis-ui';
+import { OpeniisSidebarComponent } from 'openiis-ui';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
@@ -12,7 +12,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   standalone: true,
   imports: [
     RouterOutlet,
-    SidebarComponent,
+    OpeniisSidebarComponent,
     HeaderSecComponent,
     TranslateModule,
   ],
