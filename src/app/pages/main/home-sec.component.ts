@@ -33,9 +33,14 @@ import {
         </p>
 
         <div class="info-badge">
+          <strong
+            ><p class="info-badge-text">
+              {{ 'home.instalar' | translate }}:
+            </p></strong
+          >
           <openiis-button
-            type="outline-primary"
-            text="{{ 'home.instalar' | translate }} ng add openiis-ui"
+            type="subtle"
+            text="ng add openiis-ui"
             size="md"
             (clickEvent)="copyCommand()"
           ></openiis-button>
@@ -143,6 +148,9 @@ import {
 
     .info-badge {
       margin-top: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
     }
 
     .important-section {
@@ -162,7 +170,8 @@ import {
       margin-bottom: var(--space-2);
     }
 
-    .important-section p {
+    .important-section p,
+    .info-badge-text {
       color: var(--color-text-secondary);
       font-size: 1rem;
       line-height: 1.5;
